@@ -73,6 +73,15 @@
     <Filter Include="Engine\Easing">
       <UniqueIdentifier>{1a0536d9-3ea4-428c-92ae-a29524e55145}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game\GameScene\Title">
+      <UniqueIdentifier>{d10fb1aa-3c5b-41d9-8eab-d9e47aafb87b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\GameScene\Battle">
+      <UniqueIdentifier>{79296af0-8561-4d45-9d39-180f15b1702e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\GameScene\Result">
+      <UniqueIdentifier>{1fac4737-5ee9-44b2-9ab1-2ad344b614f3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -152,6 +161,15 @@
     </ClCompile>
     <ClCompile Include="math\Vector2.cpp">
       <Filter>math</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\GameScene\Title\Title.cpp">
+      <Filter>Game\GameScene\Title</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\GameScene\Result\Result.cpp">
+      <Filter>Game\GameScene\Result</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\GameScene\Battle\Battle.cpp">
+      <Filter>Game\GameScene\Battle</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -241,6 +259,15 @@
     </ClInclude>
     <ClInclude Include="Engine\Easing\Easing.h">
       <Filter>Engine\Easing</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\GameScene\Title\Title.h">
+      <Filter>Game\GameScene\Title</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\GameScene\Result\Result.h">
+      <Filter>Game\GameScene\Result</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\GameScene\Battle\Battle.h">
+      <Filter>Game\GameScene\Battle</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
