@@ -183,7 +183,6 @@ void CommandDirectX::Finalize()
 	commandList->Release();
 	commandAllocator->Release();
 	commandQueue->Release();
-	device->Release();
 	useAdapter->Release();
 	dxgiFactory->Release();
 }
