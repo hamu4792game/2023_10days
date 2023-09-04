@@ -5,6 +5,8 @@
 
 #include "Engine/Camera/Camera.h"
 
+#include "Engine/Texture/Model.h"
+
 class GameScene
 {
 public:
@@ -36,6 +38,11 @@ private:
 	std::unique_ptr<Title> title;
 	std::unique_ptr<Battle> battle;
 	std::unique_ptr<Result> result;
+
+	std::unique_ptr<Model> model;
+	std::unique_ptr<Model> model2;
+	WorldTransform pos;
+	WorldTransform pos2;
 
 public:
 

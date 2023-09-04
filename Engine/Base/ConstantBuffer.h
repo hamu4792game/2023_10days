@@ -32,6 +32,9 @@ public:
 		Engine::GetDevice()->CreateConstantBufferView(&cBufferViewDesc, descriptorHandle);
 	}
 
+	//	仮想アドレスのget
+	D3D12_GPU_VIRTUAL_ADDRESS GetGPUVirtualAddress() { return resource->GetGPUVirtualAddress(); };
+
 private:
 	ID3D12Resource* resource = nullptr;
 	D3D12_CONSTANT_BUFFER_VIEW_DESC cBufferViewDesc{};

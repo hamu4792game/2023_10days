@@ -16,7 +16,7 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR lpCmdLine, _In
 	static D3DResourceLeakChecker leak;
 	//OutputDebugStringA("Hello,DirectX!\n");
 	int32_t windowWidth = 1280; int32_t windowHeight = 720;
-	Engine::Initialize("taimenn", windowWidth, windowHeight);
+	Engine::Initialize("2023_10days", windowWidth, windowHeight);
 	
 	GameScene::GetInstance()->Initialize();
 

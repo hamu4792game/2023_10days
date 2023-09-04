@@ -1,17 +1,31 @@
 #pragma once
 #include "math/Matrix4x4.h"
+#include "math/Vector4.h"
 #include "math/Vector3.h"
+#include "math/Vector2.h"
 #include "Engine/Base/ConstantBuffer.h"
 
 class WorldTransform
 {
 public:
-	WorldTransform() = default;
+	WorldTransform();
 	~WorldTransform() = default;
 
 	WorldTransform& operator=(const WorldTransform &trans);
 
 public:
+
+	ConstantBuffer<Matrix4x4> cMat;
+	ConstantBuffer<Vector4> cColor;
+	struct Mono {
+		Vector2 pibot;
+		float rate;
+	};
+	//	全て動かしたい時用の変数
+	static Mono monocuro;
+
+	ConstantBuffer<Mono> cMono;
+
 	// ローカルスケール
 	Vector3 scale_ = { 1.0f, 1.0f, 1.0f };
 	// X,Y,Z軸回りのローカル回転角

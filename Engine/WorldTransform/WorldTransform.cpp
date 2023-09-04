@@ -1,5 +1,15 @@
 #include "WorldTransform.h"
 
+decltype(WorldTransform::monocuro) WorldTransform::monocuro;
+
+WorldTransform::WorldTransform()
+{
+	*cMat = MakeIdentity4x4();
+	*cColor = { 1.0f,1.0f,1.0f,1.0f };
+	cMono->pibot = { 0.0f,0.0f };
+	cMono->rate = 1.0f;
+}
+
 WorldTransform& WorldTransform::operator=(const WorldTransform& trans)
 {
 	this->translation_ = trans.translation_;
@@ -12,6 +22,9 @@ WorldTransform& WorldTransform::operator=(const WorldTransform& trans)
 
 Matrix4x4 WorldTransform::UpdateMatrix()
 {
+	//	monocuroを動かせばcMonoに代入される
+	this->cMono->pibot = monocuro.pibot;
+
 	//	スケール、回転、平行移動を合成して行列を計算する
 	this->worldMatrix = MakeAffineMatrix(scale_, rotation_, translation_);
 

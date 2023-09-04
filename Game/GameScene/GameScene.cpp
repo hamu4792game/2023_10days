@@ -1,4 +1,6 @@
 #include "GameScene.h"
+#include "externals/imgui/imgui.h"
+#include "Engine/Input/KeyInput/KeyInput.h"
 
 GameScene* GameScene::GetInstance()
 {
@@ -16,18 +18,25 @@ void GameScene::Initialize()
 	viewProjectionMatrix2d = camera2d->GetViewProMat();
 
 	//	初期化
-	title = std::make_unique<Title>(camera);
+	title = std::make_unique<Title>();
 	title->Initialize();
 
-	battle = std::make_unique<Battle>(camera);
+	battle = std::make_unique<Battle>();
 	battle->Initialize();
 
-	result = std::make_unique<Result>(camera);
+	result = std::make_unique<Result>();
 	result->Initialize();
 
 	title->ModelLoad();
 	battle->ModelLoad();
 	result->ModelLoad();
+
+	model = std::make_unique<Model>();
+	model2 = std::make_unique<Model>();
+	model->Texture("Resources/player/limbs.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl");
+	model2->Texture("Resources/player/head.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl");
+	pos.translation_ = Vector3(0.0f, 0.0f, 0.0f);
+	pos2.translation_ = Vector3(3.0f, 0.0f, 0.0f);
 
 }
 
@@ -63,6 +72,13 @@ void GameScene::Update()
 		break;
 	}
 
+	ImGui::DragFloat("te", &pos.monocuro.pibot.x, 1.0f);
+	//pos2.cMono = pos.cMono;
+
+	pos.UpdateMatrix();
+	pos2.UpdateMatrix();
+
+	camera->transform.translation_.z = -20.0f;
 
 	//	カメラ行列の更新
 	viewProjectionMatrix = camera->GetViewProMat();
@@ -83,4 +99,10 @@ void GameScene::Draw()
 		result->Draw(viewProjectionMatrix);
 		break;
 	}
+
+	Model::ModelDraw(pos, viewProjectionMatrix, 0xffffffff, model.get());
+	Model::ModelDraw(pos2, viewProjectionMatrix, 0xffffffff, model.get());
+	Model::ModelDraw(pos, viewProjectionMatrix, 0xffffffff, model2.get());
+	Model::ModelDraw(pos2, viewProjectionMatrix, 0xffffffff, model2.get());
+
 }

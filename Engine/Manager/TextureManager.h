@@ -52,6 +52,8 @@ private:
 	// テクスチャコンテナ
 	//std::array<Texture2D> textures_;
 
+
+
 public:
 	//	オブジェクトファイルを読み込む関数
 	static ModelData LoadObjFile(const std::string&  filename);
