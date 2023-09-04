@@ -6,6 +6,7 @@
 #include "Engine/Camera/Camera.h"
 
 #include "Engine/Texture/Model.h"
+#include "Engine/Texture/Texture2D.h"
 
 class GameScene
 {
@@ -39,7 +40,7 @@ private:
 	std::unique_ptr<Battle> battle;
 	std::unique_ptr<Result> result;
 
-	std::unique_ptr<Model> model;
+	std::unique_ptr<Texture2D> model;
 	WorldTransform pos;
 
 public:

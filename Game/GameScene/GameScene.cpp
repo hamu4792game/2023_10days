@@ -30,9 +30,10 @@ void GameScene::Initialize()
 	battle->ModelLoad();
 	result->ModelLoad();
 
-	model = std::make_unique<Model>();
-	model->Texture("Resources/player/limbs.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl");
+	model = std::make_unique<Texture2D>();
+	model->Texture("Resources/uvChecker.png", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl");
 	pos.translation_ = Vector3(0.0f, 0.0f, 0.0f);
+	pos.scale_ = Vector3(1.0f, 1.0f, 1.0f);
 
 }
 
@@ -67,11 +68,13 @@ void GameScene::Update()
 		result->Update();
 		break;
 	}
-
+	ImGui::DragFloat2("a", &pos.translation_.x, 1.0f);
+	ImGui::DragFloat2("b", &pos.scale_.x, 1.0f);
+	ImGui::DragFloat("c", &pos.rotation_.z, 1.0f);
 
 	pos.UpdateMatrix();
 
-	camera->transform.translation_.z = -20.0f;
+	//camera2d->transform.translation_.z = -20.0f;
 
 	//	カメラ行列の更新
 	viewProjectionMatrix = camera->GetViewProMat();
@@ -93,6 +96,6 @@ void GameScene::Draw()
 		break;
 	}
 
-	Model::ModelDraw(pos, viewProjectionMatrix, 0xffffffff, model.get());
-
+	//Model::ModelDraw(pos, viewProjectionMatrix, 0xffffffff, model.get());
+	Texture2D::TextureDraw(pos, viewProjectionMatrix2d, 0xffffffff, model.get());
 }

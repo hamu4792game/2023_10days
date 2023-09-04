@@ -10,6 +10,7 @@
 #include "math/Vector4.h"
 #include "Engine/Base/ConstantBuffer.h"
 #include "math/Matrix4x4.h"
+#include "Engine/WorldTransform/WorldTransform.h"
 
 
 // ブレンドモード
@@ -42,19 +43,13 @@ private:
 	D3D12_INDEX_BUFFER_VIEW indexBufferView{};
 	ID3D12Resource* indexResource = nullptr;
 
-	IDxcBlob* vertexShader = nullptr;
-	IDxcBlob* pixelShader = nullptr;
+public:
 
-	ID3D12RootSignature* rootSignature = nullptr;
-	ID3D12PipelineState* graphicsPipelineState = nullptr;
+	Microsoft::WRL::ComPtr<IDxcBlob> vertexShader = nullptr;
+	Microsoft::WRL::ComPtr<IDxcBlob> pixelShader = nullptr;
 
-	struct Mono {
-		Vector2 pibot;
-		float rate;
-	};
-	ConstantBuffer<Matrix4x4> cMat;
-	ConstantBuffer<Vector4> cColor;
-	ConstantBuffer<Mono> cBuffer;
+	Microsoft::WRL::ComPtr<ID3D12RootSignature> rootSignature = nullptr;
+	Microsoft::WRL::ComPtr<ID3D12PipelineState> graphicsPipelineState = nullptr;
 
 	uint32_t textureWidth = 0;
 	uint32_t textureHeight = 0;
@@ -66,26 +61,18 @@ public:
 private:
 	void CreateDescriptor(const std::string& filePath);
 
-	void CreateShader(const std::string& vsFileName, const std::string& psFileName);
-
 	void CreateVertexResource();
-
-	void CreateGraphicsPipeline();
 
 public:
 	//void Draw(Matrix4x4 worldMat, Matrix4x4 viewProjectionMat, uint32_t color);
 	void Draw(Vector2 pos, Vector2 scale, float rotate, Matrix4x4 viewProjectionMat, uint32_t color);
+
+	static void TextureDraw(WorldTransform& worldTransform, const Matrix4x4& viewProjectionMat, uint32_t color, Texture2D* texture);
 
 	BlendMode blend = BlendMode::Normal;
 	void SetBlend(BlendMode blend_);
 	
 
 private:
-	//	DirectX12のTextureResourceを作る
-	DirectX::ScratchImage LoadTexture(const std::string& filePath);
-
-	//	TextureResourceにデータを転送する
-	void UploadTextureData(ID3D12Resource* texture, const DirectX::ScratchImage& mipImages);
-
 };
 
