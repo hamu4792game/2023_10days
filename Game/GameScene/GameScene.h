@@ -40,9 +40,7 @@ private:
 	std::unique_ptr<Result> result;
 
 	std::unique_ptr<Model> model;
-	std::unique_ptr<Model> model2;
 	WorldTransform pos;
-	WorldTransform pos2;
 
 public:
 
