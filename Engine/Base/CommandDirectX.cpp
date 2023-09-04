@@ -24,6 +24,7 @@ void CommandDirectX::Initialize(WinApp* winApp, int32_t bufferWidth, int32_t buf
 	winApp_ = winApp;
 	bufferWidth_ = bufferWidth; bufferHeight_ = bufferHeight;
 
+
 	CreateFactry();
 	SelectAdapter();
 	CreateDevice();
