@@ -32,7 +32,7 @@ private://	必要なメンバ変数
 	std::unique_ptr<Player> player_;
 
   //	プレイヤーデータのモデル配列
-	std::vector<std::unique_ptr<Model>> mobModels_;
+	std::vector<std::shared_ptr<Model>> mobModels_;
 
 	//	パーツ用ペアレントデータ
 	std::vector<WorldTransform> mobarts_;
