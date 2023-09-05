@@ -3,6 +3,8 @@
 #include "Engine/Camera/Camera.h"
 #include "Engine/Texture/Model.h"
 
+#include "Game/Player/Player.h"
+
 class Battle
 {
 public:
@@ -25,9 +27,6 @@ private://	必要なメンバ変数
 
 	std::shared_ptr<Camera> camera_;
 
-	//std::unique_ptr<Model> road;
-	//WorldTransform roadPos;
-	//WorldTransform wallPos;
-	//WorldTransform wallPos2;
+	std::unique_ptr<Player> player_;
 
 };

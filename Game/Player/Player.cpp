@@ -1,4 +1,13 @@
 #include "Player.h"
+#include "Engine/Input/KeyInput/KeyInput.h"
+
+Player::Player(std::shared_ptr<Camera> camera)
+{
+	camera_ = camera;
+	for (uint16_t i = 0u; i < PARTS::Num; i++) {
+		models_.push_back(std::make_unique<Model>());
+	}
+}
 
 void Player::Initialize()
 {
@@ -86,4 +95,22 @@ void Player::Draw(const Matrix4x4& viewProjection)
 	{
 		Model::ModelDraw(parts_[i], viewProjection, 0xffffffff, models_[i].get());
 	}
+}
+
+void Player::Move()
+{
+	if (KeyInput::GetKey(DIK_W)) {
+		transform.translation_.z += 0.1f;
+	}
+	if (KeyInput::GetKey(DIK_W)) {
+		transform.translation_.z += 0.1f;
+	}
+
+
+
+}
+
+void Player::CameraUpdate()
+{
+
 }

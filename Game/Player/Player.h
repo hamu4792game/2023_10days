@@ -2,11 +2,12 @@
 #include "math/Matrix4x4.h"
 #include "Engine/WorldTransform/WorldTransform.h"
 #include "Engine/Texture/Model.h"
+#include "Engine/Camera/Camera.h"
 
 class Player
 {
 public:
-	Player() = default;
+	Player(std::shared_ptr<Camera> camera = nullptr);
 	~Player() = default;
 
 	void Initialize();
@@ -50,5 +51,11 @@ private:
 	std::vector<std::unique_ptr<Model>> models_;
 	//	パーツ用データ
 	std::vector<WorldTransform> parts_;
+
+	std::shared_ptr<Camera> camera_ = nullptr;
+
+	void Move();
+
+	void CameraUpdate();
 
 };
