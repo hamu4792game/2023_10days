@@ -8,16 +8,7 @@ Battle::~Battle() {
 
 void Battle::Initialize()
 {
-	for (Enemy* enemy : enemies_) {
-		enemy->Die();
-	}
-	enemies_.remove_if([](Enemy* enemy) {
-		if (enemy->IsDead()) {
-			delete enemy;
-			return true;
-		}
-		return false;
-	});
+	EnemyReset();
 
 	EnemyGeneration();
 
@@ -63,7 +54,7 @@ void Battle::EnemyGeneration() {
 			}
 
 			// Initializeを変える必要がある
-			enemy->Initialize();
+			enemy->Initialize(type, enemyNum_);
 
 			enemies_.push_back(enemy);
 
@@ -73,6 +64,25 @@ void Battle::EnemyGeneration() {
 		}
 	}
 
+}
+
+void Battle::EnemyReset() {
+	for (Enemy* enemy : enemies_) {
+		enemy->Die();
+	}
+	enemies_.remove_if([](Enemy* enemy) {
+		if (enemy->IsDead()) {
+			delete enemy;
+			return true;
+		}
+		return false;
+	});
+
+	enemyNum_ = 0;
+	enemyKillCount_ = 0;
+	
+	preEnemyType_ = 0;
+	typeCount_ = 0;
 }
 
 void Battle::Update()

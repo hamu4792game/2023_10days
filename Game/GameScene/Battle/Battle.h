@@ -26,6 +26,8 @@ private: // Korone
 
 	void EnemyGeneration();
 
+	void EnemyReset();
+
 private: //Korone
 
 	int kEnemyMaxNum_ = 100;

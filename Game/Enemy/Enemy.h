@@ -37,6 +37,8 @@ public:
 
 public: // Korone
 
+	void Initialize(int type, int num);
+
 	BottomTypeClass GetBottomType() { return bottomType_; }
 
 	int GetNum() { return num_; }
