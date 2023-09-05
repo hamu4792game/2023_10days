@@ -1,6 +1,9 @@
 #include "GameScene.h"
 #include "externals/imgui/imgui.h"
 
+#include <stdlib.h>
+#include <time.h>
+
 GameScene* GameScene::GetInstance()
 {
 	static GameScene instance;
@@ -35,6 +38,9 @@ void GameScene::Initialize()
 	pos.translation_ = Vector3(0.0f, 0.0f, 0.0f);
 	pos.scale_ = Vector3(1.0f, 1.0f, 1.0f);
 
+
+	unsigned int currentTime = static_cast<unsigned int>(time(nullptr));
+	srand(currentTime);
 }
 
 void GameScene::Update()
