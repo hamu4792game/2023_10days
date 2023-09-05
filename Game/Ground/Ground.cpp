@@ -8,7 +8,8 @@ Ground::Ground()
 
 void Ground::Initialize()
 {
-	transform.scale_ = Vector3(30.0f, 30.0f, 30.0f);
+	transform.scale_ = Vector3(200.0f, 200.0f, 200.0f);
+	transform.rotation_ = Vector3(0.0f, AngleToRadian(90.0f), 0.0f);
 }
 
 void Ground::ModelLoad()
@@ -18,7 +19,7 @@ void Ground::ModelLoad()
 
 void Ground::Draw(const Matrix4x4& viewProjection)
 {
-	ImGui::DragFloat3("cameraTrans", &transform.scale_.x, 0.1f);
+	//ImGui::DragFloat3("cameraTrans", &transform.scale_.x, 0.1f);
 	transform.UpdateMatrix();
 	Model::ModelDraw(transform, viewProjection, 0xffffffff, ground.get());
 }
