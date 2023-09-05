@@ -91,6 +91,12 @@
     <Filter Include="Game\Enemy">
       <UniqueIdentifier>{4b840246-0c6a-490a-a936-d71fbe150aee}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game\HitTest">
+      <UniqueIdentifier>{a16e0177-092b-4ef1-9095-57516f4c7530}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Score">
+      <UniqueIdentifier>{1a35b76e-1a40-4be2-a476-8e18f40d289a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -188,6 +194,12 @@
     </ClCompile>
     <ClCompile Include="Game\Enemy\Enemy.cpp">
       <Filter>Game\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\HitTest\HitTest.cpp">
+      <Filter>Game\HitTest</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Score\Score.cpp">
+      <Filter>Game\Score</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -295,6 +307,12 @@
     </ClInclude>
     <ClInclude Include="Game\Enemy\Enemy.h">
       <Filter>Game\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\HitTest\HitTest.h">
+      <Filter>Game\HitTest</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Score\Score.h">
+      <Filter>Game\Score</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

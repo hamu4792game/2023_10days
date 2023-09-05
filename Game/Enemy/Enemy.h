@@ -6,6 +6,22 @@
 class Enemy
 {
 public:
+
+	enum class BottomTypeClass {
+		kA,
+		kB,
+		kX,
+		kY
+	};
+
+	enum BottomType {
+		kA,
+		kB,
+		kX,
+		kY
+	};
+
+public:
 	Enemy() = default;
 	~Enemy() = default;
 
@@ -18,6 +34,16 @@ public:
 
 	//	描画
 	void Draw(const Matrix4x4& viewProjection);
+
+public: // Korone
+
+	BottomTypeClass GetBottomType() { return bottomType_; }
+
+	int GetNum() { return num_; }
+
+	void Die() { isDead_ = true; }
+
+	bool IsDead() { return isDead_; }
 
 private:
 
@@ -40,5 +66,13 @@ private:
 	std::vector<std::unique_ptr<Model>> models_;
 	//	パーツ用データ
 	std::vector<WorldTransform> parts_;
+
+
+private: // Korone
+	BottomTypeClass bottomType_ = BottomTypeClass::kA;
+
+	int num_ = 0;
+
+	bool isDead_ = false;
 
 };
