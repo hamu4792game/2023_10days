@@ -305,6 +305,9 @@
     <ClInclude Include="Game\Ground\Ground.h">
       <Filter>Game\Ground</Filter>
     </ClInclude>
+    <ClInclude Include="EEnum.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="externals\imgui\LICENSE.txt">

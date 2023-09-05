@@ -3,8 +3,9 @@
 #include "Engine/Camera/Camera.h"
 #include "Engine/Texture/Model.h"
 #include "Engine/WorldTransform/WorldTransform.h"
-
 #include "Game/Player/Player.h"
+
+
 
 class Battle
 {
@@ -30,7 +31,13 @@ private://	必要なメンバ変数
 
 	std::unique_ptr<Player> player_;
 
-	//	中心座標
+  //	プレイヤーデータのモデル配列
+	std::vector<std::unique_ptr<Model>> mobModels_;
+
+	//	パーツ用ペアレントデータ
+	std::vector<WorldTransform> mobarts_;
+  
+  //	中心座標
 	WorldTransform transform;
 
 };
