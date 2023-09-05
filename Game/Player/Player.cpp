@@ -2,7 +2,16 @@
 #include "Engine/Input/KeyInput/KeyInput.h"
 #include "externals/imgui/imgui.h"
 
+
+#include "Game/Enemy/Enemy.h"
+#include "Game/Score/Score.h"
+
+#include "Engine/Input/KeyInput/KeyInput.h"
+
+void Player::Initialize()
+
 Player::Player(std::shared_ptr<Camera> camera)
+
 {
 	camera_ = camera;
 	//for (uint16_t i = 0u; i < PARTS::Num; i++) {
@@ -29,6 +38,11 @@ void Player::Initialize(std::vector<std::shared_ptr<Model>> models, const WorldT
 	
 	//親子関係
 	parts_[Body].parent_ = &transform;
+
+
+	// スコアのポインタを先に取得しないとエラーになるから保留。
+	//HitTestInitialize();
+
 	parts_[Head].parent_ = &parts_[Body];
 	parts_[BodyUnder].parent_ = &parts_[Body];
 
@@ -90,6 +104,88 @@ void Player::Update()
 	transform.UpdateMatrix();
 	for (auto& i : parts_) {
 		i.UpdateMatrix();
+	}
+}
+
+void Player::HitTestInitialize() {
+	evalutionCount_ = 0;
+	intervalCount_ = 0;
+	//score->ResetEvalution();
+}
+
+void Player::HitEvalution(Enemy* enemy, Score* score) {
+
+	if (evalutionCount_ <= kEvalutionframe_[kPerfect]) {
+
+		enemy->Die();
+		score->AddPer();
+
+		evalutionCount_ = 0;
+
+	}
+	else if (evalutionCount_ <= kEvalutionframe_[kGreat]) {
+
+		enemy->Die();
+		score->AddGre();
+
+		evalutionCount_ = 0;
+
+	}
+	else if (evalutionCount_ <= kEvalutionframe_[kGood]) {
+
+		enemy->Die();
+		score->AddGood();
+
+		evalutionCount_ = 0;
+	}
+
+	//else {
+
+	//	//enemy->Die();
+	//	score_->AddMiss();
+
+	//	evalutionCount_ = 0;
+	//}
+}
+
+void Player::HitTest(Enemy* enemy, Score* score) {
+
+	// 毎フレーム1回のみの更新。カウントがフレーム数と一致しなくなるため。
+
+	score->ResetEvalution();
+
+	evalutionCount_++;
+
+	if (KeyInput::GetInstance()->GetPadConnect()) {
+
+		if (KeyInput::GetInstance()->GetPadButtonDown(XINPUT_GAMEPAD_A)) {
+			if (enemy->GetBottomType() == Enemy::BottomTypeClass::kA) {
+
+				HitEvalution(enemy, score);
+			}
+		}
+		else if (KeyInput::GetInstance()->GetPadButtonDown(XINPUT_GAMEPAD_B)) {
+			if (enemy->GetBottomType() == Enemy::BottomTypeClass::kB) {
+				HitEvalution(enemy, score);
+			}
+		}
+		else if (KeyInput::GetInstance()->GetPadButtonDown(XINPUT_GAMEPAD_X)) {
+			if (enemy->GetBottomType() == Enemy::BottomTypeClass::kX) {
+				HitEvalution(enemy, score);
+			}
+		}
+		else if (KeyInput::GetInstance()->GetPadButtonDown(XINPUT_GAMEPAD_Y)) {
+			if (enemy->GetBottomType() == Enemy::BottomTypeClass::kY) {
+				HitEvalution(enemy, score);
+			}
+		}
+	}
+
+	if (evalutionCount_ > kEvalutionframe_[kMiss]) {
+		//enemy->Die();
+		score->AddMiss();
+
+		evalutionCount_ = 0;
 	}
 }
 

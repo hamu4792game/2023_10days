@@ -91,6 +91,8 @@
     <Filter Include="Game\Enemy">
       <UniqueIdentifier>{4b840246-0c6a-490a-a936-d71fbe150aee}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game\Score">
+      <UniqueIdentifier>{1a35b76e-1a40-4be2-a476-8e18f40d289a}</UniqueIdentifier>
     <Filter Include="Game\Ground">
       <UniqueIdentifier>{e1c70a1f-0765-4cb6-8b29-683fdd4bde94}</UniqueIdentifier>
     </Filter>
@@ -192,6 +194,8 @@
     <ClCompile Include="Game\Enemy\Enemy.cpp">
       <Filter>Game\Enemy</Filter>
     </ClCompile>
+    <ClCompile Include="Game\Score\Score.cpp">
+      <Filter>Game\Score</Filter>
     <ClCompile Include="Game\Ground\Ground.cpp">
       <Filter>Game\Ground</Filter>
     </ClCompile>
@@ -302,6 +306,8 @@
     <ClInclude Include="Game\Enemy\Enemy.h">
       <Filter>Game\Enemy</Filter>
     </ClInclude>
+    <ClInclude Include="Game\Score\Score.h">
+      <Filter>Game\Score</Filter>
     <ClInclude Include="Game\Ground\Ground.h">
       <Filter>Game\Ground</Filter>
     </ClInclude>
