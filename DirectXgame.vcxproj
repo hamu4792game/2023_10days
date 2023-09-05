@@ -125,6 +125,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="math\Vector4.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="EEnum.h" />
     <ClInclude Include="Engine\Base\CommandDirectX.h" />
     <ClInclude Include="Engine\Base\ConstantBuffer.h" />
     <ClInclude Include="Engine\Base\GraphicsPipeline\GraphicsPipeline.h" />
