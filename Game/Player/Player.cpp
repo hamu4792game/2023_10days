@@ -14,7 +14,13 @@ Player::Player(std::shared_ptr<Camera> camera)
 
 void Player::Initialize(const WorldTransform& world)
 {
+	//	世界との親子関係
+	transform.parent_ = &world;
+	transform.translation_.y = 1.0f * 30.0f;
 
+	//	カメラとの親子関係
+	camera_->transform.parent_ = &transform;
+	camera_->transform.translation_.z = -20.0f;
 	
 	//親子関係
 	parts_[Body].parent_ = &transform;
@@ -108,46 +114,4 @@ void Player::Draw(const Matrix4x4& viewProjection)
 	{
 		Model::ModelDraw(parts_[i], viewProjection, 0xffffffff, models_[i].get());
 	}
-}
-
-void Player::Move()
-{
-	Vector3 move = Vector3(0.0f, 0.0f, 0.0f);
-	const float speed = 0.2f;
-
-	if (KeyInput::GetKey(DIK_W)) {
-		move.z += 0.1f;
-	}
-	if (KeyInput::GetKey(DIK_S)) {
-		move.z -= 0.1f;
-	}
-
-	if (move.x != 0.0f || move.y != 0.0f || move.z != 0.0f)
-	{
-		//	移動量の正規化 * speed
-		move = Normalize(move) * speed;
-
-		//	移動ベクトルをカメラの角度だけ回転させる
-		move = TransformNormal(move, MakeRotateMatrix(camera_->transform.rotation_));
-
-		//	移動方向に見た目を合わせる
-		parts_[Body].rotation_.y = std::atan2f(move.x, move.z);
-
-	}
-	transform.translation_ += move;
-
-}
-
-void Player::CameraUpdate()
-{
-	Vector3 offset(0.0f, 2.0f, -20.0f);
-
-	//	カメラの角度から回転行列を計算する
-	Matrix4x4 rotate = MakeRotateMatrix(camera_->transform.rotation_);
-
-	offset = TransformNormal(offset, rotate);
-	offset.x = 0.0f;
-
-	//	座標をコピーしてオフセット分ずらす
-	camera_->transform.translation_ = transform.translation_ + offset;
 }

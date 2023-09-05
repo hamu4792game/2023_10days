@@ -56,8 +56,4 @@ private:
 
 	std::shared_ptr<Camera> camera_ = nullptr;
 
-	void Move();
-
-	void CameraUpdate();
-
 };
