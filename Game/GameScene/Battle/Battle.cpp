@@ -5,26 +5,25 @@
 Battle::Battle(std::shared_ptr<Camera> camera)
 {
 	camera_ = camera;
-	//oad = std::make_unique<Model>();
+	player_ = std::make_unique<Player>();
 }
 
 void Battle::Initialize()
 {
-	
-
+	player_->Initialize();
 }
 
 void Battle::ModelLoad()
 {
-
+	player_->ModelLoad();
 }
 
 void Battle::Update()
 {
-	
+	player_->Update();
 }
 
 void Battle::Draw(const Matrix4x4& viewProjection)
 {
-
+	player_->Draw(viewProjection);
 }
