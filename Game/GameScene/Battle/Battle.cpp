@@ -17,6 +17,7 @@ Battle::Battle(std::shared_ptr<Camera> camera)
 
 void Battle::Initialize()
 {
+
 	player_->Initialize();
 
 }
