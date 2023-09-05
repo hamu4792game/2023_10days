@@ -1,5 +1,11 @@
 #pragma once
 #include "math/Matrix4x4.h"
+#include "Engine/Camera/Camera.h"
+#include "Engine/Texture/Model.h"
+#include "Engine/WorldTransform/WorldTransform.h"
+#include "Game/Player/Player.h"
+
+
 
 #include "Game/Score/Score.h"
 #include "Game/Player/Player.h"
@@ -8,19 +14,39 @@
 class Battle
 {
 public:
-	Battle() = default;
+
 	//~Battle() = default;
 	~Battle();
 
+	Battle(std::shared_ptr<Camera> camera = nullptr);
+
+
+	//	初期化
 	void Initialize();
 
+	//	モデルのロード
 	void ModelLoad();
 
+	//	更新処理
 	void Update();
 
-	void Draw(Matrix4x4 viewProjection);
+	//	3D描画処理
+	void Draw(const Matrix4x4& viewProjection);
 
-private:
+private://	必要なメンバ変数
+
+	std::shared_ptr<Camera> camera_;
+
+	std::unique_ptr<Player> player_;
+
+  //	プレイヤーデータのモデル配列
+	std::vector<std::shared_ptr<Model>> mobModels_;
+
+	//	パーツ用ペアレントデータ
+	std::vector<WorldTransform> mobarts_;
+  
+  //	中心座標
+	WorldTransform transform;
 
 private: // Korone
 

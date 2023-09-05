@@ -8,6 +8,8 @@
 #include "Engine/Texture/Model.h"
 #include "Engine/Texture/Texture2D.h"
 
+#include "Game/Ground/Ground.h"
+
 class GameScene
 {
 public:
@@ -30,7 +32,7 @@ private:
 	
 	//	カメラの生成
 	std::shared_ptr<Camera> camera;
-	std::unique_ptr<Camera> camera2d;
+	std::shared_ptr<Camera> camera2d;
 	//	カメラ行列の生成
 	Matrix4x4 viewProjectionMatrix{};
 	Matrix4x4 viewProjectionMatrix2d{};
@@ -40,8 +42,7 @@ private:
 	std::unique_ptr<Battle> battle;
 	std::unique_ptr<Result> result;
 
-	std::unique_ptr<Texture2D> model;
-	WorldTransform pos;
+	std::unique_ptr<Ground> ground;
 
 public:
 

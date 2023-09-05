@@ -93,6 +93,8 @@
     </Filter>
     <Filter Include="Game\Score">
       <UniqueIdentifier>{1a35b76e-1a40-4be2-a476-8e18f40d289a}</UniqueIdentifier>
+    <Filter Include="Game\Ground">
+      <UniqueIdentifier>{e1c70a1f-0765-4cb6-8b29-683fdd4bde94}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -194,6 +196,8 @@
     </ClCompile>
     <ClCompile Include="Game\Score\Score.cpp">
       <Filter>Game\Score</Filter>
+    <ClCompile Include="Game\Ground\Ground.cpp">
+      <Filter>Game\Ground</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -304,6 +308,11 @@
     </ClInclude>
     <ClInclude Include="Game\Score\Score.h">
       <Filter>Game\Score</Filter>
+    <ClInclude Include="Game\Ground\Ground.h">
+      <Filter>Game\Ground</Filter>
+    </ClInclude>
+    <ClInclude Include="EEnum.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
