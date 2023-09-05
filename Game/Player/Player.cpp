@@ -1,5 +1,6 @@
 #include "Player.h"
 #include "Engine/Input/KeyInput/KeyInput.h"
+#include "externals/imgui/imgui.h"
 
 Player::Player(std::shared_ptr<Camera> camera)
 {
@@ -11,11 +12,19 @@ Player::Player(std::shared_ptr<Camera> camera)
 	parts_.resize(models_.size());
 }
 
-void Player::Initialize(std::vector<std::unique_ptr<Model>> models)
+void Player::Initialize(std::vector<std::unique_ptr<Model>> models,const WorldTransform& world)
 {
+  //  モデルの受け渡し
 	models_ = models;
 
+	//	世界との親子関係
+	transform.parent_ = &world;
+	transform.translation_.y = 1.0f * 30.0f;
 
+	//	カメラとの親子関係
+	camera_->transform.parent_ = &transform;
+	camera_->transform.translation_.z = -20.0f;
+	
 	//親子関係
 	parts_[Body].parent_ = &transform;
 	parts_[Head].parent_ = &parts_[Body];
@@ -70,6 +79,12 @@ void Player::ModelLoad()
 
 void Player::Update()
 {
+	//Move();
+	ImGui::DragFloat3("tra", &camera_->transform.translation_.x, 0.1f);
+	ImGui::DragFloat3("rot", &camera_->transform.rotation_.x, AngleToRadian(1.0f));
+
+	//CameraUpdate();
+
 	transform.UpdateMatrix();
 	for (auto& i : parts_) {
 		i.UpdateMatrix();
@@ -82,22 +97,4 @@ void Player::Draw(const Matrix4x4& viewProjection)
 	{
 		Model::ModelDraw(parts_[i], viewProjection, 0xffffffff, models_[i].get());
 	}
-}
-
-void Player::Move()
-{
-	if (KeyInput::GetKey(DIK_W)) {
-		transform.translation_.z += 0.1f;
-	}
-	if (KeyInput::GetKey(DIK_W)) {
-		transform.translation_.z += 0.1f;
-	}
-
-
-
-}
-
-void Player::CameraUpdate()
-{
-
 }

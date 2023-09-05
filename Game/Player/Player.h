@@ -12,7 +12,7 @@ public:
 	Player(std::shared_ptr<Camera> camera = nullptr);
 	~Player() = default;
 
-	void Initialize(std::vector<std::unique_ptr<Model>> models);
+	void Initialize(std::vector<std::unique_ptr<Model>> models,const WorldTransform& world);
 
 	void ModelLoad();
 
@@ -35,9 +35,5 @@ private:
 	std::vector<WorldTransform> parts_;
 
 	std::shared_ptr<Camera> camera_ = nullptr;
-
-	void Move();
-
-	void CameraUpdate();
 
 };

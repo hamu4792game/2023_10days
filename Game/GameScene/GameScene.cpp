@@ -35,9 +35,10 @@ void GameScene::Initialize()
 	battle->ModelLoad();
 	result->ModelLoad();
 
-	camera->transform.translation_.z = -20.0f;
+	//camera->transform.translation_.z = -20.0f;
 
 	ground = std::make_unique<Ground>();
+	ground->Initialize();
 	ground->ModelLoad();
 
 }
