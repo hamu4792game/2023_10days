@@ -1,6 +1,6 @@
 # Blender v3.5.0 OBJ File: 'player.blend'
 # www.blender.org
-mtllib pLFoot.mtl
+mtllib player/Parts/pLFoot/pLFoot.mtl
 o 立方体.011_立方体.008
 v -0.279036 -0.520918 -0.372405
 v -0.280000 -0.006855 -0.300000

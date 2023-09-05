@@ -1,6 +1,6 @@
 # Blender v3.5.0 OBJ File: 'player.blend'
 # www.blender.org
-mtllib pLHand.mtl
+mtllib player/Parts/pLHand/pLHand.mtl
 o 立方体.005
 v -0.376661 -0.399924 -0.415000
 v -0.376661 0.400076 -0.415000

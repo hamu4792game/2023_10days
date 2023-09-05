@@ -1,6 +1,6 @@
 # Blender v3.5.0 OBJ File: 'player.blend'
 # www.blender.org
-mtllib pLArm2.mtl
+mtllib player/Parts/pLArm2/pLArm2.mtl
 o 立方体.004
 v 0.308941 -0.268095 -0.218216
 v 0.308941 0.203339 -0.218216

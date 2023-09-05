@@ -1,6 +1,6 @@
 # Blender v3.5.0 OBJ File: 'player.blend'
 # www.blender.org
-mtllib pRHand.mtl
+mtllib player/Parts/pRHand/pRHand.mtl
 o 立方体.008_立方体.014
 v 0.367893 -0.419789 -0.415000
 v 0.367893 0.380211 -0.415000

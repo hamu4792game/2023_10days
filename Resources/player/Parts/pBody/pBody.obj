@@ -1,6 +1,6 @@
 # Blender v3.5.0 OBJ File: 'player.blend'
 # www.blender.org
-mtllib pBody.mtl
+mtllib player/Parts/pBody/pBody.mtl
 o Cube.001
 v -1.016658 1.973783 0.671133
 v -0.422471 0.306149 0.489029

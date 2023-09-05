@@ -43,6 +43,8 @@ private:
 		RLeg1,
 		RLeg2,
 		RFoot,
+
+		Num,
 	};
 	//	元
 	WorldTransform transform;

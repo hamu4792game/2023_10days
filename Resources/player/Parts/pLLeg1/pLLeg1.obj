@@ -1,6 +1,6 @@
 # Blender v3.5.0 OBJ File: 'player.blend'
 # www.blender.org
-mtllib pLLeg1.mtl
+mtllib player/Parts/pLLeg1/pLLeg1.mtl
 o 立方体.009_立方体.006
 v -0.158221 -2.012185 -0.266971
 v -0.263910 -0.306855 -0.379284
