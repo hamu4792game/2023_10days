@@ -5,17 +5,19 @@
 Player::Player(std::shared_ptr<Camera> camera)
 {
 	camera_ = camera;
-	for (uint16_t i = 0u; i < PARTS::Num; i++) {
-		models_.push_back(std::make_unique<Model>());
-	}
+	//for (uint16_t i = 0u; i < PARTS::Num; i++) {
+	//	models_.push_back(std::make_unique<Model>());
+	//}
 
-	parts_.resize(models_.size());
+	//parts_.resize(models_.size());
 }
 
-void Player::Initialize(std::vector<std::unique_ptr<Model>> models,const WorldTransform& world)
+void Player::Initialize(std::vector<std::shared_ptr<Model>> models, const WorldTransform& world)
 {
   //  モデルの受け渡し
 	models_ = models;
+
+	parts_.resize(models_.size());
 
 	//	世界との親子関係
 	transform.parent_ = &world;

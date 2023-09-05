@@ -9,7 +9,7 @@ Battle::Battle(std::shared_ptr<Camera> camera)
 
 	//プレイヤーモデルの初期化
 	for (uint16_t i = 0u; i < PARTS::Num; i++) {
-		mobModels_.push_back(std::make_unique<Model>());
+		mobModels_.push_back(std::make_shared<Model>());
 	}
   
 	mobarts_.resize(mobModels_.size());
@@ -17,7 +17,7 @@ Battle::Battle(std::shared_ptr<Camera> camera)
 
 void Battle::Initialize()
 {
-  player_->Initialize(transform);
+	player_->Initialize(mobModels_, transform);
 }
 
 void Battle::ModelLoad()
