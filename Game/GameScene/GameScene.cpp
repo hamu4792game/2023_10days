@@ -11,29 +11,34 @@ void GameScene::Initialize()
 {
 	//	モデルの読み込みと生成
 	camera = std::make_shared<Camera>(2000.0f, true);
-	camera2d = std::make_unique<Camera>();
+	camera2d = std::make_shared<Camera>();
 	//	カメラ行列の更新
 	viewProjectionMatrix = camera->GetViewProMat();
 	viewProjectionMatrix2d = camera2d->GetViewProMat();
 
-	//	初期化
+	//	シーンの生成と初期化
 	title = std::make_unique<Title>();
 	title->Initialize();
 
-	battle = std::make_unique<Battle>();
+	battle = std::make_unique<Battle>(camera);
 	battle->Initialize();
 
 	result = std::make_unique<Result>();
 	result->Initialize();
 
+	//	変数の初期化
+	scene = Scene::BATTLE;
+	oldscene = Scene::TITLE;
+
+	//	モデルのロード
 	title->ModelLoad();
 	battle->ModelLoad();
 	result->ModelLoad();
 
-	model = std::make_unique<Texture2D>();
-	model->Texture("Resources/uvChecker.png", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl");
-	pos.translation_ = Vector3(0.0f, 0.0f, 0.0f);
-	pos.scale_ = Vector3(1.0f, 1.0f, 1.0f);
+	camera->transform.translation_.z = -20.0f;
+
+	ground = std::make_unique<Ground>();
+	ground->ModelLoad();
 
 }
 
@@ -68,13 +73,9 @@ void GameScene::Update()
 		result->Update();
 		break;
 	}
-	ImGui::DragFloat2("a", &pos.translation_.x, 1.0f);
-	ImGui::DragFloat2("b", &pos.scale_.x, 1.0f);
-	ImGui::DragFloat("c", &pos.rotation_.z, 1.0f);
 
-	pos.UpdateMatrix();
-
-	//camera2d->transform.translation_.z = -20.0f;
+	//ImGui::DragFloat3("tr", &camera->transform.translation_.x, 0.1f);
+	//ImGui::DragFloat3("ro", &camera->transform.rotation_.x, 0.1f);
 
 	//	カメラ行列の更新
 	viewProjectionMatrix = camera->GetViewProMat();
@@ -96,6 +97,6 @@ void GameScene::Draw()
 		break;
 	}
 
+	ground->Draw(viewProjectionMatrix);
 	//Model::ModelDraw(pos, viewProjectionMatrix, 0xffffffff, model.get());
-	Texture2D::TextureDraw(pos, viewProjectionMatrix2d, 0xffffffff, model.get());
 }

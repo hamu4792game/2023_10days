@@ -91,6 +91,9 @@
     <Filter Include="Game\Enemy">
       <UniqueIdentifier>{4b840246-0c6a-490a-a936-d71fbe150aee}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game\Ground">
+      <UniqueIdentifier>{e1c70a1f-0765-4cb6-8b29-683fdd4bde94}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -188,6 +191,9 @@
     </ClCompile>
     <ClCompile Include="Game\Enemy\Enemy.cpp">
       <Filter>Game\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Ground\Ground.cpp">
+      <Filter>Game\Ground</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -295,6 +301,9 @@
     </ClInclude>
     <ClInclude Include="Game\Enemy\Enemy.h">
       <Filter>Game\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Ground\Ground.h">
+      <Filter>Game\Ground</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
