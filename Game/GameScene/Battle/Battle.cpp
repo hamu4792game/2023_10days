@@ -7,6 +7,8 @@ Battle::Battle(std::shared_ptr<Camera> camera)
 	camera_ = camera;
 	player_ = std::make_unique<Player>(camera_);
 
+	score_ = std::make_unique<Score>();
+
 	//プレイヤーモデルの初期化
 	for (uint16_t i = 0u; i < PARTS::Num; i++) {
 		mobModels_.push_back(std::make_shared<Model>());
@@ -23,10 +25,14 @@ Battle::~Battle() {
 
 void Battle::Initialize()
 {
+	//	カメラの設定
+	camera_->transform.translation_ = Vector3(0.0f, 16.5f, -21.7f);
+	camera_->transform.rotation_.x = 0.471f;
 
-	EnemyReset();
 
-	EnemyGeneration();
+	//EnemyReset();
+
+	//EnemyGeneration();
 
 	score_->Reset();
 
@@ -128,6 +134,9 @@ void Battle::EnemyReset() {
 
 void Battle::Update()
 {
+	//	カメラの調整
+	ImGui::DragFloat3("cameratr", &camera_->transform.translation_.x, 0.1f);
+	ImGui::DragFloat3("cameraro", &camera_->transform.rotation_.x, AngleToRadian(1.0f));
 
 	for(Enemy* enemy : enemies_){
 		if (enemy->GetNum() == enemyKillCount_) {
@@ -144,8 +153,9 @@ void Battle::Update()
 
 	player_->Update();
 
-	transform.rotation_.x += AngleToRadian(1.0f);
+	transform.rotation_.x += AngleToRadian(0.1f);
 	//ImGui::DragFloat("worldRo", &transform.rotation_.x, AngleToRadian(1.0f));
+	//	行列の更新　回転行列のみ必要なためUpdateはしていない
 	transform.worldMatrix = MakeRotateMatrix(transform.rotation_);
 	player_->Update();
 

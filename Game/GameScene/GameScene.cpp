@@ -81,8 +81,7 @@ void GameScene::Update()
 		break;
 	}
 
-	//ImGui::DragFloat3("tr", &camera->transform.translation_.x, 0.1f);
-	//ImGui::DragFloat3("ro", &camera->transform.rotation_.x, 0.1f);
+	
 
 	//	カメラ行列の更新
 	viewProjectionMatrix = camera->GetViewProMat();

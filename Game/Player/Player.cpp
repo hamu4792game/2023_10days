@@ -8,7 +8,6 @@
 
 #include "Engine/Input/KeyInput/KeyInput.h"
 
-void Player::Initialize()
 
 Player::Player(std::shared_ptr<Camera> camera)
 
@@ -30,7 +29,9 @@ void Player::Initialize(std::vector<std::shared_ptr<Model>> models, const WorldT
 
 	//	世界との親子関係
 	transform.parent_ = &world;
-	transform.translation_.y = 1.0f * 30.0f;
+	//	地面の半径 * scale
+	transform.translation_.y = 1.0f * 200.0f;
+	transform.scale_ = Vector3(0.3f, 0.3f, 0.3f);
 
 	//	カメラとの親子関係
 	camera_->transform.parent_ = &transform;
@@ -95,12 +96,6 @@ void Player::ModelLoad()
 
 void Player::Update()
 {
-	//Move();
-	ImGui::DragFloat3("tra", &camera_->transform.translation_.x, 0.1f);
-	ImGui::DragFloat3("rot", &camera_->transform.rotation_.x, AngleToRadian(1.0f));
-
-	//CameraUpdate();
-
 	transform.UpdateMatrix();
 	for (auto& i : parts_) {
 		i.UpdateMatrix();
