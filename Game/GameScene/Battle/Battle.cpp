@@ -7,6 +7,8 @@ Battle::Battle(std::shared_ptr<Camera> camera)
 	camera_ = camera;
 	player_ = std::make_unique<Player>(camera_);
 
+	score_ = std::make_unique<Score>();
+
 	//プレイヤーモデルの初期化
 	for (uint16_t i = 0u; i < PARTS::Num; i++) {
 		mobModels_.push_back(std::make_shared<Model>());
@@ -24,9 +26,9 @@ Battle::~Battle() {
 void Battle::Initialize()
 {
 
-	EnemyReset();
+	//EnemyReset();
 
-	EnemyGeneration();
+	//EnemyGeneration();
 
 	score_->Reset();
 

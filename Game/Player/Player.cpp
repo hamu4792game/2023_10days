@@ -8,7 +8,6 @@
 
 #include "Engine/Input/KeyInput/KeyInput.h"
 
-void Player::Initialize()
 
 Player::Player(std::shared_ptr<Camera> camera)
 

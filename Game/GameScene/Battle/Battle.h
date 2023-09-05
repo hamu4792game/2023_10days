@@ -66,7 +66,7 @@ private: //Korone
 	int typeCount_ = 0;
 
 	std::unique_ptr<Score> score_;
-	std::unique_ptr<Player> player_;
+	//std::unique_ptr<Player> player_;
 	std::list<Enemy*> enemies_;
 
 };
