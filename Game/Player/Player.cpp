@@ -13,8 +13,6 @@ Player::Player(std::shared_ptr<Camera> camera)
 
 void Player::Initialize()
 {
-
-	
 	//親子関係
 	parts_[Body].parent_ = &transform;
 	parts_[Head].parent_ = &parts_[Body];
