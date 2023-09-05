@@ -7,6 +7,8 @@ Player::Player(std::shared_ptr<Camera> camera)
 	for (uint16_t i = 0u; i < PARTS::Num; i++) {
 		models_.push_back(std::make_unique<Model>());
 	}
+
+	parts_.resize(models_.size());
 }
 
 void Player::Initialize()
