@@ -10,7 +10,7 @@ public:
 	Player(std::shared_ptr<Camera> camera = nullptr);
 	~Player() = default;
 
-	void Initialize();
+	void Initialize(const WorldTransform& world);
 
 	void ModelLoad();
 

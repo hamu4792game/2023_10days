@@ -1,5 +1,6 @@
 #include "Player.h"
 #include "Engine/Input/KeyInput/KeyInput.h"
+#include "externals/imgui/imgui.h"
 
 Player::Player(std::shared_ptr<Camera> camera)
 {
@@ -11,7 +12,7 @@ Player::Player(std::shared_ptr<Camera> camera)
 	parts_.resize(models_.size());
 }
 
-void Player::Initialize()
+void Player::Initialize(const WorldTransform& world)
 {
 
 	
@@ -89,6 +90,12 @@ void Player::ModelLoad()
 
 void Player::Update()
 {
+	//Move();
+	ImGui::DragFloat3("tra", &camera_->transform.translation_.x, 0.1f);
+	ImGui::DragFloat3("rot", &camera_->transform.rotation_.x, AngleToRadian(1.0f));
+
+	//CameraUpdate();
+
 	transform.UpdateMatrix();
 	for (auto& i : parts_) {
 		i.UpdateMatrix();
@@ -105,18 +112,42 @@ void Player::Draw(const Matrix4x4& viewProjection)
 
 void Player::Move()
 {
+	Vector3 move = Vector3(0.0f, 0.0f, 0.0f);
+	const float speed = 0.2f;
+
 	if (KeyInput::GetKey(DIK_W)) {
-		transform.translation_.z += 0.1f;
+		move.z += 0.1f;
 	}
-	if (KeyInput::GetKey(DIK_W)) {
-		transform.translation_.z += 0.1f;
+	if (KeyInput::GetKey(DIK_S)) {
+		move.z -= 0.1f;
 	}
 
+	if (move.x != 0.0f || move.y != 0.0f || move.z != 0.0f)
+	{
+		//	移動量の正規化 * speed
+		move = Normalize(move) * speed;
 
+		//	移動ベクトルをカメラの角度だけ回転させる
+		move = TransformNormal(move, MakeRotateMatrix(camera_->transform.rotation_));
+
+		//	移動方向に見た目を合わせる
+		parts_[Body].rotation_.y = std::atan2f(move.x, move.z);
+
+	}
+	transform.translation_ += move;
 
 }
 
 void Player::CameraUpdate()
 {
+	Vector3 offset(0.0f, 2.0f, -20.0f);
 
+	//	カメラの角度から回転行列を計算する
+	Matrix4x4 rotate = MakeRotateMatrix(camera_->transform.rotation_);
+
+	offset = TransformNormal(offset, rotate);
+	offset.x = 0.0f;
+
+	//	座標をコピーしてオフセット分ずらす
+	camera_->transform.translation_ = transform.translation_ + offset;
 }

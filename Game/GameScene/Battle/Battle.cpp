@@ -5,12 +5,12 @@
 Battle::Battle(std::shared_ptr<Camera> camera)
 {
 	camera_ = camera;
-	player_ = std::make_unique<Player>();
+	player_ = std::make_unique<Player>(camera_);
 }
 
 void Battle::Initialize()
 {
-	player_->Initialize();
+	player_->Initialize(transform);
 }
 
 void Battle::ModelLoad()
@@ -20,6 +20,9 @@ void Battle::ModelLoad()
 
 void Battle::Update()
 {
+	transform.rotation_.x += AngleToRadian(1.0f);
+	//ImGui::DragFloat("worldRo", &transform.rotation_.x, AngleToRadian(1.0f));
+	transform.worldMatrix = MakeRotateMatrix(transform.rotation_);
 	player_->Update();
 }
 
