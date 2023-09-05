@@ -10,6 +10,8 @@ void Score::Reset() {
 	missNum_ = 0;
 	isFullCom_ = false;
 	hiCombo_ = 0;
+
+	ResetEvalution();
 }
 
 void Score::SetUpdate(const Score& score) {

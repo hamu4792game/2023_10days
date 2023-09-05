@@ -33,15 +33,15 @@ void Player::Update()
 void Player::HitTestInitialize() {
 	evalutionCount_ = 0;
 	intervalCount_ = 0;
-	score_->ResetEvalution();
+	//score->ResetEvalution();
 }
 
-void Player::HitEvalution(Enemy* enemy) {
+void Player::HitEvalution(Enemy* enemy, Score* score) {
 
 	if (evalutionCount_ <= kEvalutionframe_[kPerfect]) {
 
 		enemy->Die();
-		score_->AddPer();
+		score->AddPer();
 
 		evalutionCount_ = 0;
 
@@ -49,7 +49,7 @@ void Player::HitEvalution(Enemy* enemy) {
 	else if (evalutionCount_ <= kEvalutionframe_[kGreat]) {
 
 		enemy->Die();
-		score_->AddGre();
+		score->AddGre();
 
 		evalutionCount_ = 0;
 
@@ -57,7 +57,7 @@ void Player::HitEvalution(Enemy* enemy) {
 	else if (evalutionCount_ <= kEvalutionframe_[kGood]) {
 
 		enemy->Die();
-		score_->AddGood();
+		score->AddGood();
 
 		evalutionCount_ = 0;
 	}
@@ -71,11 +71,11 @@ void Player::HitEvalution(Enemy* enemy) {
 	//}
 }
 
-void Player::HitTest(Enemy* enemy) {
+void Player::HitTest(Enemy* enemy, Score* score) {
 
 	// 毎フレーム1回のみの更新。カウントがフレーム数と一致しなくなるため。
 
-	score_->ResetEvalution();
+	score->ResetEvalution();
 
 	evalutionCount_++;
 
@@ -84,29 +84,29 @@ void Player::HitTest(Enemy* enemy) {
 		if (KeyInput::GetInstance()->GetPadButtonDown(XINPUT_GAMEPAD_A)) {
 			if (enemy->GetBottomType() == Enemy::BottomTypeClass::kA) {
 
-				HitEvalution(enemy);
+				HitEvalution(enemy, score);
 			}
 		}
 		else if (KeyInput::GetInstance()->GetPadButtonDown(XINPUT_GAMEPAD_B)) {
 			if (enemy->GetBottomType() == Enemy::BottomTypeClass::kB) {
-				HitEvalution(enemy);
+				HitEvalution(enemy, score);
 			}
 		}
 		else if (KeyInput::GetInstance()->GetPadButtonDown(XINPUT_GAMEPAD_X)) {
 			if (enemy->GetBottomType() == Enemy::BottomTypeClass::kX) {
-				HitEvalution(enemy);
+				HitEvalution(enemy, score);
 			}
 		}
 		else if (KeyInput::GetInstance()->GetPadButtonDown(XINPUT_GAMEPAD_Y)) {
 			if (enemy->GetBottomType() == Enemy::BottomTypeClass::kY) {
-				HitEvalution(enemy);
+				HitEvalution(enemy, score);
 			}
 		}
 	}
 
 	if (evalutionCount_ > kEvalutionframe_[kMiss]) {
 		//enemy->Die();
-		score_->AddMiss();
+		score->AddMiss();
 
 		evalutionCount_ = 0;
 	}
