@@ -25,14 +25,26 @@ private:
 	enum PARTS
 	{
 		Body,
+		BodyUnder,
 		Head,
-		L_arm,
-		R_arm,
-		L_leg,
-		R_leg,
-		Weapon,
 
-		Num
+		LArm1,
+		LArm2,
+		LHand,
+
+		RArm1,
+		RArm2,
+		RHand,
+
+		LLeg1,
+		LLeg2,
+		LFoot,
+
+		RLeg1,
+		RLeg2,
+		RFoot,
+
+		Num,
 	};
 	//	元
 	WorldTransform transform;
