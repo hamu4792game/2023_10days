@@ -2,6 +2,9 @@
 #include "externals/imgui/imgui.h"
 #include "math/Vector4.h"
 
+// 確認のため追加 by.Korone
+#include "Engine/Input/KeyInput/KeyInput.h"
+
 Battle::Battle(std::shared_ptr<Camera> camera)
 {
 	camera_ = camera;
@@ -163,7 +166,14 @@ void Battle::Update()
 
 		enemy->Update();
 	}
-	
+
+	// 確認のため追加 by.Korone
+	if (KeyInput::PushKey(DIK_SPACE)) {
+		score_->AddPerfect();
+	}
+	if (KeyInput::PushKey(DIK_R)) {
+		score_->AddMiss();
+	}
 	// 評価
 	/*if (score_->GetEvaluation()) {
 		EnemyGeneration();
@@ -181,8 +191,13 @@ void Battle::Update()
 
 void Battle::ScoreDraw(const Matrix4x4& viewProjection) {
 
-	// 画面の中心が{0,0}らしい
-	score_->DrawScore({ -600,-300 }, 1.0f, 0.0f, viewProjection, 0xFFFFFFFF);
+	// お試し
+
+	score_->DrawScore({ 60,60 }, 1.0f, 0.0f, viewProjection, 0xFFFFFFFF);
+
+	score_->DrawCombo({ 760,260 }, 1.5f, 0.0f, viewProjection, 0x0000FFFF);
+
+	score_->DrawPerfectNum({ 760,460 }, 0.5f, 0.2f, viewProjection, 0x00FF00FF);
 }
 
 void Battle::Draw(const Matrix4x4& viewProjection)

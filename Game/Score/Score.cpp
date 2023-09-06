@@ -6,7 +6,9 @@ void Score::Initialize(std::vector<std::shared_ptr<Texture2D>> numberTextures) {
 
 }
 
-void Score::DrawScore(Vector2 pos, float scale, float rotate, Matrix4x4 viewProjectionMat, uint32_t color) {
+void Score::DrawScore(const Vector2& screenPos, float scale, float rotate, const Matrix4x4& viewProjectionMat, uint32_t color) {
+
+	Vector2 pos = { screenPos.x - WinApp::kWindowWidth / 2, WinApp::kWindowHeight / 2 - screenPos.y };
 
 	int parameter = score_;
 	int digits = kScoreMaxDigits_;
@@ -42,7 +44,9 @@ void Score::DrawScore(Vector2 pos, float scale, float rotate, Matrix4x4 viewProj
 	}
 }
 
-void Score::DrawCombo(Vector2 pos, float scale, float rotate, Matrix4x4 viewProjectionMat, uint32_t color) {
+void Score::DrawCombo(const Vector2& screenPos, float scale, float rotate, const Matrix4x4& viewProjectionMat, uint32_t color) {
+
+	Vector2 pos = { screenPos.x - WinApp::kWindowWidth / 2, WinApp::kWindowHeight / 2 - screenPos.y };
 
 	int parameter = combo_;
 	int digits = kComboMaxDigits_;
@@ -84,7 +88,9 @@ void Score::DrawCombo(Vector2 pos, float scale, float rotate, Matrix4x4 viewProj
 	}
 }
 
-void Score::DrawHighCombo(Vector2 pos, float scale, float rotate, Matrix4x4 viewProjectionMat, uint32_t color) {
+void Score::DrawHighCombo(const Vector2& screenPos, float scale, float rotate, const Matrix4x4& viewProjectionMat, uint32_t color) {
+
+	Vector2 pos = { screenPos.x - WinApp::kWindowWidth / 2, WinApp::kWindowHeight / 2 - screenPos.y };
 
 	int parameter = highCombo_;
 	int digits = kComboMaxDigits_;
@@ -119,7 +125,9 @@ void Score::DrawHighCombo(Vector2 pos, float scale, float rotate, Matrix4x4 view
 	}
 }
 
-void Score::DrawPerfectNum(Vector2 pos, float scale, float rotate, Matrix4x4 viewProjectionMat, uint32_t color) {
+void Score::DrawPerfectNum(const Vector2& screenPos, float scale, float rotate, const Matrix4x4& viewProjectionMat, uint32_t color) {
+
+	Vector2 pos = { screenPos.x - WinApp::kWindowWidth / 2, WinApp::kWindowHeight / 2 - screenPos.y };
 
 	int parameter = perfectNum_;
 	int digits = kComboMaxDigits_;
@@ -155,7 +163,9 @@ void Score::DrawPerfectNum(Vector2 pos, float scale, float rotate, Matrix4x4 vie
 
 }
 
-void Score::DrawGreatNum(Vector2 pos, float scale, float rotate, Matrix4x4 viewProjectionMat, uint32_t color) {
+void Score::DrawGreatNum(const Vector2& screenPos, float scale, float rotate, const Matrix4x4& viewProjectionMat, uint32_t color) {
+
+	Vector2 pos = { screenPos.x - WinApp::kWindowWidth / 2, WinApp::kWindowHeight / 2 - screenPos.y };
 
 	int parameter = greatNum_;
 	int digits = kComboMaxDigits_;
@@ -190,7 +200,9 @@ void Score::DrawGreatNum(Vector2 pos, float scale, float rotate, Matrix4x4 viewP
 	}
 }
 
-void Score::DrawGoodNum(Vector2 pos, float scale, float rotate, Matrix4x4 viewProjectionMat, uint32_t color) {
+void Score::DrawGoodNum(const Vector2& screenPos, float scale, float rotate, const Matrix4x4& viewProjectionMat, uint32_t color) {
+
+	Vector2 pos = { screenPos.x - WinApp::kWindowWidth / 2, WinApp::kWindowHeight / 2 - screenPos.y };
 
 	int parameter = goodNum_;
 	int digits = kComboMaxDigits_;
@@ -225,7 +237,9 @@ void Score::DrawGoodNum(Vector2 pos, float scale, float rotate, Matrix4x4 viewPr
 	}
 }
 
-void Score::DrawMissNum(Vector2 pos, float scale, float rotate, Matrix4x4 viewProjectionMat, uint32_t color) {
+void Score::DrawMissNum(Vector2 screenPos, float scale, float rotate, Matrix4x4 viewProjectionMat, uint32_t color) {
+
+	Vector2 pos = { screenPos.x - WinApp::kWindowWidth / 2, WinApp::kWindowHeight / 2 - screenPos.y };
 
 	int parameter = missNum_;
 	int digits = kComboMaxDigits_;

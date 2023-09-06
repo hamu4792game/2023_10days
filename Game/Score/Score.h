@@ -19,25 +19,25 @@ public:
 	void Initialize(std::vector<std::shared_ptr<Texture2D>> numberTextures);
 
 	// posは一番左の数字の真ん中の座標。たぶん。
-	void DrawScore(Vector2 pos, float scale, float rotate, Matrix4x4 viewProjectionMat, uint32_t color);
+	void DrawScore(const Vector2& screenPos, float scale, float rotate, const Matrix4x4& viewProjectionMat, uint32_t color);
 
 	// posは一番左の数字の真ん中の座標。たぶん。
-	void DrawCombo(Vector2 pos, float scale, float rotate, Matrix4x4 viewProjectionMat, uint32_t color);
+	void DrawCombo(const Vector2& screenPos, float scale, float rotate, const Matrix4x4& viewProjectionMat, uint32_t color);
 
 	// posは一番左の数字の真ん中の座標。たぶん。
-	void DrawHighCombo(Vector2 pos, float scale, float rotate, Matrix4x4 viewProjectionMat, uint32_t color);
+	void DrawHighCombo(const Vector2& screenPos, float scale, float rotate, const Matrix4x4& viewProjectionMat, uint32_t color);
 
 	// posは一番左の数字の真ん中の座標。たぶん。
-	void DrawPerfectNum(Vector2 pos, float scale, float rotate, Matrix4x4 viewProjectionMat, uint32_t color);
+	void DrawPerfectNum(const Vector2& screenPos, float scale, float rotate, const Matrix4x4& viewProjectionMat, uint32_t color);
 
 	// posは一番左の数字の真ん中の座標。たぶん。
-	void DrawGreatNum(Vector2 pos, float scale, float rotate, Matrix4x4 viewProjectionMat, uint32_t color);
+	void DrawGreatNum(const Vector2& screenPos, float scale, float rotate, const Matrix4x4& viewProjectionMat, uint32_t color);
 
 	// posは一番左の数字の真ん中の座標。たぶん。
-	void DrawGoodNum(Vector2 pos, float scale, float rotate, Matrix4x4 viewProjectionMat, uint32_t color);
+	void DrawGoodNum(const Vector2& screenPos, float scale, float rotate, const Matrix4x4& viewProjectionMat, uint32_t color);
 
 	// posは一番左の数字の真ん中の座標。たぶん。
-	void DrawMissNum(Vector2 pos, float scale, float rotate, Matrix4x4 viewProjectionMat, uint32_t color);
+	void DrawMissNum(Vector2 screenPos, float scale, float rotate, Matrix4x4 viewProjectionMat, uint32_t color);
 
 public:
 
