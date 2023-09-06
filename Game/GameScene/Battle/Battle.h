@@ -54,6 +54,8 @@ private: // Korone
 
 	void EnemyReset();
 
+	void ScoreDraw(const Matrix4x4& viewProjection);
+
 private: //Korone
 
 	int kEnemyMaxNum_ = 100;
@@ -68,5 +70,7 @@ private: //Korone
 	std::unique_ptr<Score> score_;
 	//std::unique_ptr<Player> player_;
 	std::list<Enemy*> enemies_;
+
+	std::vector<std::shared_ptr<Texture2D>> numberTextures_;
 
 };
