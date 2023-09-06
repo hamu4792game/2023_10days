@@ -16,6 +16,7 @@ public:
 	Player(std::shared_ptr<Camera> camera = nullptr);
 	~Player() = default;
 
+	//モデルデータ配列,パーツWのデータ配列、親の処理
 	void Initialize(std::vector<std::shared_ptr<Model>> models,const WorldTransform& world);
 
 	void ModelLoad();
