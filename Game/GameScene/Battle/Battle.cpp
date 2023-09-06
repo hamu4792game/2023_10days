@@ -165,9 +165,9 @@ void Battle::Update()
 	}
 	
 	// 評価
-	if (score_->GetEvaluation()) {
+	/*if (score_->GetEvaluation()) {
 		EnemyGeneration();
-	}
+	}*/
 
 	//player_->Update();
 
@@ -181,14 +181,8 @@ void Battle::Update()
 
 void Battle::ScoreDraw(const Matrix4x4& viewProjection) {
 
-	//WorldTransform tmp;
-
-	tmp.translation_.x = 100;
-	tmp.translation_.y = 100;
-
-	tmp.UpdateMatrix();
-
-	score_->DrawScore(tmp, viewProjection, 0xFFFFFFFF);
+	// 画面の中心が{0,0}らしい
+	score_->DrawScore({ -600,-300 }, 1.0f, 0.0f, viewProjection, 0xFFFFFFFF);
 }
 
 void Battle::Draw(const Matrix4x4& viewProjection)

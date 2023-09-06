@@ -19,25 +19,25 @@ public:
 	void Initialize(std::vector<std::shared_ptr<Texture2D>> numberTextures);
 
 	// posは一番左の数字の真ん中の座標。たぶん。
-	void DrawScore(WorldTransform& worldTransform, Matrix4x4 viewProjectionMat, uint32_t color);
+	void DrawScore(Vector2 pos, float scale, float rotate, Matrix4x4 viewProjectionMat, uint32_t color);
 
 	// posは一番左の数字の真ん中の座標。たぶん。
-	void DrawCombo(WorldTransform& worldTransform, Matrix4x4 viewProjectionMat, uint32_t color);
+	void DrawCombo(Vector2 pos, float scale, float rotate, Matrix4x4 viewProjectionMat, uint32_t color);
 
 	// posは一番左の数字の真ん中の座標。たぶん。
-	void DrawHighCombo(WorldTransform& worldTransform, Matrix4x4 viewProjectionMat, uint32_t color);
+	void DrawHighCombo(Vector2 pos, float scale, float rotate, Matrix4x4 viewProjectionMat, uint32_t color);
 
 	// posは一番左の数字の真ん中の座標。たぶん。
-	void DrawPerfectNum(WorldTransform& worldTransform, Matrix4x4 viewProjectionMat, uint32_t color);
+	void DrawPerfectNum(Vector2 pos, float scale, float rotate, Matrix4x4 viewProjectionMat, uint32_t color);
 
 	// posは一番左の数字の真ん中の座標。たぶん。
-	void DrawGreatNum(WorldTransform& worldTransform, Matrix4x4 viewProjectionMat, uint32_t color);
+	void DrawGreatNum(Vector2 pos, float scale, float rotate, Matrix4x4 viewProjectionMat, uint32_t color);
 
 	// posは一番左の数字の真ん中の座標。たぶん。
-	void DrawGoodNum(WorldTransform& worldTransform, Matrix4x4 viewProjectionMat, uint32_t color);
+	void DrawGoodNum(Vector2 pos, float scale, float rotate, Matrix4x4 viewProjectionMat, uint32_t color);
 
 	// posは一番左の数字の真ん中の座標。たぶん。
-	void DrawMissNum(WorldTransform& worldTransform, Matrix4x4 viewProjectionMat, uint32_t color);
+	void DrawMissNum(Vector2 pos, float scale, float rotate, Matrix4x4 viewProjectionMat, uint32_t color);
 
 public:
 
@@ -52,18 +52,18 @@ public:
 	void ResetEvalution() { evalutuin_ = std::nullopt; }
 
 	// perfectの加算。スコア、コンボも加算する。
-	void AddPer() {
+	void AddPerfect() {
 		evalutuin_ = Evaluation::kPerfect;
 		perfectNum_++;
-		AddCom();
+		AddCombo();
 		AddScore(200 * (combo_ / 10 + 1));
 	}
 
 	// greatの加算。スコア、コンボも加算する。
-	void AddGre() {
+	void AddGreat() {
 		evalutuin_ = Evaluation::kGreat;
 		greatNum_++;
-		AddCom();
+		AddCombo();
 		AddScore(100 * (combo_ / 10 + 1));
 	}
 
@@ -107,7 +107,7 @@ private:
 	void AddScore(int score) { score_ += score; }
 
 	// comboの加算。hiComboとの比較と更新。
-	void AddCom();
+	void AddCombo();
 
 	void ComboReset() { combo_ = 0; }
 
@@ -142,8 +142,8 @@ private:
 	std::vector<std::shared_ptr<Texture2D>> numberTextures_;
 
 	WorldTransform scoreWorldTransform_[kScoreMaxDigits_];
-	WorldTransform combWorldTransform_[kComboMaxDigits_];
-	WorldTransform highCombWorldTransform_[kComboMaxDigits_];
+	WorldTransform comboWorldTransform_[kComboMaxDigits_];
+	WorldTransform highComboWorldTransform_[kComboMaxDigits_];
 	WorldTransform perfectNumWorldTransform_[kComboMaxDigits_];
 	WorldTransform greatNumWorldTransform_[kComboMaxDigits_];
 	WorldTransform goodNumWorldTransform_[kComboMaxDigits_];

@@ -6,45 +6,261 @@ void Score::Initialize(std::vector<std::shared_ptr<Texture2D>> numberTextures) {
 
 }
 
-void Score::DrawScore(WorldTransform& worldTransform, Matrix4x4 viewProjectionMat, uint32_t color) {
+void Score::DrawScore(Vector2 pos, float scale, float rotate, Matrix4x4 viewProjectionMat, uint32_t color) {
 
-	DrawParameter(score_, kScoreMaxDigits_, 0, worldTransform, viewProjectionMat, color);
+	int parameter = score_;
+	int digits = kScoreMaxDigits_;
+	int k = 0;
+
+	for (int i = 0; i < digits; i++) {
+		int num = parameter / int(pow(10, digits - 1 - i));
+		parameter = parameter % int(pow(10, digits - 1 - i));
+
+		if (num > 9) {
+			num = 1;
+		}
+
+		scoreWorldTransform_[i].translation_.x = pos.x + kNumberTextureWidth_ * i * scale;
+		scoreWorldTransform_[i].translation_.y = pos.y;
+		scoreWorldTransform_[i].scale_.x = scale;
+		scoreWorldTransform_[i].scale_.y = scale;
+		scoreWorldTransform_[i].rotation_.z = rotate;
+
+
+		if (rotate != 0) {
+			float a = kNumberTextureWidth_ * i * scale;
+
+			scoreWorldTransform_[i].translation_.x = a * std::cosf(rotate) + pos.x;
+			scoreWorldTransform_[i].translation_.y = a * std::sinf(rotate) + pos.y;
+
+		}
+
+		scoreWorldTransform_[i].UpdateMatrix();
+
+		Texture2D::TextureDraw(scoreWorldTransform_[i], viewProjectionMat, color, numberTextures_[num].get());
+
+	}
+}
+
+void Score::DrawCombo(Vector2 pos, float scale, float rotate, Matrix4x4 viewProjectionMat, uint32_t color) {
+
+	int parameter = combo_;
+	int digits = kComboMaxDigits_;
+	int k = 0;
+
+	for (int i = 0; i < digits; i++) {
+		int num = parameter / int(pow(10, digits - 1 - i));
+		parameter = parameter % int(pow(10, digits - 1 - i));
+
+		if (num > 9) {
+			num = 1;
+		}
+
+		comboWorldTransform_[i].translation_.x = pos.x + kNumberTextureWidth_ * i * scale;
+		comboWorldTransform_[i].translation_.y = pos.y;
+		comboWorldTransform_[i].scale_.x = scale;
+		comboWorldTransform_[i].scale_.y = scale;
+		comboWorldTransform_[i].rotation_.z = rotate;
+
+
+		if (rotate != 0) {
+			float a = kNumberTextureWidth_ * i * scale;
+
+			comboWorldTransform_[i].translation_.x = a * std::cosf(rotate) + pos.x;
+			comboWorldTransform_[i].translation_.y = a * std::sinf(rotate) + pos.y;
+
+		}
+
+		comboWorldTransform_[i].UpdateMatrix();
+
+		if (num != 0) {
+			k++;
+		}
+
+		if (k != 0) {
+			Texture2D::TextureDraw(comboWorldTransform_[i], viewProjectionMat, color, numberTextures_[num].get());
+		}
+
+	}
+}
+
+void Score::DrawHighCombo(Vector2 pos, float scale, float rotate, Matrix4x4 viewProjectionMat, uint32_t color) {
+
+	int parameter = highCombo_;
+	int digits = kComboMaxDigits_;
+
+	for (int i = 0; i < digits; i++) {
+		int num = parameter / int(pow(10, digits - 1 - i));
+		parameter = parameter % int(pow(10, digits - 1 - i));
+
+		if (num > 9) {
+			num = 1;
+		}
+
+		highComboWorldTransform_[i].translation_.x = pos.x + kNumberTextureWidth_ * i * scale;
+		highComboWorldTransform_[i].translation_.y = pos.y;
+		highComboWorldTransform_[i].scale_.x = scale;
+		highComboWorldTransform_[i].scale_.y = scale;
+		highComboWorldTransform_[i].rotation_.z = rotate;
+
+
+		if (rotate != 0) {
+			float a = kNumberTextureWidth_ * i * scale;
+
+			highComboWorldTransform_[i].translation_.x = a * std::cosf(rotate) + pos.x;
+			highComboWorldTransform_[i].translation_.y = a * std::sinf(rotate) + pos.y;
+
+		}
+
+		highComboWorldTransform_[i].UpdateMatrix();
+
+		Texture2D::TextureDraw(highComboWorldTransform_[i], viewProjectionMat, color, numberTextures_[num].get());
+
+	}
+}
+
+void Score::DrawPerfectNum(Vector2 pos, float scale, float rotate, Matrix4x4 viewProjectionMat, uint32_t color) {
+
+	int parameter = perfectNum_;
+	int digits = kComboMaxDigits_;
+
+	for (int i = 0; i < digits; i++) {
+		int num = parameter / int(pow(10, digits - 1 - i));
+		parameter = parameter % int(pow(10, digits - 1 - i));
+
+		if (num > 9) {
+			num = 1;
+		}
+
+		perfectNumWorldTransform_[i].translation_.x = pos.x + kNumberTextureWidth_ * i * scale;
+		perfectNumWorldTransform_[i].translation_.y = pos.y;
+		perfectNumWorldTransform_[i].scale_.x = scale;
+		perfectNumWorldTransform_[i].scale_.y = scale;
+		perfectNumWorldTransform_[i].rotation_.z = rotate;
+
+
+		if (rotate != 0) {
+			float a = kNumberTextureWidth_ * i * scale;
+
+			perfectNumWorldTransform_[i].translation_.x = a * std::cosf(rotate) + pos.x;
+			perfectNumWorldTransform_[i].translation_.y = a * std::sinf(rotate) + pos.y;
+
+		}
+
+		perfectNumWorldTransform_[i].UpdateMatrix();
+
+		Texture2D::TextureDraw(perfectNumWorldTransform_[i], viewProjectionMat, color, numberTextures_[num].get());
+
+	}
 
 }
 
-void Score::DrawCombo(WorldTransform& worldTransform, Matrix4x4 viewProjectionMat, uint32_t color) {
+void Score::DrawGreatNum(Vector2 pos, float scale, float rotate, Matrix4x4 viewProjectionMat, uint32_t color) {
 
-	DrawParameter(combo_, kComboMaxDigits_, 1, worldTransform, viewProjectionMat, color);
+	int parameter = greatNum_;
+	int digits = kComboMaxDigits_;
 
+	for (int i = 0; i < digits; i++) {
+		int num = parameter / int(pow(10, digits - 1 - i));
+		parameter = parameter % int(pow(10, digits - 1 - i));
+
+		if (num > 9) {
+			num = 1;
+		}
+
+		greatNumWorldTransform_[i].translation_.x = pos.x + kNumberTextureWidth_ * i * scale;
+		greatNumWorldTransform_[i].translation_.y = pos.y;
+		greatNumWorldTransform_[i].scale_.x = scale;
+		greatNumWorldTransform_[i].scale_.y = scale;
+		greatNumWorldTransform_[i].rotation_.z = rotate;
+
+
+		if (rotate != 0) {
+			float a = kNumberTextureWidth_ * i * scale;
+
+			greatNumWorldTransform_[i].translation_.x = a * std::cosf(rotate) + pos.x;
+			greatNumWorldTransform_[i].translation_.y = a * std::sinf(rotate) + pos.y;
+
+		}
+
+		greatNumWorldTransform_[i].UpdateMatrix();
+
+		Texture2D::TextureDraw(greatNumWorldTransform_[i], viewProjectionMat, color, numberTextures_[num].get());
+
+	}
 }
 
-void Score::DrawHighCombo(WorldTransform& worldTransform, Matrix4x4 viewProjectionMat, uint32_t color) {
+void Score::DrawGoodNum(Vector2 pos, float scale, float rotate, Matrix4x4 viewProjectionMat, uint32_t color) {
 
-	DrawParameter(highCombo_, kComboMaxDigits_, 0, worldTransform, viewProjectionMat, color);
+	int parameter = goodNum_;
+	int digits = kComboMaxDigits_;
 
+	for (int i = 0; i < digits; i++) {
+		int num = parameter / int(pow(10, digits - 1 - i));
+		parameter = parameter % int(pow(10, digits - 1 - i));
+
+		if (num > 9) {
+			num = 1;
+		}
+
+		goodNumWorldTransform_[i].translation_.x = pos.x + kNumberTextureWidth_ * i * scale;
+		goodNumWorldTransform_[i].translation_.y = pos.y;
+		goodNumWorldTransform_[i].scale_.x = scale;
+		goodNumWorldTransform_[i].scale_.y = scale;
+		goodNumWorldTransform_[i].rotation_.z = rotate;
+
+
+		if (rotate != 0) {
+			float a = kNumberTextureWidth_ * i * scale;
+
+			goodNumWorldTransform_[i].translation_.x = a * std::cosf(rotate) + pos.x;
+			goodNumWorldTransform_[i].translation_.y = a * std::sinf(rotate) + pos.y;
+
+		}
+
+		goodNumWorldTransform_[i].UpdateMatrix();
+
+		Texture2D::TextureDraw(goodNumWorldTransform_[i], viewProjectionMat, color, numberTextures_[num].get());
+
+	}
 }
 
-void Score::DrawPerfectNum(WorldTransform& worldTransform, Matrix4x4 viewProjectionMat, uint32_t color) {
+void Score::DrawMissNum(Vector2 pos, float scale, float rotate, Matrix4x4 viewProjectionMat, uint32_t color) {
 
-	DrawParameter(perfectNum_, kComboMaxDigits_, 0, worldTransform, viewProjectionMat, color);
+	int parameter = missNum_;
+	int digits = kComboMaxDigits_;
 
+	for (int i = 0; i < digits; i++) {
+		int num = parameter / int(pow(10, digits - 1 - i));
+		parameter = parameter % int(pow(10, digits - 1 - i));
+
+		if (num > 9) {
+			num = 1;
+		}
+
+		missNumWorldTransform_[i].translation_.x = pos.x + kNumberTextureWidth_ * i * scale;
+		missNumWorldTransform_[i].translation_.y = pos.y;
+		missNumWorldTransform_[i].scale_.x = scale;
+		missNumWorldTransform_[i].scale_.y = scale;
+		missNumWorldTransform_[i].rotation_.z = rotate;
+		
+
+		if (rotate != 0) {
+			float a = kNumberTextureWidth_ * i * scale;
+
+			missNumWorldTransform_[i].translation_.x = a * std::cosf(rotate) + pos.x;
+			missNumWorldTransform_[i].translation_.y = a * std::sinf(rotate) + pos.y;
+
+		}
+
+		missNumWorldTransform_[i].UpdateMatrix();
+
+		Texture2D::TextureDraw(missNumWorldTransform_[i], viewProjectionMat, color, numberTextures_[num].get());
+
+	}
 }
 
-void Score::DrawGreatNum(WorldTransform& worldTransform, Matrix4x4 viewProjectionMat, uint32_t color) {
-
-	DrawParameter(greatNum_, kComboMaxDigits_, 0, worldTransform, viewProjectionMat, color);
-}
-
-void Score::DrawGoodNum(WorldTransform& worldTransform, Matrix4x4 viewProjectionMat, uint32_t color) {
-
-	DrawParameter(goodNum_, kComboMaxDigits_, 0, worldTransform, viewProjectionMat, color);
-}
-
-void Score::DrawMissNum(WorldTransform& worldTransform, Matrix4x4 viewProjectionMat, uint32_t color) {
-
-	DrawParameter(missNum_, kComboMaxDigits_, 0, worldTransform, viewProjectionMat, color);
-}
-
+// gomi
 void Score::DrawParameter(int parameter, int digits, bool look, WorldTransform& worldTransform, Matrix4x4 viewProjectionMat, uint32_t color) {
 
 
@@ -122,7 +338,7 @@ void Score::IsFullComUpdate() {
 	}
 }
 
-void Score::AddCom() {
+void Score::AddCombo() {
 	combo_++;
 	if (highCombo_ < combo_) {
 		highCombo_ = combo_;
