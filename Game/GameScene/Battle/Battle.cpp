@@ -41,9 +41,9 @@ void Battle::Initialize()
 	camera_->transform.rotation_.x = 0.471f;
 
 
-	//EnemyReset();
+	EnemyReset();
 
-	//EnemyGeneration();
+	EnemyGeneration();
 
 	score_->Initialize(numberTextures_);
 
@@ -174,7 +174,7 @@ void Battle::EnemyGeneration() {
 			}
 
 			// Initializeを変える必要がある
-			enemy->Initialize(type, enemyNum_);
+			enemy->InitializeSP(type, enemyNum_, mobModels_);
 
 			enemies_.push_back(enemy);
 
@@ -214,8 +214,18 @@ void Battle::Update()
 	for(Enemy* enemy : enemies_){
 		if (enemy->GetNum() == enemyKillCount_) {
 			player_->HitTest(enemy, score_.get());
-		}
+			
+			if (score_->GetEvaluation()) {
 
+				enemyKillCount_++;
+				EnemyGeneration();
+			}
+
+			break;
+		}
+	}
+
+	for (Enemy* enemy : enemies_) {
 		enemy->Update();
 	}
 
@@ -226,12 +236,7 @@ void Battle::Update()
 	if (KeyInput::PushKey(DIK_R)) {
 		score_->AddMiss();
 	}
-	// 評価
-	/*if (score_->GetEvaluation()) {
-		EnemyGeneration();
-	}*/
 
-	//player_->Update();
 
 	//ImGui::DragFloat("worldRo", &transform.rotation_.x, AngleToRadian(1.0f));
 	//	行列の更新　回転行列のみ必要なためUpdateはしていない
@@ -246,9 +251,13 @@ void Battle::ScoreDraw(const Matrix4x4& viewProjection) {
 
 	score_->DrawScore({ 60,60 }, 1.0f, 0.0f, viewProjection, 0xFFFFFFFF);
 
-	score_->DrawCombo({ 760,260 }, 1.5f, 0.0f, viewProjection, 0x0000FFFF);
+	score_->DrawCombo({ 960,160 }, 1.5f, 0.0f, viewProjection, 0x0000FFFF);
 
-	score_->DrawPerfectNum({ 760,460 }, 0.5f, 0.2f, viewProjection, 0x00FF00FF);
+	score_->DrawPerfectNum({ 960,240 }, 0.8f, 0.0f, viewProjection, 0x00FF00FF);
+	score_->DrawPerfectNum({ 960,300 }, 0.8f, 0.0f, viewProjection, 0x00FF00FF);
+	score_->DrawGreatNum({ 960,360 }, 0.8f, 0.0f, viewProjection, 0x00FF00FF);
+	score_->DrawGoodNum({ 960,420 }, 0.8f, 0.0f, viewProjection, 0x00FF00FF);
+	score_->DrawMissNum({ 960,480 }, 0.8f, 0.0f, viewProjection, 0x00FF00FF);
 }
 
 void Battle::Draw(const Matrix4x4& viewProjection)
