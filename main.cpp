@@ -40,7 +40,7 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR lpCmdLine, _In
 		//	フレームの終了
 		Engine::EndFrame();
 		if (KeyInput::PushKey(DIK_ESCAPE)) {
-			return 0;
+			break;
 		}
 	}
 

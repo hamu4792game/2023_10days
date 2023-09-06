@@ -101,6 +101,9 @@
     <ClCompile Include="Game\Player\Player.cpp">
       <Filter>Game\Player</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\Easing\Ease.cpp">
+      <Filter>Engine\Easing</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Camera\Camera.h">
@@ -216,6 +219,9 @@
     </ClInclude>
     <ClInclude Include="EEnum.h">
       <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Easing\Ease.h">
+      <Filter>Engine\Easing</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

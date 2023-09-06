@@ -21,5 +21,5 @@ void Ground::Draw(const Matrix4x4& viewProjection)
 {
 	//ImGui::DragFloat3("cameraTrans", &transform.scale_.x, 0.1f);
 	transform.UpdateMatrix();
-	Model::ModelDraw(transform, viewProjection, 0xffffffff, ground.get());
+	Model::ModelDraw(transform, viewProjection, 0x000000ff, ground.get());
 }

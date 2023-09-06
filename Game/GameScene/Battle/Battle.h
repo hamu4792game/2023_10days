@@ -46,7 +46,7 @@ private://	必要なメンバ変数
 	std::vector<WorldTransform> mobparts_;
   
   //	中心座標
-	WorldTransform transform;
+	std::shared_ptr<WorldTransform> worldTransform;
 
 private: // Korone
 

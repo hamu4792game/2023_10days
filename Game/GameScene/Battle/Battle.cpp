@@ -15,6 +15,9 @@ Battle::Battle(std::shared_ptr<Camera> camera)
 	}
   
 	mobparts_.resize(mobModels_.size());
+
+
+	worldTransform = std::make_shared<WorldTransform>();
 }
 
 Battle::~Battle() {
@@ -36,7 +39,7 @@ void Battle::Initialize()
 
 	score_->Reset();
 
-	player_->Initialize(mobModels_,transform);
+	player_->Initialize(mobModels_, worldTransform.get());
 
 }
 
@@ -199,13 +202,12 @@ void Battle::Update()
 		EnemyGeneration();
 	}
 
-	player_->Update();
+	//player_->Update();
 
-	transform.rotation_.x += AngleToRadian(0.1f);
 	//ImGui::DragFloat("worldRo", &transform.rotation_.x, AngleToRadian(1.0f));
 	//	行列の更新　回転行列のみ必要なためUpdateはしていない
-	transform.worldMatrix = MakeRotateMatrix(transform.rotation_);
 	player_->Update();
+	worldTransform->worldMatrix = MakeRotateMatrix(worldTransform->rotation_);
 
 }
 

@@ -20,7 +20,7 @@ Player::Player(std::shared_ptr<Camera> camera)
 	//parts_.resize(models_.size());
 }
 
-void Player::Initialize(std::vector<std::shared_ptr<Model>> models, const WorldTransform& world)
+void Player::Initialize(std::vector<std::shared_ptr<Model>> models, WorldTransform* world)
 {
   //  モデルの受け渡し
 	models_ = models;
@@ -28,14 +28,17 @@ void Player::Initialize(std::vector<std::shared_ptr<Model>> models, const WorldT
 	parts_.resize(models_.size());
 
 	//	世界との親子関係
-	transform.parent_ = &world;
+	world_ = world;
+	transform.parent_ = world;
 	//	地面の半径 * scale
 	transform.translation_.y = 1.0f * 200.0f;
 	transform.scale_ = Vector3(0.3f, 0.3f, 0.3f);
 
 	//	カメラとの親子関係
 	camera_->transform.parent_ = &transform;
-	camera_->transform.translation_.z = -20.0f;
+	offset = Vector3(0.0f, 30.0f, -50.0f);
+	camera_->transform.translation_ = offset;
+	camera_->transform.rotation_.x = 0.4f;
 	
 	
 	//親子関係
@@ -101,6 +104,21 @@ void Player::ModelLoad()
 
 void Player::Update()
 {
+
+	camera_->transform.translation_ = offset;
+	if (KeyInput::GetKey(DIK_SPACE)) {
+		world_->rotation_.x += AngleToRadian(1.0f);
+
+
+		Vector2 ran(0.0f, 0.0f);
+		ran.x = static_cast<float>(std::rand() % 3 - 1);
+		ran.y = static_cast<float>(std::rand() % 3 - 1);
+		camera_->transform.translation_.x += ran.x;
+		camera_->transform.translation_.y += ran.y;
+	}
+	
+
+
 	transform.UpdateMatrix();
 	for (auto& i : parts_) {
 		i.UpdateMatrix();
