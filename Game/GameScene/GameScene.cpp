@@ -104,5 +104,6 @@ void GameScene::Draw()
 	}
 
 	ground->Draw(viewProjectionMatrix);
+	battle->Draw2D(viewProjectionMatrix2d);
 	//Model::ModelDraw(pos, viewProjectionMatrix, 0xffffffff, model.get());
 }

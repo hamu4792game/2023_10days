@@ -6,46 +6,46 @@ void Score::Initialize(std::vector<std::shared_ptr<Texture2D>> numberTextures) {
 
 }
 
-void Score::DrawScore(Vector2 pos, Vector2 scale, float rotate, Matrix4x4 viewProjectionMat, uint32_t color) {
+void Score::DrawScore(WorldTransform& worldTransform, Matrix4x4 viewProjectionMat, uint32_t color) {
 
-	DrawParameter(score_, kScoreMaxDigits_, 0, pos, scale, rotate, viewProjectionMat, color);
-
-}
-
-void Score::DrawCombo(Vector2 pos, Vector2 scale, float rotate, Matrix4x4 viewProjectionMat, uint32_t color) {
-
-	DrawParameter(combo_, kComboMaxDigits_, 1, pos, scale, rotate, viewProjectionMat, color);
+	DrawParameter(score_, kScoreMaxDigits_, 0, worldTransform, viewProjectionMat, color);
 
 }
 
-void Score::DrawHighCombo(Vector2 pos, Vector2 scale, float rotate, Matrix4x4 viewProjectionMat, uint32_t color) {
+void Score::DrawCombo(WorldTransform& worldTransform, Matrix4x4 viewProjectionMat, uint32_t color) {
 
-	DrawParameter(highCombo_, kComboMaxDigits_, 0, pos, scale, rotate, viewProjectionMat, color);
-
-}
-
-void Score::DrawPerfectNum(Vector2 pos, Vector2 scale, float rotate, Matrix4x4 viewProjectionMat, uint32_t color) {
-
-	DrawParameter(perfectNum_, kComboMaxDigits_, 0, pos, scale, rotate, viewProjectionMat, color);
+	DrawParameter(combo_, kComboMaxDigits_, 1, worldTransform, viewProjectionMat, color);
 
 }
 
-void Score::DrawGreatNum(Vector2 pos, Vector2 scale, float rotate, Matrix4x4 viewProjectionMat, uint32_t color) {
+void Score::DrawHighCombo(WorldTransform& worldTransform, Matrix4x4 viewProjectionMat, uint32_t color) {
 
-	DrawParameter(greatNum_, kComboMaxDigits_, 0, pos, scale, rotate, viewProjectionMat, color);
+	DrawParameter(highCombo_, kComboMaxDigits_, 0, worldTransform, viewProjectionMat, color);
+
 }
 
-void Score::DrawGoodNum(Vector2 pos, Vector2 scale, float rotate, Matrix4x4 viewProjectionMat, uint32_t color) {
+void Score::DrawPerfectNum(WorldTransform& worldTransform, Matrix4x4 viewProjectionMat, uint32_t color) {
 
-	DrawParameter(goodNum_, kComboMaxDigits_, 0, pos, scale, rotate, viewProjectionMat, color);
+	DrawParameter(perfectNum_, kComboMaxDigits_, 0, worldTransform, viewProjectionMat, color);
+
 }
 
-void Score::DrawMissNum(Vector2 pos, Vector2 scale, float rotate, Matrix4x4 viewProjectionMat, uint32_t color) {
+void Score::DrawGreatNum(WorldTransform& worldTransform, Matrix4x4 viewProjectionMat, uint32_t color) {
 
-	DrawParameter(missNum_, kComboMaxDigits_, 0, pos, scale, rotate, viewProjectionMat, color);
+	DrawParameter(greatNum_, kComboMaxDigits_, 0, worldTransform, viewProjectionMat, color);
 }
 
-void Score::DrawParameter(int parameter, int digits, bool look, Vector2 pos, Vector2 scale, float rotate, Matrix4x4 viewProjectionMat, uint32_t color) {
+void Score::DrawGoodNum(WorldTransform& worldTransform, Matrix4x4 viewProjectionMat, uint32_t color) {
+
+	DrawParameter(goodNum_, kComboMaxDigits_, 0, worldTransform, viewProjectionMat, color);
+}
+
+void Score::DrawMissNum(WorldTransform& worldTransform, Matrix4x4 viewProjectionMat, uint32_t color) {
+
+	DrawParameter(missNum_, kComboMaxDigits_, 0, worldTransform, viewProjectionMat, color);
+}
+
+void Score::DrawParameter(int parameter, int digits, bool look, WorldTransform& worldTransform, Matrix4x4 viewProjectionMat, uint32_t color) {
 
 
 	int para = parameter;
@@ -65,16 +65,24 @@ void Score::DrawParameter(int parameter, int digits, bool look, Vector2 pos, Vec
 			}
 		}
 
-		Vector2 p = { pos.x + kNumberTextureWidth_ * i * scale.x,pos.y };
+		WorldTransform tmp = worldTransform;
 
-		if (rotate != 0) {
-			Vector2 a = p - pos;
-			p.x = a.x * std::cosf(rotate) - a.y * std::sinf(rotate) + pos.x;
-			p.y = a.y * std::cosf(rotate) + a.x * std::sinf(rotate) + pos.y;
+		tmp.translation_.x = worldTransform.translation_.x + kNumberTextureWidth_ * i * worldTransform.scale_.x;
+
+		if (tmp.rotation_.z != 0) {
+			Vector2 a = Vector2{ tmp.translation_.x,worldTransform.translation_.y } - Vector2{ worldTransform.translation_.x, worldTransform.translation_.y };
+			tmp.translation_.x = a.x * std::cosf(worldTransform.rotation_.z) - a.y * std::sinf(worldTransform.rotation_.z) + worldTransform.translation_.x;
+			tmp.translation_.y = a.y * std::cosf(worldTransform.rotation_.z) + a.x * std::sinf(worldTransform.rotation_.z) + worldTransform.translation_.y;
+
 		}
 
-		numberTextures_[num]->Draw(p, scale, rotate, viewProjectionMat, color);
+		tmp.UpdateMatrix();
+
+		Texture2D::TextureDraw(tmp, viewProjectionMat, color, numberTextures_[num].get());
+		
 	}
+
+	
 }
 
 void Score::Reset() {

@@ -19,25 +19,25 @@ public:
 	void Initialize(std::vector<std::shared_ptr<Texture2D>> numberTextures);
 
 	// posは一番左の数字の真ん中の座標。たぶん。
-	void DrawScore(Vector2 pos, Vector2 scale, float rotate, Matrix4x4 viewProjectionMat, uint32_t color);
+	void DrawScore(WorldTransform& worldTransform, Matrix4x4 viewProjectionMat, uint32_t color);
 
 	// posは一番左の数字の真ん中の座標。たぶん。
-	void DrawCombo(Vector2 pos, Vector2 scale, float rotate, Matrix4x4 viewProjectionMat, uint32_t color);
+	void DrawCombo(WorldTransform& worldTransform, Matrix4x4 viewProjectionMat, uint32_t color);
 
 	// posは一番左の数字の真ん中の座標。たぶん。
-	void DrawHighCombo(Vector2 pos, Vector2 scale, float rotate, Matrix4x4 viewProjectionMat, uint32_t color);
+	void DrawHighCombo(WorldTransform& worldTransform, Matrix4x4 viewProjectionMat, uint32_t color);
 
 	// posは一番左の数字の真ん中の座標。たぶん。
-	void DrawPerfectNum(Vector2 pos, Vector2 scale, float rotate, Matrix4x4 viewProjectionMat, uint32_t color);
+	void DrawPerfectNum(WorldTransform& worldTransform, Matrix4x4 viewProjectionMat, uint32_t color);
 
 	// posは一番左の数字の真ん中の座標。たぶん。
-	void DrawGreatNum(Vector2 pos, Vector2 scale, float rotate, Matrix4x4 viewProjectionMat, uint32_t color);
+	void DrawGreatNum(WorldTransform& worldTransform, Matrix4x4 viewProjectionMat, uint32_t color);
 
 	// posは一番左の数字の真ん中の座標。たぶん。
-	void DrawGoodNum(Vector2 pos, Vector2 scale, float rotate, Matrix4x4 viewProjectionMat, uint32_t color);
+	void DrawGoodNum(WorldTransform& worldTransform, Matrix4x4 viewProjectionMat, uint32_t color);
 
 	// posは一番左の数字の真ん中の座標。たぶん。
-	void DrawMissNum(Vector2 pos, Vector2 scale, float rotate, Matrix4x4 viewProjectionMat, uint32_t color);
+	void DrawMissNum(WorldTransform& worldTransform, Matrix4x4 viewProjectionMat, uint32_t color);
 
 public:
 
@@ -112,7 +112,17 @@ private:
 	void ComboReset() { combo_ = 0; }
 
 
-	void DrawParameter(int parameter, int digits, bool look, Vector2 pos, Vector2 scale, float rotate, Matrix4x4 viewProjectionMat, uint32_t color);
+	void DrawParameter(int parameter, int digits, bool look, WorldTransform& worldTransform, Matrix4x4 viewProjectionMat, uint32_t color);
+
+private:
+	// 最大桁数
+	static const int kScoreMaxDigits_ = 6;
+	static const int kComboMaxDigits_ = 3;
+	static const int kEvaluationMaxDigits_ = 3;
+
+	// textureのサイズ
+	static const int kNumberTextureWidth_ = 53;
+	static const int kNumberTextureHeight_ = 61;
 
 private:
 
@@ -131,13 +141,12 @@ private:
 
 	std::vector<std::shared_ptr<Texture2D>> numberTextures_;
 
-private: 
-	// 最大桁数
-	static const int kScoreMaxDigits_ = 6;
-	static const int kComboMaxDigits_ = 3;
-	static const int kEvaluationMaxDigits_ = 3;
+	WorldTransform scoreWorldTransform_[kScoreMaxDigits_];
+	WorldTransform combWorldTransform_[kComboMaxDigits_];
+	WorldTransform highCombWorldTransform_[kComboMaxDigits_];
+	WorldTransform perfectNumWorldTransform_[kComboMaxDigits_];
+	WorldTransform greatNumWorldTransform_[kComboMaxDigits_];
+	WorldTransform goodNumWorldTransform_[kComboMaxDigits_];
+	WorldTransform missNumWorldTransform_[kComboMaxDigits_];
 
-	// textureのサイズ
-	static const int kNumberTextureWidth_ = 53;
-	static const int kNumberTextureHeight_ = 61;
 };

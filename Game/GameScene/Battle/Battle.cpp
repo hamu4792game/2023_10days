@@ -181,12 +181,23 @@ void Battle::Update()
 
 void Battle::ScoreDraw(const Matrix4x4& viewProjection) {
 
-	score_->DrawScore({ 64,100 }, {}, 0, viewProjection, 0xFFFFFFFF);
+	//WorldTransform tmp;
+
+	tmp.translation_.x = 100;
+	tmp.translation_.y = 100;
+
+	tmp.UpdateMatrix();
+
+	score_->DrawScore(tmp, viewProjection, 0xFFFFFFFF);
 }
 
 void Battle::Draw(const Matrix4x4& viewProjection)
 {
 	player_->Draw(viewProjection);
 
-	//ScoreDraw(viewProjection);
+}
+
+void Battle::Draw2D(const Matrix4x4& viewProjection) {
+
+	ScoreDraw(viewProjection);
 }
