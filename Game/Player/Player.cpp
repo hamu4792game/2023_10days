@@ -181,26 +181,51 @@ void Player::HitTest(Enemy* enemy, Score* score) {
 
 				HitEvalution(enemy, score);
 			}
+			else {
+				enemy->Die();
+				score->AddMiss();
+
+				evalutionCount_ = 0;
+			}
+
 		}
 		else if (KeyInput::GetInstance()->GetPadButtonDown(XINPUT_GAMEPAD_B)) {
 			if (enemy->GetBottomType() == Enemy::BottomTypeClass::kB) {
 				HitEvalution(enemy, score);
+			}
+			else {
+				enemy->Die();
+				score->AddMiss();
+
+				evalutionCount_ = 0;
 			}
 		}
 		else if (KeyInput::GetInstance()->GetPadButtonDown(XINPUT_GAMEPAD_X)) {
 			if (enemy->GetBottomType() == Enemy::BottomTypeClass::kX) {
 				HitEvalution(enemy, score);
 			}
+			else {
+				enemy->Die();
+				score->AddMiss();
+
+				evalutionCount_ = 0;
+			}
 		}
 		else if (KeyInput::GetInstance()->GetPadButtonDown(XINPUT_GAMEPAD_Y)) {
 			if (enemy->GetBottomType() == Enemy::BottomTypeClass::kY) {
 				HitEvalution(enemy, score);
 			}
+			else {
+				enemy->Die();
+				score->AddMiss();
+
+				evalutionCount_ = 0;
+			}
 		}
 	}
 
-	if (evalutionCount_ > kEvalutionframe_[kMiss]) {
-		//enemy->Die();
+	if (evalutionCount_ >= kEvalutionframe_[kMiss]) {
+		enemy->Die();
 		score->AddMiss();
 
 		evalutionCount_ = 0;

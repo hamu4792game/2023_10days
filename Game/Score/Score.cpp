@@ -82,9 +82,9 @@ void Score::DrawCombo(const Vector2& screenPos, float scale, float rotate, const
 		}
 
 		if (k != 0) {
-			Texture2D::TextureDraw(comboWorldTransform_[i], viewProjectionMat, color, numberTextures_[num].get());
+			//Texture2D::TextureDraw(comboWorldTransform_[i], viewProjectionMat, color, numberTextures_[num].get());
 		}
-
+		Texture2D::TextureDraw(comboWorldTransform_[i], viewProjectionMat, color, numberTextures_[num].get());
 	}
 }
 
