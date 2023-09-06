@@ -43,7 +43,7 @@ private://	必要なメンバ変数
 	std::vector<std::shared_ptr<Model>> mobModels_;
 
 	//	パーツ用ペアレントデータ
-	std::vector<WorldTransform> mobarts_;
+	std::vector<WorldTransform> mobparts_;
   
   //	中心座標
 	WorldTransform transform;

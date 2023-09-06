@@ -37,13 +37,15 @@ void Player::Initialize(std::vector<std::shared_ptr<Model>> models, const WorldT
 	camera_->transform.parent_ = &transform;
 	camera_->transform.translation_.z = -20.0f;
 	
+	
 	//親子関係
 	parts_[Body].parent_ = &transform;
 
-
 	// スコアのポインタを先に取得しないとエラーになるから保留。
 	//HitTestInitialize();
+	
 
+#pragma region パーツの親子関係と座標の初期設定
 	parts_[Head].parent_ = &parts_[Body];
 	parts_[BodyUnder].parent_ = &parts_[Body];
 
@@ -83,6 +85,9 @@ void Player::Initialize(std::vector<std::shared_ptr<Model>> models, const WorldT
 	parts_[RLeg1].translation_ = { 0.3f, -1.7f, 0 };
 	parts_[RLeg2].translation_ = { 0, -2.2f, 0 };
 	parts_[RFoot].translation_ = { 0.12f, -2.2f, 0 };
+#pragma endregion
+
+	
 	
 	
 }
