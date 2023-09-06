@@ -7,6 +7,8 @@ Battle::Battle(std::shared_ptr<Camera> camera)
 	camera_ = camera;
 	player_ = std::make_unique<Player>(camera_);
 
+	score_ = std::make_unique<Score>();
+
 	//プレイヤーモデルの初期化
 	for (uint16_t i = 0u; i < PARTS::Num; i++) {
 		mobModels_.push_back(std::make_shared<Model>());
@@ -15,9 +17,27 @@ Battle::Battle(std::shared_ptr<Camera> camera)
 	mobarts_.resize(mobModels_.size());
 }
 
+Battle::~Battle() {
+	for (Enemy* enemy : enemies_) {
+		delete enemy;
+	}
+}
+
 void Battle::Initialize()
 {
+	//	カメラの設定
+	camera_->transform.translation_ = Vector3(0.0f, 16.5f, -21.7f);
+	camera_->transform.rotation_.x = 0.471f;
+
+
+	//EnemyReset();
+
+	//EnemyGeneration();
+
+	score_->Reset();
+
 	player_->Initialize(mobModels_, transform);
+
 }
 
 void Battle::ModelLoad()
@@ -46,12 +66,99 @@ void Battle::ModelLoad()
 	//player_->ModelLoad();
 }
 
+void Battle::EnemyGeneration() {
+
+	while (enemyNum_ - enemyKillCount_ < kEnemyIntervalNum_) {
+
+		if (enemyNum_ == kEnemyMaxNum_) {
+			break;
+		}
+		else {
+			Enemy* enemy = new Enemy();
+
+			Vector3 pos = { 0,0,kEnemyPopPosLength_ * (enemyNum_ + 1) };
+
+			int type = rand() % 4;
+
+			if (type == preEnemyType_) {
+
+				typeCount_++;
+				if (typeCount_ == 4) {
+
+					while (type == preEnemyType_)
+					{
+						type = rand() % 4;
+						if (type != preEnemyType_) {
+							break;
+						}
+					}
+
+					typeCount_ = 0;
+				}
+			}
+			else {
+				typeCount_ = 0;
+			}
+
+			// Initializeを変える必要がある
+			enemy->Initialize(type, enemyNum_);
+
+			enemies_.push_back(enemy);
+
+			enemyNum_++;
+
+			preEnemyType_ = type;
+		}
+	}
+
+}
+
+void Battle::EnemyReset() {
+	for (Enemy* enemy : enemies_) {
+		enemy->Die();
+	}
+	enemies_.remove_if([](Enemy* enemy) {
+		if (enemy->IsDead()) {
+			delete enemy;
+			return true;
+		}
+		return false;
+	});
+
+	enemyNum_ = 0;
+	enemyKillCount_ = 0;
+	
+	preEnemyType_ = 0;
+	typeCount_ = 0;
+}
+
 void Battle::Update()
 {
-	transform.rotation_.x += AngleToRadian(1.0f);
+	//	カメラの調整
+	ImGui::DragFloat3("cameratr", &camera_->transform.translation_.x, 0.1f);
+	ImGui::DragFloat3("cameraro", &camera_->transform.rotation_.x, AngleToRadian(1.0f));
+
+	for(Enemy* enemy : enemies_){
+		if (enemy->GetNum() == enemyKillCount_) {
+			player_->HitTest(enemy, score_.get());
+		}
+
+		enemy->Update();
+	}
+	
+	// 評価
+	if (score_->GetEvaluation()) {
+		EnemyGeneration();
+	}
+
+	player_->Update();
+
+	transform.rotation_.x += AngleToRadian(0.1f);
 	//ImGui::DragFloat("worldRo", &transform.rotation_.x, AngleToRadian(1.0f));
+	//	行列の更新　回転行列のみ必要なためUpdateはしていない
 	transform.worldMatrix = MakeRotateMatrix(transform.rotation_);
 	player_->Update();
+
 }
 
 void Battle::Draw(const Matrix4x4& viewProjection)

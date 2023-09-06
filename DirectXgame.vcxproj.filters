@@ -1,103 +1,60 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="ソース ファイル">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="ヘッダー ファイル">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
-    </Filter>
-    <Filter Include="リソース ファイル">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
-    <Filter Include="imgui">
-      <UniqueIdentifier>{67f74df6-2975-4d88-a54c-61123d403340}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="math">
-      <UniqueIdentifier>{d06ab4f4-a73b-41d2-8f76-adcb86a2e182}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine">
-      <UniqueIdentifier>{ef6c4139-51ff-41d4-8c03-58d55b0cfe0e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\WinApp">
-      <UniqueIdentifier>{69858c87-4fc9-4096-abab-19f24ff717c9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\CommandDirectX">
-      <UniqueIdentifier>{4547f47f-f7b9-42a9-9ef1-5837d6fa477d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\Manager">
-      <UniqueIdentifier>{61a0d26f-e0c3-4eab-b79c-ac1536c34a65}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\Manager\TextureManager">
-      <UniqueIdentifier>{8d7ee662-b849-4390-b6d0-7c89d6a5a07e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\Manager\ShaderManager">
-      <UniqueIdentifier>{c52fb0f7-d808-4d78-b112-c50f1a466296}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\Camera">
-      <UniqueIdentifier>{92761fcf-7033-4d35-a4d1-c5f568a10319}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\Texture">
-      <UniqueIdentifier>{31a8052c-13b6-4752-a7a0-b601b4b9e269}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\Model">
-      <UniqueIdentifier>{6be00a5d-a29e-43cc-be49-3457eaf293ce}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\Camera\DebugCamera">
-      <UniqueIdentifier>{eb49325f-d88c-4f00-a424-c0484ab2c131}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\Input">
-      <UniqueIdentifier>{50922ffa-aaa3-45ee-abbf-58204c39dabd}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\Input\KeyInput">
-      <UniqueIdentifier>{7f235346-9a68-4ee7-abdd-434d7dd4241d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\Input\AudioInput">
-      <UniqueIdentifier>{1d654f16-6d5d-44c2-a1ae-83d9ceeb9d6a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\Manager\AudioManager">
-      <UniqueIdentifier>{78ce7726-d36f-4abb-a304-8e4a270c54cb}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Game">
-      <UniqueIdentifier>{cdd141cf-38aa-4813-bf04-abd7e48557f7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Game\GameScene">
-      <UniqueIdentifier>{67c1c47e-678c-40ad-a36b-4686e0de776d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\WorldTransform">
-      <UniqueIdentifier>{9f38a513-c383-4a49-a14f-c8ca4dd71001}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\Easing">
-      <UniqueIdentifier>{1a0536d9-3ea4-428c-92ae-a29524e55145}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Game\GameScene\Title">
-      <UniqueIdentifier>{d10fb1aa-3c5b-41d9-8eab-d9e47aafb87b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Game\GameScene\Battle">
-      <UniqueIdentifier>{79296af0-8561-4d45-9d39-180f15b1702e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Game\GameScene\Result">
-      <UniqueIdentifier>{1fac4737-5ee9-44b2-9ab1-2ad344b614f3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\GraphicsPipeline">
-      <UniqueIdentifier>{e3d0eb86-665e-4073-a5e3-b2bd93884ccb}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Game\Player">
-      <UniqueIdentifier>{8020e90d-8935-4b18-8324-71dcd85095e9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Game\Enemy">
-      <UniqueIdentifier>{4b840246-0c6a-490a-a936-d71fbe150aee}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Game\Ground">
-      <UniqueIdentifier>{e1c70a1f-0765-4cb6-8b29-683fdd4bde94}</UniqueIdentifier>
-    </Filter>
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="main.cpp">
-      <Filter>ソース ファイル</Filter>
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="Engine\Camera\Camera.cpp">
+      <Filter>Engine\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Base\CommandDirectX.cpp">
+      <Filter>Engine\CommandDirectX</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Input\AudioInput\AudioInput.cpp">
+      <Filter>Engine\Input\AudioInput</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Input\KeyInput\KeyInput.cpp">
+      <Filter>Engine\Input\KeyInput</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Manager\AudioManager\AudioManager.cpp">
+      <Filter>Engine\Manager\AudioManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Manager\ShaderManager.cpp">
+      <Filter>Engine\Manager\ShaderManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Manager\TextureManager.cpp">
+      <Filter>Engine\Manager\TextureManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Texture\Model.cpp">
+      <Filter>Engine\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Texture\Texture2D.cpp">
+      <Filter>Engine\Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Base\WinApp.cpp">
+      <Filter>Engine\WinApp</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\WorldTransform\WorldTransform.cpp">
+      <Filter>Engine\WorldTransform</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Camera\DebugCamera\DebugCamera.cpp">
+      <Filter>Engine\Camera\DebugCamera</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Engine.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Base\GraphicsPipeline\GraphicsPipeline.cpp">
+      <Filter>Engine\GraphicsPipeline</Filter>
+    </ClCompile>
+    <ClCompile Include="math\Matrix4x4.cpp">
+      <Filter>math</Filter>
+    </ClCompile>
+    <ClCompile Include="math\Vector2.cpp">
+      <Filter>math</Filter>
+    </ClCompile>
+    <ClCompile Include="math\Vector4.cpp">
+      <Filter>math</Filter>
+    </ClCompile>
+    <ClCompile Include="math\Vector3.cpp">
+      <Filter>math</Filter>
     </ClCompile>
     <ClCompile Include="externals\imgui\imgui.cpp">
       <Filter>imgui</Filter>
@@ -120,91 +77,94 @@
     <ClCompile Include="externals\imgui\imgui_widgets.cpp">
       <Filter>imgui</Filter>
     </ClCompile>
-    <ClCompile Include="math\Matrix4x4.cpp">
-      <Filter>math</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Engine.cpp">
-      <Filter>Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Base\WinApp.cpp">
-      <Filter>Engine\WinApp</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Base\CommandDirectX.cpp">
-      <Filter>Engine\CommandDirectX</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Manager\ShaderManager.cpp">
-      <Filter>Engine\Manager\ShaderManager</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Manager\TextureManager.cpp">
-      <Filter>Engine\Manager\TextureManager</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Camera\Camera.cpp">
-      <Filter>Engine\Camera</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Texture\Texture2D.cpp">
-      <Filter>Engine\Texture</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Texture\Model.cpp">
-      <Filter>Engine\Model</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Camera\DebugCamera\DebugCamera.cpp">
-      <Filter>Engine\Camera\DebugCamera</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Input\KeyInput\KeyInput.cpp">
-      <Filter>Engine\Input\KeyInput</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Input\AudioInput\AudioInput.cpp">
-      <Filter>Engine\Input\AudioInput</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Manager\AudioManager\AudioManager.cpp">
-      <Filter>Engine\Manager\AudioManager</Filter>
+    <ClCompile Include="Game\Enemy\Enemy.cpp">
+      <Filter>Game\Enemy</Filter>
     </ClCompile>
     <ClCompile Include="Game\GameScene\GameScene.cpp">
       <Filter>Game\GameScene</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\WorldTransform\WorldTransform.cpp">
-      <Filter>Engine\WorldTransform</Filter>
-    </ClCompile>
-    <ClCompile Include="math\Vector3.cpp">
-      <Filter>math</Filter>
-    </ClCompile>
-    <ClCompile Include="math\Vector4.cpp">
-      <Filter>math</Filter>
-    </ClCompile>
-    <ClCompile Include="math\Vector2.cpp">
-      <Filter>math</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\GameScene\Title\Title.cpp">
-      <Filter>Game\GameScene\Title</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\GameScene\Result\Result.cpp">
-      <Filter>Game\GameScene\Result</Filter>
+    <ClCompile Include="Game\Ground\Ground.cpp">
+      <Filter>Game\Ground</Filter>
     </ClCompile>
     <ClCompile Include="Game\GameScene\Battle\Battle.cpp">
       <Filter>Game\GameScene\Battle</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Base\GraphicsPipeline\GraphicsPipeline.cpp">
-      <Filter>Engine\GraphicsPipeline</Filter>
+    <ClCompile Include="Game\GameScene\Result\Result.cpp">
+      <Filter>Game\GameScene\Result</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\GameScene\Title\Title.cpp">
+      <Filter>Game\GameScene\Title</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Score\Score.cpp">
+      <Filter>Game\Score</Filter>
     </ClCompile>
     <ClCompile Include="Game\Player\Player.cpp">
       <Filter>Game\Player</Filter>
     </ClCompile>
-    <ClCompile Include="Game\Enemy\Enemy.cpp">
-      <Filter>Game\Enemy</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\Ground\Ground.cpp">
-      <Filter>Game\Ground</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="externals\imgui\imstb_rectpack.h">
-      <Filter>imgui</Filter>
+    <ClInclude Include="Engine\Camera\Camera.h">
+      <Filter>Engine\Camera</Filter>
     </ClInclude>
-    <ClInclude Include="externals\imgui\imstb_textedit.h">
-      <Filter>imgui</Filter>
+    <ClInclude Include="Engine\Base\CommandDirectX.h">
+      <Filter>Engine\CommandDirectX</Filter>
     </ClInclude>
-    <ClInclude Include="externals\imgui\imstb_truetype.h">
-      <Filter>imgui</Filter>
+    <ClInclude Include="Engine\Easing\Easing.h">
+      <Filter>Engine\Easing</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Input\AudioInput\AudioInput.h">
+      <Filter>Engine\Input\AudioInput</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Input\KeyInput\KeyInput.h">
+      <Filter>Engine\Input\KeyInput</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Manager\AudioManager\AudioManager.h">
+      <Filter>Engine\Manager\AudioManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Manager\ShaderManager.h">
+      <Filter>Engine\Manager\ShaderManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Manager\TextureManager.h">
+      <Filter>Engine\Manager\TextureManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Texture\Model.h">
+      <Filter>Engine\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Texture\Texture2D.h">
+      <Filter>Engine\Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Base\WinApp.h">
+      <Filter>Engine\WinApp</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\WorldTransform\WorldTransform.h">
+      <Filter>Engine\WorldTransform</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Base\ConstantBuffer.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Camera\DebugCamera\DebugCamera.h">
+      <Filter>Engine\Camera\DebugCamera</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Engine.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Base\GraphicsPipeline\GraphicsPipeline.h">
+      <Filter>Engine\GraphicsPipeline</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Log.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="math\Matrix4x4.h">
+      <Filter>math</Filter>
+    </ClInclude>
+    <ClInclude Include="math\Vector4.h">
+      <Filter>math</Filter>
+    </ClInclude>
+    <ClInclude Include="math\Vector3.h">
+      <Filter>math</Filter>
+    </ClInclude>
+    <ClInclude Include="math\Vector2.h">
+      <Filter>math</Filter>
     </ClInclude>
     <ClInclude Include="externals\imgui\imconfig.h">
       <Filter>imgui</Filter>
@@ -221,93 +181,128 @@
     <ClInclude Include="externals\imgui\imgui_internal.h">
       <Filter>imgui</Filter>
     </ClInclude>
-    <ClInclude Include="math\Matrix4x4.h">
-      <Filter>math</Filter>
+    <ClInclude Include="externals\imgui\imstb_rectpack.h">
+      <Filter>imgui</Filter>
     </ClInclude>
-    <ClInclude Include="math\Vector2.h">
-      <Filter>math</Filter>
+    <ClInclude Include="externals\imgui\imstb_textedit.h">
+      <Filter>imgui</Filter>
     </ClInclude>
-    <ClInclude Include="math\Vector3.h">
-      <Filter>math</Filter>
-    </ClInclude>
-    <ClInclude Include="math\Vector4.h">
-      <Filter>math</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Engine.h">
-      <Filter>Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Log.h">
-      <Filter>Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Base\WinApp.h">
-      <Filter>Engine\WinApp</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Base\CommandDirectX.h">
-      <Filter>Engine\CommandDirectX</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Manager\ShaderManager.h">
-      <Filter>Engine\Manager\ShaderManager</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Manager\TextureManager.h">
-      <Filter>Engine\Manager\TextureManager</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Camera\Camera.h">
-      <Filter>Engine\Camera</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Texture\Texture2D.h">
-      <Filter>Engine\Texture</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Texture\Model.h">
-      <Filter>Engine\Model</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Camera\DebugCamera\DebugCamera.h">
-      <Filter>Engine\Camera\DebugCamera</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Input\KeyInput\KeyInput.h">
-      <Filter>Engine\Input\KeyInput</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Input\AudioInput\AudioInput.h">
-      <Filter>Engine\Input\AudioInput</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Manager\AudioManager\AudioManager.h">
-      <Filter>Engine\Manager\AudioManager</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Base\ConstantBuffer.h">
-      <Filter>Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\GameScene\GameScene.h">
-      <Filter>Game\GameScene</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\WorldTransform\WorldTransform.h">
-      <Filter>Engine\WorldTransform</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Easing\Easing.h">
-      <Filter>Engine\Easing</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\GameScene\Title\Title.h">
-      <Filter>Game\GameScene\Title</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\GameScene\Result\Result.h">
-      <Filter>Game\GameScene\Result</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\GameScene\Battle\Battle.h">
-      <Filter>Game\GameScene\Battle</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Base\GraphicsPipeline\GraphicsPipeline.h">
-      <Filter>Engine\GraphicsPipeline</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\Player\Player.h">
-      <Filter>Game\Player</Filter>
+    <ClInclude Include="externals\imgui\imstb_truetype.h">
+      <Filter>imgui</Filter>
     </ClInclude>
     <ClInclude Include="Game\Enemy\Enemy.h">
       <Filter>Game\Enemy</Filter>
     </ClInclude>
+    <ClInclude Include="Game\GameScene\GameScene.h">
+      <Filter>Game\GameScene</Filter>
+    </ClInclude>
     <ClInclude Include="Game\Ground\Ground.h">
       <Filter>Game\Ground</Filter>
     </ClInclude>
-    <ClInclude Include="EEnum.h">
-      <Filter>ヘッダー ファイル</Filter>
+    <ClInclude Include="Game\GameScene\Battle\Battle.h">
+      <Filter>Game\GameScene\Battle</Filter>
     </ClInclude>
+    <ClInclude Include="Game\GameScene\Result\Result.h">
+      <Filter>Game\GameScene\Result</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\GameScene\Title\Title.h">
+      <Filter>Game\GameScene\Title</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Score\Score.h">
+      <Filter>Game\Score</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Player\Player.h">
+      <Filter>Game\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="EEnum.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Engine">
+      <UniqueIdentifier>{ea1512f0-ff0a-41b5-abc5-079d70e17f3f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Camera">
+      <UniqueIdentifier>{7ce7437c-302c-4262-9012-56d66ed28e78}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\CommandDirectX">
+      <UniqueIdentifier>{b2a4589a-495d-45de-b3f2-4ec39a8f663c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Easing">
+      <UniqueIdentifier>{f962be3c-f413-4205-866c-0698393c6f9b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Input">
+      <UniqueIdentifier>{26705c6f-8cb3-433f-a582-7c02d9ca7a3a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Input\AudioInput">
+      <UniqueIdentifier>{012c4740-422f-4b0f-9d1b-42be4da72041}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Input\KeyInput">
+      <UniqueIdentifier>{93413b76-0ab5-4063-a46e-339a3ad6b674}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Manager">
+      <UniqueIdentifier>{8582e121-b2e5-43b6-a988-f2b417b9143a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Manager\AudioManager">
+      <UniqueIdentifier>{9b23d19a-124d-4c12-9b38-106d9b4e7590}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Manager\ShaderManager">
+      <UniqueIdentifier>{4d18751a-1689-47c8-8783-acb427318f4e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Manager\TextureManager">
+      <UniqueIdentifier>{15d90bdf-5fc6-48a7-8ca8-fd7ebc4b7346}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Model">
+      <UniqueIdentifier>{e96bed89-f1fc-4f25-b651-dda88c242102}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Texture">
+      <UniqueIdentifier>{6383f2ed-4d38-4943-b887-e51f86a2de9a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\WinApp">
+      <UniqueIdentifier>{d479967e-da47-4259-aafc-7f4c20691499}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\WorldTransform">
+      <UniqueIdentifier>{e87d1099-f085-4574-881c-32bb991baebe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Camera\DebugCamera">
+      <UniqueIdentifier>{cfb571e1-9cde-49dc-ba97-bb0639074471}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\GraphicsPipeline">
+      <UniqueIdentifier>{e5f2fc00-9aea-45be-997b-e33e61adfe44}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="math">
+      <UniqueIdentifier>{9c32842a-616d-47b7-a1fd-84702f61b1cc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="imgui">
+      <UniqueIdentifier>{1bc5df33-c290-41ee-b4db-b9f6b0d0758c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game">
+      <UniqueIdentifier>{3ba9cce2-d55c-4668-9f9d-4fd5d463027b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Enemy">
+      <UniqueIdentifier>{fccb9ca6-ebe8-4198-9d1a-40ef283764c2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\GameScene">
+      <UniqueIdentifier>{f2714010-80f6-4a11-8576-2117702fd88e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Ground">
+      <UniqueIdentifier>{cc10d3d5-f517-46c1-8689-f9886c7bf5d2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\GameScene\Title">
+      <UniqueIdentifier>{46a7a751-e96b-422a-a575-2f2cd94c84f4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\GameScene\Result">
+      <UniqueIdentifier>{080f51b1-b2e7-4740-918b-70e4f41a341a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\GameScene\Battle">
+      <UniqueIdentifier>{0010e352-cdae-4966-be85-4f89394abdff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Score">
+      <UniqueIdentifier>{34f3ad00-f561-4888-a48d-99dba1bb8f8c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Player">
+      <UniqueIdentifier>{7cdcfa8e-f92b-4cec-95eb-64d0a5dd4a67}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="externals\imgui\LICENSE.txt">

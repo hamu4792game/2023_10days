@@ -55,6 +55,51 @@ void Model::Texture(const std::string& filePath, const std::string& vsFileName, 
 	graphicsPipelineState = GraphicsPipeline::GetInstance()->CreateGraphicsPipeline();
 }
 
+void Model::Texture(const std::string& filePath, const std::string& vsFileName, const std::string& psFileName, const std::string& texturePath)
+{
+	//	モデルのロードとデスクリプタヒープの生成
+	CreateDescriptor(filePath, texturePath);
+
+	vertexShader = GraphicsPipeline::GetInstance()->CreateVSShader(vsFileName);
+	//	ピクセルシェーダーのコンパイルがなぜかできないため、緊急措置を行っている
+	pixelShader = ShaderManager::GetInstance()->CompileShader(ConvertString(psFileName), L"ps_6_0");
+	//pixelShader = GraphicsPipeline::GetInstance()->CreatePSShader(psFileName);
+	GraphicsPipeline::GetInstance()->pixelShader = pixelShader;
+
+	//	頂点データの生成
+	CreateVertexResource();
+
+	D3D12_DESCRIPTOR_RANGE range[1] = {};
+	range[0].BaseShaderRegister = 0;
+	range[0].NumDescriptors = 1;	//	必要な数
+	range[0].RegisterSpace = 0;
+	range[0].RangeType = D3D12_DESCRIPTOR_RANGE_TYPE_SRV;
+	range[0].OffsetInDescriptorsFromTableStart = D3D12_DESCRIPTOR_RANGE_OFFSET_APPEND;
+
+	D3D12_ROOT_PARAMETER rootParameter[4] = {};
+	rootParameter[0].ParameterType = D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE;
+	rootParameter[0].ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;
+	rootParameter[0].Descriptor.ShaderRegister = D3D12_SHADER_VISIBILITY_ALL;
+	rootParameter[0].DescriptorTable.pDescriptorRanges = range;
+	rootParameter[0].DescriptorTable.NumDescriptorRanges = _countof(range);
+
+	rootParameter[1].ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;
+	rootParameter[1].ShaderVisibility = D3D12_SHADER_VISIBILITY_VERTEX;
+	rootParameter[1].Descriptor.ShaderRegister = 0;
+
+	rootParameter[2].ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;
+	rootParameter[2].ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;
+	rootParameter[2].Descriptor.ShaderRegister = 1;
+
+	rootParameter[3].ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;
+	rootParameter[3].ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;
+	rootParameter[3].Descriptor.ShaderRegister = 2;
+
+
+	rootSignature = GraphicsPipeline::GetInstance()->CreateRootSignature(rootParameter, 4);
+	graphicsPipelineState = GraphicsPipeline::GetInstance()->CreateGraphicsPipeline();
+}
+
 void Model::CreateDescriptor(const std::string& filePath)
 {
 	//	モデル読み込み
@@ -72,6 +117,34 @@ void Model::CreateDescriptor(const std::string& filePath)
 	//	デスクリプタヒープを生成
 	SRVHeap = CreateDescriptorHeap(Engine::GetDevice(), D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV, 10, true);
 	
+	//	設定
+	D3D12_SHADER_RESOURCE_VIEW_DESC srvDesc{};
+	srvDesc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;
+	srvDesc.Format = metaData.format;
+	srvDesc.Texture2D.MipLevels = static_cast<UINT>(metaData.mipLevels);
+	srvDesc.Shader4ComponentMapping = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
+	//	
+	Engine::GetDevice()->CreateShaderResourceView(resource[0].Get(), &srvDesc, SRVHeap->GetCPUDescriptorHandleForHeapStart());
+	textureSrvHandleGPU = GetGPUDescriptorHandle(SRVHeap, Engine::GetDevice()->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV), 0);
+}
+
+void Model::CreateDescriptor(const std::string& filePath, const std::string& texturePath)
+{
+	//	モデル読み込み
+	modelData = TextureManager::LoadObjFile(filePath);
+
+	DirectX::ScratchImage mipImages = TextureManager::LoadTexture("./Resources/" + texturePath);
+	//DirectX::ScratchImage mipImages = TextureManager::LoadTexture("./Resources/uvChecker.png");
+	const DirectX::TexMetadata& metaData = mipImages.GetMetadata();
+	resource[0] = Engine::CreateTextureResource(Engine::GetDevice(), metaData);
+	TextureManager::UploadTextureData(resource[0].Get(), mipImages);
+
+	// 幅
+	//const UINT SRVsize = Engine::GetDevice()->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
+
+	//	デスクリプタヒープを生成
+	SRVHeap = CreateDescriptorHeap(Engine::GetDevice(), D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV, 10, true);
+
 	//	設定
 	D3D12_SHADER_RESOURCE_VIEW_DESC srvDesc{};
 	srvDesc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;
