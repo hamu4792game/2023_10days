@@ -1,7 +1,7 @@
 #pragma once
 
-
 #include <optional>
+#include "Engine/Texture/Texture2D.h"
 
 class Score {
 
@@ -14,6 +14,33 @@ public:
 		kMiss
 	};
 
+public:
+
+	void Initialize(std::vector<std::shared_ptr<Texture2D>> numberTextures);
+
+	// posは一番左の数字の真ん中の座標。たぶん。
+	void DrawScore(const Vector2& screenPos, float scale, float rotate, const Matrix4x4& viewProjectionMat, uint32_t color);
+
+	// posは一番左の数字の真ん中の座標。たぶん。
+	void DrawCombo(const Vector2& screenPos, float scale, float rotate, const Matrix4x4& viewProjectionMat, uint32_t color);
+
+	// posは一番左の数字の真ん中の座標。たぶん。
+	void DrawHighCombo(const Vector2& screenPos, float scale, float rotate, const Matrix4x4& viewProjectionMat, uint32_t color);
+
+	// posは一番左の数字の真ん中の座標。たぶん。
+	void DrawPerfectNum(const Vector2& screenPos, float scale, float rotate, const Matrix4x4& viewProjectionMat, uint32_t color);
+
+	// posは一番左の数字の真ん中の座標。たぶん。
+	void DrawGreatNum(const Vector2& screenPos, float scale, float rotate, const Matrix4x4& viewProjectionMat, uint32_t color);
+
+	// posは一番左の数字の真ん中の座標。たぶん。
+	void DrawGoodNum(const Vector2& screenPos, float scale, float rotate, const Matrix4x4& viewProjectionMat, uint32_t color);
+
+	// posは一番左の数字の真ん中の座標。たぶん。
+	void DrawMissNum(Vector2 screenPos, float scale, float rotate, Matrix4x4 viewProjectionMat, uint32_t color);
+
+public:
+
 	// すべての数値を0,falseにする
 	void Reset();
 
@@ -24,22 +51,19 @@ public:
 
 	void ResetEvalution() { evalutuin_ = std::nullopt; }
 
-	// scoreの加算
-	void AddScore(int score) { score_ += score; }
-
 	// perfectの加算。スコア、コンボも加算する。
-	void AddPer() {
+	void AddPerfect() {
 		evalutuin_ = Evaluation::kPerfect;
 		perfectNum_++;
-		AddCom();
+		AddCombo();
 		AddScore(200 * (combo_ / 10 + 1));
 	}
 
 	// greatの加算。スコア、コンボも加算する。
-	void AddGre() {
+	void AddGreat() {
 		evalutuin_ = Evaluation::kGreat;
 		greatNum_++;
-		AddCom();
+		AddCombo();
 		AddScore(100 * (combo_ / 10 + 1));
 	}
 
@@ -58,29 +82,47 @@ public:
 		ComboReset();
 	}
 
-	// comboの加算。hiComboとの比較と更新。
-	void AddCom();
-
-	void ComboReset() { combo_ = 0; }
-
 	// goodとmissが0ならフルコンになる。プレイが終わってからの更新でよさそう。
 	void IsFullComUpdate();
 
 	int GetScore() { return score_; }
 
-	int GetCom() { return combo_; }
+	int GetCombo() { return combo_; }
 
-	int GetHiCombo() { return hiCombo_; }
+	int GetHighCombo() { return highCombo_; }
 
-	int GetPer() { return perfectNum_; }
+	int GetPerfect() { return perfectNum_; }
 
-	int GetGre() { return greatNum_; }
+	int GetGreat() { return greatNum_; }
 
 	int GetGood() { return goodNum_; }
 
 	int GetMiss() { return missNum_; }
 
 	bool IsFullCom() { return isFullCom_; }
+
+private:
+
+	// scoreの加算
+	void AddScore(int score) { score_ += score; }
+
+	// comboの加算。hiComboとの比較と更新。
+	void AddCombo();
+
+	void ComboReset() { combo_ = 0; }
+
+
+	void DrawParameter(int parameter, int digits, bool look, WorldTransform& worldTransform, Matrix4x4 viewProjectionMat, uint32_t color);
+
+private:
+	// 最大桁数
+	static const int kScoreMaxDigits_ = 6;
+	static const int kComboMaxDigits_ = 3;
+	static const int kEvaluationMaxDigits_ = 3;
+
+	// textureのサイズ
+	static const int kNumberTextureWidth_ = 53;
+	static const int kNumberTextureHeight_ = 61;
 
 private:
 
@@ -93,7 +135,18 @@ private:
 	int goodNum_ = 0;
 	int missNum_ = 0;
 
-	int hiCombo_ = 0;
+	int highCombo_ = 0;
 	bool isFullCom_ = false;
+
+
+	std::vector<std::shared_ptr<Texture2D>> numberTextures_;
+
+	WorldTransform scoreWorldTransform_[kScoreMaxDigits_];
+	WorldTransform comboWorldTransform_[kComboMaxDigits_];
+	WorldTransform highComboWorldTransform_[kComboMaxDigits_];
+	WorldTransform perfectNumWorldTransform_[kComboMaxDigits_];
+	WorldTransform greatNumWorldTransform_[kComboMaxDigits_];
+	WorldTransform goodNumWorldTransform_[kComboMaxDigits_];
+	WorldTransform missNumWorldTransform_[kComboMaxDigits_];
 
 };

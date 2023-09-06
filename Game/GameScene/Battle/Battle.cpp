@@ -2,6 +2,9 @@
 #include "externals/imgui/imgui.h"
 #include "math/Vector4.h"
 
+// 確認のため追加 by.Korone
+#include "Engine/Input/KeyInput/KeyInput.h"
+
 Battle::Battle(std::shared_ptr<Camera> camera)
 {
 	camera_ = camera;
@@ -18,6 +21,11 @@ Battle::Battle(std::shared_ptr<Camera> camera)
 
 
 	worldTransform = std::make_shared<WorldTransform>();
+
+	for (uint16_t i = 0u; i < 10; i++) {
+		numberTextures_.push_back(std::make_shared<Texture2D>());
+	}
+
 }
 
 Battle::~Battle() {
@@ -36,6 +44,8 @@ void Battle::Initialize()
 	//EnemyReset();
 
 	//EnemyGeneration();
+
+	score_->Initialize(numberTextures_);
 
 	score_->Reset();
 
@@ -65,6 +75,18 @@ void Battle::ModelLoad()
 	mobModels_[RLeg1]->Texture("Resources/player/Parts/pRLeg1/pRLeg1.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl");
 	mobModels_[RLeg2]->Texture("Resources/player/Parts/pRLeg2/pRLeg2.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl");
 	mobModels_[RFoot]->Texture("Resources/player/Parts/pRFoot/pRFoot.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl");
+
+
+	numberTextures_[0]->Texture("Resources/number/0.png", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl");
+	numberTextures_[1]->Texture("Resources/number/1.png", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl");
+	numberTextures_[2]->Texture("Resources/number/2.png", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl");
+	numberTextures_[3]->Texture("Resources/number/3.png", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl");
+	numberTextures_[4]->Texture("Resources/number/4.png", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl");
+	numberTextures_[5]->Texture("Resources/number/5.png", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl");
+	numberTextures_[6]->Texture("Resources/number/6.png", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl");
+	numberTextures_[7]->Texture("Resources/number/7.png", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl");
+	numberTextures_[8]->Texture("Resources/number/8.png", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl");
+	numberTextures_[9]->Texture("Resources/number/9.png", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl");
 
 	//player_->ModelLoad();
 	
@@ -196,11 +218,18 @@ void Battle::Update()
 
 		enemy->Update();
 	}
-	
-	// 評価
-	if (score_->GetEvaluation()) {
-		EnemyGeneration();
+
+	// 確認のため追加 by.Korone
+	if (KeyInput::PushKey(DIK_SPACE)) {
+		score_->AddPerfect();
 	}
+	if (KeyInput::PushKey(DIK_R)) {
+		score_->AddMiss();
+	}
+	// 評価
+	/*if (score_->GetEvaluation()) {
+		EnemyGeneration();
+	}*/
 
 	//player_->Update();
 
@@ -211,7 +240,24 @@ void Battle::Update()
 
 }
 
+void Battle::ScoreDraw(const Matrix4x4& viewProjection) {
+
+	// お試し
+
+	score_->DrawScore({ 60,60 }, 1.0f, 0.0f, viewProjection, 0xFFFFFFFF);
+
+	score_->DrawCombo({ 760,260 }, 1.5f, 0.0f, viewProjection, 0x0000FFFF);
+
+	score_->DrawPerfectNum({ 760,460 }, 0.5f, 0.2f, viewProjection, 0x00FF00FF);
+}
+
 void Battle::Draw(const Matrix4x4& viewProjection)
 {
 	player_->Draw(viewProjection);
+
+}
+
+void Battle::Draw2D(const Matrix4x4& viewProjection) {
+
+	ScoreDraw(viewProjection);
 }

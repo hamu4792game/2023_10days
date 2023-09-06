@@ -136,7 +136,7 @@ void Player::HitEvalution(Enemy* enemy, Score* score) {
 	if (evalutionCount_ <= kEvalutionframe_[kPerfect]) {
 
 		enemy->Die();
-		score->AddPer();
+		score->AddPerfect();
 
 		evalutionCount_ = 0;
 
@@ -144,7 +144,7 @@ void Player::HitEvalution(Enemy* enemy, Score* score) {
 	else if (evalutionCount_ <= kEvalutionframe_[kGreat]) {
 
 		enemy->Die();
-		score->AddGre();
+		score->AddGreat();
 
 		evalutionCount_ = 0;
 
