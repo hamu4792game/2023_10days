@@ -16,7 +16,8 @@ public:
 	Player(std::shared_ptr<Camera> camera = nullptr);
 	~Player() = default;
 
-	void Initialize(std::vector<std::shared_ptr<Model>> models,const WorldTransform& world);
+	//モデルデータ配列,パーツWのデータ配列、親の処理
+	void Initialize(std::vector<std::shared_ptr<Model>> models,WorldTransform* world);
 
 	void ModelLoad();
 
@@ -43,6 +44,8 @@ private: // Korone
 private:
 
 	
+	//	世界の中心のptr
+	WorldTransform* world_ = nullptr;
 	
 	//	元
 	WorldTransform transform;
@@ -51,7 +54,10 @@ private:
 	std::vector<std::shared_ptr<Model>> models_;
 	//	パーツ用データ
 	std::vector<WorldTransform> parts_;
-
+	//	カメラ共有ptr
+	std::shared_ptr<Camera> camera_ = nullptr;
+	//	カメラの初期位置
+	Vector3 offset;
 
 private: // Korone
 
@@ -75,6 +81,5 @@ private: // Korone
 
 	//Score* score = nullptr;
 
-	std::shared_ptr<Camera> camera_ = nullptr;
 
 };

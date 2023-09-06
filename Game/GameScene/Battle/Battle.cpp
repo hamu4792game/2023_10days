@@ -17,11 +17,15 @@ Battle::Battle(std::shared_ptr<Camera> camera)
 		mobModels_.push_back(std::make_shared<Model>());
 	}
   
-	mobarts_.resize(mobModels_.size());
+	mobparts_.resize(mobModels_.size());
+
+
+	worldTransform = std::make_shared<WorldTransform>();
 
 	for (uint16_t i = 0u; i < 10; i++) {
 		numberTextures_.push_back(std::make_shared<Texture2D>());
 	}
+
 }
 
 Battle::~Battle() {
@@ -45,7 +49,7 @@ void Battle::Initialize()
 
 	score_->Reset();
 
-	player_->Initialize(mobModels_, transform);
+	player_->Initialize(mobModels_, worldTransform.get());
 
 }
 
@@ -85,6 +89,54 @@ void Battle::ModelLoad()
 	numberTextures_[9]->Texture("Resources/number/9.png", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl");
 
 	//player_->ModelLoad();
+	
+	//削除済
+#pragma region スペチャ：：//パーツの基本的な親子関係を作成
+	/*
+	//Bodyの親子関係のみ呼び出しクラス内で作成
+	mobparts_[Head].parent_ = &mobparts_[Body];
+	mobparts_[BodyUnder].parent_ = &mobparts_[Body];
+
+	mobparts_[LArm1].parent_ = &mobparts_[Body];
+	mobparts_[LArm2].parent_ = &mobparts_[LArm1];
+	mobparts_[LHand].parent_ = &mobparts_[LArm2];
+
+	mobparts_[RArm1].parent_ = &mobparts_[Body];
+	mobparts_[RArm2].parent_ = &mobparts_[RArm1];
+	mobparts_[RHand].parent_ = &mobparts_[RArm2];
+
+	mobparts_[LLeg1].parent_ = &mobparts_[BodyUnder];
+	mobparts_[LLeg2].parent_ = &mobparts_[LLeg1];
+	mobparts_[LFoot].parent_ = &mobparts_[LLeg2];
+
+	mobparts_[RLeg1].parent_ = &mobparts_[BodyUnder];
+	mobparts_[RLeg2].parent_ = &mobparts_[RLeg1];
+	mobparts_[RFoot].parent_ = &mobparts_[RLeg2];
+
+	//座標設定
+	mobparts_[Body].translation_ = { 0, 0, 0 };
+	mobparts_[BodyUnder].translation_ = { 0, 0, 0 };
+	mobparts_[Head].translation_ = { 0, 2.6f, 0 };
+
+	mobparts_[LArm1].translation_ = { -0.8f, 1.57f, 0 };
+	mobparts_[LArm2].translation_ = { -1.73f, 0, 0 };
+	mobparts_[LHand].translation_ = { -2.37f, 0, 0 };
+
+	mobparts_[RArm1].translation_ = { 0.8f, 1.57f, 0 };
+	mobparts_[RArm2].translation_ = { 1.73f, 0, 0 };
+	mobparts_[RHand].translation_ = { 2.37f, 0, 0 };
+
+	mobparts_[LLeg1].translation_ = { -0.3f, -1.7f, 0 };
+	mobparts_[LLeg2].translation_ = { 0, -2.2f, 0 };
+	mobparts_[LFoot].translation_ = { -0.12f, -2.2f, 0 };
+
+	mobparts_[RLeg1].translation_ = { 0.3f, -1.7f, 0 };
+	mobparts_[RLeg2].translation_ = { 0, -2.2f, 0 };
+	mobparts_[RFoot].translation_ = { 0.12f, -2.2f, 0 };
+	*/
+#pragma endregion 
+	
+
 }
 
 void Battle::EnemyGeneration() {
@@ -181,11 +233,10 @@ void Battle::Update()
 
 	//player_->Update();
 
-	transform.rotation_.x += AngleToRadian(0.1f);
 	//ImGui::DragFloat("worldRo", &transform.rotation_.x, AngleToRadian(1.0f));
 	//	行列の更新　回転行列のみ必要なためUpdateはしていない
-	transform.worldMatrix = MakeRotateMatrix(transform.rotation_);
 	player_->Update();
+	worldTransform->worldMatrix = MakeRotateMatrix(worldTransform->rotation_);
 
 }
 

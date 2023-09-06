@@ -2,6 +2,7 @@
 #include "math/Matrix4x4.h"
 #include "Engine/WorldTransform/WorldTransform.h"
 #include "Engine/Texture/Model.h"
+#include"EEnum.h"
 
 class Enemy
 {
@@ -39,6 +40,12 @@ public: // Korone
 
 	void Initialize(int type, int num);
 
+	//修正版
+	void InitializeSP(int type, int num,
+		std::vector<std::shared_ptr<Model>> models);
+
+
+
 	BottomTypeClass GetBottomType() { return bottomType_; }
 
 	int GetNum() { return num_; }
@@ -49,23 +56,12 @@ public: // Korone
 
 private:
 
-	enum PARTS
-	{
-		Body,
-		Head,
-		L_arm,
-		R_arm,
-		L_leg,
-		R_leg,
-		Weapon,
-
-		Num
-	};
+	
 	//	元
 	WorldTransform transform;
 
 	//	モデルデータ配列
-	std::vector<std::unique_ptr<Model>> models_;
+	std::vector<std::shared_ptr<Model>> models_;
 	//	パーツ用データ
 	std::vector<WorldTransform> parts_;
 
