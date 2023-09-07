@@ -14,6 +14,8 @@ Battle::Battle(std::shared_ptr<Camera> camera)
 
 	score_ = std::make_unique<Score>();
 
+	player_->SetScore(score_.get());
+
 	//プレイヤーモデルの初期化
 	for (uint16_t i = 0u; i < PARTS::Num; i++) {
 		mobModels_.push_back(std::make_shared<Model>());
@@ -247,7 +249,7 @@ void Battle::Update()
 
 	for(Enemy* enemy : enemies_){
 		if (enemy->GetNum() == enemyKillCount_) {
-			player_->HitTest(enemy, score_.get());
+			player_->HitTest(enemy);
 			
 			if (score_->GetEvaluation()) {
 

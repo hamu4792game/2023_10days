@@ -146,12 +146,12 @@ void Player::HitTestInitialize() {
 	//score->ResetEvalution();
 }
 
-void Player::HitEvalution(Enemy* enemy, Score* score) {
+void Player::HitEvalution(Enemy* enemy) {
 
 	if (evalutionCount_ <= kEvalutionframe_[kPerfect]) {
 
 		enemy->Die();
-		score->AddPerfect();
+		score_->AddPerfect();
 
 		evalutionCount_ = 0;
 
@@ -159,7 +159,7 @@ void Player::HitEvalution(Enemy* enemy, Score* score) {
 	else if (evalutionCount_ <= kEvalutionframe_[kGreat]) {
 
 		enemy->Die();
-		score->AddGreat();
+		score_->AddGreat();
 
 		evalutionCount_ = 0;
 
@@ -167,7 +167,7 @@ void Player::HitEvalution(Enemy* enemy, Score* score) {
 	else if (evalutionCount_ <= kEvalutionframe_[kGood]) {
 
 		enemy->Die();
-		score->AddGood();
+		score_->AddGood();
 
 		evalutionCount_ = 0;
 	}
@@ -182,8 +182,9 @@ void Player::HitEvalution(Enemy* enemy, Score* score) {
 }
 
 void Player::Move() {
+
 	//	攻撃(入力)された時
-	if (KeyInput::PushKey(DIK_SPACE) && !flag) {
+	if ((KeyInput::PushKey(DIK_SPACE) && !flag) || score_->GetEvaluation()) {
 		flag = true;
 	}
 	if (flag) {
@@ -223,7 +224,7 @@ void Player::MoveType2() {
 		waitFrame++;
 
 		//	仮 入力を受け付けたらフラグを建てる
-		if (KeyInput::PushKey(DIK_SPACE)) {
+		if (KeyInput::PushKey(DIK_SPACE) || score_->GetEvaluation()) {
 			waitFrame = MAX_frame;
 		}
 
@@ -252,69 +253,73 @@ void Player::MoveType2() {
 	}
 }
 
-void Player::HitTest(Enemy* enemy, Score* score) {
+void Player::HitTest(Enemy* enemy) {
 
 	// 毎フレーム1回のみの更新。カウントがフレーム数と一致しなくなるため。
 
-	score->ResetEvalution();
+	score_->ResetEvalution();
 
-	evalutionCount_++;
+	if (frame >= MAX_frame) {
 
-	if (KeyInput::GetInstance()->GetPadConnect()) {
+		evalutionCount_++;
 
-		if (KeyInput::GetInstance()->GetPadButtonDown(XINPUT_GAMEPAD_A)) {
-			if (enemy->GetBottomType() == Enemy::BottomTypeClass::kA) {
+		if (KeyInput::GetInstance()->GetPadConnect()) {
 
-				HitEvalution(enemy, score);
+			if (KeyInput::GetInstance()->GetPadButtonDown(XINPUT_GAMEPAD_A)) {
+				if (enemy->GetBottomType() == Enemy::BottomTypeClass::kA) {
+
+					HitEvalution(enemy);
+				}
+				else {
+					enemy->Die();
+					score_->AddMiss();
+
+					evalutionCount_ = 0;
+				}
+
 			}
-			else {
-				enemy->Die();
-				score->AddMiss();
+			else if (KeyInput::GetInstance()->GetPadButtonDown(XINPUT_GAMEPAD_B)) {
+				if (enemy->GetBottomType() == Enemy::BottomTypeClass::kB) {
+					HitEvalution(enemy);
+				}
+				else {
+					enemy->Die();
+					score_->AddMiss();
 
-				evalutionCount_ = 0;
+					evalutionCount_ = 0;
+				}
 			}
+			else if (KeyInput::GetInstance()->GetPadButtonDown(XINPUT_GAMEPAD_X)) {
+				if (enemy->GetBottomType() == Enemy::BottomTypeClass::kX) {
+					HitEvalution(enemy);
+				}
+				else {
+					enemy->Die();
+					score_->AddMiss();
 
+					evalutionCount_ = 0;
+				}
+			}
+			else if (KeyInput::GetInstance()->GetPadButtonDown(XINPUT_GAMEPAD_Y)) {
+				if (enemy->GetBottomType() == Enemy::BottomTypeClass::kY) {
+					HitEvalution(enemy);
+				}
+				else {
+					enemy->Die();
+					score_->AddMiss();
+
+					evalutionCount_ = 0;
+				}
+			}
 		}
-		else if (KeyInput::GetInstance()->GetPadButtonDown(XINPUT_GAMEPAD_B)) {
-			if (enemy->GetBottomType() == Enemy::BottomTypeClass::kB) {
-				HitEvalution(enemy, score);
-			}
-			else {
-				enemy->Die();
-				score->AddMiss();
 
-				evalutionCount_ = 0;
-			}
+		if (evalutionCount_ >= kEvalutionframe_[kMiss]) {
+			enemy->Die();
+			score_->AddMiss();
+
+			evalutionCount_ = 0;
 		}
-		else if (KeyInput::GetInstance()->GetPadButtonDown(XINPUT_GAMEPAD_X)) {
-			if (enemy->GetBottomType() == Enemy::BottomTypeClass::kX) {
-				HitEvalution(enemy, score);
-			}
-			else {
-				enemy->Die();
-				score->AddMiss();
 
-				evalutionCount_ = 0;
-			}
-		}
-		else if (KeyInput::GetInstance()->GetPadButtonDown(XINPUT_GAMEPAD_Y)) {
-			if (enemy->GetBottomType() == Enemy::BottomTypeClass::kY) {
-				HitEvalution(enemy, score);
-			}
-			else {
-				enemy->Die();
-				score->AddMiss();
-
-				evalutionCount_ = 0;
-			}
-		}
-	}
-
-	if (evalutionCount_ >= kEvalutionframe_[kMiss]) {
-		enemy->Die();
-		score->AddMiss();
-
-		evalutionCount_ = 0;
 	}
 }
 
