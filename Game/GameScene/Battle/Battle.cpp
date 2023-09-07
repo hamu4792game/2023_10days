@@ -282,15 +282,23 @@ void Battle::ScoreDraw(const Matrix4x4& viewProjection) {
 
 	// お試し
 
-	score_->DrawScore({ 60,60 }, 1.0f, 0.0f, viewProjection, 0xFFFFFFFF);
+	score_->SetWorldTransform({ 60,60 }, 1.0f, 0.0f, Score::kScore);
+	score_->SetWorldTransform({ 960,160 }, 1.5f, 0.0f, Score::kCombo);
+	score_->SetWorldTransform({ 960,240 }, 0.8f, 0.0f, Score::kHighCombo);
+	score_->SetWorldTransform({ 960,300 }, 0.8f, 0.0f, Score::kPerfectNum);
+	score_->SetWorldTransform({ 960,360 }, 0.8f, 0.0f, Score::kGreatNum);
+	score_->SetWorldTransform({ 960,420 }, 0.8f, 0.0f, Score::kGoodNum);
+	score_->SetWorldTransform({ 960,480 }, 0.8f, 0.0f, Score::kMissNum);
 
-	score_->DrawCombo({ 960,160 }, 1.5f, 0.0f, viewProjection, 0x0000FFFF);
 
-	score_->DrawPerfectNum({ 960,240 }, 0.8f, 0.0f, viewProjection, 0x00FF00FF);
-	score_->DrawPerfectNum({ 960,300 }, 0.8f, 0.0f, viewProjection, 0x00FF00FF);
-	score_->DrawGreatNum({ 960,360 }, 0.8f, 0.0f, viewProjection, 0x00FF00FF);
-	score_->DrawGoodNum({ 960,420 }, 0.8f, 0.0f, viewProjection, 0x00FF00FF);
-	score_->DrawMissNum({ 960,480 }, 0.8f, 0.0f, viewProjection, 0x00FF00FF);
+	score_->DrawParameter(viewProjection, 0xFFFFFFFF, Score::kScore);
+	score_->DrawParameter(viewProjection, 0x0000FFFF, Score::kCombo);
+	score_->DrawParameter(viewProjection, 0x00FF00FF, Score::kHighCombo);
+	score_->DrawParameter(viewProjection, 0x00FF00FF, Score::kPerfectNum);
+	score_->DrawParameter(viewProjection, 0x00FF00FF, Score::kGreatNum);
+	score_->DrawParameter(viewProjection, 0x00FF00FF, Score::kGoodNum);
+	score_->DrawParameter(viewProjection, 0x00FF00FF, Score::kMissNum);
+
 }
 
 void Battle::Draw(const Matrix4x4& viewProjection)

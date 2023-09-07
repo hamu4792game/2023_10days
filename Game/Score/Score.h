@@ -14,30 +14,28 @@ public:
 		kMiss
 	};
 
+	enum Parameter {
+		kScore,
+		kCombo,
+		kHighCombo,
+		kPerfectNum,
+		kGreatNum,
+		kGoodNum,
+		kMissNum,
+	};
+
+	static const int kParameterNum_ = 7;
+
 public:
+
+	Score();
 
 	void Initialize(std::vector<std::shared_ptr<Texture2D>> numberTextures);
 
-	// posは一番左の数字の真ん中の座標。たぶん。
-	void DrawScore(const Vector2& screenPos, float scale, float rotate, const Matrix4x4& viewProjectionMat, uint32_t color);
+	// posは一番左の数字の真ん中の座標。
+	void SetWorldTransform(const Vector2& screenPos, float scale, float rotate, Parameter parameter);
 
-	// posは一番左の数字の真ん中の座標。たぶん。
-	void DrawCombo(const Vector2& screenPos, float scale, float rotate, const Matrix4x4& viewProjectionMat, uint32_t color);
-
-	// posは一番左の数字の真ん中の座標。たぶん。
-	void DrawHighCombo(const Vector2& screenPos, float scale, float rotate, const Matrix4x4& viewProjectionMat, uint32_t color);
-
-	// posは一番左の数字の真ん中の座標。たぶん。
-	void DrawPerfectNum(const Vector2& screenPos, float scale, float rotate, const Matrix4x4& viewProjectionMat, uint32_t color);
-
-	// posは一番左の数字の真ん中の座標。たぶん。
-	void DrawGreatNum(const Vector2& screenPos, float scale, float rotate, const Matrix4x4& viewProjectionMat, uint32_t color);
-
-	// posは一番左の数字の真ん中の座標。たぶん。
-	void DrawGoodNum(const Vector2& screenPos, float scale, float rotate, const Matrix4x4& viewProjectionMat, uint32_t color);
-
-	// posは一番左の数字の真ん中の座標。たぶん。
-	void DrawMissNum(Vector2 screenPos, float scale, float rotate, Matrix4x4 viewProjectionMat, uint32_t color);
+	void DrawParameter(const Matrix4x4& viewProjectionMat, uint32_t color, Parameter parameter);
 
 public:
 
@@ -54,23 +52,23 @@ public:
 	// perfectの加算。スコア、コンボも加算する。
 	void AddPerfect() {
 		evalutuin_ = Evaluation::kPerfect;
-		perfectNum_++;
+		parameters_[kPerfectNum]++;
 		AddCombo();
-		AddScore(200 * (combo_ / 10 + 1));
+		AddScore(200 * (parameters_[kCombo] / 10 + 1));
 	}
 
 	// greatの加算。スコア、コンボも加算する。
 	void AddGreat() {
 		evalutuin_ = Evaluation::kGreat;
-		greatNum_++;
+		parameters_[kGreatNum]++;
 		AddCombo();
-		AddScore(100 * (combo_ / 10 + 1));
+		AddScore(100 * (parameters_[kCombo] / 10 + 1));
 	}
 
 	// goodの加算。スコアの加算、コンボを途切れさせる。
 	void AddGood() {
 		evalutuin_ = Evaluation::kGood;
-		goodNum_++;
+		parameters_[kGoodNum]++;
 		ComboReset();
 		AddScore(50);
 	}
@@ -78,41 +76,38 @@ public:
 	// missの加算。コンボを途切れさせる。
 	void AddMiss() {
 		evalutuin_ = Evaluation::kMiss;
-		missNum_++;
+		parameters_[kMissNum]++;
 		ComboReset();
 	}
 
 	// goodとmissが0ならフルコンになる。プレイが終わってからの更新でよさそう。
 	void IsFullComUpdate();
 
-	int GetScore() { return score_; }
+	int GetScore() { return parameters_[kScore]; }
 
-	int GetCombo() { return combo_; }
+	int GetCombo() { return parameters_[kCombo]; }
 
-	int GetHighCombo() { return highCombo_; }
+	int GetHighCombo() { return parameters_[kHighCombo]; }
 
-	int GetPerfect() { return perfectNum_; }
+	int GetPerfect() { return parameters_[kPerfectNum]; }
 
-	int GetGreat() { return greatNum_; }
+	int GetGreat() { return parameters_[kGreatNum]; }
 
-	int GetGood() { return goodNum_; }
+	int GetGood() { return parameters_[kGoodNum]; }
 
-	int GetMiss() { return missNum_; }
+	int GetMiss() { return parameters_[kMissNum]; }
 
 	bool IsFullCom() { return isFullCom_; }
 
 private:
 
 	// scoreの加算
-	void AddScore(int score) { score_ += score; }
+	void AddScore(int score) { parameters_[kScore] += score; }
 
 	// comboの加算。hiComboとの比較と更新。
 	void AddCombo();
 
-	void ComboReset() { combo_ = 0; }
-
-
-	void DrawParameter(int parameter, int digits, bool look, WorldTransform& worldTransform, Matrix4x4 viewProjectionMat, uint32_t color);
+	void ComboReset() { parameters_[kCombo] = 0; }
 
 private:
 	// 最大桁数
@@ -128,25 +123,14 @@ private:
 
 	std::optional<Evaluation> evalutuin_ = std::nullopt;
 
-	int score_ = 0;
-	int combo_ = 0;
-	int perfectNum_ = 0;
-	int greatNum_ = 0;
-	int goodNum_ = 0;
-	int missNum_ = 0;
+	int parameters_[kParameterNum_] = {};
 
-	int highCombo_ = 0;
 	bool isFullCom_ = false;
 
 
 	std::vector<std::shared_ptr<Texture2D>> numberTextures_;
 
-	WorldTransform scoreWorldTransform_[kScoreMaxDigits_];
-	WorldTransform comboWorldTransform_[kComboMaxDigits_];
-	WorldTransform highComboWorldTransform_[kComboMaxDigits_];
-	WorldTransform perfectNumWorldTransform_[kComboMaxDigits_];
-	WorldTransform greatNumWorldTransform_[kComboMaxDigits_];
-	WorldTransform goodNumWorldTransform_[kComboMaxDigits_];
-	WorldTransform missNumWorldTransform_[kComboMaxDigits_];
+	std::vector<std::shared_ptr<WorldTransform>> worldTransforms_[kParameterNum_];
+
 
 };
