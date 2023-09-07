@@ -90,6 +90,9 @@ void GameScene::Update()
 
 void GameScene::Draw()
 {
+
+	ground->Draw(viewProjectionMatrix);
+	//	3D描画
 	switch (scene)
 	{
 	case GameScene::Scene::TITLE:
@@ -103,7 +106,19 @@ void GameScene::Draw()
 		break;
 	}
 
-	ground->Draw(viewProjectionMatrix);
-	battle->Draw2D(viewProjectionMatrix2d);
+	//	2D描画
+	switch (scene)
+	{
+	case GameScene::Scene::TITLE:
+		title->Draw(viewProjectionMatrix2d);
+		break;
+	case GameScene::Scene::BATTLE:
+		battle->Draw2D(viewProjectionMatrix2d);
+		break;
+	case GameScene::Scene::RESULT:
+		result->Draw(viewProjectionMatrix2d);
+		break;
+	}
+
 	//Model::ModelDraw(pos, viewProjectionMatrix, 0xffffffff, model.get());
 }

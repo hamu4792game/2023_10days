@@ -76,7 +76,7 @@ void Enemy::InitializeSP(float pos, int type, int num,//	モデルデータ配�
 	parts_[Body].parent_ = &transform;
 
 	//ボタンの親を設定
-	BottonW_.parent_ = &transform;
+	BottonW_.parent_ = &parts_[Body];
 	BottonW_.translation_ = { 0,5,0 };
 
 #pragma region 親子関係設定
