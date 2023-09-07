@@ -14,9 +14,22 @@ public:
 		kMiss
 	};
 
+	enum class Parameter {
+		kScore,
+		kCombo,
+		kHighCombo,
+		kPerfectNum,
+		kGreatNum,
+		kGoodNum,
+		kMissNum,
+
+	};
+
 public:
 
 	void Initialize(std::vector<std::shared_ptr<Texture2D>> numberTextures);
+
+	void SetWorldTransform(const Vector2& screenPos, float scale, float rotate, Parameter parameter);
 
 	// posは一番左の数字の真ん中の座標。たぶん。
 	void DrawScore(const Vector2& screenPos, float scale, float rotate, const Matrix4x4& viewProjectionMat, uint32_t color);

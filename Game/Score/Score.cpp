@@ -6,6 +6,91 @@ void Score::Initialize(std::vector<std::shared_ptr<Texture2D>> numberTextures) {
 
 }
 
+void Score::SetWorldTransform(const Vector2& screenPos, float scale, float rotate, Parameter parameter) {
+
+	Vector2 pos = { screenPos.x - WinApp::kWindowWidth / 2, WinApp::kWindowHeight / 2 - screenPos.y };
+
+	int digits = 0;
+
+	switch (parameter)
+	{
+	case Score::Parameter::kScore:
+
+		digits = kScoreMaxDigits_;
+
+		for (int i = 0; i < digits; i++) {
+
+			scoreWorldTransform_[i].translation_.x = pos.x + kNumberTextureWidth_ * i * scale;
+			scoreWorldTransform_[i].translation_.y = pos.y;
+			scoreWorldTransform_[i].scale_.x = scale;
+			scoreWorldTransform_[i].scale_.y = scale;
+			scoreWorldTransform_[i].rotation_.z = rotate;
+
+
+			if (rotate != 0) {
+				float a = kNumberTextureWidth_ * i * scale;
+
+				scoreWorldTransform_[i].translation_.x = a * std::cosf(rotate) + pos.x;
+				scoreWorldTransform_[i].translation_.y = a * std::sinf(rotate) + pos.y;
+
+			}
+
+			scoreWorldTransform_[i].UpdateMatrix();
+
+
+		}
+		break;
+	case Score::Parameter::kCombo:
+
+		digits = kComboMaxDigits_;
+
+		for (int i = 0; i < digits; i++) {
+
+			comboWorldTransform_[i].translation_.x = pos.x + kNumberTextureWidth_ * i * scale;
+			comboWorldTransform_[i].translation_.y = pos.y;
+			comboWorldTransform_[i].scale_.x = scale;
+			comboWorldTransform_[i].scale_.y = scale;
+			comboWorldTransform_[i].rotation_.z = rotate;
+
+
+			if (rotate != 0) {
+				float a = kNumberTextureWidth_ * i * scale;
+
+				comboWorldTransform_[i].translation_.x = a * std::cosf(rotate) + pos.x;
+				comboWorldTransform_[i].translation_.y = a * std::sinf(rotate) + pos.y;
+
+			}
+
+			comboWorldTransform_[i].UpdateMatrix();
+
+		}
+		break;
+	case Score::Parameter::kHighCombo:
+
+
+		break;
+	case Score::Parameter::kPerfectNum:
+
+
+		break;
+	case Score::Parameter::kGreatNum:
+
+
+		break;
+	case Score::Parameter::kGoodNum:
+
+
+		break;
+	case Score::Parameter::kMissNum:
+
+
+		break;
+	default:
+		break;
+	}
+
+}
+
 void Score::DrawScore(const Vector2& screenPos, float scale, float rotate, const Matrix4x4& viewProjectionMat, uint32_t color) {
 
 	Vector2 pos = { screenPos.x - WinApp::kWindowWidth / 2, WinApp::kWindowHeight / 2 - screenPos.y };
