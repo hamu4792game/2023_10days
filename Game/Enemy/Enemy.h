@@ -34,7 +34,7 @@ public:
 	void Update();
 
 	//	描画
-	void Draw(const Matrix4x4& viewProjection);
+	void Draw(const Matrix4x4& viewProjection, std::vector<std::shared_ptr<Model>> botunModels);
 
 public: // Korone
 
@@ -44,7 +44,7 @@ public: // Korone
 	void InitializeSP(int type, int num,
 		std::vector<std::shared_ptr<Model>> models);
 
-
+	int type_;
 
 	BottomTypeClass GetBottomType() { return bottomType_; }
 
@@ -66,11 +66,17 @@ private:
 	std::vector<WorldTransform> parts_;
 
 
+	//ボタンのワールド
+	WorldTransform BottonW_;
+
+
 private: // Korone
 	BottomTypeClass bottomType_ = BottomTypeClass::kA;
 
 	int num_ = 0;
 
 	bool isDead_ = false;
+
+
 
 };

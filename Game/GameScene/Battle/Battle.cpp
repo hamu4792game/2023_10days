@@ -18,7 +18,12 @@ Battle::Battle(std::shared_ptr<Camera> camera)
 	for (uint16_t i = 0u; i < PARTS::Num; i++) {
 		mobModels_.push_back(std::make_shared<Model>());
 	}
-  
+	//ボタンモデルの初期化
+	for (uint32_t i = 0u; i < 4; i++) {
+		bottonModels_.push_back(std::make_shared<Model>());
+	}
+
+
 	mobparts_.resize(mobModels_.size());
 
 
@@ -93,6 +98,14 @@ void Battle::ModelLoad()
 
 	//player_->ModelLoad();
 	
+	//ボタンオブジェクトロード
+	bottonModels_[0]->Texture("Resources/hud/A/A.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl");
+	bottonModels_[1]->Texture("Resources/hud/B/B.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl");
+	bottonModels_[2]->Texture("Resources/hud/X/X.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl");
+	bottonModels_[3]->Texture("Resources/hud/Y/Y.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl");
+
+
+
 	//削除済
 #pragma region スペチャ：：//パーツの基本的な親子関係を作成
 	/*

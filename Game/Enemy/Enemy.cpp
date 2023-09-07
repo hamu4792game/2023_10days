@@ -45,7 +45,7 @@ void Enemy::InitializeSP(int type, int num,//	モデルデータ配列
 
 	models_ = models;
 
-	
+	type_ = type;
 
 	switch (type)
 	{
@@ -70,6 +70,11 @@ void Enemy::InitializeSP(int type, int num,//	モデルデータ配列
 
 	parts_.resize(models_.size());
 
+	//ボタンの親を設定
+	BottonW_.parent_ = &transform;
+	BottonW_.translation_ = { 0,5,0 };
+
+#pragma region 親子関係設定
 	parts_[Head].parent_ = &parts_[Body];
 	parts_[BodyUnder].parent_ = &parts_[Body];
 
@@ -109,6 +114,9 @@ void Enemy::InitializeSP(int type, int num,//	モデルデータ配列
 	parts_[RLeg1].translation_ = { 0.3f, -1.7f, 0 };
 	parts_[RLeg2].translation_ = { 0, -2.2f, 0 };
 	parts_[RFoot].translation_ = { 0.12f, -2.2f, 0 };
+#pragma endregion
+
+	
 }
 
 
@@ -123,12 +131,34 @@ void Enemy::Update()
 	for (auto& i : parts_) {
 		i.UpdateMatrix();
 	}
+	BottonW_.UpdateMatrix();
 }
 
-void Enemy::Draw(const Matrix4x4& viewProjection)
+void Enemy::Draw(const Matrix4x4& viewProjection, std::vector<std::shared_ptr<Model>> botunModels)
 {
 	for (uint16_t i = 0u; i < parts_.size(); i++)
 	{
 		Model::ModelDraw(parts_[i], viewProjection, 0xffffffff, models_[i].get());
+	}
+
+	//ボタン描画
+	switch (type_)
+	{
+	case Enemy::kA:
+		Model::ModelDraw(BottonW_, viewProjection, 0xffffffff, botunModels[0].get());
+		break;
+	case Enemy::kB:
+		Model::ModelDraw(BottonW_, viewProjection, 0xffffffff, botunModels[1].get());
+
+		break;
+	case Enemy::kX:
+		Model::ModelDraw(BottonW_, viewProjection, 0xffffffff, botunModels[2].get());
+
+		break;
+	case Enemy::kY:
+		Model::ModelDraw(BottonW_, viewProjection, 0xffffffff, botunModels[3].get());
+		break;
+	default:
+		break;
 	}
 }

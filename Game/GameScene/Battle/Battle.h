@@ -50,6 +50,9 @@ private://	必要なメンバ変数
 	//	中心座標
 	std::shared_ptr<WorldTransform> worldTransform;
 
+
+	std::vector<std::shared_ptr<Model>> bottonModels_;
+
 public:
 	//	マスターフレーム速度。リアルタイム加減速
 	static float masterSpeed;
