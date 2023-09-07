@@ -128,7 +128,7 @@ void Player::Update()
 	//}
 	
 	
-	ImGui::DragFloat("body", &parts_[Body].translation_.y, 0.1f);
+	//ImGui::DragFloat("body", &parts_[Body].translation_.y, 0.1f);
 
 	//	待機時間
 	if (waitFrame >= 60.0f)	{
