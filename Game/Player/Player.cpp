@@ -31,7 +31,7 @@ void Player::Initialize(std::vector<std::shared_ptr<Model>> models, WorldTransfo
 	world_ = world;
 	transform.parent_ = world;
 	//	地面の半径 * scale
-	transform.translation_.y = 1.0f * 200.0f;
+	//transform.translation_.y = 1.0f * 200.0f;
 	transform.scale_ = Vector3(0.3f, 0.3f, 0.3f);
 
 	//	カメラとの親子関係
@@ -105,7 +105,7 @@ void Player::ModelLoad()
 void Player::Update()
 {
 
-	camera_->transform.translation_ = offset;
+	//camera_->transform.translation_ = offset;
 	if (KeyInput::GetKey(DIK_SPACE)) {
 		world_->rotation_.x += AngleToRadian(1.0f);
 
