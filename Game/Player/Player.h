@@ -78,6 +78,8 @@ private:
 
 	//	移動処理
 	void Move();
+	//	tyoe2
+	void MoveType2();
 
 private: // Korone
 

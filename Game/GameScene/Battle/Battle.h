@@ -43,12 +43,16 @@ private://	必要なメンバ変数
 
 	//	プレイヤーデータのモデル配列
 	std::vector<std::shared_ptr<Model>> mobModels_;
+	std::vector<std::shared_ptr<Model>> mobModels_type2;
 
 	//	パーツ用ペアレントデータ
 	std::vector<WorldTransform> mobparts_;
   
 	//	中心座標
 	std::shared_ptr<WorldTransform> worldTransform;
+
+
+	std::vector<std::shared_ptr<Model>> bottonModels_;
 
 public:
 	//	マスターフレーム速度。リアルタイム加減速
@@ -68,7 +72,9 @@ private: //Korone
 	//int kEnemyIntervalNum_ = 5;
 	int enemyNum_ = 0;
 	int enemyKillCount_ = 0;
-	float kEnemyPopPosLength_ = 2.0f;
+
+	// enemyの配置の間隔
+	float kEnemyPopPosLength_ = 10.0f;
 
 	int preEnemyType_ = 0;
 	int typeCount_ = 0;

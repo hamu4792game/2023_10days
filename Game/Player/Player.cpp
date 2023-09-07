@@ -79,25 +79,25 @@ void Player::Initialize(std::vector<std::shared_ptr<Model>> models, WorldTransfo
 	parts_[RFoot].parent_ = &parts_[RLeg2];
 
 	//座標設定
-	parts_[Body].translation_ = { 0, 0, 0 };
-	parts_[BodyUnder].translation_ = { 0, 0, 0 };
-	parts_[Head].translation_ = { 0, 2.6f, 0 };
+	parts_[Body].translation_ = { 0.0f, 6.5f, 0.0f };
+	parts_[BodyUnder].translation_ = { 0.0f, 0.0f, 0.0f };
+	parts_[Head].translation_ = { 0.0f, 2.6f, 0.0f };
 
-	parts_[LArm1].translation_ = { -0.8f, 1.57f, 0 };
-	parts_[LArm2].translation_ = { -1.73f, 0, 0 };
-	parts_[LHand].translation_ = { -2.37f, 0, 0 };
+	parts_[LArm1].translation_ = { -0.8f, 1.57f, 0.0f };
+	parts_[LArm2].translation_ = { -1.73f, 0.0f, 0.0f };
+	parts_[LHand].translation_ = { -2.37f, 0.0f, 0.0f };
 
-	parts_[RArm1].translation_ = { 0.8f, 1.57f, 0 };
-	parts_[RArm2].translation_ = { 1.73f, 0, 0 };
-	parts_[RHand].translation_ = { 2.37f, 0, 0 };
+	parts_[RArm1].translation_ = { 0.8f, 1.57f, 0.0f };
+	parts_[RArm2].translation_ = { 1.73f, 0.0f, 0.0f };
+	parts_[RHand].translation_ = { 2.37f, 0.0f, 0.0f };
 
-	parts_[LLeg1].translation_ = { -0.3f, -1.7f, 0 };
-	parts_[LLeg2].translation_ = { 0, -2.2f, 0 };
-	parts_[LFoot].translation_ = { -0.12f, -2.2f, 0 };
+	parts_[LLeg1].translation_ = { -0.3f, -1.7f, 0.0f };
+	parts_[LLeg2].translation_ = { 0.0f, -2.2f, 0.0f };
+	parts_[LFoot].translation_ = { -0.12f, -2.2f, 0.0f };
 
-	parts_[RLeg1].translation_ = { 0.3f, -1.7f, 0 };
-	parts_[RLeg2].translation_ = { 0, -2.2f, 0 };
-	parts_[RFoot].translation_ = { 0.12f, -2.2f, 0 };
+	parts_[RLeg1].translation_ = { 0.3f, -1.7f, 0.0f };
+	parts_[RLeg2].translation_ = { 0.0f, -2.2f, 0.0f };
+	parts_[RFoot].translation_ = { 0.12f, -2.2f, 0.0f };
 #pragma endregion
 
 	
@@ -128,20 +128,11 @@ void Player::Update()
 	//}
 	
 	
-	//	待機時間
-	if (waitFrame >= 60.0f)	{
-		//	仮 入力を受け付けたらフラグを建てる
-		if (KeyInput::PushKey(DIK_SPACE)) {
-			flag = true;
-		}
-		//	移動処理
-		Move();
-	}
-	else {
-		waitFrame++;
-	}
-	
+	//ImGui::DragFloat("body", &parts_[Body].translation_.y, 0.1f);
 
+	//	待機時間
+	//	移動処理
+	MoveType2();
 
 	transform.UpdateMatrix();
 	for (auto& i : parts_) {
@@ -191,14 +182,18 @@ void Player::HitEvalution(Enemy* enemy, Score* score) {
 }
 
 void Player::Move() {
-	//	frame加算処理 通常加算速度 * 全体のframe速度
-	frame += 1.0f * Battle::masterSpeed;
-	
 	//	攻撃(入力)された時
+	if (KeyInput::PushKey(DIK_SPACE) && !flag) {
+		flag = true;
+	}
 	if (flag) {
 		//	フレームを最大にする
-		frame = MAX_frame;
+		//frame = MAX_frame;
+		Battle::masterSpeed = 1.0f;
 	}
+	//	frame加算処理 通常加算速度 * 全体のframe速度
+	frame += 1.0f * Battle::masterSpeed;
+
 
 	//	攻撃をするまでの移動処理
 	transform.translation_.z = Ease::UseEase(oldPos, movePos, frame, MAX_frame, Ease::EaseType::EaseOutSine);
@@ -212,11 +207,49 @@ void Player::Move() {
 		frame = 0.0f;
 		//	待機フレームの初期化
 		waitFrame = 0.0f;
+
+		Battle::masterSpeed = 0.3f;
+
 		//	フラグを折る
 		flag = false;
 	}
+}
 
+void Player::MoveType2() {
+	//	frame加算処理 通常加算速度 * 全体のframe速度
+	frame += 1.0f * Battle::masterSpeed;
 
+	if (flag) {
+		waitFrame++;
+
+		//	仮 入力を受け付けたらフラグを建てる
+		if (KeyInput::PushKey(DIK_SPACE)) {
+			waitFrame = MAX_frame;
+		}
+
+		if (waitFrame >= MAX_frame) {
+			//	座標の更新
+			oldPos = transform.translation_.z;
+			//	敵の間隔分足す
+			movePos += enemyDistance;
+			//	frameの初期化
+			frame = 0.0f;
+			//	待機フレームの初期化
+			waitFrame = 0.0f;
+
+			flag = false;
+		}
+	}
+	else {
+		//	frame加算処理 通常加算速度 * 全体のframe速度
+		frame += 1.0f * Battle::masterSpeed;
+		//	攻撃をするまでの移動処理
+		transform.translation_.z = Ease::UseEase(oldPos, movePos, frame, MAX_frame, Ease::EaseType::EaseOutSine);
+		if (frame >= MAX_frame) {
+			waitFrame = 0.0f;
+			flag = true;
+		}
+	}
 }
 
 void Player::HitTest(Enemy* enemy, Score* score) {
