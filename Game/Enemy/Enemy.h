@@ -41,7 +41,7 @@ public: // Korone
 	void Initialize(int type, int num);
 
 	//修正版
-	void InitializeSP(int type, int num,
+	void InitializeSP(float pos, int type, int num,
 		std::vector<std::shared_ptr<Model>> models);
 
 	int type_;

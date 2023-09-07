@@ -71,6 +71,8 @@ private: //Korone
 	//int kEnemyIntervalNum_ = 5;
 	int enemyNum_ = 0;
 	int enemyKillCount_ = 0;
+
+	// enemyの配置の間隔
 	float kEnemyPopPosLength_ = 2.0f;
 
 	int preEnemyType_ = 0;

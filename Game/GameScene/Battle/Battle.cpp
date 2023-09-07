@@ -161,7 +161,7 @@ void Battle::EnemyGeneration() {
 
 		Enemy* enemy = new Enemy();
 
-		Vector3 pos = { 0,0,kEnemyPopPosLength_ * (enemyNum_ + 1) };
+		float  pos = kEnemyPopPosLength_ * (enemyNum_ + 1);
 
 		int type = rand() % 4;
 
@@ -186,7 +186,7 @@ void Battle::EnemyGeneration() {
 		}
 
 		// Initializeを変える必要がある
-		enemy->InitializeSP(type, enemyNum_, mobModels_);
+		enemy->InitializeSP(pos, type, enemyNum_, mobModels_);
 
 		enemies_.push_back(enemy);
 

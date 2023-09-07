@@ -39,13 +39,16 @@ void Enemy::Initialize(int type, int num)
 	parts_[Body].parent_ = &transform;
 }
 
-void Enemy::InitializeSP(int type, int num,//	モデルデータ配列
+void Enemy::InitializeSP(float pos, int type, int num,//	モデルデータ配列
 	std::vector<std::shared_ptr<Model>> models)
 {
 
 	models_ = models;
 
 	type_ = type;
+
+	transform.translation_.z = pos;
+	transform.UpdateMatrix();
 
 	switch (type)
 	{
