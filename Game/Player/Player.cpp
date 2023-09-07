@@ -216,7 +216,43 @@ void Player::Move() {
 		}
 	}
 
+}
 
+void Player::MoveType2() {
+	//	frame加算処理 通常加算速度 * 全体のframe速度
+	frame += 1.0f * Battle::masterSpeed;
+
+	if (flag) {
+		waitFrame++;
+
+		//	仮 入力を受け付けたらフラグを建てる
+		if (KeyInput::PushKey(DIK_SPACE)) {
+			waitFrame = MAX_frame;
+		}
+
+		if (waitFrame >= MAX_frame) {
+			//	座標の更新
+			oldPos = transform.translation_.z;
+			//	敵の間隔分足す
+			movePos += enemyDistance;
+			//	frameの初期化
+			frame = 0.0f;
+			//	待機フレームの初期化
+			waitFrame = 0.0f;
+
+			flag = false;
+		}
+	}
+	else {
+		//	frame加算処理 通常加算速度 * 全体のframe速度
+		frame += 1.0f * Battle::masterSpeed;
+		//	攻撃をするまでの移動処理
+		transform.translation_.z = Ease::UseEase(oldPos, movePos, frame, MAX_frame, Ease::EaseType::EaseOutSine);
+		if (frame >= MAX_frame) {
+			waitFrame = 0.0f;
+			flag = true;
+		}
+	}
 }
 
 void Player::HitTest(Enemy* enemy, Score* score) {
