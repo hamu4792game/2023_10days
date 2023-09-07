@@ -8,7 +8,7 @@ Ground::Ground()
 
 void Ground::Initialize()
 {
-	transform.scale_ = Vector3(200.0f, 200.0f, 200.0f);
+	transform.scale_ = Vector3(100.0f, 10.0f, 200.0f);
 	transform.rotation_ = Vector3(0.0f, AngleToRadian(0.0f), 0.0f);
 }
 

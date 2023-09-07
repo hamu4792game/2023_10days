@@ -5,6 +5,8 @@
 // 確認のため追加 by.Korone
 #include "Engine/Input/KeyInput/KeyInput.h"
 
+decltype(Battle::masterSpeed) Battle::masterSpeed;
+
 Battle::Battle(std::shared_ptr<Camera> camera)
 {
 	camera_ = camera;
@@ -40,6 +42,7 @@ void Battle::Initialize()
 	camera_->transform.translation_ = Vector3(0.0f, 16.5f, -21.7f);
 	camera_->transform.rotation_.x = 0.471f;
 
+	masterSpeed = 1.0f;
 
 	EnemyReset();
 
@@ -205,6 +208,7 @@ void Battle::Update()
 	//	カメラの調整
 	ImGui::DragFloat3("cameratr", &camera_->transform.translation_.x, 0.1f);
 	ImGui::DragFloat3("cameraro", &camera_->transform.rotation_.x, AngleToRadian(1.0f));
+	//ImGui::DragFloat("master", &masterSpeed, 0.1f);
 
 	for(Enemy* enemy : enemies_){
 		if (enemy->GetNum() == enemyKillCount_) {
