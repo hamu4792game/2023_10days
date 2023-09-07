@@ -48,6 +48,7 @@ void Enemy::InitializeSP(float pos, int type, int num,//	モデルデータ配�
 	type_ = type;
 
 	transform.translation_.z = pos;
+	transform.translation_.y = 6.5f;
 	transform.scale_ = Vector3(0.3f, 0.3f, 0.3f);
 	//transform.UpdateMatrix();
 
@@ -100,7 +101,7 @@ void Enemy::InitializeSP(float pos, int type, int num,//	モデルデータ配�
 	parts_[RFoot].parent_ = &parts_[RLeg2];
 
 	//座標設定
-	parts_[Body].translation_ = { 0.0f, 6.5f, 0.0f };
+	parts_[Body].translation_ = { 0.0f, 0.0f, 0.0f };
 	parts_[BodyUnder].translation_ = { 0.0f, 0.0f, 0.0f };
 	parts_[Head].translation_ = { 0.0f, 2.6f, 0.0f };
 

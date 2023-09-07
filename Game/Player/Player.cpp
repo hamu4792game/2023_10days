@@ -33,7 +33,7 @@ void Player::Initialize(std::vector<std::shared_ptr<Model>> models, WorldTransfo
 	world_ = world;
 	transform.parent_ = world;
 	//	地面の半径 * scale
-	//transform.translation_.y = 1.0f * 200.0f;
+	transform.translation_.y = 6.5f;
 	transform.scale_ = Vector3(0.3f, 0.3f, 0.3f);
 
 	//	カメラとの親子関係
@@ -79,7 +79,7 @@ void Player::Initialize(std::vector<std::shared_ptr<Model>> models, WorldTransfo
 	parts_[RFoot].parent_ = &parts_[RLeg2];
 
 	//座標設定
-	parts_[Body].translation_ = { 0.0f, 6.5f, 0.0f };
+	parts_[Body].translation_ = { 0.0f, 0.0f, 0.0f };
 	parts_[BodyUnder].translation_ = { 0.0f, 0.0f, 0.0f };
 	parts_[Head].translation_ = { 0.0f, 2.6f, 0.0f };
 
