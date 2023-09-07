@@ -197,7 +197,8 @@ void Player::Move() {
 	//	攻撃(入力)された時
 	if (flag) {
 		//	フレームを最大にする
-		frame = MAX_frame;
+		//frame = MAX_frame;
+		Battle::masterSpeed = 1.0f;
 	}
 
 	//	攻撃をするまでの移動処理
@@ -212,6 +213,9 @@ void Player::Move() {
 		frame = 0.0f;
 		//	待機フレームの初期化
 		waitFrame = 0.0f;
+
+		Battle::masterSpeed = 0.3f;
+
 		//	フラグを折る
 		flag = false;
 	}
