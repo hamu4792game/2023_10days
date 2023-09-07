@@ -129,18 +129,8 @@ void Player::Update()
 	
 	
 	//	待機時間
-	if (waitFrame >= 60.0f)	{
-		//	仮 入力を受け付けたらフラグを建てる
-		if (KeyInput::PushKey(DIK_SPACE)) {
-			flag = true;
-		}
-		//	移動処理
-		Move();
-	}
-	else {
-		waitFrame++;
-	}
-	
+	//	移動処理
+	Move();
 
 
 	transform.UpdateMatrix();
@@ -193,31 +183,37 @@ void Player::HitEvalution(Enemy* enemy, Score* score) {
 void Player::Move() {
 	//	frame加算処理 通常加算速度 * 全体のframe速度
 	frame += 1.0f * Battle::masterSpeed;
-	
-	//	攻撃(入力)された時
+
 	if (flag) {
-		//	フレームを最大にする
-		//frame = MAX_frame;
-		Battle::masterSpeed = 1.0f;
+		waitFrame++;
+
+		//	仮 入力を受け付けたらフラグを建てる
+		if (KeyInput::PushKey(DIK_SPACE)) {
+			waitFrame = MAX_frame;
+		}
+
+		if (waitFrame >= MAX_frame) {
+			//	座標の更新
+			oldPos = transform.translation_.z;
+			//	敵の間隔分足す
+			movePos += enemyDistance;
+			//	frameの初期化
+			frame = 0.0f;
+			//	待機フレームの初期化
+			waitFrame = 0.0f;
+
+			flag = false;
+		}
 	}
-
-	//	攻撃をするまでの移動処理
-	transform.translation_.z = Ease::UseEase(oldPos, movePos, frame, MAX_frame, Ease::EaseType::EaseOutSine);
-	//	最大まで移動したら初期化(次の敵への準備)処理
-	if (frame >= MAX_frame) {
-		//	座標の更新
-		oldPos = transform.translation_.z;
-		//	敵の間隔分足す
-		movePos += enemyDistance;
-		//	frameの初期化
-		frame = 0.0f;
-		//	待機フレームの初期化
-		waitFrame = 0.0f;
-
-		Battle::masterSpeed = 0.3f;
-
-		//	フラグを折る
-		flag = false;
+	else {
+		//	frame加算処理 通常加算速度 * 全体のframe速度
+		frame += 1.0f * Battle::masterSpeed;
+		//	攻撃をするまでの移動処理
+		transform.translation_.z = Ease::UseEase(oldPos, movePos, frame, MAX_frame, Ease::EaseType::EaseOutSine);
+		if (frame >= MAX_frame)	{
+			waitFrame = 0.0f;
+			flag = true;
+		}
 	}
 
 
