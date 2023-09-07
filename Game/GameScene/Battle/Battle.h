@@ -43,6 +43,7 @@ private://	必要なメンバ変数
 
 	//	プレイヤーデータのモデル配列
 	std::vector<std::shared_ptr<Model>> mobModels_;
+	std::vector<std::shared_ptr<Model>> mobModels_type2;
 
 	//	パーツ用ペアレントデータ
 	std::vector<WorldTransform> mobparts_;
@@ -73,7 +74,7 @@ private: //Korone
 	int enemyKillCount_ = 0;
 
 	// enemyの配置の間隔
-	float kEnemyPopPosLength_ = 2.0f;
+	float kEnemyPopPosLength_ = 10.0f;
 
 	int preEnemyType_ = 0;
 	int typeCount_ = 0;

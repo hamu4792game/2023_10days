@@ -79,25 +79,25 @@ void Player::Initialize(std::vector<std::shared_ptr<Model>> models, WorldTransfo
 	parts_[RFoot].parent_ = &parts_[RLeg2];
 
 	//座標設定
-	parts_[Body].translation_ = { 0, 0, 0 };
-	parts_[BodyUnder].translation_ = { 0, 0, 0 };
-	parts_[Head].translation_ = { 0, 2.6f, 0 };
+	parts_[Body].translation_ = { 0.0f, 6.5f, 0.0f };
+	parts_[BodyUnder].translation_ = { 0.0f, 0.0f, 0.0f };
+	parts_[Head].translation_ = { 0.0f, 2.6f, 0.0f };
 
-	parts_[LArm1].translation_ = { -0.8f, 1.57f, 0 };
-	parts_[LArm2].translation_ = { -1.73f, 0, 0 };
-	parts_[LHand].translation_ = { -2.37f, 0, 0 };
+	parts_[LArm1].translation_ = { -0.8f, 1.57f, 0.0f };
+	parts_[LArm2].translation_ = { -1.73f, 0.0f, 0.0f };
+	parts_[LHand].translation_ = { -2.37f, 0.0f, 0.0f };
 
-	parts_[RArm1].translation_ = { 0.8f, 1.57f, 0 };
-	parts_[RArm2].translation_ = { 1.73f, 0, 0 };
-	parts_[RHand].translation_ = { 2.37f, 0, 0 };
+	parts_[RArm1].translation_ = { 0.8f, 1.57f, 0.0f };
+	parts_[RArm2].translation_ = { 1.73f, 0.0f, 0.0f };
+	parts_[RHand].translation_ = { 2.37f, 0.0f, 0.0f };
 
-	parts_[LLeg1].translation_ = { -0.3f, -1.7f, 0 };
-	parts_[LLeg2].translation_ = { 0, -2.2f, 0 };
-	parts_[LFoot].translation_ = { -0.12f, -2.2f, 0 };
+	parts_[LLeg1].translation_ = { -0.3f, -1.7f, 0.0f };
+	parts_[LLeg2].translation_ = { 0.0f, -2.2f, 0.0f };
+	parts_[LFoot].translation_ = { -0.12f, -2.2f, 0.0f };
 
-	parts_[RLeg1].translation_ = { 0.3f, -1.7f, 0 };
-	parts_[RLeg2].translation_ = { 0, -2.2f, 0 };
-	parts_[RFoot].translation_ = { 0.12f, -2.2f, 0 };
+	parts_[RLeg1].translation_ = { 0.3f, -1.7f, 0.0f };
+	parts_[RLeg2].translation_ = { 0.0f, -2.2f, 0.0f };
+	parts_[RFoot].translation_ = { 0.12f, -2.2f, 0.0f };
 #pragma endregion
 
 	
@@ -128,6 +128,8 @@ void Player::Update()
 	//}
 	
 	
+	ImGui::DragFloat("body", &parts_[Body].translation_.y, 0.1f);
+
 	//	待機時間
 	if (waitFrame >= 60.0f)	{
 		//	仮 入力を受け付けたらフラグを建てる
@@ -141,7 +143,6 @@ void Player::Update()
 		waitFrame++;
 	}
 	
-
 
 	transform.UpdateMatrix();
 	for (auto& i : parts_) {

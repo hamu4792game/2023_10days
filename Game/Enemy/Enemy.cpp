@@ -48,7 +48,8 @@ void Enemy::InitializeSP(float pos, int type, int num,//	モデルデータ配�
 	type_ = type;
 
 	transform.translation_.z = pos;
-	transform.UpdateMatrix();
+	transform.scale_ = Vector3(0.3f, 0.3f, 0.3f);
+	//transform.UpdateMatrix();
 
 	switch (type)
 	{
@@ -72,6 +73,7 @@ void Enemy::InitializeSP(float pos, int type, int num,//	モデルデータ配�
 	num_ = num;
 
 	parts_.resize(models_.size());
+	parts_[Body].parent_ = &transform;
 
 	//ボタンの親を設定
 	BottonW_.parent_ = &transform;
@@ -98,25 +100,25 @@ void Enemy::InitializeSP(float pos, int type, int num,//	モデルデータ配�
 	parts_[RFoot].parent_ = &parts_[RLeg2];
 
 	//座標設定
-	parts_[Body].translation_ = { 0, 0, 0 };
-	parts_[BodyUnder].translation_ = { 0, 0, 0 };
-	parts_[Head].translation_ = { 0, 2.6f, 0 };
+	parts_[Body].translation_ = { 0.0f, 6.5f, 0.0f };
+	parts_[BodyUnder].translation_ = { 0.0f, 0.0f, 0.0f };
+	parts_[Head].translation_ = { 0.0f, 2.6f, 0.0f };
 
-	parts_[LArm1].translation_ = { -0.8f, 1.57f, 0 };
-	parts_[LArm2].translation_ = { -1.73f, 0, 0 };
-	parts_[LHand].translation_ = { -2.37f, 0, 0 };
+	parts_[LArm1].translation_ = { -0.8f, 1.57f, 0.0f };
+	parts_[LArm2].translation_ = { -1.73f, 0.0f, 0.0f };
+	parts_[LHand].translation_ = { -2.37f, 0.0f, 0.0f };
 
-	parts_[RArm1].translation_ = { 0.8f, 1.57f, 0 };
-	parts_[RArm2].translation_ = { 1.73f, 0, 0 };
-	parts_[RHand].translation_ = { 2.37f, 0, 0 };
+	parts_[RArm1].translation_ = { 0.8f, 1.57f, 0.0f };
+	parts_[RArm2].translation_ = { 1.73f, 0.0f, 0.0f };
+	parts_[RHand].translation_ = { 2.37f, 0.0f, 0.0f };
 
-	parts_[LLeg1].translation_ = { -0.3f, -1.7f, 0 };
-	parts_[LLeg2].translation_ = { 0, -2.2f, 0 };
-	parts_[LFoot].translation_ = { -0.12f, -2.2f, 0 };
+	parts_[LLeg1].translation_ = { -0.3f, -1.7f, 0.0f };
+	parts_[LLeg2].translation_ = { 0.0f, -2.2f, 0.0f };
+	parts_[LFoot].translation_ = { -0.12f, -2.2f, 0.0f };
 
-	parts_[RLeg1].translation_ = { 0.3f, -1.7f, 0 };
-	parts_[RLeg2].translation_ = { 0, -2.2f, 0 };
-	parts_[RFoot].translation_ = { 0.12f, -2.2f, 0 };
+	parts_[RLeg1].translation_ = { 0.3f, -1.7f, 0.0f };
+	parts_[RLeg2].translation_ = { 0.0f, -2.2f, 0.0f };
+	parts_[RFoot].translation_ = { 0.12f, -2.2f, 0.0f };
 #pragma endregion
 
 	
@@ -130,6 +132,8 @@ void Enemy::ModelLoad()
 
 void Enemy::Update()
 {
+	
+
 	transform.UpdateMatrix();
 	for (auto& i : parts_) {
 		i.UpdateMatrix();

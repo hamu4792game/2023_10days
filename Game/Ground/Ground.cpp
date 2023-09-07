@@ -14,7 +14,7 @@ void Ground::Initialize()
 
 void Ground::ModelLoad()
 {
-	ground->Texture("Resources/plane/plane.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl", "uvChecker.png");
+	ground->Texture("Resources/plane/plane.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl", "road.png");
 }
 
 void Ground::Draw(const Matrix4x4& viewProjection)

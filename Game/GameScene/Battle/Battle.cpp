@@ -17,6 +17,7 @@ Battle::Battle(std::shared_ptr<Camera> camera)
 	//プレイヤーモデルの初期化
 	for (uint16_t i = 0u; i < PARTS::Num; i++) {
 		mobModels_.push_back(std::make_shared<Model>());
+		mobModels_type2.push_back(std::make_shared<Model>());
 	}
 	//ボタンモデルの初期化
 	for (uint32_t i = 0u; i < 4; i++) {
@@ -83,6 +84,27 @@ void Battle::ModelLoad()
 	mobModels_[RLeg1]->Texture("Resources/player/Parts/pRLeg1/pRLeg1.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl");
 	mobModels_[RLeg2]->Texture("Resources/player/Parts/pRLeg2/pRLeg2.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl");
 	mobModels_[RFoot]->Texture("Resources/player/Parts/pRFoot/pRFoot.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl");
+
+	//頭・身体・腰
+	mobModels_type2[Body]->Texture("Resources/player/Parts/pBody/pBody.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl", "uvChecker.png");
+	mobModels_type2[Head]->Texture("Resources/player/Parts/pHead/pHead.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl", "uvChecker.png");
+	mobModels_type2[BodyUnder]->Texture("Resources/player/Parts/pBodyUnder/pBodyUnder.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl", "uvChecker.png");
+	//左腕１・左腕２・左手
+	mobModels_type2[LArm1]->Texture("Resources/player/Parts/pLArm1/pLArm1.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl", "uvChecker.png");
+	mobModels_type2[LArm2]->Texture("Resources/player/Parts/pLArm2/pLArm2.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl", "uvChecker.png");
+	mobModels_type2[LHand]->Texture("Resources/player/Parts/pLHand/pLHand.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl", "uvChecker.png");
+	//右腕１・右腕２・右手
+	mobModels_type2[RArm1]->Texture("Resources/player/Parts/pRArm1/pRArm1.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl", "uvChecker.png");
+	mobModels_type2[RArm2]->Texture("Resources/player/Parts/pRArm2/pRArm2.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl", "uvChecker.png");
+	mobModels_type2[RHand]->Texture("Resources/player/Parts/pRHand/pRHand.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl", "uvChecker.png");
+	//左足首１・左足首２・左足
+	mobModels_type2[LLeg1]->Texture("Resources/player/Parts/pLLeg1/pLLeg1.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl", "uvChecker.png");
+	mobModels_type2[LLeg2]->Texture("Resources/player/Parts/pLLeg/pLLeg.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl", "uvChecker.png");
+	mobModels_type2[LFoot]->Texture("Resources/player/Parts/pLFoot/pLFoot.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl", "uvChecker.png");
+	//右足首１・右足首２・右足
+	mobModels_type2[RLeg1]->Texture("Resources/player/Parts/pRLeg1/pRLeg1.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl", "uvChecker.png");
+	mobModels_type2[RLeg2]->Texture("Resources/player/Parts/pRLeg2/pRLeg2.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl", "uvChecker.png");
+	mobModels_type2[RFoot]->Texture("Resources/player/Parts/pRFoot/pRFoot.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl", "uvChecker.png");
 
 
 	numberTextures_[0]->Texture("Resources/number/0.png", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl");
@@ -161,7 +183,7 @@ void Battle::EnemyGeneration() {
 
 		Enemy* enemy = new Enemy();
 
-		float  pos = kEnemyPopPosLength_ * (enemyNum_ + 1);
+		float  pos = kEnemyPopPosLength_ * (enemyNum_ + 1) + 1.0f;
 
 		int type = rand() % 4;
 
@@ -186,7 +208,7 @@ void Battle::EnemyGeneration() {
 		}
 
 		// Initializeを変える必要がある
-		enemy->InitializeSP(pos, type, enemyNum_, mobModels_);
+		enemy->InitializeSP(pos, type, enemyNum_, mobModels_type2);
 
 		enemies_.push_back(enemy);
 
