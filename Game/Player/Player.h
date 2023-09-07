@@ -59,6 +59,26 @@ private:
 	//	カメラの初期位置
 	Vector3 offset;
 
+	//	移動処理用のフラグ
+	bool flag = false;
+
+	//	移動座標 (敵の位置)
+	float movePos = 0.0f;
+	//	移動前の座標（ease用始点）
+	float oldPos = 0.0f;
+	//	客の間隔
+	float enemyDistance;
+	//	加算していくフレーム
+	float frame;
+	float waitFrame;
+	//	最大フレーム
+	float MAX_frame;
+
+private:
+
+	//	移動処理
+	void Move();
+
 private: // Korone
 
 	enum Evalution {

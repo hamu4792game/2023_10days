@@ -1,6 +1,6 @@
 # Blender v3.5.0 OBJ File: ''
 # www.blender.org
-mtllib B.mtl
+mtllib hud/B/B.mtl
 o Cube
 v 0.074533 0.470281 0.200000
 v 0.074533 -0.547993 0.200000

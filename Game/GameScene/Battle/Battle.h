@@ -41,14 +41,18 @@ private://	必要なメンバ変数
 
 	std::unique_ptr<Player> player_;
 
-  //	プレイヤーデータのモデル配列
+	//	プレイヤーデータのモデル配列
 	std::vector<std::shared_ptr<Model>> mobModels_;
 
 	//	パーツ用ペアレントデータ
 	std::vector<WorldTransform> mobparts_;
   
-  //	中心座標
+	//	中心座標
 	std::shared_ptr<WorldTransform> worldTransform;
+
+public:
+	//	マスターフレーム速度。リアルタイム加減速
+	static float masterSpeed;
 
 private: // Korone
 
@@ -74,7 +78,5 @@ private: //Korone
 	std::list<Enemy*> enemies_;
 
 	std::vector<std::shared_ptr<Texture2D>> numberTextures_;
-
-	WorldTransform tmp;
 
 };
