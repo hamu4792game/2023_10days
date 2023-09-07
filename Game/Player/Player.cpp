@@ -218,7 +218,7 @@ void Player::Move() {
 
 void Player::MoveType2() {
 	//	frame加算処理 通常加算速度 * 全体のframe速度
-	frame += 1.0f * Battle::masterSpeed;
+	//frame += 1.0f * Battle::masterSpeed;
 
 	if (flag) {
 		waitFrame++;
@@ -228,7 +228,7 @@ void Player::MoveType2() {
 			waitFrame = MAX_frame;
 		}
 
-		if (waitFrame >= MAX_frame) {
+		if (KeyInput::PushKey(DIK_SPACE) || score_->GetEvaluation()) {
 			//	座標の更新
 			oldPos = transform.translation_.z;
 			//	敵の間隔分足す
@@ -259,7 +259,7 @@ void Player::HitTest(Enemy* enemy) {
 
 	score_->ResetEvalution();
 
-	if (frame >= MAX_frame) {
+	if (flag) {
 
 		evalutionCount_++;
 

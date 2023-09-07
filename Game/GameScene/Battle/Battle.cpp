@@ -185,7 +185,7 @@ void Battle::EnemyGeneration() {
 
 		Enemy* enemy = new Enemy();
 
-		float  pos = kEnemyPopPosLength_ * (enemyNum_ + 1) + 1.0f;
+		float  pos = kEnemyPopPosLength_ * (enemyNum_) + 1.0f;
 
 		int type = rand() % 4;
 
