@@ -67,7 +67,28 @@ void Score::SetWorldTransform(const Vector2& screenPos, float scale, float rotat
 		break;
 	case Score::Parameter::kHighCombo:
 
+		digits = kComboMaxDigits_;
 
+		for (int i = 0; i < digits; i++) {
+
+			highComboWorldTransform_[i].translation_.x = pos.x + kNumberTextureWidth_ * i * scale;
+			highComboWorldTransform_[i].translation_.y = pos.y;
+			highComboWorldTransform_[i].scale_.x = scale;
+			highComboWorldTransform_[i].scale_.y = scale;
+			highComboWorldTransform_[i].rotation_.z = rotate;
+
+
+			if (rotate != 0) {
+				float a = kNumberTextureWidth_ * i * scale;
+
+				highComboWorldTransform_[i].translation_.x = a * std::cosf(rotate) + pos.x;
+				highComboWorldTransform_[i].translation_.y = a * std::sinf(rotate) + pos.y;
+
+			}
+
+			highComboWorldTransform_[i].UpdateMatrix();
+
+		}
 		break;
 	case Score::Parameter::kPerfectNum:
 
