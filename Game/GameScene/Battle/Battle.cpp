@@ -141,47 +141,42 @@ void Battle::ModelLoad()
 
 void Battle::EnemyGeneration() {
 
-	while (enemyNum_ - enemyKillCount_ < kEnemyIntervalNum_) {
+	for (int i = 0; i < kEnemyMaxNum_; i++) {
 
-		if (enemyNum_ == kEnemyMaxNum_) {
-			break;
-		}
-		else {
-			Enemy* enemy = new Enemy();
+		Enemy* enemy = new Enemy();
 
-			Vector3 pos = { 0,0,kEnemyPopPosLength_ * (enemyNum_ + 1) };
+		Vector3 pos = { 0,0,kEnemyPopPosLength_ * (enemyNum_ + 1) };
 
-			int type = rand() % 4;
+		int type = rand() % 4;
 
-			if (type == preEnemyType_) {
+		if (type == preEnemyType_) {
 
-				typeCount_++;
-				if (typeCount_ == 4) {
+			typeCount_++;
+			if (typeCount_ == 4) {
 
-					while (type == preEnemyType_)
-					{
-						type = rand() % 4;
-						if (type != preEnemyType_) {
-							break;
-						}
+				while (type == preEnemyType_)
+				{
+					type = rand() % 4;
+					if (type != preEnemyType_) {
+						break;
 					}
-
-					typeCount_ = 0;
 				}
-			}
-			else {
+
 				typeCount_ = 0;
 			}
-
-			// Initializeを変える必要がある
-			enemy->InitializeSP(type, enemyNum_, mobModels_);
-
-			enemies_.push_back(enemy);
-
-			enemyNum_++;
-
-			preEnemyType_ = type;
 		}
+		else {
+			typeCount_ = 0;
+		}
+
+		// Initializeを変える必要がある
+		enemy->InitializeSP(type, enemyNum_, mobModels_);
+
+		enemies_.push_back(enemy);
+
+		enemyNum_++;
+
+		preEnemyType_ = type;
 	}
 
 }
@@ -218,7 +213,6 @@ void Battle::Update()
 			if (score_->GetEvaluation()) {
 
 				enemyKillCount_++;
-				EnemyGeneration();
 			}
 
 			break;

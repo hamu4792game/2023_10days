@@ -61,10 +61,10 @@ private: // Korone
 private: //Korone
 
 	int kEnemyMaxNum_ = 100;
-	int kEnemyIntervalNum_ = 5;
+	//int kEnemyIntervalNum_ = 5;
 	int enemyNum_ = 0;
 	int enemyKillCount_ = 0;
-	float kEnemyPopPosLength_ = 5.0f;
+	float kEnemyPopPosLength_ = 2.0f;
 
 	int preEnemyType_ = 0;
 	int typeCount_ = 0;
