@@ -201,7 +201,7 @@ void Player::Move() {
 	}
 
 	//	攻撃をするまでの移動処理
-	transform.translation_.z = Ease::UseEase(oldPos, movePos, static_cast<int>(frame), static_cast<int>(MAX_frame), Ease::EaseType::EaseOutSine, 1);
+	transform.translation_.z = Ease::UseEase(oldPos, movePos, frame, MAX_frame, Ease::EaseType::EaseOutSine);
 	//	最大まで移動したら初期化(次の敵への準備)処理
 	if (frame >= MAX_frame) {
 		//	座標の更新
