@@ -29,17 +29,19 @@ public:
 
 public: // Korone
 
+	void SetScore(Score* score) { score_ = score; }
+
 	void HitTestInitialize();
 
 	//void SetScore(Score* score) { score = score; }
 
-	void HitTest(Enemy* enemy, Score* score);
+	void HitTest(Enemy* enemy);
 
 private: // Korone
 
 	//void HitTest(Enemy* enemy, Score* score);
 
-	void HitEvalution(Enemy* enemy, Score* score);
+	void HitEvalution(Enemy* enemy);
 
 private:
 
@@ -89,6 +91,8 @@ private: // Korone
 		kGood,
 		kMiss
 	};
+
+	Score* score_ = nullptr;
 
 	//Input* input_ = nullptr;
 
