@@ -12,7 +12,7 @@ GameScene* GameScene::GetInstance()
 
 void GameScene::Initialize()
 {
-	//	モデルの読み込みと生成
+	//	カメラの読み込みと生成
 	camera = std::make_shared<Camera>(2000.0f, true);
 	camera2d = std::make_shared<Camera>();
 	//	カメラ行列の更新
@@ -38,6 +38,11 @@ void GameScene::Initialize()
 	for (uint16_t i = 0u; i < 10; i++) {
 		numberTextures_.push_back(std::make_shared<Texture2D>());
 	}
+	//	UIテクスチャの初期化
+	for (uint16_t i = 0u; i < UI::kUITexturesMaxNum_; i++) {
+		UITextures_.push_back(std::make_shared<Texture2D>());
+	}
+
 
 	//	モデルのロード
 	ModelLoad();
@@ -61,13 +66,6 @@ void GameScene::Initialize()
 	//	変数の初期化
 	scene = Scene::BATTLE;
 	oldscene = Scene::TITLE;
-
-	//	モデルのロード
-	//title->ModelLoad();
-	//battle->ModelLoad();
-	result->ModelLoad();
-
-
 
 	//camera->transform.translation_.z = -20.0f;
 
