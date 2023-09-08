@@ -17,6 +17,11 @@ WorldTransform& WorldTransform::operator=(const WorldTransform& trans)
 	this->scale_ = trans.rotation_;
 	this->worldMatrix = trans.worldMatrix;
 	this->parent_ = trans.parent_;
+	this->cMat = trans.cMat;
+	this->cColor = trans.cColor;
+	this->cMono->pibot = trans.cMono->pibot;
+	this->cMono->rate = trans.cMono->rate;
+
 	return *this;
 }
 

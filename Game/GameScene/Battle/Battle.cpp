@@ -2,59 +2,189 @@
 #include "externals/imgui/imgui.h"
 #include "math/Vector4.h"
 
+// 確認のため追加 by.Korone
+#include "Engine/Input/KeyInput/KeyInput.h"
+
+decltype(Battle::masterSpeed) Battle::masterSpeed;
+
 Battle::Battle(std::shared_ptr<Camera> camera)
 {
 	camera_ = camera;
 	player_ = std::make_unique<Player>(camera_);
 
-	//プレイヤーモデルの初期化
-	for (uint16_t i = 0u; i < PARTS::Num; i++) {
-		mobModels_.push_back(std::make_shared<Model>());
+
+	score_ = std::make_unique<Score>();
+
+	player_->SetScore(score_.get());
+
+	worldTransform = std::make_shared<WorldTransform>();
+
+	ui_ = std::make_unique<UI>();
+	ui_->SetScore(score_.get());
+
+}
+
+Battle::~Battle() {
+	for (Enemy* enemy : enemies_) {
+		delete enemy;
 	}
-  
-	mobarts_.resize(mobModels_.size());
 }
 
 void Battle::Initialize()
 {
-	player_->Initialize(mobModels_, transform);
+	//	カメラの設定
+	camera_->transform.translation_ = Vector3(0.0f, 16.5f, -21.7f);
+	camera_->transform.rotation_.x = 0.471f;
+
+	masterSpeed = 1.0f;
+
+	EnemyReset();
+
+	EnemyGeneration();
+
+	score_->Initialize();
+
+	ui_->Initialize();
+
+	player_->Initialize(mobModels_, worldTransform.get());
+
 }
 
-void Battle::ModelLoad()
-{
-	//頭・身体・腰
-	mobModels_[Body]->Texture("Resources/player/Parts/pBody/pBody.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl");
-	mobModels_[Head]->Texture("Resources/player/Parts/pHead/pHead.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl");
-	mobModels_[BodyUnder]->Texture("Resources/player/Parts/pBodyUnder/pBodyUnder.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl");
-	//左腕１・左腕２・左手
-	mobModels_[LArm1]->Texture("Resources/player/Parts/pLArm1/pLArm1.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl");
-	mobModels_[LArm2]->Texture("Resources/player/Parts/pLArm2/pLArm2.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl");
-	mobModels_[LHand]->Texture("Resources/player/Parts/pLHand/pLHand.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl");
-	//右腕１・右腕２・右手
-	mobModels_[RArm1]->Texture("Resources/player/Parts/pRArm1/pRArm1.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl");
-	mobModels_[RArm2]->Texture("Resources/player/Parts/pRArm2/pRArm2.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl");
-	mobModels_[RHand]->Texture("Resources/player/Parts/pRHand/pRHand.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl");
-	//左足首１・左足首２・左足
-	mobModels_[LLeg1]->Texture("Resources/player/Parts/pLLeg1/pLLeg1.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl");
-	mobModels_[LLeg2]->Texture("Resources/player/Parts/pLLeg/pLLeg.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl");
-	mobModels_[LFoot]->Texture("Resources/player/Parts/pLFoot/pLFoot.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl");
-	//右足首１・右足首２・右足
-	mobModels_[RLeg1]->Texture("Resources/player/Parts/pRLeg1/pRLeg1.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl");
-	mobModels_[RLeg2]->Texture("Resources/player/Parts/pRLeg2/pRLeg2.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl");
-	mobModels_[RFoot]->Texture("Resources/player/Parts/pRFoot/pRFoot.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl");
 
-	//player_->ModelLoad();
+void Battle::EnemyGeneration() {
+
+	for (int i = 0; i < kEnemyMaxNum_; i++) {
+
+		Enemy* enemy = new Enemy();
+
+		float  pos = kEnemyPopPosLength_ * (enemyNum_) + 1.0f;
+
+		int type = rand() % 4;
+
+		if (type == preEnemyType_) {
+
+			typeCount_++;
+			if (typeCount_ == 4) {
+
+				while (type == preEnemyType_)
+				{
+					type = rand() % 4;
+					if (type != preEnemyType_) {
+						break;
+					}
+				}
+
+				typeCount_ = 0;
+			}
+		}
+		else {
+			typeCount_ = 0;
+		}
+
+		// Initializeを変える必要がある
+		enemy->InitializeSP(pos, type, enemyNum_, mobModels_type2);
+
+		enemies_.push_back(enemy);
+
+		enemyNum_++;
+
+		preEnemyType_ = type;
+	}
+
+}
+
+void Battle::EnemyReset() {
+	for (Enemy* enemy : enemies_) {
+		enemy->Die();
+	}
+	enemies_.remove_if([](Enemy* enemy) {
+		if (enemy->IsDead()) {
+			delete enemy;
+			return true;
+		}
+		return false;
+	});
+
+	enemyNum_ = 0;
+	enemyKillCount_ = 0;
+	
+	preEnemyType_ = 0;
+	typeCount_ = 0;
 }
 
 void Battle::Update()
 {
-	transform.rotation_.x += AngleToRadian(1.0f);
+	//	カメラの調整
+	ImGui::DragFloat3("cameratr", &camera_->transform.translation_.x, 0.1f);
+	ImGui::DragFloat3("cameraro", &camera_->transform.rotation_.x, AngleToRadian(1.0f));
+	ImGui::DragFloat("master", &worldTransform->scale_.y, 0.01f);
+
+	for(Enemy* enemy : enemies_){
+		if (enemy->GetNum() == enemyKillCount_) {
+			player_->HitTest(enemy);
+			
+			if (score_->GetEvaluation()) {
+
+				enemyKillCount_++;
+			}
+
+			break;
+		}
+	}
+
+	for (Enemy* enemy : enemies_) {
+		enemy->Update();
+	}
+
+	// 確認のため追加 by.Korone
+	if (KeyInput::PushKey(DIK_SPACE)) {
+		score_->AddPerfect();
+	}
+	if (KeyInput::PushKey(DIK_R)) {
+		score_->AddMiss();
+	}
+
+
 	//ImGui::DragFloat("worldRo", &transform.rotation_.x, AngleToRadian(1.0f));
-	transform.worldMatrix = MakeRotateMatrix(transform.rotation_);
+	//	行列の更新　回転行列のみ必要なためUpdateはしていない
 	player_->Update();
+	worldTransform->UpdateMatrix();
+
+}
+
+void Battle::ScoreDraw(const Matrix4x4& viewProjection) {
+
+	// お試し
+
+	score_->SetWorldTransform({ 60.0f,60.0f }, 1.0f, 0.0f, Score::kScore);
+	score_->SetWorldTransform({ 960.0f,160.0f }, 1.5f, 0.0f, Score::kCombo);
+	score_->SetWorldTransform({ 960.0f,240.0f }, 0.8f, 0.0f, Score::kHighCombo);
+	score_->SetWorldTransform({ 960.0f,300.0f }, 0.8f, 0.0f, Score::kPerfectNum);
+	score_->SetWorldTransform({ 960.0f,360.0f }, 0.8f, 0.0f, Score::kGreatNum);
+	score_->SetWorldTransform({ 960.0f,420.0f }, 0.8f, 0.0f, Score::kGoodNum);
+	score_->SetWorldTransform({ 960.0f,480.0f }, 0.8f, 0.0f, Score::kMissNum);
+
+
+	score_->DrawParameter(viewProjection, Score::kScore);
+	score_->DrawParameter(viewProjection, Score::kCombo);
+	score_->DrawParameter(viewProjection, Score::kHighCombo);
+	score_->DrawParameter(viewProjection, Score::kPerfectNum);
+	score_->DrawParameter(viewProjection, Score::kGreatNum);
+	score_->DrawParameter(viewProjection, Score::kGoodNum);
+	score_->DrawParameter(viewProjection, Score::kMissNum);
+
 }
 
 void Battle::Draw(const Matrix4x4& viewProjection)
 {
 	player_->Draw(viewProjection);
+
+	for (Enemy* enemy : enemies_) {
+		enemy->Draw(viewProjection, bottonModels_);
+	}
+}
+
+void Battle::Draw2D(const Matrix4x4& viewProjection) {
+
+	ScoreDraw(viewProjection);
 }

@@ -57,9 +57,13 @@ public:
 	/// <param name="psFileName">psShaderのパス</param>
 	void Texture(const std::string& filePath, const std::string& vsFileName, const std::string& psFileName);
 
+	void Texture(const std::string& filePath, const std::string& vsFileName, const std::string& psFileName, const std::string& texturePath);
+
 private:
 	
 	void CreateDescriptor(const std::string& filePath);
+
+	void CreateDescriptor(const std::string& filePath, const std::string& texturePath);
 
 	void CreateVertexResource();
 
