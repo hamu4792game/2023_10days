@@ -56,9 +56,6 @@ private: // モデル用変数
 	std::vector<std::shared_ptr<Texture2D>> UITextures_;
 
 private:
-	//	パーツ用データの元
-	std::vector<WorldTransform> parts_;
-
 
 public:
 
@@ -72,7 +69,5 @@ public:
 private: // メンバ関数
 	//	モデルのロード
 	void ModelLoad();
-	//	パーツデータの初期座標のセット
-	void SetParts();
 
 };

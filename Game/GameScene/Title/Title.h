@@ -3,11 +3,15 @@
 #include <vector>
 #include "Engine/Texture/Model.h"
 #include "Engine/Texture/Texture2D.h"
+#include "Engine/Camera/Camera.h"
+
+#include "Game/Enemy/Enemy.h"
+#include "Game/Player/Player.h"
 
 class Title
 {
 public:
-	Title() = default;
+	Title(std::shared_ptr<Camera> camera = nullptr);
 	~Title() = default;
 
 	void Initialize();
@@ -29,8 +33,23 @@ private: // シーンで必要なモデル配列
 	std::vector<std::shared_ptr<Model>> bottonModels_;
 	
 private:
-	//	モデルデータ配列
-	std::vector<WorldTransform> parts_;
+	//	中心座標
+	WorldTransform worldTransform;
+	
+
+	//struct Chara {
+	//	//	キャラの座標
+	//	WorldTransform character;
+	//	//	モデルデータ配列
+	//	std::vector<WorldTransform> parts_;
+	//};
+	//Chara player_;
+	//std::vector<Chara> enemy_;
+
+	std::vector<std::unique_ptr<Enemy>> enemys_;
+
+	//	カメラのポインタ
+	std::shared_ptr<Camera> camera_ = nullptr;
 
 
 private: // メンバ関数

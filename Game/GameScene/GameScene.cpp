@@ -3,6 +3,7 @@
 
 #include <stdlib.h>
 #include <time.h>
+#include "Engine/Input/KeyInput/KeyInput.h"
 
 GameScene* GameScene::GetInstance()
 {
@@ -20,7 +21,7 @@ void GameScene::Initialize()
 	viewProjectionMatrix2d = camera2d->GetViewProMat();
 
 	//	シーンの生成
-	title = std::make_unique<Title>();
+	title = std::make_unique<Title>(camera);
 	battle = std::make_unique<Battle>(camera);
 	result = std::make_unique<Result>();
 
@@ -64,8 +65,8 @@ void GameScene::Initialize()
 
 
 	//	変数の初期化
-	scene = Scene::BATTLE;
-	oldscene = Scene::TITLE;
+	scene = Scene::TITLE;
+	oldscene = Scene::RESULT;
 
 	//camera->transform.translation_.z = -20.0f;
 
@@ -104,6 +105,9 @@ void GameScene::Update()
 		break;
 	case GameScene::Scene::BATTLE:
 		battle->Update();
+		if (KeyInput::PushKey(DIK_P)) {
+			scene = Scene::TITLE;
+		}
 		break;
 	case GameScene::Scene::RESULT:
 		result->Update();

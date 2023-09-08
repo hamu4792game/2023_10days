@@ -1,21 +1,52 @@
 #include "Game/GameScene/Title/Title.h"
-#include <EEnum.h>
+#include "EEnum.h"
+#include "externals/imgui/imgui.h"
+
+Title::Title(std::shared_ptr<Camera> camera)
+{
+	camera_ = camera;
+}
 
 void Title::Initialize()
 {
-	parts_.resize(mobModels_.size());
-	SetParts();
+	worldTransform.translation_ = Vector3(0.0f, 6.5f, 0.0f);
+
+	player_.parts_.resize(mobModels_.size());
+	enemy_.resize(5);
+	for (uint16_t i = 0u; i < enemy_.size(); i++) {
+		enemy_[i].parts_.resize(mobModels_type2.size());
+		enemy_[i].parts_ = SetParts(enemy_[i].parts_);
+		enemy_[i].character.translation_.z = 10.0f + static_cast<float>(i * 10.0f);
+	}
+
+	//SetParts();
+
+	//	カメラの設定
+	//	カメラとの親子関係
+	camera_->transform.parent_ = &worldTransform;
+	camera_->transform.translation_ = Vector3(-6.0f, -0.5f, -35.0f);
+	camera_->transform.rotation_ = Vector3(0.035f, 0.035f, 0.0f);
 }
 
 void Title::Update()
 {
+	ImGui::DragFloat3("camera", &camera_->transform.translation_.x, 0.1f);
+	ImGui::DragFloat3("cameraRot", &camera_->transform.rotation_.x, AngleToRadian(1.0f));
+
+	worldTransform.UpdateMatrix();
+	
+	for (uint16_t i = 0; i < 5; i++) {
+		enemys_.push_back(std::make_unique<Enemy>());
+		enemys_[i]->InitializeSP(10.0f + (i * 10.0f), Enemy::BottomType::kA, i, mobModels_type2);
+	}
 }
 
 void Title::Draw(Matrix4x4 viewProjection)
 {
-	for (uint16_t i = 0u; i < parts_.size(); i++)
+	for (uint16_t i = 0u; i <5; i++)
 	{
-		Model::ModelDraw(parts_[i], viewProjection, 0xffffffff, mobModels_[i].get());
+		Model::ModelDraw(player_.parts_[i], viewProjection, 0xffffffff, mobModels_[i].get());
+		enemys_[i]->Draw(viewProjection);
 	}
 }
 
