@@ -24,11 +24,13 @@ public:
 
 public:
 
-	UI(std::vector<std::shared_ptr<Texture2D>> UITextures);
+	UI();
 
 	void Initialize();
 
 	void SetScore(Score* score) { score_ = score; }
+
+	void SetUITexture(std::vector<std::shared_ptr<Texture2D>> UITextures) { UITextures_ = UITextures; }
 
 	// posは一番左の数字の真ん中の座標。
 	void SetWorldTransform(const Vector2& screenPos, float scale, float rotate, UITextureNames textureName);

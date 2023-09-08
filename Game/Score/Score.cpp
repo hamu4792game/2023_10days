@@ -1,6 +1,6 @@
 #include "Score.h"
 
-Score::Score(std::vector<std::shared_ptr<Texture2D>> numberTextures) {
+Score::Score() {
 
 	for (int i = 0; i < kParameterNum_; i++) {
 		if (i == kScore) {
@@ -17,7 +17,6 @@ Score::Score(std::vector<std::shared_ptr<Texture2D>> numberTextures) {
 		colors_[i] = 0xFFFFFFFF;
 	}
 
-	numberTextures_ = numberTextures;
 }
 
 void Score::Initialize() {

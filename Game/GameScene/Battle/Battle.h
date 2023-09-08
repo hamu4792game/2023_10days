@@ -25,9 +25,6 @@ public:
 	//	初期化
 	void Initialize();
 
-	//	モデルのロード
-	void ModelLoad();
-
 	//	更新処理
 	void Update();
 
@@ -37,10 +34,12 @@ public:
 	void Draw2D(const Matrix4x4& viewProjection);
 
 
-	void SetModels(std::vector<std::shared_ptr<Model>> modeldate) { mobModels_ = modeldate; };
-	void SetModelsType2(std::vector<std::shared_ptr<Model>> modeldate) { mobModels_type2 = modeldate; };
-	void SetBottonModels(std::vector<std::shared_ptr<Model>> modeldate) { bottonModels_= modeldate; };
-	void SetNumberTextures(std::vector<std::shared_ptr<Texture2D>> texturedate) { numberTextures_ = texturedate; };
+	void SetModels(std::vector<std::shared_ptr<Model>> modeldate) { mobModels_ = modeldate; }
+	void SetModelsType2(std::vector<std::shared_ptr<Model>> modeldate) { mobModels_type2 = modeldate; }
+	void SetBottonModels(std::vector<std::shared_ptr<Model>> modeldate) { bottonModels_= modeldate; }
+	void SetNumberTextures(std::vector<std::shared_ptr<Texture2D>> texturedate) { score_->SetNumberTexture(texturedate); }
+	void SetUITextures(std::vector<std::shared_ptr<Texture2D>> texturedate) { ui_->SetUITexture(texturedate); }
+
 
 private://	必要なメンバ変数
 
@@ -54,10 +53,9 @@ private: // シーンで必要なモデル配列
 	std::vector<std::shared_ptr<Model>> mobModels_type2;
 
 	std::vector<std::shared_ptr<Model>> bottonModels_;
-	//	
-	std::vector<std::shared_ptr<Texture2D>> numberTextures_;
-
 	
+
+
 private:
 	
 	//	中心座標
@@ -93,8 +91,5 @@ private: //Korone
 	std::unique_ptr<UI> ui_;
 	
 	std::list<Enemy*> enemies_;
-
-
-	std::vector<std::shared_ptr<Texture2D>> UITextures_;
 
 };
