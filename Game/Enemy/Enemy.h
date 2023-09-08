@@ -60,11 +60,7 @@ public: // Korone
 
 	int GetNum() { return num_; }
 
-	void Die(bool left) { isDead_ = true;
-	
-	checkDirection_=left;
-	
-	}
+	void Die(bool left);
 
 	bool IsDead() { return isDead_; }
 
@@ -125,7 +121,7 @@ private://Specha
 	//現在の回転軸の保存先
 	std::vector<Vector3>nowR;
 	//大の字
-	std::vector<esing> sprawled;
+	std::vector<esing> sprawled[2];
 
 
 };

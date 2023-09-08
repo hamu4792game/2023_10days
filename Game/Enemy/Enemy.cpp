@@ -136,79 +136,103 @@ void Enemy::AnimeInitialize() {
 #pragma region 大の字
 	//大の字の値設定
 	//サイズ設定
-	sprawled.resize(parts_.size());
-	sprawled[Head] = {
+	sprawled[0].resize(parts_.size());
+	sprawled[0][Head] = {
 		{0.0f, 0.0f, 0.0f},
 		{0.0f, 0.0f, 0.0f},
 	};
 
-	sprawled[Body] = {
+	sprawled[0][Body] = {
 		{0.0f, 0.0f, 0.0f},
 		{0.0f, 0.0f, 0.0f},
 	};
 
-	sprawled[BodyUnder] = {
+	sprawled[0][BodyUnder] = {
 		{0.0f, 0.0f, 0.0f},
 		{0.0f, 0.0f, 0.0f},
 	};
 
-	sprawled[LArm1] = {
+	sprawled[0][LArm1] = {
 		{0.0f, 0.0f, -0.5f},
 		{0.0f, 0.0f, -0.5f},
 	};
-	sprawled[LArm2] = {
+	sprawled[0][LArm2] = {
 		{0.0f, 0.0f, 0.0f},
 		{0.0f, 0.0f, 0.0f},
 	};
-	sprawled[LHand] = {
+	sprawled[0][LHand] = {
 		{0.0f, 0.0f, 0.0f},
 		{0.0f, 0.0f, 0.0f},
 	};
 
-	sprawled[RArm1] = {
+	sprawled[0][RArm1] = {
 		{0.0f, 0.0f, 0.5f},
 		{0.0f, 0.0f, 0.5f},
 	};
-	sprawled[RArm2] = {
+	sprawled[0][RArm2] = {
 		{0.0f, 0.0f, 0.0f},
 		{0.0f, 0.0f, 0.0f},
 	};
-	sprawled[RHand] = {
+	sprawled[0][RHand] = {
 		{0.0f, 0.0f, 0.0f},
 		{0.0f, 0.0f, 0.0f},
 	};
 
 
-	sprawled[LLeg1] = {
+	sprawled[0][LLeg1] = {
 		{0.0f, 0.0f, -0.8f},
 		{0.0f, 0.0f, -0.8f },
 	};
-	sprawled[LLeg2] = {
+	sprawled[0][LLeg2] = {
 		{0.0f, 0.0f, 0.0f},
 		{0.0f, 0.0f, 0.0f},
 	};
-	sprawled[LFoot] = {
+	sprawled[0][LFoot] = {
 		{1.0f, 0.0f, 0.0f},
 		{1.0f, 0.0f, 0.0f},
 	};
 
-	sprawled[RLeg1] = {
+	sprawled[0][RLeg1] = {
 		{0.0f, 0.0f, 0.8f},
 		{0.0f, 0.0f, 0.8f},
 	};
-	sprawled[RLeg2] = {
+	sprawled[0][RLeg2] = {
 		{0.0f, 0.0f, 0.0f},
 		{0.0f, 0.0f, 0.0f},
 	};
-	sprawled[RFoot] = {
+	sprawled[0][RFoot] = {
 		{1.0f, 0.0f, 0.0f},
 		{1.0f, 0.0f, 0.0f},
 	};
+#pragma endregion
+#pragma region 
+
 #pragma endregion
 
 
 }
 
+
+void Enemy::Die(bool left) {
+	//デスフラグをON
+	isDead_ = true;
+
+	//方向設定
+	if (left) {
+		blowVec = { 0.5f,0.5f,0 };
+	}
+	else {
+		blowVec = { -0.5f,0.5f,0 };
+	}
+
+	//Tをゼロに
+	T_ = 0;
+	//WAVEの最初のはじめ
+	SetAnimeStart = false;
+
+	//animestate設定するところを通すように
+	isStart_blow_away = false;
+}
 //イージングの処理、好きに中身かえてちょ
 Vector3 ES(esing E, float t) {
 	return {
@@ -218,23 +242,33 @@ Vector3 ES(esing E, float t) {
 	};
 }
 
+int GetRandomNum(int wideOrmax, bool isWide) {
+	unsigned int curtime = (unsigned int)time(nullptr);
+	srand(curtime);
+	int num;
+	if (isWide) {
+		num = rand() % (wideOrmax * 2 + 1) - wideOrmax;
+	}
+	else {
+		num = rand() % wideOrmax;
+	}
+	return num;
+}
+
 void Enemy::BlowAway() {
 	//死んだときに吹っ飛びアニメーション
 	if (isDead_) {
 		if (!isStart_blow_away) {
 			isStart_blow_away = true;
-			//仮でベクトル指定
-			blowVec = { 0.5f,0.5f,0 };
 			//アニメ状態を最初にする
 			animeState_ = MODE_A::NOMOTIAN;
-			//Tをゼロに
-			T_ = 0;
-			SetAnimeStart = false;
+			
+			int GetTypeM = GetRandomNum(1, false);
 
 			//現在の回転量の取得
 			for (int i = 0; i < Num; i++) {
 				//仮でいきなり手を広げた状態
-				ESALL[i] = sprawled[i];
+				ESALL[i] = sprawled[0][i];
 			}
 		}
 		else {

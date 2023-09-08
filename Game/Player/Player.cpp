@@ -153,7 +153,7 @@ void Player::HitEvalution(Enemy* enemy) {
 
 	if (evalutionCount_ <= kEvalutionframe_[kPerfect]) {
 
-		enemy->Die();
+		enemy->Die(1);
 		score_->AddPerfect();
 
 		evalutionCount_ = 0;
@@ -161,7 +161,7 @@ void Player::HitEvalution(Enemy* enemy) {
 	}
 	else if (evalutionCount_ <= kEvalutionframe_[kGreat]) {
 
-		enemy->Die();
+		enemy->Die(0);
 		score_->AddGreat();
 
 		evalutionCount_ = 0;
@@ -169,7 +169,7 @@ void Player::HitEvalution(Enemy* enemy) {
 	}
 	else if (evalutionCount_ <= kEvalutionframe_[kGood]) {
 
-		enemy->Die();
+		enemy->Die(1);
 		score_->AddGood();
 
 		evalutionCount_ = 0;
@@ -274,7 +274,7 @@ void Player::HitTest(Enemy* enemy) {
 					HitEvalution(enemy);
 				}
 				else {
-					enemy->Die();
+					enemy->Die(0);
 					score_->AddMiss();
 
 					evalutionCount_ = 0;
@@ -286,7 +286,7 @@ void Player::HitTest(Enemy* enemy) {
 					HitEvalution(enemy);
 				}
 				else {
-					enemy->Die();
+					enemy->Die(1);
 					score_->AddMiss();
 
 					evalutionCount_ = 0;
@@ -297,7 +297,7 @@ void Player::HitTest(Enemy* enemy) {
 					HitEvalution(enemy);
 				}
 				else {
-					enemy->Die();
+					enemy->Die(1);
 					score_->AddMiss();
 
 					evalutionCount_ = 0;
@@ -308,7 +308,7 @@ void Player::HitTest(Enemy* enemy) {
 					HitEvalution(enemy);
 				}
 				else {
-					enemy->Die();
+					enemy->Die(0);
 					score_->AddMiss();
 
 					evalutionCount_ = 0;
@@ -317,7 +317,7 @@ void Player::HitTest(Enemy* enemy) {
 		}
 
 		if (evalutionCount_ >= kEvalutionframe_[kMiss]) {
-			enemy->Die();
+			enemy->Die(1);
 			score_->AddMiss();
 
 			evalutionCount_ = 0;
