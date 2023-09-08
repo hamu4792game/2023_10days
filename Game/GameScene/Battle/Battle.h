@@ -36,24 +36,32 @@ public:
 
 	void Draw2D(const Matrix4x4& viewProjection);
 
+
+	void SetModels(std::vector<std::shared_ptr<Model>> modeldate) { mobModels_ = modeldate; };
+	void SetModelsType2(std::vector<std::shared_ptr<Model>> modeldate) { mobModels_type2 = modeldate; };
+	void SetBottonModels(std::vector<std::shared_ptr<Model>> modeldate) { bottonModels_= modeldate; };
+	void SetNumberTextures(std::vector<std::shared_ptr<Texture2D>> texturedate) { numberTextures_ = texturedate; };
+
 private://	必要なメンバ変数
 
 	std::shared_ptr<Camera> camera_;
 
 	std::unique_ptr<Player> player_;
 
+private: // シーンで必要なモデル配列
 	//	プレイヤーデータのモデル配列
 	std::vector<std::shared_ptr<Model>> mobModels_;
 	std::vector<std::shared_ptr<Model>> mobModels_type2;
 
-	//	パーツ用ペアレントデータ
-	std::vector<WorldTransform> mobparts_;
-  
+	std::vector<std::shared_ptr<Model>> bottonModels_;
+	//	
+	std::vector<std::shared_ptr<Texture2D>> numberTextures_;
+
+	
+private:
+	
 	//	中心座標
 	std::shared_ptr<WorldTransform> worldTransform;
-
-
-	std::vector<std::shared_ptr<Model>> bottonModels_;
 
 public:
 	//	マスターフレーム速度。リアルタイム加減速
@@ -86,7 +94,6 @@ private: //Korone
 	
 	std::list<Enemy*> enemies_;
 
-	std::vector<std::shared_ptr<Texture2D>> numberTextures_;
 
 	std::vector<std::shared_ptr<Texture2D>> UITextures_;
 
