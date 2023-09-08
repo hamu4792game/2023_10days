@@ -74,6 +74,14 @@ void UI::BattleInitialize() {
 	score_->SetIsDraw(true, Score::kGoodNum);
 	score_->SetIsDraw(true, Score::kMissNum);
 
+	for (int i = 0; i < kUITexturesMaxNum_; i++) {
+		isDraw_[i] = true;
+
+		SetWorldTransform({ 960.0f,160.0f + 60.0f * i }, 1.0f, 0.0f, i);
+	}
+
+
+
 }
 
 void UI::ResultInitialize() {
