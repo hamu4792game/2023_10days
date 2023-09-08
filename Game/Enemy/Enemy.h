@@ -14,6 +14,14 @@ enum class MODE_A {
 	NOMOTIAN,
 };
 
+enum class blow {
+	DAISHA,
+	FIGURA,
+
+	NUM,
+};
+
+
 class Enemy
 {
 public:
@@ -120,8 +128,19 @@ private://Specha
 
 	//現在の回転軸の保存先
 	std::vector<Vector3>nowR;
-	//大の字
-	std::vector<esing> sprawled[2];
+	
+	//飛ばす方向を保存
+	bool dire;
 
+	//保存
+	int ANIMETYPE;
 
+	//吹っ飛びアニメ数
+	static const int animeNUM = 4;
+
+	//アニメーションの引数まとめ
+	std::vector<esing> sprawled[animeNUM];
+
+	//[3]の右バージョン
+	std::vector<esing> anoMotion;
 };
