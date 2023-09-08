@@ -1,6 +1,6 @@
 #include "Score.h"
 
-Score::Score() {
+Score::Score(std::vector<std::shared_ptr<Texture2D>> numberTextures) {
 
 	for (int i = 0; i < kParameterNum_; i++) {
 		if (i == kScore) {
@@ -13,13 +13,16 @@ Score::Score() {
 				worldTransforms_[i].push_back(std::make_shared<WorldTransform>());
 			}
 		}
+
+		colors_[i] = 0xFFFFFFFF;
 	}
 
+	numberTextures_ = numberTextures;
 }
 
-void Score::Initialize(std::vector<std::shared_ptr<Texture2D>> numberTextures) {
+void Score::Initialize() {
 	
-	numberTextures_ = numberTextures;
+	Reset();
 
 }
 
@@ -53,7 +56,13 @@ void Score::SetWorldTransform(const Vector2& screenPos, float scale, float rotat
 
 }
 
-void Score::DrawParameter(const Matrix4x4& viewProjectionMat, uint32_t color, Parameter parameter) {
+void Score::DrawParameter(const Matrix4x4& viewProjectionMat, Parameter parameter) {
+
+	if (parameter == kCombo) {
+		if (parameters_[parameter] < 2) {
+			return;
+		}
+	}
 
 	int i = 0;
 	int num = 0;
@@ -86,11 +95,11 @@ void Score::DrawParameter(const Matrix4x4& viewProjectionMat, uint32_t color, Pa
 
 		if (parameter == kCombo) {
 			if (k != 0) {
-				Texture2D::TextureDraw(*(worldTransform.get()), viewProjectionMat, color, numberTextures_[num].get());
+				Texture2D::TextureDraw(*(worldTransform.get()), viewProjectionMat, colors_[parameter], numberTextures_[num].get());
 			}
 		}
 		else {
-			Texture2D::TextureDraw(*(worldTransform.get()), viewProjectionMat, color, numberTextures_[num].get());
+			Texture2D::TextureDraw(*(worldTransform.get()), viewProjectionMat, colors_[parameter], numberTextures_[num].get());
 		}
 
 		i++;

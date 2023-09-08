@@ -12,10 +12,6 @@ Battle::Battle(std::shared_ptr<Camera> camera)
 	camera_ = camera;
 	player_ = std::make_unique<Player>(camera_);
 
-	score_ = std::make_unique<Score>();
-
-	player_->SetScore(score_.get());
-
 	//プレイヤーモデルの初期化
 	for (uint16_t i = 0u; i < PARTS::Num; i++) {
 		mobModels_.push_back(std::make_shared<Model>());
@@ -36,6 +32,15 @@ Battle::Battle(std::shared_ptr<Camera> camera)
 		numberTextures_.push_back(std::make_shared<Texture2D>());
 	}
 
+	for (uint16_t i = 0u; i < UI::kUITexturesMaxNum_; i++) {
+		UITextures_.push_back(std::make_shared<Texture2D>());
+	}
+
+	// この二つテクスチャーない
+	ui_ = std::make_unique<UI>(UITextures_);
+	score_ = std::make_unique<Score>(numberTextures_);
+
+	player_->SetScore(score_.get());
 }
 
 Battle::~Battle() {
@@ -56,9 +61,7 @@ void Battle::Initialize()
 
 	EnemyGeneration();
 
-	score_->Initialize(numberTextures_);
-
-	score_->Reset();
+	score_->Initialize();
 
 	player_->Initialize(mobModels_, worldTransform.get());
 
@@ -120,8 +123,15 @@ void Battle::ModelLoad()
 	numberTextures_[8]->Texture("Resources/number/8.png", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl");
 	numberTextures_[9]->Texture("Resources/number/9.png", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl");
 
-	//player_->ModelLoad();
-	
+	UITextures_[UI::kScore]->Texture("Resources/hud/ScoreTextures/SCORE.png", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl");
+	UITextures_[UI::kHighScore]->Texture("Resources/hud/ScoreTextures/HIGHSCORE.png", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl");
+	UITextures_[UI::kCombo]->Texture("Resources/hud/ScoreTextures/COMBO.png", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl");
+	UITextures_[UI::kHighCombo]->Texture("Resources/hud/ScoreTextures/HIGHCOMBO.png", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl");
+	UITextures_[UI::kPerfect]->Texture("Resources/hud/ScoreTextures/PERFECT.png", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl");
+	UITextures_[UI::kGreat]->Texture("Resources/hud/ScoreTextures/GREAT.png", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl");
+	UITextures_[UI::kGood]->Texture("Resources/hud/ScoreTextures/GOOD.png", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl");
+	UITextures_[UI::kMiss]->Texture("Resources/hud/ScoreTextures/MISS.png", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl");
+
 	//ボタンオブジェクトロード
 	bottonModels_[0]->Texture("Resources/hud/A/A.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl");
 	bottonModels_[1]->Texture("Resources/hud/B/B.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl");
@@ -293,13 +303,13 @@ void Battle::ScoreDraw(const Matrix4x4& viewProjection) {
 	score_->SetWorldTransform({ 960.0f,480.0f }, 0.8f, 0.0f, Score::kMissNum);
 
 
-	score_->DrawParameter(viewProjection, 0xFFFFFFFF, Score::kScore);
-	score_->DrawParameter(viewProjection, 0x0000FFFF, Score::kCombo);
-	score_->DrawParameter(viewProjection, 0x00FF00FF, Score::kHighCombo);
-	score_->DrawParameter(viewProjection, 0x00FF00FF, Score::kPerfectNum);
-	score_->DrawParameter(viewProjection, 0x00FF00FF, Score::kGreatNum);
-	score_->DrawParameter(viewProjection, 0x00FF00FF, Score::kGoodNum);
-	score_->DrawParameter(viewProjection, 0x00FF00FF, Score::kMissNum);
+	score_->DrawParameter(viewProjection, Score::kScore);
+	score_->DrawParameter(viewProjection, Score::kCombo);
+	score_->DrawParameter(viewProjection, Score::kHighCombo);
+	score_->DrawParameter(viewProjection, Score::kPerfectNum);
+	score_->DrawParameter(viewProjection, Score::kGreatNum);
+	score_->DrawParameter(viewProjection, Score::kGoodNum);
+	score_->DrawParameter(viewProjection, Score::kMissNum);
 
 }
 
