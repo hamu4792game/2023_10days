@@ -101,9 +101,12 @@ void Player::Initialize(std::vector<std::shared_ptr<Model>> models, WorldTransfo
 #pragma endregion
 
 	
-	
+	//アニメーションに使う値の設定
 	
 }
+
+
+
 
 void Player::ModelLoad()
 {

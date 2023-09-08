@@ -1,5 +1,5 @@
 #include "Enemy.h"
-
+#include<numbers>
 void Enemy::Initialize()
 {
 	parts_.resize(models_.size());
@@ -76,6 +76,9 @@ void Enemy::InitializeSP(float pos, int type, int num,//	モデルデータ配�
 	parts_.resize(models_.size());
 	parts_[Body].parent_ = &transform;
 
+	//アニメ系統初期化
+	AnimeInitialize();
+
 	//ボタンの親を設定
 	BottonW_.parent_ = &parts_[Body];
 	BottonW_.translation_ = { 0,5,0 };
@@ -126,6 +129,155 @@ void Enemy::InitializeSP(float pos, int type, int num,//	モデルデータ配�
 }
 
 
+void Enemy::AnimeInitialize() {
+	//サイズあわせ
+	nowR.resize(parts_.size());
+	ESALL.resize(parts_.size());
+#pragma region 大の字
+	//大の字の値設定
+	//サイズ設定
+	sprawled.resize(parts_.size());
+	sprawled[Head] = {
+		{0.0f, 0.0f, 0.0f},
+		{0.0f, 0.0f, 0.0f},
+	};
+
+	sprawled[Body] = {
+		{0.0f, 0.0f, 0.0f},
+		{0.0f, 0.0f, 0.0f},
+	};
+
+	sprawled[BodyUnder] = {
+		{0.0f, 0.0f, 0.0f},
+		{0.0f, 0.0f, 0.0f},
+	};
+
+	sprawled[LArm1] = {
+		{0.0f, 0.0f, -0.5f},
+		{0.0f, 0.0f, -0.5f},
+	};
+	sprawled[LArm2] = {
+		{0.0f, 0.0f, 0.0f},
+		{0.0f, 0.0f, 0.0f},
+	};
+	sprawled[LHand] = {
+		{0.0f, 0.0f, 0.0f},
+		{0.0f, 0.0f, 0.0f},
+	};
+
+	sprawled[RArm1] = {
+		{0.0f, 0.0f, 0.5f},
+		{0.0f, 0.0f, 0.5f},
+	};
+	sprawled[RArm2] = {
+		{0.0f, 0.0f, 0.0f},
+		{0.0f, 0.0f, 0.0f},
+	};
+	sprawled[RHand] = {
+		{0.0f, 0.0f, 0.0f},
+		{0.0f, 0.0f, 0.0f},
+	};
+
+
+	sprawled[LLeg1] = {
+		{0.0f, 0.0f, -0.8f},
+		{0.0f, 0.0f, -0.8f },
+	};
+	sprawled[LLeg2] = {
+		{0.0f, 0.0f, 0.0f},
+		{0.0f, 0.0f, 0.0f},
+	};
+	sprawled[LFoot] = {
+		{1.0f, 0.0f, 0.0f},
+		{1.0f, 0.0f, 0.0f},
+	};
+
+	sprawled[RLeg1] = {
+		{0.0f, 0.0f, 0.8f},
+		{0.0f, 0.0f, 0.8f},
+	};
+	sprawled[RLeg2] = {
+		{0.0f, 0.0f, 0.0f},
+		{0.0f, 0.0f, 0.0f},
+	};
+	sprawled[RFoot] = {
+		{1.0f, 0.0f, 0.0f},
+		{1.0f, 0.0f, 0.0f},
+	};
+#pragma endregion
+
+
+}
+
+//イージングの処理、好きに中身かえてちょ
+Vector3 ES(esing E, float t) {
+	return {
+		E.st.x * (1.0f - t) + E.ed.x * t,
+		E.st.y * (1.0f - t) + E.ed.y * t,
+		E.st.z * (1.0f - t) + E.ed.z * t,
+	};
+}
+
+void Enemy::BlowAway() {
+	//死んだときに吹っ飛びアニメーション
+	if (isDead_) {
+		if (!isStart_blow_away) {
+			isStart_blow_away = true;
+			//仮でベクトル指定
+			blowVec = { 0.5f,0.5f,0 };
+			//アニメ状態を最初にする
+			animeState_ = MODE_A::NOMOTIAN;
+			//Tをゼロに
+			T_ = 0;
+			SetAnimeStart = false;
+
+			//現在の回転量の取得
+			for (int i = 0; i < Num; i++) {
+				//仮でいきなり手を広げた状態
+				ESALL[i] = sprawled[i];
+			}
+		}
+		else {
+			switch (animeState_)
+			{
+			case MODE_A::WAVE1:
+				break;
+			case MODE_A::WAVE2:
+				break;
+			case MODE_A::WAVE3:
+				break;
+			case MODE_A::WAVE4:
+				break;
+			case MODE_A::NOMOTIAN:
+				
+				//アニメーション初期設定
+				if (!SetAnimeStart) {
+					SetAnimeStart = true;
+					//更新
+					for (int i = 0; i < Num; i++) {
+						if (i != Body) {
+							parts_[i].rotation_ = ES(ESALL[i], T_);
+						}
+					}
+				}
+				else {//以下アニメーション処理
+
+					//移動量加算
+					transform.translation_ += blowVec;
+					//回転
+					parts_[Body].rotation_.z += (1.0f / 3.0f) * (float)std::numbers::pi;
+
+				}
+				break;			
+			default:
+				break;
+			}
+		}
+	}
+
+
+}
+
 void Enemy::ModelLoad()
 {
 	//models_[Body]->Texture("Resources/player/body.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl");
@@ -134,6 +286,8 @@ void Enemy::ModelLoad()
 void Enemy::Update()
 {
 	
+	//死んだときのアニメーション
+	BlowAway();
 
 	transform.UpdateMatrix();
 	for (auto& i : parts_) {
@@ -141,6 +295,7 @@ void Enemy::Update()
 	}
 	BottonW_.UpdateMatrix();
 }
+
 
 void Enemy::Draw(const Matrix4x4& viewProjection, std::vector<std::shared_ptr<Model>> botunModels)
 {

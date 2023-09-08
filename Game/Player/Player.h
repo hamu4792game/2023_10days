@@ -10,6 +10,8 @@ class Score;
 
 class Enemy;
 
+
+
 class Player
 {
 public:
@@ -106,6 +108,7 @@ private: // Korone
 	int evalutionCount_ = 0;
 
 	//Score* score = nullptr;
+
 
 
 };

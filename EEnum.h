@@ -24,3 +24,8 @@ enum PARTS
 
 	Num,
 };
+
+struct esing {
+	Vector3 st;
+	Vector3 ed;
+};
