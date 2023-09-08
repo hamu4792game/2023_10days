@@ -2,7 +2,7 @@
 
 #include "Game/Score/Score.h"
 
-UI::UI(std::vector<std::shared_ptr<Texture2D>> UITextures) {
+UI::UI() {
 
 	for (int i = 0; i < kUITexturesMaxNum_; i++) {
 		worldTransforms_.push_back(std::make_shared<WorldTransform>());
@@ -10,7 +10,6 @@ UI::UI(std::vector<std::shared_ptr<Texture2D>> UITextures) {
 		colors_[i] = 0xFFFFFFFF;
 	}
 
-	UITextures_ = UITextures;
 }
 
 void UI::Initialize() {

@@ -52,6 +52,8 @@ private: // モデル用変数
 	std::vector<std::shared_ptr<Model>> bottonModels_;
 	//	数字UIのtexture 0～9の10個
 	std::vector<std::shared_ptr<Texture2D>> numberTextures_;
+	// UIのperfectやcomboなど
+	std::vector<std::shared_ptr<Texture2D>> UITextures_;
 
 private:
 	//	パーツ用データの元

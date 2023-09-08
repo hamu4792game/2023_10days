@@ -38,6 +38,11 @@ void GameScene::Initialize()
 	for (uint16_t i = 0u; i < 10; i++) {
 		numberTextures_.push_back(std::make_shared<Texture2D>());
 	}
+	//	UIテクスチャの初期化
+	for (uint16_t i = 0u; i < UI::kUITexturesMaxNum_; i++) {
+		UITextures_.push_back(std::make_shared<Texture2D>());
+	}
+
 	//	パーツデータの初期化
 	parts_.resize(mobModels_.size());
 	SetParts();
@@ -49,6 +54,7 @@ void GameScene::Initialize()
 	battle->SetModelsType2(mobModels_type2);
 	battle->SetBottonModels(bottonModels_);
 	battle->SetNumberTextures(numberTextures_);
+	battle->SetUITextures(UITextures_);
 
 	//	シーンの初期化
 	title->Initialize();
@@ -208,6 +214,16 @@ void GameScene::ModelLoad()
 	numberTextures_[7]->Texture("Resources/number/7.png", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl");
 	numberTextures_[8]->Texture("Resources/number/8.png", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl");
 	numberTextures_[9]->Texture("Resources/number/9.png", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl");
+
+	// UIのperfectやcomboなど
+	UITextures_[UI::kScore]->Texture("Resources/hud/ScoreTextures/SCORE.png", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl");
+	UITextures_[UI::kHighScore]->Texture("Resources/hud/ScoreTextures/HIGHSCORE.png", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl");
+	UITextures_[UI::kCombo]->Texture("Resources/hud/ScoreTextures/COMBO.png", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl");
+	UITextures_[UI::kHighCombo]->Texture("Resources/hud/ScoreTextures/HIGHCOMBO.png", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl");
+	UITextures_[UI::kPerfect]->Texture("Resources/hud/ScoreTextures/PERFECT.png", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl");
+	UITextures_[UI::kGreat]->Texture("Resources/hud/ScoreTextures/GREAT.png", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl");
+	UITextures_[UI::kGood]->Texture("Resources/hud/ScoreTextures/GOOD.png", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl");
+	UITextures_[UI::kMiss]->Texture("Resources/hud/ScoreTextures/MISS.png", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl");
 
 	//ボタンオブジェクトロード
 	bottonModels_[0]->Texture("Resources/hud/A/A.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl");

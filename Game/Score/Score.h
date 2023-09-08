@@ -28,9 +28,11 @@ public:
 
 public:
 
-	Score(std::vector<std::shared_ptr<Texture2D>> numberTextures);
+	Score();
 
 	void Initialize();
+
+	void SetNumberTexture(std::vector<std::shared_ptr<Texture2D>> numberTextures) { numberTextures_ = numberTextures; }
 
 	// posは一番左の数字の真ん中の座標。
 	void SetWorldTransform(const Vector2& screenPos, float scale, float rotate, Parameter parameter);
