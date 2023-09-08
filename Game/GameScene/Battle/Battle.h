@@ -10,6 +10,7 @@
 #include "Game/Score/Score.h"
 #include "Game/Player/Player.h"
 #include "Game/Enemy/Enemy.h"
+#include "Game/UI/UI.h"
 
 class Battle
 {
@@ -88,8 +89,12 @@ private: //Korone
 	int typeCount_ = 0;
 
 	std::unique_ptr<Score> score_;
-	//std::unique_ptr<Player> player_;
+
+	std::unique_ptr<UI> ui_;
+	
 	std::list<Enemy*> enemies_;
 
+
+	std::vector<std::shared_ptr<Texture2D>> UITextures_;
 
 };

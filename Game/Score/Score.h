@@ -28,14 +28,16 @@ public:
 
 public:
 
-	Score();
+	Score(std::vector<std::shared_ptr<Texture2D>> numberTextures);
 
-	void Initialize(std::vector<std::shared_ptr<Texture2D>> numberTextures);
+	void Initialize();
 
 	// posは一番左の数字の真ん中の座標。
 	void SetWorldTransform(const Vector2& screenPos, float scale, float rotate, Parameter parameter);
 
-	void DrawParameter(const Matrix4x4& viewProjectionMat, uint32_t color, Parameter parameter);
+	void SetColor(uint32_t color, Parameter parameter) { colors_[parameter] = color; }
+
+	void DrawParameter(const Matrix4x4& viewProjectionMat, Parameter parameter);
 
 public:
 
@@ -124,6 +126,8 @@ private:
 	std::optional<Evaluation> evalutuin_ = std::nullopt;
 
 	int parameters_[kParameterNum_] = {};
+
+	uint32_t colors_[kParameterNum_] = {};
 
 	bool isFullCom_ = false;
 
