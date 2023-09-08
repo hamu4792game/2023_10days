@@ -17,9 +17,9 @@ public:
 	void Draw(Matrix4x4 viewProjection);
 	void Draw2D(Matrix4x4 viewProjection2d);
 public: // setter
-	void SetModels(std::vector<std::shared_ptr<Model>> modeldate) { mobModels_ = modeldate; };
-	void SetModelsType2(std::vector<std::shared_ptr<Model>> modeldate) { mobModels_type2 = modeldate; };
-	void SetBottonModels(std::vector<std::shared_ptr<Model>> modeldate) { bottonModels_ = modeldate; };
+	void SetModels(std::vector<std::shared_ptr<Model>> modeldate) { mobModels_ = modeldate; }
+	void SetModelsType2(std::vector<std::shared_ptr<Model>> modeldate) { mobModels_type2 = modeldate; }
+	void SetBottonModels(std::vector<std::shared_ptr<Model>> modeldate) { bottonModels_ = modeldate; }
 
 private: // シーンで必要なモデル配列
 	//	プレイヤーデータのモデル配列
@@ -27,8 +27,14 @@ private: // シーンで必要なモデル配列
 	std::vector<std::shared_ptr<Model>> mobModels_type2;
 
 	std::vector<std::shared_ptr<Model>> bottonModels_;
-	//	
-	std::vector<std::shared_ptr<Texture2D>> numberTextures_;
+	
+private:
+	//	モデルデータ配列
+	std::vector<WorldTransform> parts_;
 
+
+private: // メンバ関数
+	//	パーツの初期位置をセット
+	void SetParts();
 
 };
