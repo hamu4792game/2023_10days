@@ -3,7 +3,7 @@
 Score::Score() {
 
 	for (int i = 0; i < kParameterNum_; i++) {
-		if (i == kScore) {
+		if (i == kScore || i == kMemoHighCombo) {
 			for (int j = 0; j < kScoreMaxDigits_; j++) {
 				worldTransforms_[i].push_back(std::make_shared<WorldTransform>());
 			}
@@ -15,6 +15,10 @@ Score::Score() {
 		}
 
 		colors_[i] = 0xFFFFFFFF;
+
+		parameters_[i] = 0;
+
+		isDraw_[i] = false;
 	}
 
 }
@@ -25,7 +29,13 @@ void Score::Initialize() {
 
 }
 
-void Score::SetWorldTransform(const Vector2& screenPos, float scale, float rotate, Parameter parameter) {
+void Score::ResetIsDraw() {
+	for (int i = 0; i < kParameterNum_; i++) {
+		isDraw_[i] = false;
+	}
+}
+
+void Score::SetWorldTransform(const Vector2& screenPos, float scale, float rotate, int parameter) {
 
 	Vector2 pos = { screenPos.x - WinApp::kWindowWidth / 2, WinApp::kWindowHeight / 2 - screenPos.y };
 
@@ -55,7 +65,7 @@ void Score::SetWorldTransform(const Vector2& screenPos, float scale, float rotat
 
 }
 
-void Score::DrawParameter(const Matrix4x4& viewProjectionMat, Parameter parameter) {
+void Score::DrawParameter(const Matrix4x4& viewProjectionMat, int parameter) {
 
 	if (parameter == kCombo) {
 		if (parameters_[parameter] < 2) {
@@ -70,7 +80,7 @@ void Score::DrawParameter(const Matrix4x4& viewProjectionMat, Parameter paramete
 
 	int digits = 0;
 
-	if (parameter == kScore) {
+	if (parameter == kScore || parameter == kMemoHighScore) {
 		digits = kScoreMaxDigits_;
 	}
 	else {
@@ -105,9 +115,19 @@ void Score::DrawParameter(const Matrix4x4& viewProjectionMat, Parameter paramete
 	}
 }
 
-void Score::Reset() {
+void Score::Draw2D(const Matrix4x4& viewProjectionMat) {
 
 	for (int i = 0; i < kParameterNum_; i++) {
+		if (isDraw_[i]) {
+			DrawParameter(viewProjectionMat, i);
+		}
+	}
+
+}
+
+void Score::Reset() {
+
+	for (int i = 0; i < 7; i++) {
 		parameters_[i] = 0;
 	}
 
@@ -117,18 +137,17 @@ void Score::Reset() {
 	ResetEvalution();
 }
 
-void Score::SetUpdate(const Score& score) {
+
+void Score::Memo() {
 	
-	if (parameters_[kScore] < score.parameters_[kScore]) {
-		parameters_[kScore] = score.parameters_[kScore];
+	IsFullComUpdate();
+
+	if (parameters_[kMemoHighScore] < parameters_[kScore]) {
+		parameters_[kMemoHighScore] = parameters_[kScore];
 	}
 
-	if (parameters_[kHighCombo] < score.parameters_[kHighCombo]) {
-		parameters_[kHighCombo] = score.parameters_[kHighCombo];
-	}
-
-	if (!isFullCom_) {
-		isFullCom_ = score.isFullCom_;
+	if (parameters_[kMemoHighCombo] < parameters_[kHighCombo]) {
+		parameters_[kMemoHighCombo] = parameters_[kHighCombo];
 	}
 }
 

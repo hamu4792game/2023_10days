@@ -1,6 +1,8 @@
 #pragma once
 #include "math/Matrix4x4.h"
 
+#include "Game/UI/UI.h"
+
 class Result
 {
 public:
@@ -15,6 +17,13 @@ public:
 
 	void Draw(Matrix4x4 viewProjection);
 
+public: // korone
+
+	void SetUI(UI* ui) { ui_ = ui; }
+
+
 private:
+
+	UI* ui_ = nullptr;
 
 };

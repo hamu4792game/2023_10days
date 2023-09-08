@@ -40,6 +40,9 @@ public:
 	void SetNumberTextures(std::vector<std::shared_ptr<Texture2D>> texturedate) { score_->SetNumberTexture(texturedate); }
 	void SetUITextures(std::vector<std::shared_ptr<Texture2D>> texturedate) { ui_->SetUITexture(texturedate); }
 
+public: // korone
+
+	UI* GetUI() { return ui_.get(); }
 
 private://	必要なメンバ変数
 
@@ -70,8 +73,6 @@ private: // Korone
 	void EnemyGeneration();
 
 	void EnemyReset();
-
-	void ScoreDraw(const Matrix4x4& viewProjection);
 
 private: //Korone
 

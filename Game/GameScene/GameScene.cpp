@@ -56,6 +56,8 @@ void GameScene::Initialize()
 	battle->SetNumberTextures(numberTextures_);
 	battle->SetUITextures(UITextures_);
 
+	result->SetUI(battle->GetUI());
+
 	//	シーンの初期化
 	title->Initialize();
 	battle->Initialize();
