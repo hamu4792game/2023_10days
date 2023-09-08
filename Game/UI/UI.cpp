@@ -3,6 +3,8 @@
 #include "Game/Score/Score.h"
 #include "Game/GameScene/GameScene.h"
 
+#include "GlobalVariables/GlobalVariables.h"
+
 UI::UI() {
 
 	for (int i = 0; i < kUITexturesMaxNum_; i++) {
@@ -24,7 +26,26 @@ void UI::ResetIsDraw() {
 	score_->ResetIsDraw();
 }
 
+void UI::SetGlobalVariable() {
+
+	GlobalVariables* globalVariables = GlobalVariables::GetInstance();
+
+	globalVariables->CreateGroup("UI");
+
+	globalVariables->AddItem("UI", "ScoreSprite", worldTransforms_[kScore]->translation_);
+}
+
+void UI::ApplyGlobalVariable() {
+
+	GlobalVariables* globalVariables = GlobalVariables::GetInstance();
+
+	worldTransforms_[kScore]->translation_= globalVariables->GetVector3Value("UI", "ScoreSprite");
+
+}
+
 void UI::Initialize() {
+
+	SetGlobalVariable();
 
 	switch (GameScene::GetInstance()->scene)
 	{
@@ -106,6 +127,8 @@ void UI::SetWorldTransform(const Vector2& screenPos, float scale, float rotate, 
 }
 
 void UI::Update() {
+
+	ApplyGlobalVariable();
 
 	switch (GameScene::GetInstance()->scene)
 	{

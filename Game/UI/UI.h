@@ -47,6 +47,10 @@ public:
 
 private:
 
+	void SetGlobalVariable();
+
+	void ApplyGlobalVariable();
+
 	void ResetIsDraw();
 
 	void TitleInitialize();

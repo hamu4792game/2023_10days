@@ -136,6 +136,8 @@ void Battle::Update()
 		enemy->Update();
 	}
 
+	ui_->Update();
+
 	// 確認のため追加 by.Korone
 	if (KeyInput::PushKey(DIK_SPACE)) {
 		score_->AddPerfect();

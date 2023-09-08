@@ -40,13 +40,17 @@ void GlobalVariables::Update() {
 
 			if (std::holds_alternative<int32_t>(item)) {
 				int32_t* ptr = std::get_if<int32_t>(&item);
-				ImGui::SliderInt(itemName.c_str(), ptr, 0, 100);
+				ImGui::DragInt(itemName.c_str(), ptr, 1);
 			} else if (std::holds_alternative<float>(item)) {
 				float* ptr = std::get_if<float>(&item);
-				ImGui::SliderFloat(itemName.c_str(), ptr, -10.0f, 10.0f);
-			} else if (std::holds_alternative<Vector3>(item)) {
+				ImGui::DragFloat(itemName.c_str(), ptr, 0.01f);
+			} else if (std::holds_alternative<Vector2>(item)) {
+				Vector2* ptr = std::get_if<Vector2>(&item);
+				ImGui::DragFloat2(itemName.c_str(), reinterpret_cast<float*>(ptr), 0.01f);
+			}
+			else if (std::holds_alternative<Vector3>(item)) {
 				Vector3* ptr = std::get_if<Vector3>(&item);
-				ImGui::SliderFloat3(itemName.c_str(), reinterpret_cast<float*>(ptr), -10.0f, 10.0f);
+				ImGui::DragFloat3(itemName.c_str(), reinterpret_cast<float*>(ptr), 0.01f);
 			}
 		}
 
@@ -90,6 +94,15 @@ void GlobalVariables::SetValue(const std::string& groupName, const std::string& 
 	group[key] = newItem;
 }
 
+void GlobalVariables::SetValue(const std::string& groupName, const std::string& key, Vector2 value) {
+	Group& group = datas_[groupName];
+
+	Item newItem{};
+	newItem = value;
+
+	group[key] = newItem;
+}
+
 void GlobalVariables::SetValue(const std::string& groupName, const std::string& key, Vector3 value) {
 	Group& group = datas_[groupName];
 
@@ -109,21 +122,19 @@ void GlobalVariables::AddItem(const std::string& groupName, const std::string& k
 		SetValue(groupName, key, value);
 	}
 
-	/*for (std::map<std::string, Group>::iterator itGroup = datas_.begin();
-	     itGroup != datas_.end(); ++itGroup) {
-		
-		Group& group = itGroup->second;
-
-		if (groupName == itGroup->first) {
-			if (group.items.find(key) == group.items.end()) {
-				SetValue(groupName, key, value);
-				break;
-			}
-		}
-	}*/
 }
 
 void GlobalVariables::AddItem(const std::string& groupName, const std::string& key, float value) {
+	std::map<std::string, Group>::iterator itGroup = datas_.find(groupName);
+
+	Group& group = itGroup->second;
+
+	if (group.find(key) == group.end()) {
+		SetValue(groupName, key, value);
+	}
+}
+
+void GlobalVariables::AddItem(const std::string& groupName, const std::string& key, const Vector2& value) {
 	std::map<std::string, Group>::iterator itGroup = datas_.find(groupName);
 
 	Group& group = itGroup->second;
@@ -163,6 +174,17 @@ float GlobalVariables::GetFloatValue(const std::string& groupName, const std::st
 	assert(group.find(key) != group.end());
 
 	return std::get<float>(group.find(key)->second);
+}
+
+Vector2 GlobalVariables::GetVector2Value(const std::string& groupName, const std::string& key) const {
+
+	assert(datas_.find(groupName) != datas_.end());
+
+	const Group& group = datas_.at(groupName);
+
+	assert(group.find(key) != group.end());
+
+	return std::get<Vector2>(group.find(key)->second);
 }
 
 Vector3 GlobalVariables::GetVector3Value(const std::string& groupName, const std::string& key) const {
@@ -206,10 +228,14 @@ void GlobalVariables::SaveFile(const std::string& groupName) {
 		} else if (std::holds_alternative<float>(item)) {
 
 			root[groupName][itemName] = std::get<float>(item);
-		} else if (std::holds_alternative<Vector3>(item)) {
+		} else if (std::holds_alternative<Vector2>(item)) {
+
+			Vector2 value = std::get<Vector2>(item);
+			root[groupName][itemName] = nlohmann::json::array({value.x, value.y});
+		}else if (std::holds_alternative<Vector3>(item)) {
 
 			Vector3 value = std::get<Vector3>(item);
-			root[groupName][itemName] = nlohmann::json::array({value.x, value.y, value.z});
+			root[groupName][itemName] = nlohmann::json::array({ value.x, value.y, value.z });
 		}
 
 	}
@@ -308,9 +334,14 @@ void GlobalVariables::LoadFile(const std::string& groupName) {
 
 			double value = itItem->get<double>();
 			SetValue(groupName, itemName, static_cast<float>(value));
-		} else if (itItem->is_array() && itItem->size() == 3) {
+		} else if (itItem->is_array() && itItem->size() == 2) {
 
-			Vector3 value = {itItem->at(0), itItem->at(1), itItem->at(2)};
+			Vector2 value = {itItem->at(0), itItem->at(1)};
+			SetValue(groupName, itemName, value);
+		}
+		else if (itItem->is_array() && itItem->size() == 3) {
+
+			Vector3 value = { itItem->at(0), itItem->at(1), itItem->at(2) };
 			SetValue(groupName, itemName, value);
 		}
 	}
