@@ -44,12 +44,33 @@ private:
 
 	std::unique_ptr<Ground> ground;
 
+private: // モデル用変数
+	// プレイヤーデータのモデル配列
+	std::vector<std::shared_ptr<Model>> mobModels_;
+	std::vector<std::shared_ptr<Model>> mobModels_type2;
+	//	ボタンUIのモデル 4個
+	std::vector<std::shared_ptr<Model>> bottonModels_;
+	//	数字UIのtexture 0～9の10個
+	std::vector<std::shared_ptr<Texture2D>> numberTextures_;
+
+private:
+	//	パーツ用データの元
+	std::vector<WorldTransform> parts_;
+
+
 public:
 
 	void Initialize();
 
+
 	void Update();
 	
 	void Draw();
+
+private: // メンバ関数
+	//	モデルのロード
+	void ModelLoad();
+	//	パーツデータの初期座標のセット
+	void SetParts();
 
 };
