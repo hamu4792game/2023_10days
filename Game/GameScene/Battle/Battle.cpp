@@ -95,7 +95,7 @@ void Battle::EnemyGeneration() {
 
 void Battle::EnemyReset() {
 	for (Enemy* enemy : enemies_) {
-		enemy->Die();
+		enemy->Die(0);
 	}
 	enemies_.remove_if([](Enemy* enemy) {
 		if (enemy->IsDead()) {

@@ -4,6 +4,16 @@
 #include "Engine/Texture/Model.h"
 #include"EEnum.h"
 
+
+enum class MODE_A {
+	WAVE1,
+	WAVE2,
+	WAVE3,
+	WAVE4,
+
+	NOMOTIAN,
+};
+
 class Enemy
 {
 public:
@@ -50,7 +60,7 @@ public: // Korone
 
 	int GetNum() { return num_; }
 
-	void Die() { isDead_ = true; }
+	void Die(bool left);
 
 	bool IsDead() { return isDead_; }
 
@@ -77,6 +87,41 @@ private: // Korone
 
 	bool isDead_ = false;
 
+
+
+private://Specha
+
+	//アニメーション開始前初期化できているか
+	bool isStart_blow_away = false;
+	//飛ぶ時のベクトル
+	Vector3 blowVec;
+	//アニメの状態
+	MODE_A animeState_;
+
+	//敵のアニメーション処理
+	void BlowAway();
+
+	//アニメーションに関する初期化処理
+	void AnimeInitialize();
+
+	//WAVEごとのアニメーションの初期化処理
+	bool SetAnimeStart = false;
+
+	//変数T
+	float T_;
+	//変数Tに足す1fごとの数値
+	float AddT_=1.0f/60.0f;
+
+	//飛ぶ方向右,0,左１
+	bool checkDirection_;
+
+	//実際のイージングで使う構造体
+	std::vector<esing> ESALL;
+
+	//現在の回転軸の保存先
+	std::vector<Vector3>nowR;
+	//大の字
+	std::vector<esing> sprawled[2];
 
 
 };
