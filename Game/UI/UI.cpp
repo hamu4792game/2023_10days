@@ -28,18 +28,18 @@ void UI::ResetIsDraw() {
 
 void UI::SetGlobalVariable() {
 
-	GlobalVariables* globalVariables = GlobalVariables::GetInstance();
+	/*GlobalVariables* globalVariables = GlobalVariables::GetInstance();
 
 	globalVariables->CreateGroup("UI");
 
-	globalVariables->AddItem("UI", "ScoreSprite", worldTransforms_[kScore]->translation_);
+	globalVariables->AddItem("UI", "ScoreSprite", worldTransforms_[kScore]->translation_);*/
 }
 
 void UI::ApplyGlobalVariable() {
 
-	GlobalVariables* globalVariables = GlobalVariables::GetInstance();
+	/*GlobalVariables* globalVariables = GlobalVariables::GetInstance();
 
-	worldTransforms_[kScore]->translation_= globalVariables->GetVector3Value("UI", "ScoreSprite");
+	worldTransforms_[kScore]->translation_= globalVariables->GetVector3Value("UI", "ScoreSprite");*/
 
 }
 
@@ -115,15 +115,15 @@ void UI::SetWorldTransform(const Vector2& screenPos, float scale, float rotate, 
 
 	Vector2 pos = { screenPos.x - WinApp::kWindowWidth / 2, WinApp::kWindowHeight / 2 - screenPos.y };
 
-	worldTransforms_[textureName].get()->translation_.x = pos.x;
-	worldTransforms_[textureName].get()->translation_.y = pos.y;
+	worldTransforms_[textureName]->translation_.x = pos.x;
+	worldTransforms_[textureName]->translation_.y = pos.y;
 
-	worldTransforms_[textureName].get()->rotation_.z = rotate;
+	worldTransforms_[textureName]->rotation_.z = rotate;
 
-	worldTransforms_[textureName].get()->scale_.x = scale;
-	worldTransforms_[textureName].get()->scale_.y = scale;
+	worldTransforms_[textureName]->scale_.x = scale;
+	worldTransforms_[textureName]->scale_.y = scale;
 
-	worldTransforms_[textureName].get()->UpdateMatrix();
+	worldTransforms_[textureName]->UpdateMatrix();
 }
 
 void UI::Update() {
@@ -162,16 +162,15 @@ void UI::ResultUpdate() {
 }
 
 void UI::DrawUITexture(const Matrix4x4& viewProjectionMat, int textureName) {
-
-	Texture2D::TextureDraw(*(worldTransforms_[textureName].get()), viewProjectionMat, colors_[textureName], UITextures_[textureName].get());
+	if (isDraw_[textureName]) {
+		Texture2D::TextureDraw(*(worldTransforms_[textureName].get()), viewProjectionMat, colors_[textureName], UITextures_[textureName].get());
+	}
 }
 
 void UI::DrawUITextures(const Matrix4x4& viewProjectionMat) {
 
 	for (int i = 0; i < kUITexturesMaxNum_; i++) {
-		if (isDraw_[i]) {
-			DrawUITexture(viewProjectionMat, i);
-		}
+		DrawUITexture(viewProjectionMat, i);
 	}
 }
 
