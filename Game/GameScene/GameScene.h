@@ -57,6 +57,13 @@ private: // モデル用変数
 
 	std::vector<std::shared_ptr<Model>> shopModel_;
 
+	// ゲージ用
+	std::vector<std::shared_ptr<Texture2D>> gaugeTextures_;
+
+private:
+	//	パーツ用データの元
+	std::vector<WorldTransform> parts_;
+
 private:
 
 public:
