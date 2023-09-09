@@ -214,7 +214,7 @@ void Title::CameraMove()
 			cameraStep = CAMERASTEP::BounceFace;
 
 			// BounceFaceのためのセット
-			camera_->transform.rotation_ = Vector3(0.0f, AngleToRadian(180.0f), 0.0f);
+			camera_->transform.rotation_ = Vector3(0.0f, AngleToRadian(-180.0f), 0.0f);
 			camera_->transform.translation_ = Vector3(0.0f, 2.6f, 6.5f);
 			chara.rotation_.y = 0.0f;
 
@@ -231,9 +231,26 @@ void Title::CameraMove()
 		easeNowFrame++;
 		camera_->transform.translation_ = Ease::UseEase(startingPoint, endPoint, easeNowFrame, easeMaxFrame, Ease::EaseType::EaseInOutBounce);
 		if (easeNowFrame >= easeMaxFrame) {
+			cameraStep = CAMERASTEP::FirstReturn;
+
+			startingPoint = camera_->transform.translation_;
+			startingRotate = camera_->transform.rotation_;
+			endPoint = Vector3(0.0f, 30.0f, -50.0f);
+			endRotate = Vector3(0.4f, 0.0f, 0.0f);
+			easeNowFrame = 0;
+			easeMaxFrame = 30;
+
+		}
+		break;
+case Title::CAMERASTEP::FirstReturn:
+		easeNowFrame++;
+		camera_->transform.translation_ = Ease::UseEase(startingPoint, endPoint, easeNowFrame, easeMaxFrame, Ease::EaseType::EaseInSine);
+		camera_->transform.rotation_ = Ease::UseEase(startingRotate, endRotate, easeNowFrame, easeMaxFrame, Ease::EaseType::EaseInSine);
+		if (easeNowFrame >= easeMaxFrame) {
 			cameraStep = CAMERASTEP::Zero;
 
 		}
 		break;
+
 	}
 }

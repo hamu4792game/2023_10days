@@ -57,7 +57,7 @@ private:
 		Second,
 		Bounce,
 		BounceFace,
-
+		FirstReturn,
 	};
 	CAMERASTEP cameraStep = CAMERASTEP::Zero;
 
