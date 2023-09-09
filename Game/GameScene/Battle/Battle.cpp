@@ -48,6 +48,8 @@ void Battle::Initialize()
 
 	player_->Initialize(mobModels_, worldTransform.get());
 
+	player_->GaugeInitialize();
+
 }
 
 
@@ -132,9 +134,13 @@ void Battle::Update()
 		}
 	}
 
+	player_->GaugeUpdate();
+
 	for (Enemy* enemy : enemies_) {
 		enemy->Update();
 	}
+
+	ui_->Update();
 
 	// 確認のため追加 by.Korone
 	if (KeyInput::PushKey(DIK_SPACE)) {
@@ -163,5 +169,6 @@ void Battle::Draw(const Matrix4x4& viewProjection)
 
 void Battle::Draw2D(const Matrix4x4& viewProjection) {
 
+	player_->GaugeDraw2D(viewProjection);
 	ui_->Draw2D(viewProjection);
 }

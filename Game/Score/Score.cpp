@@ -67,60 +67,61 @@ void Score::SetWorldTransform(const Vector2& screenPos, float scale, float rotat
 
 void Score::DrawParameter(const Matrix4x4& viewProjectionMat, int parameter) {
 
-	if (parameter == kCombo) {
-		if (parameters_[parameter] < 2) {
-			return;
-		}
-	}
 
-	int i = 0;
-	int num = 0;
-	int parameterNum = parameters_[parameter];
-	int k = 0;
-
-	int digits = 0;
-
-	if (parameter == kScore || parameter == kMemoHighScore) {
-		digits = kScoreMaxDigits_;
-	}
-	else {
-		digits = kComboMaxDigits_;
-	}
-
-	for (std::shared_ptr<WorldTransform> worldTransform : worldTransforms_[parameter]) {
-
-		num = parameterNum / int(pow(10, digits - 1 - i));
-		parameterNum = parameterNum % int(pow(10, digits - 1 - i));
-
-		if (num > 9) {
-			num = 1;
-		}
-
+	if (isDraw_[parameter]) {
 		if (parameter == kCombo) {
-			if (num != 0) {
-				k++;
+			if (parameters_[parameter] < 2) {
+				return;
 			}
 		}
 
-		if (parameter == kCombo) {
-			if (k != 0) {
-				Texture2D::TextureDraw(*(worldTransform.get()), viewProjectionMat, colors_[parameter], numberTextures_[num].get());
-			}
+		int i = 0;
+		int num = 0;
+		int parameterNum = parameters_[parameter];
+		int k = 0;
+
+		int digits = 0;
+
+		if (parameter == kScore || parameter == kMemoHighScore) {
+			digits = kScoreMaxDigits_;
 		}
 		else {
-			Texture2D::TextureDraw(*(worldTransform.get()), viewProjectionMat, colors_[parameter], numberTextures_[num].get());
+			digits = kComboMaxDigits_;
 		}
 
-		i++;
+		for (std::shared_ptr<WorldTransform> worldTransform : worldTransforms_[parameter]) {
+
+			num = parameterNum / int(pow(10, digits - 1 - i));
+			parameterNum = parameterNum % int(pow(10, digits - 1 - i));
+
+			if (num > 9) {
+				num = 1;
+			}
+
+			if (parameter == kCombo) {
+				if (num != 0) {
+					k++;
+				}
+			}
+
+			if (parameter == kCombo) {
+				if (k != 0) {
+					Texture2D::TextureDraw(*(worldTransform.get()), viewProjectionMat, colors_[parameter], numberTextures_[num].get());
+				}
+			}
+			else {
+				Texture2D::TextureDraw(*(worldTransform.get()), viewProjectionMat, colors_[parameter], numberTextures_[num].get());
+			}
+
+			i++;
+		}
 	}
 }
 
 void Score::Draw2D(const Matrix4x4& viewProjectionMat) {
 
 	for (int i = 0; i < kParameterNum_; i++) {
-		if (isDraw_[i]) {
-			DrawParameter(viewProjectionMat, i);
-		}
+		DrawParameter(viewProjectionMat, i);
 	}
 
 }
