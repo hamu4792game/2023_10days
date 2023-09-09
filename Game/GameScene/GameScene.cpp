@@ -42,7 +42,10 @@ void GameScene::Initialize()
 	for (uint16_t i = 0u; i < UI::kUITexturesMaxNum_; i++) {
 		UITextures_.push_back(std::make_shared<Texture2D>());
 	}
-
+	// ゲージ用
+	for (uint16_t i = 0u; i < Player::kGaugeResourceNum_; i++) {
+		gaugeTextures_.push_back(std::make_shared<Texture2D>());
+	}
 
 	//	モデルのロード
 	ModelLoad();
@@ -56,6 +59,9 @@ void GameScene::Initialize()
 	battle->SetBottonModels(bottonModels_);
 	battle->SetNumberTextures(numberTextures_);
 	battle->SetUITextures(UITextures_);
+	battle->SetGaugeTextures(gaugeTextures_);
+
+	result->SetUI(battle->GetUI());
 
 	//	シーンの初期化
 	title->Initialize();
@@ -218,6 +224,10 @@ void GameScene::ModelLoad()
 	UITextures_[UI::kGreat]->Texture("Resources/hud/ScoreTextures/GREAT.png", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl");
 	UITextures_[UI::kGood]->Texture("Resources/hud/ScoreTextures/GOOD.png", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl");
 	UITextures_[UI::kMiss]->Texture("Resources/hud/ScoreTextures/MISS.png", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl");
+
+	// ゲージ用
+	gaugeTextures_[Player::GaugeResource::kBackResource]->Texture("Resources/gauge/white.png", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl");
+	gaugeTextures_[Player::GaugeResource::kGaugeResource]->Texture("Resources/gauge/white.png", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl");
 
 	//ボタンオブジェクトロード
 	bottonModels_[0]->Texture("Resources/hud/A/A.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl");

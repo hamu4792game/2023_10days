@@ -4,7 +4,7 @@
 #include "Engine/Texture/Model.h"
 #include "Engine/Camera/Camera.h"
 #include"EEnum.h"
-
+#include "Engine/Texture/Texture2D.h"
 
 class Score;
 
@@ -31,6 +31,25 @@ public:
 
 public: // Korone
 
+	enum GaugeResource {
+		kBackResource,
+		kGaugeResource,
+	};
+
+	static const int kGaugeResourceNum_ = 2;
+
+	enum GaugeDrawEnum {
+		kBack,
+		kGaugeBack,
+		kGaugePerfect,
+		kGaugeGreat,
+		kGaugeGood
+	};
+
+	static const int kGaugeDrawNum_ = 5;
+
+	void SetGaugeTextures(std::vector<std::shared_ptr<Texture2D>> textures) { gaugeTextures_ = textures; }
+
 	void SetScore(Score* score) { score_ = score; }
 
 	void HitTestInitialize();
@@ -39,11 +58,32 @@ public: // Korone
 
 	void HitTest(Enemy* enemy);
 
+
+	void GaugeInitialize();
+
+	void GaugeUpdate();
+
+	void GaugeDraw2D(const Matrix4x4& viewProjection);
+
 private: // Korone
 
 	//void HitTest(Enemy* enemy, Score* score);
 
+	void SetGaugeWorldTransform(const Vector2& screenPos, const Vector2& scale, float rotate, int gaugeEnumName);
+
+	void SetFloatTransform();
+
+	void SetColor(uint32_t color, int gaugeEnumName) { gaugeColors_[gaugeEnumName] = color; }
+
+	void SetIsDraw(bool is, int gaugeEnumName) { gaugeIsDraw_[gaugeEnumName] = false; }
+
+	void GaugeDraw(const Matrix4x4& viewProjection, int gaugeEnumName);
+
 	void HitEvalution(Enemy* enemy);
+
+	void SetGaugeGlobalVariable();
+
+	void ApplyGuageGlobalVariable();
 
 private:
 
@@ -94,6 +134,8 @@ private: // Korone
 		kMiss
 	};
 
+	static const int kGaugeTransformNum_ = 3;
+
 	Score* score_ = nullptr;
 
 	//Input* input_ = nullptr;
@@ -109,6 +151,46 @@ private: // Korone
 
 	//Score* score = nullptr;
 
+	std::vector<std::shared_ptr<Texture2D>> gaugeTextures_;
 
+	std::vector<std::shared_ptr<WorldTransform>> gaugeWorldTransforms_;
+
+	const float kTextureSize_ = 4.0f;
+
+	float kBaseScale_ = 60.0f;
+
+	float kBaseScaleY_ = 18.0f;
+
+	float kBaseWhiteSpace_ = 4.0f;
+
+	float kGaugeScale_[kGaugeTransformNum_] = {
+		kBaseScale_ * kEvalutionframe_[Evalution::kPerfect] / kEvalutionframe_[Evalution::kGood],
+		kBaseScale_ * (kEvalutionframe_[Evalution::kGreat] - kEvalutionframe_[Evalution::kPerfect]) / kEvalutionframe_[Evalution::kGood],
+		kBaseScale_ * (kEvalutionframe_[Evalution::kGood] - kEvalutionframe_[Evalution::kGreat]) / kEvalutionframe_[Evalution::kGood]
+	};
+
+	Vector2 kBasePos_ = { float(WinApp::kWindowWidth) / 2.0f, 600.0f };
+
+	float kGaugeStartPos_[kGaugeTransformNum_] = {
+		kBasePos_.x - kTextureSize_ / 2 * kBaseScale_ + kTextureSize_ / 2 * kGaugeScale_[Evalution::kPerfect],
+		kGaugeStartPos_[Evalution::kPerfect] + kTextureSize_ / 2 * kGaugeScale_[Evalution::kPerfect] + kTextureSize_ / 2 * kGaugeScale_[Evalution::kGreat],
+		kGaugeStartPos_[Evalution::kGreat] + kTextureSize_ / 2 * kGaugeScale_[Evalution::kGreat] + kTextureSize_ / 2 * kGaugeScale_[Evalution::kGood],
+	};
+
+	float kGaugeEndPos_[kGaugeTransformNum_] = {
+		kGaugeStartPos_[Evalution::kPerfect] + kTextureSize_ / 2 * kGaugeScale_[Evalution::kPerfect],
+		kGaugeStartPos_[Evalution::kGreat] + kTextureSize_ / 2 * kGaugeScale_[Evalution::kGreat],
+		kGaugeStartPos_[Evalution::kGood] + kTextureSize_ / 2 * kGaugeScale_[Evalution::kGood]
+	};
+
+	/*float kGaugePerfectScale_ = kBaseScale_ * kEvalutionframe_[Evalution::kPerfect] / kEvalutionframe_[Evalution::kGood];
+
+	float kGaugeGreatScale_ = kBaseScale_ * (kEvalutionframe_[Evalution::kGreat] - kEvalutionframe_[Evalution::kPerfect]) / kEvalutionframe_[Evalution::kGood];
+
+	float kGaugeGoodScale_ = kBaseScale_ * (kEvalutionframe_[Evalution::kGood] - kEvalutionframe_[Evalution::kGreat]) / kEvalutionframe_[Evalution::kGood];*/
+
+	uint32_t gaugeColors_[kGaugeDrawNum_] = {};
+
+	bool gaugeIsDraw_[kGaugeDrawNum_] = {};
 
 };
