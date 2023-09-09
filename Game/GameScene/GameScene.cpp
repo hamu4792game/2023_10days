@@ -43,7 +43,11 @@ void GameScene::Initialize()
 	for (uint16_t i = 0u; i < UI::kUITexturesMaxNum_; i++) {
 		UITextures_.push_back(std::make_shared<Texture2D>());
 	}
-
+	//	shopモデルの生成
+	for (uint16_t i = 0u; i < static_cast<uint16_t>(SHOPPARTS::Num); i++) {
+		shopModel_.push_back(std::make_shared<Model>());
+	}
+	
 
 	//	モデルのロード
 	ModelLoad();
@@ -51,6 +55,7 @@ void GameScene::Initialize()
 	title->SetModels(mobModels_);
 	title->SetModelsType2(mobModels_type2);
 	title->SetBottonModels(bottonModels_);
+	title->SetShopModel(shopModel_);
 
 	battle->SetModels(mobModels_);
 	battle->SetModelsType2(mobModels_type2);
@@ -228,4 +233,9 @@ void GameScene::ModelLoad()
 	bottonModels_[1]->Texture("Resources/hud/B/B.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl");
 	bottonModels_[2]->Texture("Resources/hud/X/X.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl");
 	bottonModels_[3]->Texture("Resources/hud/Y/Y.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl");
+
+	//	
+	shopModel_[0]->Texture("Resources/shop/shop.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl", "uvChecker.png");
+	shopModel_[1]->Texture("Resources/plane/plane.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl", "hud/board.png");
+	shopModel_[2]->Texture("Resources/plane/plane.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl", "hud/onetime.png");
 }

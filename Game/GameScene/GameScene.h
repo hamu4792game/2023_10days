@@ -55,6 +55,8 @@ private: // モデル用変数
 	// UIのperfectやcomboなど
 	std::vector<std::shared_ptr<Texture2D>> UITextures_;
 
+	std::vector<std::shared_ptr<Model>> shopModel_;
+
 private:
 
 public:
