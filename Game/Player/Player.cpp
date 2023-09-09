@@ -34,7 +34,7 @@ void Player::Initialize(std::vector<std::shared_ptr<Model>> models, WorldTransfo
 	transform.parent_ = world;
 	//	地面の半径 * scale
 	transform.translation_.y = 6.5f;
-	transform.scale_ = Vector3(0.3f, 0.3f, 0.3f);
+	//transform.scale_ = Vector3(0.3f, 0.3f, 0.3f);
 
 	//	カメラとの親子関係
 	camera_->transform.parent_ = &transform;

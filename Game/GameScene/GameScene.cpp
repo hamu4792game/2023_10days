@@ -102,6 +102,9 @@ void GameScene::Update()
 	{
 	case GameScene::Scene::TITLE:
 		title->Update();
+		if (KeyInput::PushKey(DIK_P)) {
+			scene = Scene::BATTLE;
+		}
 		break;
 	case GameScene::Scene::BATTLE:
 		battle->Update();
@@ -113,8 +116,6 @@ void GameScene::Update()
 		result->Update();
 		break;
 	}
-
-	
 
 	//	カメラ行列の更新
 	viewProjectionMatrix = camera->GetViewProMat();
@@ -152,7 +153,6 @@ void GameScene::Draw()
 		result->Draw(viewProjectionMatrix2d);
 		break;
 	}
-
 	//Model::ModelDraw(pos, viewProjectionMatrix, 0xffffffff, model.get());
 }
 

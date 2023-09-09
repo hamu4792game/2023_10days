@@ -35,21 +35,19 @@ private: // シーンで必要なモデル配列
 private:
 	//	中心座標
 	WorldTransform worldTransform;
-	
+	//	キャラ用
+	WorldTransform chara;
 
-	//struct Chara {
-	//	//	キャラの座標
-	//	WorldTransform character;
-	//	//	モデルデータ配列
-	//	std::vector<WorldTransform> parts_;
-	//};
-	//Chara player_;
-	//std::vector<Chara> enemy_;
+	//	モデルデータ配列
+	std::vector<WorldTransform> parts_;
 
-	std::vector<std::unique_ptr<Enemy>> enemys_;
+	std::vector<std::unique_ptr<Enemy>> enemy_;
 
 	//	カメラのポインタ
 	std::shared_ptr<Camera> camera_ = nullptr;
+
+	Vector3 startingPoint;
+	Vector3 endPoint;
 
 
 private: // メンバ関数

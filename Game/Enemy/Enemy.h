@@ -45,6 +45,7 @@ public:
 
 	//	描画
 	void Draw(const Matrix4x4& viewProjection, std::vector<std::shared_ptr<Model>> botunModels);
+	void Draw(const Matrix4x4& viewProjection);
 
 public: // Korone
 
