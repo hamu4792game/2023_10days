@@ -29,3 +29,11 @@ struct esing {
 	Vector3 st;
 	Vector3 ed;
 };
+
+enum class SHOPPARTS {
+	Base,
+	Signboard,
+	BoardText,
+
+	Num
+};
