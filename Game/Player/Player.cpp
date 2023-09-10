@@ -108,9 +108,300 @@ void Player::Initialize(std::vector<std::shared_ptr<Model>> models, WorldTransfo
 
 	
 	//アニメーションに使う値の設定
-	
+	AnimeInitialize();
 }
 
+
+
+#pragma region Animation関数
+void Player::AnimeInitialize() {
+
+	state_ =Normal;
+
+	wave_A = ATKWAIT;
+
+	T_ = 0;
+
+	isAnimeStart_ = false;
+	//サイズあわせ
+	nowR.resize(parts_.size());
+	ESALL.resize(parts_.size());
+
+#pragma region 各アニメの身体パーツ
+	AnimeType[Normal].resize(parts_.size());
+
+	AnimeType[Normal][Body] = {
+		{0.9f, 0.0f, 0.0f},
+		{1.0f, 0.0f, 0.0f},
+	};
+	AnimeType[Normal][Head] = {
+		{-0.7f, 0.0f, 0.0f},
+		{-0.7f, 0.0f, 0.0f},
+	};
+	AnimeType[Normal][BodyUnder] = {
+		{-0.35f, 0.0f, 0.0f},
+		{-0.45f, 0.0f, 0.0f},
+	};
+
+	AnimeType[0][LArm1] = {
+		{0.0f, 0.7f, 1.0f},
+		{0.0f, 0.8f, 1.0f},
+	};
+	AnimeType[0][LArm2] = {
+		{0.0f, 2.4f, 0.0f},
+		{0.0f, 2.4f, 0.0f},
+	};
+	AnimeType[0][LHand] = {
+		{0.0f, 0.0f, 0.0f},
+		{0.0f, 0.0f, 0.0f},
+	};
+
+	AnimeType[0][RArm1] = {
+		{0.0f, -0.7f, -1.0f},
+		{0.0f, -0.8f, -1.0f},
+	};
+	AnimeType[0][RArm2] = {
+		{0.0f, -2.4f, 0.0f},
+		{0.0f, -2.4f, 0.0f},
+	};
+	AnimeType[0][RHand] = {
+		{0.0f, 0.0f, 0.0f},
+		{0.0f, 0.0f, 0.0f},
+	};
+
+
+	AnimeType[0][LLeg1] = {
+		{-2.11f,  0.0f, 0.0f},
+		{0.0f, 0.0f, 0.0f},
+	};
+	AnimeType[0][LLeg2] = {
+		{2.15f,  0.0f, 0.0f},
+		{0.0f, 0.0f, 0.0f},
+	};
+	AnimeType[0][LFoot] = {
+		{0.45f, 0.0f, 0.0f},
+		{0.0f, 0.0f, 0.0f},
+	};
+
+	AnimeType[0][RLeg1] = {
+		{0.0f,   0.0f, 0.0f},
+		{-2.11f, 0.0f, 0.0f},
+	};
+	AnimeType[0][RLeg2] = {
+		{0.0f,  0.0f, 0.0f},
+		{2.15f, 0.0f, 0.0f},
+	};
+	AnimeType[0][RFoot] = {
+		{0.0f,  0.0f, 0.0f},
+		{0.45f, 0.0f, 0.0f},
+	};
+
+	AnimeType[ATK_R].resize(parts_.size());
+	// 右に飛ばすパンチ
+	AnimeType[1][Body] = {
+		{0.0f,-0.8f,0},
+		{0.0f, 1.5f, 0.0f},
+	};
+	AnimeType[1][Head] = {
+		{0.0f, 0.95f, 0.0f},
+		{0.0f, -1.11f, 0.0f},
+	};
+	AnimeType[1][BodyUnder] = {
+		{0.0f,0.0f,0.0f},
+		{0.0f, -2.31f, 0},
+	};
+
+	AnimeType[1][LArm1] = {
+		{0.0f, -0.13f, 0.0f},
+		{0.0f, 0.48f, 0.0f},
+	};
+	AnimeType[1][LArm2] = {
+		{0.0f, 2.5f, 0.0f},
+		{0.0f, 1.14f, 0.0f},
+	};
+	AnimeType[1][LHand] = {
+		{0.0f, 0.23f, 0.0f},
+		{0.0f, 0.23f, 0.0f},
+	};
+
+	AnimeType[1][RArm1] = {
+		{0.0f, 0.73f, -0.9f},
+		{0.0f, -0.23f, 0.0f},
+	};
+	AnimeType[1][RArm2] = {
+		{0.0f, -2.64f, 0.0f},
+		{0.0f, -2.63f, 0.0f},
+	};
+	AnimeType[1][RHand] = {
+		{0.0f, 0.0f, 0.0f},
+		{0.0f, 0.0f, 0.0f},
+	};
+
+	AnimeType[1][LLeg1] = {
+		{-0.57f, -0.22f, 0.0f},
+		{-0.57f, -0.22f, 0.0f},
+	};
+	AnimeType[1][LLeg2] = {
+		{0.6f, 0.0f, 0.0f},
+		{0.6f, 0.0f, 0.0f},
+	};
+	AnimeType[1][LFoot] = {
+		{0.0f, 0.0f, 0.0f},
+		{0.0f, 0.0f, 0.0f},
+	};
+
+	AnimeType[1][RLeg1] = {
+		{-0.6f, 0.9f, 0.0f},
+		{-0.6f, 0.9f, 0.0f},
+	};
+	AnimeType[1][RLeg2] = {
+		{0.7f, 0.0f, 0.0f},
+		{0.7f, 0.0f, 0.0f},
+	};
+	AnimeType[1][RFoot] = {
+		{0.0f, 0.0f, 0.0f},
+		{0.0f, 0.0f, 0.0f},
+	};
+
+#pragma endregion
+
+
+}
+
+//現在のプレイヤーの情報取得
+void Player::GetplayerR() {
+	for (int i = 0; i < PARTS::Num; i++) {
+		nowR[i] = parts_[i].rotation_;
+	}
+}
+
+
+
+void Player::Animetion() {
+
+	switch (state_)
+	{
+	case Player::Normal:
+		if (score_->GetEvaluation()) {
+			state_ = ATK_R;
+		}
+		break;
+	case Player::ATK_R:
+		ATK_R_F();
+		break;
+	case Player::ATK_L:
+		break;
+	case Player::A_NUM:
+		break;
+	default:
+		break;
+	}
+}
+
+void Player::ATK_R_F() {
+
+	switch (wave_A)
+	{
+	case Player::ATKWAIT:
+		if (!isAnimeStart_) {
+			isAnimeStart_ = true;
+
+			GetplayerR();
+
+			//現在の回転量の取得
+			for (int i = 0; i < Num; i++) {
+				//仮でいきなり手を広げた状態
+				ESALL[i] = {
+					nowR[i],
+					AnimeType[ATK_R][i].st
+				};
+			}
+		}
+		else {
+			for (int i = 0; i < Num; i++) {
+				parts_[i].rotation_ = ES(ESALL[i], T_);			
+			}
+
+			//予備動作無し
+			T_ = 1.0f;
+			if (T_ >= 1.0f) {
+				wave_A = ATK;
+				T_ = 0;
+				isAnimeStart_ = false;
+			}
+
+		}
+
+		break;
+	case Player::ATK:
+		if (!isAnimeStart_) {
+			isAnimeStart_ = true;
+
+			GetplayerR();
+
+			//現在の回転量の取得
+			for (int i = 0; i < Num; i++) {
+				//仮でいきなり手を広げた状態
+				ESALL[i] = {
+					nowR[i],
+					AnimeType[ATK_R][i].ed,
+				};
+			}
+		}
+		else {
+			//イージング更新
+			for (int i = 0; i < Num; i++) {
+				parts_[i].rotation_ = ES(ESALL[i], T_);
+			}
+			//Tを加算
+			T_ += AddT_;
+			//シーン切り替え処理
+			if (T_ >= 1.0f) {
+				wave_A = BACK;
+				T_ = 0;
+				isAnimeStart_ = false;
+			}
+
+		}
+		break;
+	case Player::BACK:
+		if (!isAnimeStart_) {
+			isAnimeStart_ = true;
+
+			GetplayerR();
+
+			//現在の回転量の取得
+			for (int i = 0; i < Num; i++) {
+				//仮でいきなり手を広げた状態
+				ESALL[i] = {
+					nowR[i],
+					AnimeType[ATK_R][i].st,
+				};
+			}
+		}
+		else {
+			//イージング更新
+			for (int i = 0; i < Num; i++) {
+				parts_[i].rotation_ = ES(ESALL[i], T_);
+			}
+			//Tを加算
+			T_ += AddT_;
+			//シーン切り替え処理
+			if (T_ >= 1.0f) {
+				wave_A = ATKWAIT;
+				state_ = Normal;
+				T_ = 0;
+				isAnimeStart_ = false;
+			}
+
+		}
+		break;
+	default:
+		break;
+	}
+	
+}
+#pragma endregion
 
 
 
@@ -142,6 +433,8 @@ void Player::Update()
 	//	待機時間
 	//	移動処理
 	MoveType2();
+
+	Animetion();
 
 	transform.UpdateMatrix();
 	for (auto& i : parts_) {

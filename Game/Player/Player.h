@@ -196,4 +196,52 @@ private: // Korone
 
 	bool gaugeIsDraw_[kGaugeDrawNum_] = {};
 
+
+private: //Spe
+
+	enum ANIMETYPE {
+		Normal,
+		ATK_R,
+		ATK_L,
+
+		A_NUM,
+	};
+
+	//アニメーション状態、ここを変えるとそれぞれアニメーションが始まる
+	ANIMETYPE state_;
+
+	//行動管理
+	enum ANIMEWAVE {
+		ATKWAIT,//攻撃予備動作
+		ATK,
+		BACK,
+	};
+
+	//アニメーションモード、基本アニメーション関数内で変更
+	ANIMEWAVE wave_A;
+
+	void AnimeInitialize();
+
+	void Animetion();
+
+	void ATK_R_F();
+
+	//イージング
+	float T_;
+	//アニメーションフレーム加算地
+	float AddT_ = 1.0f / 30.0f;
+
+	//アニメーション開始時の初期化関数
+	bool isAnimeStart_;
+
+	//実際のイージングで使う構造体
+	std::vector<esing> ESALL;
+
+	//現在の回転軸の保存先
+	std::vector<Vector3>nowR;
+
+	void GetplayerR();
+	//大の字
+	std::vector<esing> AnimeType[A_NUM];
+
 };
