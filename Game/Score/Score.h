@@ -16,14 +16,14 @@ public:
 
 	enum Parameter {
 		kScore,
+		kMemoHighScore,
 		kCombo,
 		kHighCombo,
+		kMemoHighCombo,
 		kPerfectNum,
 		kGreatNum,
 		kGoodNum,
 		kMissNum,
-		kMemoHighScore,
-		kMemoHighCombo,
 	};
 
 	static const int kParameterNum_ = 9;

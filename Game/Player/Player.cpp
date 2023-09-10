@@ -59,7 +59,7 @@ void Player::Initialize(std::vector<std::shared_ptr<Model>> models, WorldTransfo
 	flag = false;
 	movePos = 0.0f;
 	oldPos = 0.0f;
-	enemyDistance = 10.0f;
+	//enemyDistance = 10.0f;
 	frame = 0.0f;
 	MAX_frame = 60.0f;
 	
@@ -517,11 +517,11 @@ void Player::MoveType2() {
 		waitFrame++;
 
 		//	仮 入力を受け付けたらフラグを建てる
-		if (KeyInput::PushKey(DIK_SPACE) || score_->GetEvaluation()) {
+		if (/*KeyInput::PushKey(DIK_SPACE) || */score_->GetEvaluation()) {
 			waitFrame = MAX_frame;
 		}
 
-		if (KeyInput::PushKey(DIK_SPACE) || score_->GetEvaluation()) {
+		if (/*KeyInput::PushKey(DIK_SPACE) || */score_->GetEvaluation()) {
 			//	座標の更新
 			oldPos = transform.translation_.z;
 			//	敵の間隔分足す
@@ -652,7 +652,7 @@ void Player::SetGaugeGlobalVariable() {
 	globalVariables->AddItem(groupName, "scaleY", kBaseScaleY_);
 	globalVariables->AddItem(groupName, "whiteSpace", kBaseWhiteSpace_);
 
-
+	ApplyGuageGlobalVariable();
 }
 
 void Player::ApplyGuageGlobalVariable() {
@@ -705,6 +705,7 @@ void Player::SetFloatTransform() {
 void Player::GaugeUpdate() {
 
 	ApplyGuageGlobalVariable();
+
 
 	if (flag) {
 

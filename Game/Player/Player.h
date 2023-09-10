@@ -118,6 +118,9 @@ private:
 	//	最大フレーム
 	float MAX_frame;
 
+public:
+	void SetDistance(const float& dis) { enemyDistance = dis; }
+
 private:
 
 	//	移動処理
