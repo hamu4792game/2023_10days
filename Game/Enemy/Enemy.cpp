@@ -489,6 +489,281 @@ void Enemy::AnimeInitialize() {
 	};
 #pragma endregion
 
+
+#pragma region 待機
+	WAIT_[0].resize(parts_.size());
+	WAIT_[0][Body] = {
+		{0,0,0},
+		{0,0,0},
+	};
+	WAIT_[0][BodyUnder] = {
+		{0, 0, 0},
+		{0, 0, 0},
+	};
+	WAIT_[0][Head] = {
+		{0, 0, 0},
+		{0, 0, 0},
+	};
+
+
+	//左腕
+	WAIT_[0][LArm1] = {
+		{0.8f, 0.8f, 1.0f},
+		{0.8f, 0.8f, 1.0f},
+	};
+	WAIT_[0][LArm2] = {
+		{0.0f, 2.0f, -3.4f},
+		{0.0f, 2.0f, -3.4f},
+	};
+	WAIT_[0][LHand] = {
+		{0,0,0},
+		{0,0,0},
+	};
+	//右腕
+	WAIT_[0][RArm1] = {
+		{0.8f, -0.8f, -1.0f},
+		{0.8f, -0.8f, -1.0f},
+	};
+	WAIT_[0][RArm2] = {
+		{0.0f, -2.3f, 0.4f},
+		{0.0f, -2.3f, 0.4f},
+	};
+	WAIT_[0][RHand] = {
+		{0.0f, 0.0f, 0.0f},
+		{0.0f, 0.0f, 0.0f},
+	};
+
+	//足
+	WAIT_[0][LLeg1] = {
+		{0.0f, -0.18f, 0.0f},
+		{0.0f, -0.18f, 0.0f},
+	};
+	WAIT_[0][LLeg2] = {
+		{0.0f, 0.0f, 0.0f},
+		{0.0f, 0.0f, 0.0f},
+	};
+	WAIT_[0][LFoot] = {
+		{0.0f, 0.0f, 0.0f},
+		{0.0f, 0.0f, 0.0f},
+	};
+
+	WAIT_[0][RLeg1] = {
+		{-0.3f, 1.0f, 0.0f},
+		{-0.3f, 1.0f, 0.0f},
+	};
+	WAIT_[0][RLeg2] = {
+		{0.3f, 0.0f, 0.0f},
+		{0.3f, 0.0f, 0.0f},
+	};
+	WAIT_[0][RFoot] = {
+		{0.13f,0.0f,0.0f},
+		{-0.44f,0.0f,0.0f},
+	};
+
+	WAIT_[1].resize(parts_.size());
+	WAIT_[1][Body] = {
+		{0, 0, 0},
+		{0, 0, 0},
+	};
+	WAIT_[1][BodyUnder] = {
+		{0, 0, 0},
+		{0, 0, 0},
+	};
+	WAIT_[1][Head] = {
+		{0, 0, 0},
+		{0, 0, 0},
+	};
+
+	WAIT_[1][LArm1] = {
+		{0, 0, 1.2f},
+		{0, 0, 1.2f},
+	};
+	WAIT_[1][LArm2] = {
+		{0, 0, 0.3f},
+		{0, 0, 0.3f},
+	};
+	WAIT_[1][LHand] = {
+		{0, 0, 0},
+		{0, 0, 0},
+	};
+
+	WAIT_[1][RArm1] = {
+		{0, 0, -0.4f},
+		{0, 0, -0.4f},
+	};
+	WAIT_[1][RArm2] = {
+		{0, 0, -1.8f},
+		{0, 0, -1.8f},
+	};
+	WAIT_[1][RHand] = {
+		{0, 0, -1.85f},
+		{0, 0, -1.85f},
+	};
+	WAIT_[1][LLeg1] = {
+		{0,      -0.48f, -0.12f},
+		{-0.39f, -0.48f, -0.12f},
+	};
+	WAIT_[1][LLeg2] = {
+		{0.14f, 0, 0},
+		{0.65f, 0, 0},
+	};
+	WAIT_[1][LFoot] = {
+		{0,    0.03f, 0.13f},
+		{0.2f, 0.03f, 0.13f},
+	};
+
+	WAIT_[1][RLeg1] = {
+		{0, 0.03f, 0.13f},
+		{0, 0.03f, 0.13f},
+	};
+	WAIT_[1][RLeg2] = {
+		{0, 0, -0.15f},
+		{0, 0, -0.15f},
+	};
+	WAIT_[1][RFoot] = {
+		{0, 0.36f, 0},
+		{0, 0.36f, 0},
+	};
+
+	WAIT_[2].resize(parts_.size());
+
+	WAIT_[2][Body] = {
+		{0, 0, 0},
+		{0, 0, 0},
+	};
+	WAIT_[2][BodyUnder] = {
+		{0, 0, 0},
+		{0, 0, 0},
+	};
+	WAIT_[2][Head] = {
+		{0.15f, -0.22f, 0},
+		{0.15f, -0.22f, 0},
+	};
+
+	// 左腕
+	WAIT_[2][LArm1] = {
+		{0.01f, 0.45f, 0.03f},
+		{0.01f, 0.45f, 0.03f},
+	};
+	WAIT_[2][LArm2] = {
+		{0.0f,2.02f,0.0f},
+		{0.0f,2.02f,0.0f},
+	};
+	WAIT_[2][LHand] = {
+		{0, 0, 0.0f},
+		{0, 0, 0.0f},
+	};
+	// 右腕
+	WAIT_[2][RArm1] = {
+		{0,0,-0.6f},
+		{0,0,-0.6f},
+	};
+	WAIT_[2][RArm2] = {
+		{0.0f,0.0f,-0.6f},
+		{0.0f,0.0f,-0.6f},
+	};
+	WAIT_[2][RHand] = {
+		{0.0f, 0.0f, 0.0f},
+		{0.0f, 0.0f, 0.0f},
+	};
+	// 足
+	WAIT_[2][LLeg1] = {
+		{0.0f, 0.0f, 0.0f},
+		{0.0f, 0.0f, 0.0f},
+	};
+	WAIT_[2][LLeg2] = {
+		{0.0f, 0.0f, 0.0f},
+		{0.0f, 0.0f, 0.0f},
+	};
+	WAIT_[2][LFoot] = {
+		{0.0f, 0.0f, 0.0f},
+		{0.0f, 0.0f, 0.0f},
+	};
+
+	WAIT_[2][RLeg1] = {
+		{0.0f, 0.0f, 0.0f},
+		{0.0f, 0.0f, 0.0f},
+	};
+	WAIT_[2][RLeg2] = {
+		{0.0f, 0.0f, 0.0f},
+		{0.0f, 0.0f, 0.0f},
+	};
+	WAIT_[2][RFoot] = {
+		{0.0f, 0.0f, 0.0f},
+		{0.0f, 0.0f, 0.0f},
+	};
+
+
+	WAIT_[3].resize(parts_.size());
+
+	WAIT_[3][Body] = {
+		{0, 0, 0},
+		{0, 0, 0},
+	};
+	WAIT_[3][BodyUnder] = {
+		{0, 0, 0},
+		{0, 0, 0},
+	};
+	WAIT_[3][Head] = {
+		{0.15f, -0.22f, 0},
+		{0.15f, -0.22f, 0},
+	};
+
+	// 左腕
+	WAIT_[3][LArm1] = {
+		{0.0f,0.0f,0.67f},
+		{0.0f,0.0f,0.67f},
+	};
+	WAIT_[3][LArm2] = {
+		{0.0f,0.0f,1.54f},
+		{0.0f,0.0f,1.54f},
+	};
+	WAIT_[3][LHand] = {
+		{0, 0, 0.0f},
+		{0, 0, 0.0f},
+	};
+	// 右腕
+	WAIT_[3][RArm1] = {
+		{0.0f,0,-1.67f},
+		{0.0f,0,-1.67f},
+	};
+	WAIT_[3][RArm2] = {
+		{0.0f,-1.85f,0.0f},
+		{0.0f,-1.85f,0.0f},
+	};
+	WAIT_[3][RHand] = {
+		{0.0f, 0.0f, 0.0f},
+		{0.0f, 0.0f, 0.0f},
+	};
+	// 足
+	WAIT_[3][LLeg1] = {
+		{0.0f, 0.0f, 0.0f},
+		{0.0f, 0.0f, 0.0f},
+	};
+	WAIT_[3][LLeg2] = {
+		{0.0f, 0.0f, 0.0f},
+		{0.0f, 0.0f, 0.0f},
+	};
+	WAIT_[3][LFoot] = {
+		{0.0f, 0.0f, 0.0f},
+		{0.0f, 0.0f, 0.0f},
+	};
+
+	WAIT_[3][RLeg1] = {
+		{0.0f, 0.0f, 0.0f},
+		{0.0f, 0.0f, 0.0f},
+	};
+	WAIT_[3][RLeg2] = {
+		{0.0f, 0.0f, 0.0f},
+		{0.0f, 0.0f, 0.0f},
+	};
+	WAIT_[3][RFoot] = {
+		{0.0f, 0.0f, 0.0f},
+		{0.0f, 0.0f, 0.0f},
+	};
+#pragma endregion
+
+
 }
 
 
@@ -525,8 +800,8 @@ Vector3 ES(esing E, float t) {
 }
 
 int GetRandomNum(int wideOrmax, bool isWide) {
-	unsigned int curtime = (unsigned int)time(nullptr);
-	srand(curtime);
+	//unsigned int curtime = (unsigned int)time(nullptr);
+	//srand(curtime);
 	int num;
 	if (isWide) {
 		num = rand() % (wideOrmax * 2 + 1) - wideOrmax;
@@ -538,6 +813,9 @@ int GetRandomNum(int wideOrmax, bool isWide) {
 }
 
 void Enemy::BlowAway() {
+
+	float AddTTTT;
+
 	//死んだときに吹っ飛びアニメーション
 	if (isDead_) {
 		if (!isStart_blow_away) {
@@ -636,8 +914,124 @@ void Enemy::BlowAway() {
 			}
 		}
 	}
+	else {
+		switch (state_)
+		{
+		case Enemy::NONE:
+			AddTTTT = 1.0f / (30.0f * GetRandomNum(10, false));
 
+			T_ += AddTTTT;
+			if (T_ >= 1.0f) {
+				T_ = 0;
+				SetAnimeStart = false;
+				state_ = ONE;
+				mode_ = WAIT;
+			}
 
+			ANIMENUM = GetRandomNum(4, false);
+			break;
+		case Enemy::ONE:
+			WaitAnimetion(ANIMENUM);
+			break;
+		case Enemy::TWO:
+			break;
+		case Enemy::TREE:
+			break;
+		default:
+			break;
+		}
+	}
+}
+
+void Enemy::WaitAnimetion(int num) {
+	switch (mode_)
+	{
+	case Enemy::WAIT:
+
+		if (!SetAnimeStart) {
+			T_ = 0;
+			SetAnimeStart = true;
+
+			GetER();
+			for (int i = 0; i < Num; i++) {
+				//仮でいきなり手を広げた状態
+				ESALL[i] = {
+					nowR[i],
+					WAIT_[num][i].st,
+
+				};
+			}
+		}
+		else {
+			//更新
+			for (int i = 0; i < Num; i++) {
+				if (i != Body) {
+					parts_[i].rotation_ = ES(ESALL[i], T_);
+				}
+			}
+
+			T_ += 1.0f / 60.0f;
+			if (T_ >= 1.0f) {
+				//state_ = NONE;
+				T_ = 0;
+				SetAnimeStart = false;
+				mode_ = MOVE;
+			}
+		}
+
+		break;
+	case Enemy::MOVE:
+		//初期化
+		if (!SetAnimeStart) {
+			T_ = 0;
+			SetAnimeStart = true;
+			for (int i = 0; i < Num; i++) {
+				//仮でいきなり手を広げた状態
+				ESALL[i] = WAIT_[num][i];
+			}
+			isLoop = false;
+			countAnime_ = 0;
+		}
+		else {
+			//更新
+			for (int i = 0; i < Num; i++) {
+				if (i != Body) {
+					parts_[i].rotation_ = ES(ESALL[i], T_);
+				}
+			}
+
+			//ループ時の処理の変更
+			if (!isLoop) {
+				T_ += 1.0f / 30.0f;
+				if (T_ >= 1.0f) {					
+					T_ = 1.0f;
+					isLoop = true;
+					//
+				}
+			}
+			else {
+				T_ -= 1.0f / 30.0f;
+				if (T_ <= 0.0f) {				
+					T_ = 0.0f;
+					isLoop = false;
+				}
+			}
+
+			//シーン切り替え処理
+			if (++countAnime_ >= 180) {
+				SetAnimeStart = false;
+				state_ = NONE;
+				mode_ = WAIT;
+			}
+
+		}
+		break;
+	case Enemy::BACK:
+		break;
+	default:
+		break;
+	}
+	
 }
 
 void Enemy::ModelLoad()
