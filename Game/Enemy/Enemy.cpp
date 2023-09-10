@@ -49,7 +49,7 @@ void Enemy::InitializeSP(float pos, int type, int num,//	モデルデータ配�
 
 	transform.translation_.z = pos;
 	transform.translation_.y = 6.5f;
-	transform.scale_ = Vector3(0.3f, 0.3f, 0.3f);
+	//transform.scale_ = Vector3(0.3f, 0.3f, 0.3f);
 	//transform.UpdateMatrix();
 
 	switch (type)
@@ -170,6 +170,7 @@ void Enemy::AnimeInitialize() {
 		{0.0f, 0.0f, 0.5f},
 		{0.0f, 0.0f, 0.5f},
 	};
+	
 	sprawled[0][RArm2] = {
 		{0.0f, 0.0f, 0.0f},
 		{0.0f, 0.0f, 0.0f},
@@ -586,6 +587,7 @@ void Enemy::BlowAway() {
 					}
 				}
 				
+
 			}
 		}
 		else {
@@ -686,5 +688,13 @@ void Enemy::Draw(const Matrix4x4& viewProjection, std::vector<std::shared_ptr<Mo
 		default:
 			break;
 		}
+	}
+}
+
+void Enemy::Draw(const Matrix4x4& viewProjection)
+{
+	for (uint16_t i = 0u; i < parts_.size(); i++)
+	{
+		Model::ModelDraw(parts_[i], viewProjection, 0xffffffff, models_[i].get());
 	}
 }

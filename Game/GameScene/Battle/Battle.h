@@ -10,6 +10,7 @@
 #include "Game/Score/Score.h"
 #include "Game/Player/Player.h"
 #include "Game/Enemy/Enemy.h"
+#include "Game/UI/UI.h"
 
 class Battle
 {
@@ -24,9 +25,6 @@ public:
 	//	初期化
 	void Initialize();
 
-	//	モデルのロード
-	void ModelLoad();
-
 	//	更新処理
 	void Update();
 
@@ -35,24 +33,37 @@ public:
 
 	void Draw2D(const Matrix4x4& viewProjection);
 
+
+	void SetModels(std::vector<std::shared_ptr<Model>> modeldate) { mobModels_ = modeldate; }
+	void SetModelsType2(std::vector<std::shared_ptr<Model>> modeldate) { mobModels_type2 = modeldate; }
+	void SetBottonModels(std::vector<std::shared_ptr<Model>> modeldate) { bottonModels_= modeldate; }
+	void SetNumberTextures(std::vector<std::shared_ptr<Texture2D>> texturedate) { score_->SetNumberTexture(texturedate); }
+	void SetUITextures(std::vector<std::shared_ptr<Texture2D>> texturedate) { ui_->SetUITexture(texturedate); }
+	void SetGaugeTextures(std::vector<std::shared_ptr<Texture2D>> textures) { player_->SetGaugeTextures(textures); }
+
+public: // korone
+
+	UI* GetUI() { return ui_.get(); }
+
 private://	必要なメンバ変数
 
 	std::shared_ptr<Camera> camera_;
 
 	std::unique_ptr<Player> player_;
 
+private: // シーンで必要なモデル配列
 	//	プレイヤーデータのモデル配列
 	std::vector<std::shared_ptr<Model>> mobModels_;
 	std::vector<std::shared_ptr<Model>> mobModels_type2;
 
-	//	パーツ用ペアレントデータ
-	std::vector<WorldTransform> mobparts_;
-  
+	std::vector<std::shared_ptr<Model>> bottonModels_;
+	
+
+
+private:
+	
 	//	中心座標
 	std::shared_ptr<WorldTransform> worldTransform;
-
-
-	std::vector<std::shared_ptr<Model>> bottonModels_;
 
 public:
 	//	マスターフレーム速度。リアルタイム加減速
@@ -64,12 +75,11 @@ private: // Korone
 
 	void EnemyReset();
 
-	void ScoreDraw(const Matrix4x4& viewProjection);
-
 private: //Korone
 
-	int kEnemyMaxNum_ = 100;
-	//int kEnemyIntervalNum_ = 5;
+	int kEnemyMaxNum_ = 40;
+	int kEnemyIntervalNum_ = 5;
+
 	int enemyNum_ = 0;
 	int enemyKillCount_ = 0;
 
@@ -80,9 +90,9 @@ private: //Korone
 	int typeCount_ = 0;
 
 	std::unique_ptr<Score> score_;
-	//std::unique_ptr<Player> player_;
-	std::list<Enemy*> enemies_;
 
-	std::vector<std::shared_ptr<Texture2D>> numberTextures_;
+	std::unique_ptr<UI> ui_;
+	
+	std::list<Enemy*> enemies_;
 
 };

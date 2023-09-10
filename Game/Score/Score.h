@@ -16,34 +16,42 @@ public:
 
 	enum Parameter {
 		kScore,
+		kMemoHighScore,
 		kCombo,
 		kHighCombo,
+		kMemoHighCombo,
 		kPerfectNum,
 		kGreatNum,
 		kGoodNum,
 		kMissNum,
 	};
 
-	static const int kParameterNum_ = 7;
+	static const int kParameterNum_ = 9;
 
 public:
 
 	Score();
 
-	void Initialize(std::vector<std::shared_ptr<Texture2D>> numberTextures);
+	void Initialize();
+
+	void SetNumberTexture(std::vector<std::shared_ptr<Texture2D>> numberTextures) { numberTextures_ = numberTextures; }
 
 	// posは一番左の数字の真ん中の座標。
-	void SetWorldTransform(const Vector2& screenPos, float scale, float rotate, Parameter parameter);
+	void SetWorldTransform(const Vector2& screenPos, float scale, float rotate, int parameter);
 
-	void DrawParameter(const Matrix4x4& viewProjectionMat, uint32_t color, Parameter parameter);
+	void SetColor(uint32_t color, int parameter) { colors_[parameter] = color; }
+
+	void SetIsDraw(bool is, int parameter) { isDraw_[parameter] = is; }
+
+	void DrawParameter(const Matrix4x4& viewProjectionMat, int parameter);
+
+	void Draw2D(const Matrix4x4& viewProjectionMat);
 
 public:
 
-	// すべての数値を0,falseにする
-	void Reset();
+	void Memo();
 
-	// score,hiCombo,isFullComboを比較して更新する
-	void SetUpdate(const Score& score);
+	void ResetIsDraw();
 
 	std::optional<Evaluation> GetEvaluation() { return evalutuin_; }
 
@@ -80,9 +88,6 @@ public:
 		ComboReset();
 	}
 
-	// goodとmissが0ならフルコンになる。プレイが終わってからの更新でよさそう。
-	void IsFullComUpdate();
-
 	int GetScore() { return parameters_[kScore]; }
 
 	int GetCombo() { return parameters_[kCombo]; }
@@ -97,9 +102,19 @@ public:
 
 	int GetMiss() { return parameters_[kMissNum]; }
 
+	int GetHighScore() { return parameters_[kMemoHighScore]; }
+
+	int GetMemoHighCombo() { return parameters_[kMemoHighCombo]; }
+
 	bool IsFullCom() { return isFullCom_; }
 
 private:
+
+	// goodとmissが0ならフルコンになる。プレイが終わってからの更新でよさそう。
+	void IsFullComUpdate();
+
+	// すべての数値を0,falseにする
+	void Reset();
 
 	// scoreの加算
 	void AddScore(int score) { parameters_[kScore] += score; }
@@ -125,8 +140,11 @@ private:
 
 	int parameters_[kParameterNum_] = {};
 
-	bool isFullCom_ = false;
+	uint32_t colors_[kParameterNum_] = {};
 
+	bool isDraw_[kParameterNum_] = {};
+
+	bool isFullCom_ = false;
 
 	std::vector<std::shared_ptr<Texture2D>> numberTextures_;
 

@@ -24,6 +24,8 @@ public:
 	Scene scene = Scene::TITLE;
 	Scene oldscene = Scene::TITLE;
 
+	bool sceneChangeFlag;
+
 	//	シングルトンインスタンス
 	static GameScene* GetInstance();
 
@@ -44,12 +46,47 @@ private:
 
 	std::unique_ptr<Ground> ground;
 
+private: // モデル用変数
+	// プレイヤーデータのモデル配列
+	std::vector<std::shared_ptr<Model>> mobModels_;
+	std::vector<std::shared_ptr<Model>> mobModels_type2;
+	//	ボタンUIのモデル 4個
+	std::vector<std::shared_ptr<Model>> bottonModels_;
+	//	数字UIのtexture 0～9の10個
+	std::vector<std::shared_ptr<Texture2D>> numberTextures_;
+	// UIのperfectやcomboなど
+	std::vector<std::shared_ptr<Texture2D>> UITextures_;
+
+	std::vector<std::shared_ptr<Model>> shopModel_;
+
+	// ゲージ用
+	std::vector<std::shared_ptr<Texture2D>> gaugeTextures_;
+
+private:
+	//	パーツ用データの元
+	std::vector<WorldTransform> parts_;
+
+private:
+
 public:
 
 	void Initialize();
 
+
 	void Update();
 	
 	void Draw();
+
+private: // メンバ関数
+	//	モデルのロード
+	void ModelLoad();
+
+	//	シーンチェンジ用
+	Texture2D box;
+	WorldTransform boxtransform;
+	float boxScale = 0.0f;
+	float easeNum = 0.0f;
+	bool flag = false;
+	void SceneChange();
 
 };

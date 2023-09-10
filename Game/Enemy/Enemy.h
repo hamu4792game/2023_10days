@@ -53,6 +53,7 @@ public:
 
 	//	描画
 	void Draw(const Matrix4x4& viewProjection, std::vector<std::shared_ptr<Model>> botunModels);
+	void Draw(const Matrix4x4& viewProjection);
 
 public: // Korone
 
@@ -144,3 +145,7 @@ private://Specha
 	//[3]の右バージョン
 	std::vector<esing> anoMotion;
 };
+
+
+//イージングの処理、好きに中身かえてちょ
+Vector3 ES(esing E, float t);

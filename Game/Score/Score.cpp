@@ -3,7 +3,7 @@
 Score::Score() {
 
 	for (int i = 0; i < kParameterNum_; i++) {
-		if (i == kScore) {
+		if (i == kScore || i == kMemoHighScore) {
 			for (int j = 0; j < kScoreMaxDigits_; j++) {
 				worldTransforms_[i].push_back(std::make_shared<WorldTransform>());
 			}
@@ -13,17 +13,29 @@ Score::Score() {
 				worldTransforms_[i].push_back(std::make_shared<WorldTransform>());
 			}
 		}
+
+		colors_[i] = 0xFFFFFFFF;
+
+		parameters_[i] = 0;
+
+		isDraw_[i] = false;
 	}
 
 }
 
-void Score::Initialize(std::vector<std::shared_ptr<Texture2D>> numberTextures) {
+void Score::Initialize() {
 	
-	numberTextures_ = numberTextures;
+	Reset();
 
 }
 
-void Score::SetWorldTransform(const Vector2& screenPos, float scale, float rotate, Parameter parameter) {
+void Score::ResetIsDraw() {
+	for (int i = 0; i < kParameterNum_; i++) {
+		isDraw_[i] = false;
+	}
+}
+
+void Score::SetWorldTransform(const Vector2& screenPos, float scale, float rotate, int parameter) {
 
 	Vector2 pos = { screenPos.x - WinApp::kWindowWidth / 2, WinApp::kWindowHeight / 2 - screenPos.y };
 
@@ -53,54 +65,75 @@ void Score::SetWorldTransform(const Vector2& screenPos, float scale, float rotat
 
 }
 
-void Score::DrawParameter(const Matrix4x4& viewProjectionMat, uint32_t color, Parameter parameter) {
+void Score::DrawParameter(const Matrix4x4& viewProjectionMat, int parameter) {
 
-	int i = 0;
-	int num = 0;
-	int parameterNum = parameters_[parameter];
-	int k = 0;
 
-	int digits = 0;
-
-	if (parameter == kScore) {
-		digits = kScoreMaxDigits_;
-	}
-	else {
-		digits = kComboMaxDigits_;
-	}
-
-	for (std::shared_ptr<WorldTransform> worldTransform : worldTransforms_[parameter]) {
-
-		num = parameterNum / int(pow(10, digits - 1 - i));
-		parameterNum = parameterNum % int(pow(10, digits - 1 - i));
-
-		if (num > 9) {
-			num = 1;
-		}
-
+	if (isDraw_[parameter]) {
 		if (parameter == kCombo) {
-			if (num != 0) {
-				k++;
+			if (parameters_[parameter] < 2) {
+				return;
 			}
 		}
 
-		if (parameter == kCombo) {
-			if (k != 0) {
-				Texture2D::TextureDraw(*(worldTransform.get()), viewProjectionMat, color, numberTextures_[num].get());
-			}
+		int i = 0;
+		int num = 0;
+		int parameterNum = parameters_[parameter];
+		int k = 0;
+
+		int digits = 0;
+
+		if (parameter == kScore || parameter == kMemoHighScore) {
+			digits = kScoreMaxDigits_;
 		}
 		else {
-			Texture2D::TextureDraw(*(worldTransform.get()), viewProjectionMat, color, numberTextures_[num].get());
+			digits = kComboMaxDigits_;
 		}
 
-		i++;
+		for (std::shared_ptr<WorldTransform> worldTransform : worldTransforms_[parameter]) {
+
+			num = parameterNum / int(pow(10, digits - 1 - i));
+			parameterNum = parameterNum % int(pow(10, digits - 1 - i));
+
+			if (num > 9) {
+				num = 1;
+			}
+
+			if (parameter == kCombo) {
+				if (num != 0) {
+					k++;
+				}
+			}
+
+			if (parameter == kCombo) {
+				if (k != 0) {
+					Texture2D::TextureDraw(*(worldTransform.get()), viewProjectionMat, colors_[parameter], numberTextures_[num].get());
+				}
+			}
+			else {
+				Texture2D::TextureDraw(*(worldTransform.get()), viewProjectionMat, colors_[parameter], numberTextures_[num].get());
+			}
+
+			i++;
+		}
 	}
+}
+
+void Score::Draw2D(const Matrix4x4& viewProjectionMat) {
+
+	for (int i = 0; i < kParameterNum_; i++) {
+		DrawParameter(viewProjectionMat, i);
+	}
+
 }
 
 void Score::Reset() {
 
 	for (int i = 0; i < kParameterNum_; i++) {
-		parameters_[i] = 0;
+		if (i != Parameter::kMemoHighScore) {
+			parameters_[i] = 0;
+
+		}
+		
 	}
 
 	isFullCom_ = false;
@@ -109,18 +142,17 @@ void Score::Reset() {
 	ResetEvalution();
 }
 
-void Score::SetUpdate(const Score& score) {
+
+void Score::Memo() {
 	
-	if (parameters_[kScore] < score.parameters_[kScore]) {
-		parameters_[kScore] = score.parameters_[kScore];
+	IsFullComUpdate();
+
+	if (parameters_[kMemoHighScore] < parameters_[kScore]) {
+		parameters_[kMemoHighScore] = parameters_[kScore];
 	}
 
-	if (parameters_[kHighCombo] < score.parameters_[kHighCombo]) {
-		parameters_[kHighCombo] = score.parameters_[kHighCombo];
-	}
-
-	if (!isFullCom_) {
-		isFullCom_ = score.isFullCom_;
+	if (parameters_[kMemoHighCombo] < parameters_[kHighCombo]) {
+		parameters_[kMemoHighCombo] = parameters_[kHighCombo];
 	}
 }
 

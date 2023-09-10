@@ -1,0 +1,49 @@
+{
+    "ScoreBattleScene": {
+        "ComboPos": [
+            1000.0,
+            360.0
+        ],
+        "ComboScale": 1.5,
+        "GoodPos": [
+            640.0,
+            100.0
+        ],
+        "GoodScale": 1.0,
+        "GreatPos": [
+            640.0,
+            50.0
+        ],
+        "GreatScale": 1.0,
+        "HighComboPos": [
+            1000.0,
+            600.0
+        ],
+        "HighComboScale": 1.0,
+        "HighScorePos": [
+            1060.0,
+            180.0
+        ],
+        "HighScoreScale": 0.699999988079071,
+        "MissPos": [
+            640.0,
+            150.0
+        ],
+        "MissScale": 1.0,
+        "PerfectPos": [
+            640.0,
+            200.0
+        ],
+        "PerfectScale": 1.0,
+        "ScorePos": [
+            980.0,
+            100.0
+        ],
+        "ScoreScale": 1.0,
+        "TotalHighComboPos": [
+            640.0,
+            250.0
+        ],
+        "TotalHighComboScale": 1.0
+    }
+}

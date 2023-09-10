@@ -104,6 +104,12 @@
     <ClCompile Include="Engine\Easing\Ease.cpp">
       <Filter>Engine\Easing</Filter>
     </ClCompile>
+    <ClCompile Include="Game\UI\UI.cpp">
+      <Filter>Game\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="GlobalVariables\GlobalVariables.cpp">
+      <Filter>GlobalVariables</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Camera\Camera.h">
@@ -223,6 +229,12 @@
     <ClInclude Include="Engine\Easing\Ease.h">
       <Filter>Engine\Easing</Filter>
     </ClInclude>
+    <ClInclude Include="Game\UI\UI.h">
+      <Filter>Game\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="GlobalVariables\GlobalVariables.h">
+      <Filter>GlobalVariables</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Engine">
@@ -308,6 +320,12 @@
     </Filter>
     <Filter Include="Game\Player">
       <UniqueIdentifier>{7cdcfa8e-f92b-4cec-95eb-64d0a5dd4a67}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\UI">
+      <UniqueIdentifier>{9c794037-5856-4b03-8816-818b8eb45d8d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GlobalVariables">
+      <UniqueIdentifier>{5db6066b-e521-4852-be15-c042cb93042a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
