@@ -89,7 +89,7 @@ private:
 		kScoreClass,
 	};
 
-	static const int kParameterNum_ = 2;
+	static const int kUIParameterNum_ = 2;
 
 	enum ParameterNum {
 		kPos,
@@ -110,7 +110,7 @@ private:
 		}
 	};
 
-	const char* uiItemNames_[kParameterNum_][kUITexturesMaxNum_] = {
+	const char* uiItemNames_[kUIParameterNum_][kUITexturesMaxNum_] = {
 
 		// Pos
 		{
@@ -136,7 +136,7 @@ private:
 		}
 	};
 
-	const char* scoreItemNames_[kParameterNum_][kScoreNum_] = {
+	const char* scoreItemNames_[kUIParameterNum_][kScoreNum_] = {
 
 		// Pos
 		{

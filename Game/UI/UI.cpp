@@ -239,6 +239,8 @@ void UI::BattleInitialize() {
 	score_->SetIsDraw(true, Score::kGreatNum);
 	score_->SetIsDraw(true, Score::kGoodNum);
 	score_->SetIsDraw(true, Score::kMissNum);
+	score_->SetIsDraw(true, Score::kMemoHighScore);
+	score_->SetIsDraw(true, Score::kMemoHighCombo);
 
 	for (int i = 0; i < kUITexturesMaxNum_; i++) {
 		isDraw_[i] = true;
@@ -274,10 +276,8 @@ void UI::SetWorldTransform(const Vector2& screenPos, float scale, float rotate, 
 
 void UI::Update() {
 
-#ifdef DEBUG
 	ApplyGlobalVariable();
 	SetAllTransform(Scene::kBattleScene);
-#endif // DEBUG
 
 	switch (GameScene::GetInstance()->scene)
 	{

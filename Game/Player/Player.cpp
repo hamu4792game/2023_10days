@@ -420,10 +420,7 @@ void Player::SetFloatTransform() {
 
 void Player::GaugeUpdate() {
 
-#ifdef DEBUG
 	ApplyGuageGlobalVariable();
-
-#endif // DEBUG
 
 
 	if (flag) {

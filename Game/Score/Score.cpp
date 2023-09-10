@@ -3,7 +3,7 @@
 Score::Score() {
 
 	for (int i = 0; i < kParameterNum_; i++) {
-		if (i == kScore || i == kMemoHighCombo) {
+		if (i == kScore || i == kMemoHighScore) {
 			for (int j = 0; j < kScoreMaxDigits_; j++) {
 				worldTransforms_[i].push_back(std::make_shared<WorldTransform>());
 			}
