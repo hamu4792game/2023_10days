@@ -368,7 +368,7 @@ void Player::SetGaugeGlobalVariable() {
 	globalVariables->AddItem(groupName, "scaleY", kBaseScaleY_);
 	globalVariables->AddItem(groupName, "whiteSpace", kBaseWhiteSpace_);
 
-
+	ApplyGuageGlobalVariable();
 }
 
 void Player::ApplyGuageGlobalVariable() {
@@ -421,6 +421,7 @@ void Player::SetFloatTransform() {
 void Player::GaugeUpdate() {
 
 	ApplyGuageGlobalVariable();
+
 
 	if (flag) {
 
