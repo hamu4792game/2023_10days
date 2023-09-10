@@ -128,8 +128,12 @@ void Score::Draw2D(const Matrix4x4& viewProjectionMat) {
 
 void Score::Reset() {
 
-	for (int i = 0; i < 7; i++) {
-		parameters_[i] = 0;
+	for (int i = 0; i < kParameterNum_; i++) {
+		if (i != Parameter::kMemoHighScore) {
+			parameters_[i] = 0;
+
+		}
+		
 	}
 
 	isFullCom_ = false;
