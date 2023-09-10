@@ -559,6 +559,71 @@ void Enemy::AnimeInitialize() {
 		{0.13f,0.0f,0.0f},
 		{-0.44f,0.0f,0.0f},
 	};
+
+	WAIT_[1].resize(parts_.size());
+	WAIT_[1][Body] = {
+		{0, 0, 0},
+		{0, 0, 0},
+	};
+	WAIT_[1][BodyUnder] = {
+		{0, 0, 0},
+		{0, 0, 0},
+	};
+	WAIT_[1][Head] = {
+		{0, 0, 0},
+		{0, 0, 0},
+	};
+
+	WAIT_[1][LArm1] = {
+		{0, 0, 1.2f},
+		{0, 0, 1.2f},
+	};
+	WAIT_[1][LArm2] = {
+		{0, 0, 0.3f},
+		{0, 0, 0.3f},
+	};
+	WAIT_[1][LHand] = {
+		{0, 0, 0},
+		{0, 0, 0},
+	};
+
+	WAIT_[1][RArm1] = {
+		{0, 0, -0.4f},
+		{0, 0, -0.4f},
+	};
+	WAIT_[1][RArm2] = {
+		{0, 0, -1.8f},
+		{0, 0, -1.8f},
+	};
+	WAIT_[1][RHand] = {
+		{0, 0, -1.85f},
+		{0, 0, -1.85f},
+	};
+	WAIT_[1][LLeg1] = {
+		{0,      -0.48f, -0.12f},
+		{-0.39f, -0.48f, -0.12f},
+	};
+	WAIT_[1][LLeg2] = {
+		{0.14f, 0, 0},
+		{0.65f, 0, 0},
+	};
+	WAIT_[1][LFoot] = {
+		{0,    0.03f, 0.13f},
+		{0.2f, 0.03f, 0.13f},
+	};
+
+	WAIT_[1][RLeg1] = {
+		{0, 0.03f, 0.13f},
+		{0, 0.03f, 0.13f},
+	};
+	WAIT_[1][RLeg2] = {
+		{0, 0, -0.15f},
+		{0, 0, -0.15f},
+	};
+	WAIT_[1][RFoot] = {
+		{0, 0.36f, 0},
+		{0, 0.36f, 0},
+	};
 #pragma endregion
 
 
@@ -727,7 +792,7 @@ void Enemy::BlowAway() {
 			}
 			break;
 		case Enemy::ONE:
-			WaitAnimetion(0);
+			WaitAnimetion(1);
 			break;
 		case Enemy::TWO:
 			break;
