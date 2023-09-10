@@ -220,11 +220,16 @@ private: //Spe
 	//アニメーションモード、基本アニメーション関数内で変更
 	ANIMEWAVE wave_A;
 
+	//アニメーション初期化
 	void AnimeInitialize();
 
+	//アニメーションアップデート
 	void Animetion();
 
+	//右攻撃まとめ
 	void ATK_R_F();
+
+	//
 
 	//イージング
 	float T_;
