@@ -81,9 +81,9 @@ private: // Korone
 
 	void HitEvalution(Enemy* enemy);
 
-	void SetGaugeGlobalVariable();
+	void SetKoroneGlobalVariable();
 
-	void ApplyGuageGlobalVariable();
+	void ApplyKoroneGlobalVariable();
 
 private:
 
@@ -148,7 +148,7 @@ private: // Korone
 
 	int intervalCount_ = 0;
 
-	int kEvalutionframe_[4] = { 20, 60, 120, 121 };
+	int kEvalutionframe_[4] = { 20, 60, 120, kEvalutionframe_[Evalution::kGood] + 1};
 
 	int evalutionCount_ = 0;
 

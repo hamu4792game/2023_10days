@@ -648,10 +648,10 @@ void Player::GaugeInitialize() {
 	SetGaugeWorldTransform({ kGaugeStartPos_[Evalution::kGreat],kBasePos_.y }, { kGaugeScale_[Evalution::kGreat],kBaseScaleY_ }, 0.0f, GaugeDrawEnum::kGaugeGreat);
 	SetGaugeWorldTransform({ kGaugeStartPos_[Evalution::kGood],kBasePos_.y }, { kGaugeScale_[Evalution::kGood],kBaseScaleY_ }, 0.0f, GaugeDrawEnum::kGaugeGood);
 
-	SetGaugeGlobalVariable();
+	SetKoroneGlobalVariable();
 }
 
-void Player::SetGaugeGlobalVariable() {
+void Player::SetKoroneGlobalVariable() {
 
 	GlobalVariables* globalVariables = GlobalVariables::GetInstance();
 
@@ -664,10 +664,16 @@ void Player::SetGaugeGlobalVariable() {
 	globalVariables->AddItem(groupName, "scaleY", kBaseScaleY_);
 	globalVariables->AddItem(groupName, "whiteSpace", kBaseWhiteSpace_);
 
-	ApplyGuageGlobalVariable();
+	globalVariables->CreateGroup("EvalutionFrame");
+
+	globalVariables->AddItem("EvalutionFrame", "perfect", kEvalutionframe_[Evalution::kPerfect]);
+	globalVariables->AddItem("EvalutionFrame", "great", kEvalutionframe_[Evalution::kGreat]);
+	globalVariables->AddItem("EvalutionFrame", "good", kEvalutionframe_[Evalution::kGood]);
+
+	ApplyKoroneGlobalVariable();
 }
 
-void Player::ApplyGuageGlobalVariable() {
+void Player::ApplyKoroneGlobalVariable() {
 
 	GlobalVariables* globalVariables = GlobalVariables::GetInstance();
 	const char* groupName = "Gauge";
@@ -677,6 +683,11 @@ void Player::ApplyGuageGlobalVariable() {
 	kBaseScaleY_ = globalVariables->GetFloatValue(groupName, "scaleY");
 	kBaseWhiteSpace_ = globalVariables->GetFloatValue(groupName, "whiteSpace");
 
+	kEvalutionframe_[Evalution::kPerfect] = globalVariables->GetIntValue("EvalutionFrame", "perfect");
+	kEvalutionframe_[Evalution::kGreat] = globalVariables->GetIntValue("EvalutionFrame", "great");
+	kEvalutionframe_[Evalution::kGood] = globalVariables->GetIntValue("EvalutionFrame", "good");
+
+	kEvalutionframe_[Evalution::kMiss] = kEvalutionframe_[Evalution::kGood] + 1;
 
 	SetFloatTransform();
 }
@@ -716,7 +727,7 @@ void Player::SetFloatTransform() {
 
 void Player::GaugeUpdate() {
 
-	ApplyGuageGlobalVariable();
+	ApplyKoroneGlobalVariable();
 
 
 	if (flag) {
