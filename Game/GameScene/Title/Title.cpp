@@ -1,6 +1,5 @@
 #include "Game/GameScene/Title/Title.h"
 #include "EEnum.h"
-#include "externals/imgui/imgui.h"
 #include "Engine/Easing/Ease.h"
 #include "Engine/Input/KeyInput/KeyInput.h"
 #include "Game/GameScene/GameScene.h"
@@ -62,10 +61,6 @@ void Title::Initialize()
 
 void Title::Update()
 {
-	ImGui::DragFloat3("camera", &camera_->transform.translation_.x, 0.1f);
-	ImGui::DragFloat3("cameraRot", &camera_->transform.rotation_.x, AngleToRadian(1.0f));
-	ImGui::DragFloat3("trans", &pushAtrans_.scale_.x, 1.0f);
-
 	CameraMove();
 
 	worldTransform.UpdateMatrix();
