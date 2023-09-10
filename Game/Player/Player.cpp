@@ -278,10 +278,13 @@ void Player::GetplayerR() {
 
 
 void Player::Animetion() {
+
 	switch (state_)
 	{
 	case Player::Normal:
-
+		if (score_->GetEvaluation()) {
+			state_ = ATK_R;
+		}
 		break;
 	case Player::ATK_R:
 		ATK_R_F();
@@ -319,10 +322,12 @@ void Player::ATK_R_F() {
 				parts_[i].rotation_ = ES(ESALL[i], T_);			
 			}
 
-			T_ += AddT_;
+			//予備動作無し
+			T_ = 1.0f;
 			if (T_ >= 1.0f) {
 				wave_A = ATK;
 				T_ = 0;
+				isAnimeStart_ = false;
 			}
 
 		}
@@ -354,6 +359,7 @@ void Player::ATK_R_F() {
 			if (T_ >= 1.0f) {
 				wave_A = BACK;
 				T_ = 0;
+				isAnimeStart_ = false;
 			}
 
 		}
@@ -369,7 +375,7 @@ void Player::ATK_R_F() {
 				//仮でいきなり手を広げた状態
 				ESALL[i] = {
 					nowR[i],
-					AnimeType[Normal][i].st,
+					AnimeType[ATK_R][i].st,
 				};
 			}
 		}
@@ -385,6 +391,7 @@ void Player::ATK_R_F() {
 				wave_A = ATKWAIT;
 				state_ = Normal;
 				T_ = 0;
+				isAnimeStart_ = false;
 			}
 
 		}
@@ -426,6 +433,8 @@ void Player::Update()
 	//	待機時間
 	//	移動処理
 	MoveType2();
+
+	Animetion();
 
 	transform.UpdateMatrix();
 	for (auto& i : parts_) {
