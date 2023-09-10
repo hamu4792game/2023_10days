@@ -1,5 +1,5 @@
 #include "Battle.h"
-#include "externals/imgui/imgui.h"
+//#include "externals/imgui/imgui.h"
 #include "math/Vector4.h"
 #include "Game/GameScene/GameScene.h"
 
@@ -123,11 +123,6 @@ void Battle::EnemyReset() {
 
 void Battle::Update()
 {
-	//	カメラの調整
-	ImGui::DragFloat3("cameratr", &camera_->transform.translation_.x, 0.1f);
-	ImGui::DragFloat3("cameraro", &camera_->transform.rotation_.x, AngleToRadian(1.0f));
-	ImGui::DragFloat("master", &worldTransform->scale_.y, 0.01f);
-
 	for(Enemy* enemy : enemies_){
 		if (enemy->GetNum() == enemyKillCount_) {
 			player_->HitTest(enemy);

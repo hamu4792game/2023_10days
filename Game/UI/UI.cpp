@@ -62,87 +62,6 @@ void UI::SetGlobalVariable() {
 		}
 	}
 
-	/*globalVariables->CreateGroup("UIBattleScene");
-
-	globalVariables->AddItem("UIBattleScene", "ScorePos", uiPos_[Scene::kBattleScene][UITextureNames::kScore]);
-	globalVariables->AddItem("UIBattleScene", "ScoreScale", uiScales_[Scene::kBattleScene][UITextureNames::kScore]);
-	globalVariables->AddItem("UIBattleScene", "HighScorePos", uiPos_[Scene::kBattleScene][UITextureNames::kHighScore]);
-	globalVariables->AddItem("UIBattleScene", "HighScoreScale", uiScales_[Scene::kBattleScene][UITextureNames::kHighScore]);
-	globalVariables->AddItem("UIBattleScene", "ComboPos", uiPos_[Scene::kBattleScene][UITextureNames::kCombo]);
-	globalVariables->AddItem("UIBattleScene", "ComboScale", uiScales_[Scene::kBattleScene][UITextureNames::kCombo]);
-	globalVariables->AddItem("UIBattleScene", "HighComboPos", uiPos_[Scene::kBattleScene][UITextureNames::kHighCombo]);
-	globalVariables->AddItem("UIBattleScene", "HighComboScale", uiScales_[Scene::kBattleScene][UITextureNames::kHighCombo]);
-	globalVariables->AddItem("UIBattleScene", "PerfectPos", uiPos_[Scene::kBattleScene][UITextureNames::kPerfect]);
-	globalVariables->AddItem("UIBattleScene", "PerfectScale", uiScales_[Scene::kBattleScene][UITextureNames::kPerfect]);
-	globalVariables->AddItem("UIBattleScene", "GreatPos", uiPos_[Scene::kBattleScene][UITextureNames::kGreat]);
-	globalVariables->AddItem("UIBattleScene", "GreatScale", uiScales_[Scene::kBattleScene][UITextureNames::kGreat]);
-	globalVariables->AddItem("UIBattleScene", "GoodPos", uiPos_[Scene::kBattleScene][UITextureNames::kGood]);
-	globalVariables->AddItem("UIBattleScene", "GoodScale", uiScales_[Scene::kBattleScene][UITextureNames::kGood]);
-	globalVariables->AddItem("UIBattleScene", "MissPos", uiPos_[Scene::kBattleScene][UITextureNames::kMiss]);
-	globalVariables->AddItem("UIBattleScene", "MissScale", uiScales_[Scene::kBattleScene][UITextureNames::kMiss]);
-
-	globalVariables->CreateGroup("UIResultScene");
-
-	globalVariables->AddItem("UIResultScene", "ScorePos", uiPos_[Scene::kResultScene][UITextureNames::kScore]);
-	globalVariables->AddItem("UIResultScene", "ScoreScale", uiScales_[Scene::kResultScene][UITextureNames::kScore]);
-	globalVariables->AddItem("UIResultScene", "HighScorePos", uiPos_[Scene::kResultScene][UITextureNames::kHighScore]);
-	globalVariables->AddItem("UIResultScene", "HighScoreScale", uiScales_[Scene::kResultScene][UITextureNames::kHighScore]);
-	globalVariables->AddItem("UIResultScene", "ComboPos", uiPos_[Scene::kResultScene][UITextureNames::kCombo]);
-	globalVariables->AddItem("UIResultScene", "ComboScale", uiScales_[Scene::kResultScene][UITextureNames::kCombo]);
-	globalVariables->AddItem("UIResultScene", "HighComboPos", uiPos_[Scene::kResultScene][UITextureNames::kHighCombo]);
-	globalVariables->AddItem("UIResultScene", "HighComboScale", uiScales_[Scene::kResultScene][UITextureNames::kHighCombo]);
-	globalVariables->AddItem("UIResultScene", "PerfectPos", uiPos_[Scene::kResultScene][UITextureNames::kPerfect]);
-	globalVariables->AddItem("UIResultScene", "PerfectScale", uiScales_[Scene::kResultScene][UITextureNames::kPerfect]);
-	globalVariables->AddItem("UIResultScene", "GreatPos", uiPos_[Scene::kResultScene][UITextureNames::kGreat]);
-	globalVariables->AddItem("UIResultScene", "GreatScale", uiScales_[Scene::kResultScene][UITextureNames::kGreat]);
-	globalVariables->AddItem("UIResultScene", "GoodPos", uiPos_[Scene::kResultScene][UITextureNames::kGood]);
-	globalVariables->AddItem("UIResultScene", "GoodScale", uiScales_[Scene::kResultScene][UITextureNames::kGood]);
-	globalVariables->AddItem("UIResultScene", "MissPos", uiPos_[Scene::kResultScene][UITextureNames::kMiss]);
-	globalVariables->AddItem("UIResultScene", "MissScale", uiScales_[Scene::kResultScene][UITextureNames::kMiss]);
-
-
-	globalVariables->CreateGroup("ScoreBattleScene");
-
-	globalVariables->AddItem("ScoreBattleScene", "ScorePos", scoreNumPos_[Scene::kBattleScene][Score::Parameter::kScore]);
-	globalVariables->AddItem("ScoreBattleScene", "ScoreScale", scoreNumScales_[Scene::kBattleScene][Score::Parameter::kScore]);
-	globalVariables->AddItem("ScoreBattleScene", "HighScorePos", scoreNumPos_[Scene::kBattleScene][Score::Parameter::kMemoHighScore]);
-	globalVariables->AddItem("ScoreBattleScene", "HighScoreScale", scoreNumScales_[Scene::kBattleScene][Score::Parameter::kMemoHighScore]);
-	globalVariables->AddItem("ScoreBattleScene", "ComboPos", scoreNumPos_[Scene::kBattleScene][Score::Parameter::kCombo]);
-	globalVariables->AddItem("ScoreBattleScene", "ComboScale", scoreNumScales_[Scene::kBattleScene][Score::Parameter::kCombo]);
-	globalVariables->AddItem("ScoreBattleScene", "HighComboPos", scoreNumPos_[Scene::kBattleScene][Score::Parameter::kHighCombo]);
-	globalVariables->AddItem("ScoreBattleScene", "HighComboScale", scoreNumScales_[Scene::kBattleScene][Score::Parameter::kHighCombo]);
-	globalVariables->AddItem("ScoreBattleScene", "TotalHighComboPos", scoreNumPos_[Scene::kBattleScene][Score::Parameter::kMemoHighCombo]);
-	globalVariables->AddItem("ScoreBattleScene", "TotalHighComboScale", scoreNumScales_[Scene::kBattleScene][Score::Parameter::kMemoHighCombo]);
-	globalVariables->AddItem("ScoreBattleScene", "PerfectPos", scoreNumPos_[Scene::kBattleScene][Score::Parameter::kPerfectNum]);
-	globalVariables->AddItem("ScoreBattleScene", "PerfectScale", scoreNumScales_[Scene::kBattleScene][Score::Parameter::kPerfectNum]);
-	globalVariables->AddItem("ScoreBattleScene", "GreatPos", scoreNumPos_[Scene::kBattleScene][Score::Parameter::kGreatNum]);
-	globalVariables->AddItem("ScoreBattleScene", "GreatScale", scoreNumScales_[Scene::kBattleScene][Score::Parameter::kGreatNum]);
-	globalVariables->AddItem("ScoreBattleScene", "GoodPos", scoreNumPos_[Scene::kBattleScene][Score::Parameter::kGoodNum]);
-	globalVariables->AddItem("ScoreBattleScene", "GoodScale", scoreNumScales_[Scene::kBattleScene][Score::Parameter::kGoodNum]);
-	globalVariables->AddItem("ScoreBattleScene", "MissPos", scoreNumPos_[Scene::kBattleScene][Score::Parameter::kMissNum]);
-	globalVariables->AddItem("ScoreBattleScene", "MissScale", scoreNumScales_[Scene::kBattleScene][Score::Parameter::kMissNum]);
-
-	globalVariables->CreateGroup("ScoreResultScene");
-
-	globalVariables->AddItem("ScoreResultScene", "ScorePos", scoreNumPos_[Scene::kResultScene][Score::Parameter::kScore]);
-	globalVariables->AddItem("ScoreResultScene", "ScoreScale", scoreNumScales_[Scene::kResultScene][Score::Parameter::kScore]);
-	globalVariables->AddItem("ScoreResultScene", "HighScorePos", scoreNumPos_[Scene::kResultScene][Score::Parameter::kMemoHighScore]);
-	globalVariables->AddItem("ScoreResultScene", "HighScoreScale", scoreNumScales_[Scene::kResultScene][Score::Parameter::kMemoHighScore]);
-	globalVariables->AddItem("ScoreResultScene", "ComboPos", scoreNumPos_[Scene::kResultScene][Score::Parameter::kCombo]);
-	globalVariables->AddItem("ScoreResultScene", "ComboScale", scoreNumScales_[Scene::kResultScene][Score::Parameter::kCombo]);
-	globalVariables->AddItem("ScoreResultScene", "HighComboPos", scoreNumPos_[Scene::kResultScene][Score::Parameter::kHighCombo]);
-	globalVariables->AddItem("ScoreResultScene", "HighComboScale", scoreNumScales_[Scene::kResultScene][Score::Parameter::kHighCombo]);
-	globalVariables->AddItem("ScoreBattleScene", "TotalHighComboPos", scoreNumPos_[Scene::kBattleScene][Score::Parameter::kMemoHighCombo]);
-	globalVariables->AddItem("ScoreBattleScene", "TotalHighComboScale", scoreNumScales_[Scene::kBattleScene][Score::Parameter::kMemoHighCombo]);
-	globalVariables->AddItem("ScoreResultScene", "PerfectPos", scoreNumPos_[Scene::kResultScene][Score::Parameter::kPerfectNum]);
-	globalVariables->AddItem("ScoreResultScene", "PerfectScale", scoreNumScales_[Scene::kResultScene][Score::Parameter::kPerfectNum]);
-	globalVariables->AddItem("ScoreResultScene", "GreatPos", scoreNumPos_[Scene::kResultScene][Score::Parameter::kGreatNum]);
-	globalVariables->AddItem("ScoreResultScene", "GreatScale", scoreNumScales_[Scene::kResultScene][Score::Parameter::kGreatNum ]);
-	globalVariables->AddItem("ScoreResultScene", "GoodPos", scoreNumPos_[Scene::kResultScene][Score::Parameter::kGoodNum]);
-	globalVariables->AddItem("ScoreResultScene", "GoodScale", scoreNumScales_[Scene::kResultScene][Score::Parameter::kGoodNum]);
-	globalVariables->AddItem("ScoreResultScene", "MissPos", scoreNumPos_[Scene::kResultScene][Score::Parameter::kMissNum]);
-	globalVariables->AddItem("ScoreResultScene", "MissScale", scoreNumScales_[Scene::kResultScene][Score::Parameter::kMissNum]);*/
-
 	ApplyGlobalVariable();
 }
 
@@ -231,6 +150,11 @@ void UI::BattleInitialize() {
 	score_->SetIsDraw(true, Score::kMemoHighScore);
 	//score_->SetIsDraw(true, Score::kMemoHighCombo);
 
+	colors_[UITextureNames::kPerfect] = 0xFFFF22FF;
+	colors_[UITextureNames::kGreat] = 0xEE1111FF;
+	colors_[UITextureNames::kGood] = 0x11EE11FF;
+	colors_[UITextureNames::kMiss] = 0x333333FF;
+
 	isDraw_[UITextureNames::kScore] = true;
 	isDraw_[UITextureNames::kCombo] = true;
 	isDraw_[UITextureNames::kHighScore] = true;
@@ -254,6 +178,11 @@ void UI::ResultInitialize() {
 	score_->SetIsDraw(true, Score::kMissNum);
 	score_->SetIsDraw(true, Score::kMemoHighScore);
 	//score_->SetIsDraw(true, Score::kMemoHighCombo);
+
+	colors_[UITextureNames::kPerfect] = 0xFFFFFFFF;
+	colors_[UITextureNames::kGreat] = 0xFFFFFFFF;
+	colors_[UITextureNames::kGood] = 0xFFFFFFFF;
+	colors_[UITextureNames::kMiss] = 0xFFFFFFFF;
 
 	isDraw_[UITextureNames::kScore] = true;
 	isDraw_[UITextureNames::kCombo] = true;
