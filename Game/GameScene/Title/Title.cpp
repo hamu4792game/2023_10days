@@ -161,7 +161,7 @@ void Title::CameraMove()
 		}
 
 
-		if (KeyInput::PushKey(DIK_SPACE)) {
+		if (KeyInput::PushKey(DIK_SPACE) || KeyInput::GetInstance()->GetPadButtonDown(XINPUT_GAMEPAD_A)) {
 			cameraStep = CAMERASTEP::First;
 
 			// Firstのためのセット
