@@ -59,6 +59,9 @@ void Battle::Initialize()
 
 void Battle::EnemyGeneration() {
 
+	unsigned int currentTime = static_cast<unsigned int>(time(nullptr));
+	srand(currentTime);
+
 	while (enemyNum_ - enemyKillCount_ < kEnemyIntervalNum_) {
 
 		if (enemyNum_ == kEnemyMaxNum_) {
@@ -151,15 +154,6 @@ void Battle::Update()
 	}
 
 	ui_->Update();
-
-	// 確認のため追加 by.Korone
-	if (KeyInput::PushKey(DIK_SPACE)) {
-		score_->AddPerfect();
-	}
-	if (KeyInput::PushKey(DIK_R)) {
-		score_->AddMiss();
-	}
-
 
 	player_->Update();
 	worldTransform->UpdateMatrix();
