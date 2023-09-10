@@ -50,6 +50,8 @@ void Battle::Initialize()
 
 	player_->Initialize(mobModels_, worldTransform.get());
 
+	player_->SetDistance(kEnemyPopPosLength_);
+
 	player_->GaugeInitialize();
 
 }
