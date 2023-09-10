@@ -40,7 +40,7 @@ void Player::Initialize(std::vector<std::shared_ptr<Model>> models, WorldTransfo
 	transform.parent_ = world;
 	//	地面の半径 * scale
 	transform.translation_.y = 6.5f;
-	transform.scale_ = Vector3(0.3f, 0.3f, 0.3f);
+	//transform.scale_ = Vector3(0.3f, 0.3f, 0.3f);
 
 	//	カメラとの親子関係
 	camera_->transform.parent_ = &transform;
@@ -59,7 +59,7 @@ void Player::Initialize(std::vector<std::shared_ptr<Model>> models, WorldTransfo
 	flag = false;
 	movePos = 0.0f;
 	oldPos = 0.0f;
-	enemyDistance = 10.0f;
+	//enemyDistance = 10.0f;
 	frame = 0.0f;
 	MAX_frame = 60.0f;
 	
@@ -233,11 +233,11 @@ void Player::MoveType2() {
 		waitFrame++;
 
 		//	仮 入力を受け付けたらフラグを建てる
-		if (KeyInput::PushKey(DIK_SPACE) || score_->GetEvaluation()) {
+		if (/*KeyInput::PushKey(DIK_SPACE) || */score_->GetEvaluation()) {
 			waitFrame = MAX_frame;
 		}
 
-		if (KeyInput::PushKey(DIK_SPACE) || score_->GetEvaluation()) {
+		if (/*KeyInput::PushKey(DIK_SPACE) || */score_->GetEvaluation()) {
 			//	座標の更新
 			oldPos = transform.translation_.z;
 			//	敵の間隔分足す

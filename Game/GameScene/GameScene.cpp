@@ -3,6 +3,9 @@
 
 #include <stdlib.h>
 #include <time.h>
+#include "Engine/Input/KeyInput/KeyInput.h"
+#include <algorithm>
+#include "Engine/Easing/Ease.h"
 
 GameScene* GameScene::GetInstance()
 {
@@ -20,7 +23,7 @@ void GameScene::Initialize()
 	viewProjectionMatrix2d = camera2d->GetViewProMat();
 
 	//	シーンの生成
-	title = std::make_unique<Title>();
+	title = std::make_unique<Title>(camera);
 	battle = std::make_unique<Battle>(camera);
 	result = std::make_unique<Result>();
 
@@ -42,6 +45,11 @@ void GameScene::Initialize()
 	for (uint16_t i = 0u; i < UI::kUITexturesMaxNum_; i++) {
 		UITextures_.push_back(std::make_shared<Texture2D>());
 	}
+	//	shopモデルの生成
+	for (uint16_t i = 0u; i < static_cast<uint16_t>(SHOPPARTS::Num); i++) {
+		shopModel_.push_back(std::make_shared<Model>());
+	}
+	
 	// ゲージ用
 	for (uint16_t i = 0u; i < Player::kGaugeResourceNum_; i++) {
 		gaugeTextures_.push_back(std::make_shared<Texture2D>());
@@ -53,6 +61,7 @@ void GameScene::Initialize()
 	title->SetModels(mobModels_);
 	title->SetModelsType2(mobModels_type2);
 	title->SetBottonModels(bottonModels_);
+	title->SetShopModel(shopModel_);
 
 	battle->SetModels(mobModels_);
 	battle->SetModelsType2(mobModels_type2);
@@ -70,14 +79,21 @@ void GameScene::Initialize()
 
 
 	//	変数の初期化
-	scene = Scene::BATTLE;
-	oldscene = Scene::TITLE;
+	scene = Scene::TITLE;
+	oldscene = Scene::RESULT;
 
 	//camera->transform.translation_.z = -20.0f;
 
 	ground = std::make_unique<Ground>();
 	ground->Initialize();
 	ground->ModelLoad();
+
+
+	//	シーンチェンジ用
+	sceneChangeFlag = false;
+	flag = false;
+	easeNum = 0.0f;
+	boxtransform.scale_ = Vector3(0.0f, 0.0f, 1.0f);
 
 
 	unsigned int currentTime = static_cast<unsigned int>(time(nullptr));
@@ -107,16 +123,26 @@ void GameScene::Update()
 	{
 	case GameScene::Scene::TITLE:
 		title->Update();
+		if (KeyInput::PushKey(DIK_P)) {
+			//scene = Scene::BATTLE;
+			sceneChangeFlag = true;
+		}
 		break;
 	case GameScene::Scene::BATTLE:
 		battle->Update();
+		if (KeyInput::PushKey(DIK_P)) {
+			scene = Scene::TITLE;
+		}
 		break;
 	case GameScene::Scene::RESULT:
 		result->Update();
 		break;
 	}
 
-	
+	//	シーンチェンジの処理
+	if (sceneChangeFlag) {
+		SceneChange();
+	}
 
 	//	カメラ行列の更新
 	viewProjectionMatrix = camera->GetViewProMat();
@@ -153,6 +179,10 @@ void GameScene::Draw()
 	case GameScene::Scene::RESULT:
 		result->Draw(viewProjectionMatrix2d);
 		break;
+	}
+
+	if (sceneChangeFlag) {
+		Texture2D::TextureDraw(boxtransform, viewProjectionMatrix2d, 0x000000ff, &box);
 	}
 
 	//Model::ModelDraw(pos, viewProjectionMatrix, 0xffffffff, model.get());
@@ -234,4 +264,56 @@ void GameScene::ModelLoad()
 	bottonModels_[1]->Texture("Resources/hud/B/B.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl");
 	bottonModels_[2]->Texture("Resources/hud/X/X.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl");
 	bottonModels_[3]->Texture("Resources/hud/Y/Y.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl");
+
+	//	
+	shopModel_[0]->Texture("Resources/shop/shop.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl", "uvChecker.png");
+	shopModel_[1]->Texture("Resources/plane/plane.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl", "hud/board.png");
+	shopModel_[2]->Texture("Resources/plane/plane.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl", "hud/onetime.png");
+
+	box.Texture("Resources/hud/block.png", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl");
+}
+
+
+void GameScene::SceneChange()
+{
+	//80
+	boxtransform.rotation_.z += AngleToRadian(15.0f);
+	easeNum += 0.02f;
+	easeNum = std::clamp(easeNum, 0.0f, 1.0f);
+	if (!flag) {
+		boxScale = Ease::UseEase(0.0f, 100.0f, easeNum, 1.0f, Ease::EaseType::EaseOutCirc);
+		
+		if (easeNum == 1.0f) {
+			flag = true;
+			easeNum = 0.0f;
+			boxScale = 100.0f;
+			//	あくまでもここはシーン切り替え処理のみ
+			switch (scene)
+			{
+			case GameScene::Scene::TITLE:
+				scene = GameScene::Scene::BATTLE;
+				break;
+			case GameScene::Scene::BATTLE:
+				scene = GameScene::Scene::RESULT;
+				break;
+			case GameScene::Scene::RESULT:
+				scene = GameScene::Scene::TITLE;
+				break;
+			}
+		}
+	}
+	else if (flag) {
+		boxScale = Ease::UseEase(100.0f, 0.0f, easeNum, 1.0f, Ease::EaseType::EaseOutCirc);
+		if (easeNum == 1.0f) {
+			flag = false;
+			sceneChangeFlag = false;
+			easeNum = 0.0f;
+			boxScale = 0.0f;
+			boxtransform.rotation_.z = 0.0f;
+		}
+	}
+
+	boxtransform.scale_ = Vector3(boxScale, boxScale, 1.0f);
+
+	boxtransform.UpdateMatrix();
 }

@@ -1,6 +1,7 @@
 #include "Battle.h"
 #include "externals/imgui/imgui.h"
 #include "math/Vector4.h"
+#include "Game/GameScene/GameScene.h"
 
 // 確認のため追加 by.Korone
 #include "Engine/Input/KeyInput/KeyInput.h"
@@ -34,7 +35,8 @@ void Battle::Initialize()
 {
 	//	カメラの設定
 	camera_->transform.translation_ = Vector3(0.0f, 16.5f, -21.7f);
-	camera_->transform.rotation_.x = 0.471f;
+	camera_->transform.rotation_ = Vector3(0.471f, 0.0f, 0.0f);
+	camera_->transform.scale_ = Vector3(1.0f, 1.0f, 1.0f);
 
 	masterSpeed = 1.0f;
 
@@ -141,6 +143,11 @@ void Battle::Update()
 		enemy->Update();
 	}
 
+	//	一旦仮置き 敵を最大数倒したらシーン切り替え
+	if (enemyKillCount_ >= kEnemyMaxNum_) {
+		GameScene::GetInstance()->sceneChangeFlag = true;
+	}
+
 	ui_->Update();
 
 	// 確認のため追加 by.Korone
@@ -152,8 +159,6 @@ void Battle::Update()
 	}
 
 
-	//ImGui::DragFloat("worldRo", &transform.rotation_.x, AngleToRadian(1.0f));
-	//	行列の更新　回転行列のみ必要なためUpdateはしていない
 	player_->Update();
 	worldTransform->UpdateMatrix();
 
