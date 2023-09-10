@@ -221,32 +221,19 @@ void UI::BattleInitialize() {
 
 	ResetIsDraw();
 
-
-
-	//score_->SetWorldTransform({ 60.0f,60.0f }, 1.0f, 0.0f, Score::kScore);
-	//score_->SetWorldTransform({ 960.0f,160.0f }, 1.5f, 0.0f, Score::kCombo);
-	//score_->SetWorldTransform({ 960.0f,240.0f }, 0.8f, 0.0f, Score::kHighCombo);
-	//score_->SetWorldTransform({ 960.0f,300.0f }, 0.8f, 0.0f, Score::kPerfectNum);
-	//score_->SetWorldTransform({ 960.0f,360.0f }, 0.8f, 0.0f, Score::kGreatNum);
-	//score_->SetWorldTransform({ 960.0f,420.0f }, 0.8f, 0.0f, Score::kGoodNum);
-	//score_->SetWorldTransform({ 960.0f,480.0f }, 0.8f, 0.0f, Score::kMissNum);
-
-
 	score_->SetIsDraw(true, Score::kScore);
 	score_->SetIsDraw(true, Score::kCombo);
-	score_->SetIsDraw(true, Score::kHighCombo);
-	score_->SetIsDraw(true, Score::kPerfectNum);
-	score_->SetIsDraw(true, Score::kGreatNum);
-	score_->SetIsDraw(true, Score::kGoodNum);
-	score_->SetIsDraw(true, Score::kMissNum);
+	//score_->SetIsDraw(true, Score::kHighCombo);
+	//score_->SetIsDraw(true, Score::kPerfectNum);
+	//score_->SetIsDraw(true, Score::kGreatNum);
+	//score_->SetIsDraw(true, Score::kGoodNum);
+	//score_->SetIsDraw(true, Score::kMissNum);
 	score_->SetIsDraw(true, Score::kMemoHighScore);
-	score_->SetIsDraw(true, Score::kMemoHighCombo);
+	//score_->SetIsDraw(true, Score::kMemoHighCombo);
 
-	for (int i = 0; i < kUITexturesMaxNum_; i++) {
-		isDraw_[i] = true;
-
-		//SetWorldTransform({ 960.0f,160.0f + 60.0f * i }, 1.0f, 0.0f, i);
-	}
+	isDraw_[UITextureNames::kScore] = true;
+	isDraw_[UITextureNames::kCombo] = true;
+	isDraw_[UITextureNames::kHighScore] = true;
 
 	SetAllTransform(Scene::kBattleScene);
 
@@ -255,6 +242,26 @@ void UI::BattleInitialize() {
 void UI::ResultInitialize() {
 
 	ResetIsDraw();
+
+	score_->Memo();
+
+	score_->SetIsDraw(true, Score::kScore);
+	//score_->SetIsDraw(true, Score::kCombo);
+	score_->SetIsDraw(true, Score::kHighCombo);
+	score_->SetIsDraw(true, Score::kPerfectNum);
+	score_->SetIsDraw(true, Score::kGreatNum);
+	score_->SetIsDraw(true, Score::kGoodNum);
+	score_->SetIsDraw(true, Score::kMissNum);
+	score_->SetIsDraw(true, Score::kMemoHighScore);
+	//score_->SetIsDraw(true, Score::kMemoHighCombo);
+
+	isDraw_[UITextureNames::kScore] = true;
+	isDraw_[UITextureNames::kCombo] = true;
+	isDraw_[UITextureNames::kHighScore] = true;
+	isDraw_[UITextureNames::kPerfect] = true;
+	isDraw_[UITextureNames::kGreat] = true;
+	isDraw_[UITextureNames::kGood] = true;
+	isDraw_[UITextureNames::kMiss] = true;
 
 	SetAllTransform(Scene::kResultScene);
 }
@@ -275,9 +282,6 @@ void UI::SetWorldTransform(const Vector2& screenPos, float scale, float rotate, 
 }
 
 void UI::Update() {
-
-	ApplyGlobalVariable();
-	SetAllTransform(Scene::kBattleScene);
 
 	switch (GameScene::GetInstance()->scene)
 	{
@@ -303,11 +307,43 @@ void UI::TitleUpdate() {
 }
 
 void UI::BattleUpdate() {
+	ApplyGlobalVariable();
+	SetAllTransform(Scene::kBattleScene);
+
+	if (score_->GetEvaluation() == Score::Evaluation::kPerfect) {
+
+		isDraw_[UITextureNames::kPerfect] = true;
+		isDraw_[UITextureNames::kGreat] = false;
+		isDraw_[UITextureNames::kGood] = false;
+		isDraw_[UITextureNames::kMiss] = false;
+	}
+	else if (score_->GetEvaluation() == Score::Evaluation::kGreat) {
+
+		isDraw_[UITextureNames::kPerfect] = false;
+		isDraw_[UITextureNames::kGreat] = true;
+		isDraw_[UITextureNames::kGood] = false;
+		isDraw_[UITextureNames::kMiss] = false;
+	}
+	else if (score_->GetEvaluation() == Score::Evaluation::kGood) {
+
+		isDraw_[UITextureNames::kPerfect] = false;
+		isDraw_[UITextureNames::kGreat] = false;
+		isDraw_[UITextureNames::kGood] = true;
+		isDraw_[UITextureNames::kMiss] = false;
+	}
+	else if (score_->GetEvaluation() == Score::Evaluation::kMiss) {
+
+		isDraw_[UITextureNames::kPerfect] = false;
+		isDraw_[UITextureNames::kGreat] = false;
+		isDraw_[UITextureNames::kGood] = false;
+		isDraw_[UITextureNames::kMiss] = true;
+	}
 
 }
 
 void UI::ResultUpdate() {
-
+	ApplyGlobalVariable();
+	SetAllTransform(Scene::kResultScene);
 }
 
 void UI::DrawUITexture(const Matrix4x4& viewProjectionMat, int textureName) {
