@@ -268,7 +268,7 @@ void GameScene::ModelLoad()
 	bottonModels_[3]->Texture("Resources/hud/Y/Y.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl");
 
 	//	
-	shopModel_[0]->Texture("Resources/shop/shop.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl", "uvChecker.png");
+	shopModel_[0]->Texture("Resources/shop/shop.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl", "shop/shop.png");
 	shopModel_[1]->Texture("Resources/plane/plane.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl", "hud/board.png");
 	shopModel_[2]->Texture("Resources/plane/plane.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl", "hud/onetime.png");
 
