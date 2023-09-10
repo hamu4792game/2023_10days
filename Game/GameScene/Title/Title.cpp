@@ -12,6 +12,9 @@ Title::Title(std::shared_ptr<Camera> camera)
 	for (uint16_t index = 0u; index < 30u; index++) {
 		enemy_.push_back(std::make_unique<Enemy>());
 	}
+	pushAtext_ = std::make_unique<Texture2D>();
+	pushAtext_->Texture("Resources/hud/pushA.png", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl");
+	
 }
 
 void Title::Initialize()
@@ -52,13 +55,16 @@ void Title::Initialize()
 
 	endPoint = Vector3(0.0f, 0.0f, 170.0f);
 
+	pushAtrans_.translation_ = Vector3(0.0f, -230.0f, 0.0f);
+	pushAtrans_.scale_ = Vector3(1.5f, 1.5f, 1.0f);
+
 }
 
 void Title::Update()
 {
 	ImGui::DragFloat3("camera", &camera_->transform.translation_.x, 0.1f);
 	ImGui::DragFloat3("cameraRot", &camera_->transform.rotation_.x, AngleToRadian(1.0f));
-	ImGui::DragFloat3("trans", &shopTrans[1].translation_.x, 1.0f);
+	ImGui::DragFloat3("trans", &pushAtrans_.scale_.x, 1.0f);
 
 	CameraMove();
 
@@ -77,6 +83,11 @@ void Title::Update()
 		parts.UpdateMatrix();
 	}
 
+
+	if (cameraStep == Title::CAMERASTEP::Zero) {
+		pushAtrans_.UpdateMatrix();
+	}
+	
 }
 
 void Title::Draw(Matrix4x4 viewProjection)
@@ -97,7 +108,9 @@ void Title::Draw(Matrix4x4 viewProjection)
 
 void Title::Draw2D(Matrix4x4 viewProjection2d)
 {
-
+	if (cameraStep == Title::CAMERASTEP::Zero) {
+		Texture2D::TextureDraw(pushAtrans_, viewProjection2d, 0x000000ff, pushAtext_.get());
+	}
 }
 
 void Title::SetParts()

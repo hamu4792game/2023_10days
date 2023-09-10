@@ -88,6 +88,10 @@ void GameScene::Initialize()
 	ground->Initialize();
 	ground->ModelLoad();
 
+	skydome = std::make_unique<Skydome>();
+	skydome->Initialize();
+	skydome->ModelLoad();
+
 
 	//	シーンチェンジ用
 	sceneChangeFlag = false;
@@ -149,6 +153,7 @@ void GameScene::Update()
 void GameScene::Draw()
 {
 
+	skydome->Draw(viewProjectionMatrix);
 	ground->Draw(viewProjectionMatrix);
 	//	3D描画
 	switch (scene)

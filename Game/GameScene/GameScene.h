@@ -9,6 +9,7 @@
 #include "Engine/Texture/Texture2D.h"
 
 #include "Game/Ground/Ground.h"
+#include "Game/Skydome/Skydome.h"
 
 class GameScene
 {
@@ -24,7 +25,7 @@ public:
 	Scene scene = Scene::TITLE;
 	Scene oldscene = Scene::TITLE;
 
-	bool sceneChangeFlag;
+	bool sceneChangeFlag = false;
 
 	//	シングルトンインスタンス
 	static GameScene* GetInstance();
@@ -45,6 +46,7 @@ private:
 	std::unique_ptr<Result> result;
 
 	std::unique_ptr<Ground> ground;
+	std::unique_ptr<Skydome> skydome;
 
 private: // モデル用変数
 	// プレイヤーデータのモデル配列
