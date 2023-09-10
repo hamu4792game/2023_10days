@@ -139,11 +139,47 @@ private://Specha
 	//吹っ飛びアニメ数
 	static const int animeNUM = 4;
 
+	enum STATEANIME {
+		NONE,
+		ONE,
+		TWO,
+		TREE,
+	};
+
+	STATEANIME state_ = NONE;
+
+	enum A_MODE {
+		WAIT,
+		MOVE,
+		BACK,
+	};
+
+	A_MODE mode_ = WAIT;
+
+	//待機アニメーションまとめ
+	std::vector<esing> WAIT_[3];
+
 	//アニメーションの引数まとめ
 	std::vector<esing> sprawled[animeNUM];
 
 	//[3]の右バージョン
 	std::vector<esing> anoMotion;
+
+	//ループ時利用する
+	bool isLoop = false;
+
+	//アニメーションのカウント
+	int countAnime_ = 0;
+
+	void WaitAnimetion(int num);
+
+
+	void GetER() {
+		for (int i = 0; i < PARTS::Num; i++) {
+			nowR[i] = parts_[i].rotation_;
+		}
+	}
+
 };
 
 
