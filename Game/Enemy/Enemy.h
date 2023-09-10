@@ -126,3 +126,7 @@ private://Specha
 
 
 };
+
+
+//イージングの処理、好きに中身かえてちょ
+Vector3 ES(esing E, float t);
