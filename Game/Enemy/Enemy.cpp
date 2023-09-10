@@ -269,7 +269,7 @@ void Enemy::BlowAway() {
 			//現在の回転量の取得
 			for (int i = 0; i < Num; i++) {
 				//仮でいきなり手を広げた状態
-				ESALL[i] = sprawled[0][i];
+				ESALL[i] = sprawled[GetTypeM][i];
 			}
 		}
 		else {

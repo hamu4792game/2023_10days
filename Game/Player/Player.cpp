@@ -298,6 +298,7 @@ void Player::Animetion() {
 	}
 }
 
+//右攻撃
 void Player::ATK_R_F() {
 
 	switch (wave_A)
@@ -401,6 +402,8 @@ void Player::ATK_R_F() {
 	}
 	
 }
+
+//
 #pragma endregion
 
 
