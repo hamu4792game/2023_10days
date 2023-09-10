@@ -3,6 +3,7 @@
 #include "externals/imgui/imgui.h"
 #include "Engine/Easing/Ease.h"
 #include "Engine/Input/KeyInput/KeyInput.h"
+#include "Game/GameScene/GameScene.h"
 
 Title::Title(std::shared_ptr<Camera> camera)
 {
@@ -229,17 +230,21 @@ void Title::CameraMove()
 		break;
 	case Title::CAMERASTEP::BounceFace:
 		easeNowFrame++;
-		camera_->transform.translation_ = Ease::UseEase(startingPoint, endPoint, easeNowFrame, easeMaxFrame, Ease::EaseType::EaseInOutBounce);
-		if (easeNowFrame >= easeMaxFrame) {
-			cameraStep = CAMERASTEP::FirstReturn;
+		if (easeNowFrame >= easeMaxFrame + 20) {
+			cameraStep = CAMERASTEP::Zero;
 
-			startingPoint = camera_->transform.translation_;
+			//	シーンチェンジ
+			GameScene::GetInstance()->sceneChangeFlag = true;
+			//	tirstReturnへの準備
+			/*startingPoint = camera_->transform.translation_;
 			startingRotate = camera_->transform.rotation_;
 			endPoint = Vector3(0.0f, 30.0f, -50.0f);
 			endRotate = Vector3(0.4f, 0.0f, 0.0f);
 			easeNowFrame = 0;
-			easeMaxFrame = 30;
-
+			easeMaxFrame = 30;*/
+		}
+		else if (easeNowFrame <= easeMaxFrame) {
+			camera_->transform.translation_ = Ease::UseEase(startingPoint, endPoint, easeNowFrame, easeMaxFrame, Ease::EaseType::EaseInOutBounce);
 		}
 		break;
 case Title::CAMERASTEP::FirstReturn:

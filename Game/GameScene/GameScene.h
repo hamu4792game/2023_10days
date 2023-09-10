@@ -24,6 +24,8 @@ public:
 	Scene scene = Scene::TITLE;
 	Scene oldscene = Scene::TITLE;
 
+	bool sceneChangeFlag;
+
 	//	シングルトンインスタンス
 	static GameScene* GetInstance();
 
@@ -78,5 +80,13 @@ public:
 private: // メンバ関数
 	//	モデルのロード
 	void ModelLoad();
+
+	//	シーンチェンジ用
+	Texture2D box;
+	WorldTransform boxtransform;
+	float boxScale = 0.0f;
+	float easeNum = 0.0f;
+	bool flag = false;
+	void SceneChange();
 
 };
