@@ -157,7 +157,7 @@ private://Specha
 	A_MODE mode_ = WAIT;
 
 	//待機アニメーションまとめ
-	std::vector<esing> WAIT_[3];
+	std::vector<esing> WAIT_[4];
 
 	//アニメーションの引数まとめ
 	std::vector<esing> sprawled[animeNUM];
@@ -173,6 +173,7 @@ private://Specha
 
 	void WaitAnimetion(int num);
 
+	int ANIMENUM = 0;
 
 	void GetER() {
 		for (int i = 0; i < PARTS::Num; i++) {

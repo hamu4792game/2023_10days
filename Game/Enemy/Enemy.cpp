@@ -624,6 +624,143 @@ void Enemy::AnimeInitialize() {
 		{0, 0.36f, 0},
 		{0, 0.36f, 0},
 	};
+
+	WAIT_[2].resize(parts_.size());
+
+	WAIT_[2][Body] = {
+		{0, 0, 0},
+		{0, 0, 0},
+	};
+	WAIT_[2][BodyUnder] = {
+		{0, 0, 0},
+		{0, 0, 0},
+	};
+	WAIT_[2][Head] = {
+		{0.15f, -0.22f, 0},
+		{0.15f, -0.22f, 0},
+	};
+
+	// 左腕
+	WAIT_[2][LArm1] = {
+		{0.01f, 0.45f, 0.03f},
+		{0.01f, 0.45f, 0.03f},
+	};
+	WAIT_[2][LArm2] = {
+		{0.0f,2.02f,0.0f},
+		{0.0f,2.02f,0.0f},
+	};
+	WAIT_[2][LHand] = {
+		{0, 0, 0.0f},
+		{0, 0, 0.0f},
+	};
+	// 右腕
+	WAIT_[2][RArm1] = {
+		{0,0,-0.6f},
+		{0,0,-0.6f},
+	};
+	WAIT_[2][RArm2] = {
+		{0.0f,0.0f,-0.6f},
+		{0.0f,0.0f,-0.6f},
+	};
+	WAIT_[2][RHand] = {
+		{0.0f, 0.0f, 0.0f},
+		{0.0f, 0.0f, 0.0f},
+	};
+	// 足
+	WAIT_[2][LLeg1] = {
+		{0.0f, 0.0f, 0.0f},
+		{0.0f, 0.0f, 0.0f},
+	};
+	WAIT_[2][LLeg2] = {
+		{0.0f, 0.0f, 0.0f},
+		{0.0f, 0.0f, 0.0f},
+	};
+	WAIT_[2][LFoot] = {
+		{0.0f, 0.0f, 0.0f},
+		{0.0f, 0.0f, 0.0f},
+	};
+
+	WAIT_[2][RLeg1] = {
+		{0.0f, 0.0f, 0.0f},
+		{0.0f, 0.0f, 0.0f},
+	};
+	WAIT_[2][RLeg2] = {
+		{0.0f, 0.0f, 0.0f},
+		{0.0f, 0.0f, 0.0f},
+	};
+	WAIT_[2][RFoot] = {
+		{0.0f, 0.0f, 0.0f},
+		{0.0f, 0.0f, 0.0f},
+	};
+
+
+	WAIT_[3].resize(parts_.size());
+
+	WAIT_[3][Body] = {
+		{0, 0, 0},
+		{0, 0, 0},
+	};
+	WAIT_[3][BodyUnder] = {
+		{0, 0, 0},
+		{0, 0, 0},
+	};
+	WAIT_[3][Head] = {
+		{0.15f, -0.22f, 0},
+		{0.15f, -0.22f, 0},
+	};
+
+	// 左腕
+	WAIT_[3][LArm1] = {
+		{0.0f,0.0f,0.67f},
+		{0.0f,0.0f,0.67f},
+	};
+	WAIT_[3][LArm2] = {
+		{0.0f,0.0f,1.54f},
+		{0.0f,0.0f,1.54f},
+	};
+	WAIT_[3][LHand] = {
+		{0, 0, 0.0f},
+		{0, 0, 0.0f},
+	};
+	// 右腕
+	WAIT_[3][RArm1] = {
+		{0.0f,0,-1.67f},
+		{0.0f,0,-1.67f},
+	};
+	WAIT_[3][RArm2] = {
+		{0.0f,-1.85f,0.0f},
+		{0.0f,-1.85f,0.0f},
+	};
+	WAIT_[3][RHand] = {
+		{0.0f, 0.0f, 0.0f},
+		{0.0f, 0.0f, 0.0f},
+	};
+	// 足
+	WAIT_[3][LLeg1] = {
+		{0.0f, 0.0f, 0.0f},
+		{0.0f, 0.0f, 0.0f},
+	};
+	WAIT_[3][LLeg2] = {
+		{0.0f, 0.0f, 0.0f},
+		{0.0f, 0.0f, 0.0f},
+	};
+	WAIT_[3][LFoot] = {
+		{0.0f, 0.0f, 0.0f},
+		{0.0f, 0.0f, 0.0f},
+	};
+
+	WAIT_[3][RLeg1] = {
+		{0.0f, 0.0f, 0.0f},
+		{0.0f, 0.0f, 0.0f},
+	};
+	WAIT_[3][RLeg2] = {
+		{0.0f, 0.0f, 0.0f},
+		{0.0f, 0.0f, 0.0f},
+	};
+	WAIT_[3][RFoot] = {
+		{0.0f, 0.0f, 0.0f},
+		{0.0f, 0.0f, 0.0f},
+	};
 #pragma endregion
 
 
@@ -663,8 +800,8 @@ Vector3 ES(esing E, float t) {
 }
 
 int GetRandomNum(int wideOrmax, bool isWide) {
-	unsigned int curtime = (unsigned int)time(nullptr);
-	srand(curtime);
+	//unsigned int curtime = (unsigned int)time(nullptr);
+	//srand(curtime);
 	int num;
 	if (isWide) {
 		num = rand() % (wideOrmax * 2 + 1) - wideOrmax;
@@ -790,9 +927,11 @@ void Enemy::BlowAway() {
 				state_ = ONE;
 				mode_ = WAIT;
 			}
+
+			ANIMENUM = GetRandomNum(4, false);
 			break;
 		case Enemy::ONE:
-			WaitAnimetion(1);
+			WaitAnimetion(ANIMENUM);
 			break;
 		case Enemy::TWO:
 			break;
@@ -808,6 +947,7 @@ void Enemy::WaitAnimetion(int num) {
 	switch (mode_)
 	{
 	case Enemy::WAIT:
+
 		if (!SetAnimeStart) {
 			T_ = 0;
 			SetAnimeStart = true;
