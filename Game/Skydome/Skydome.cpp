@@ -18,6 +18,7 @@ void Skydome::ModelLoad()
 
 void Skydome::Draw(const Matrix4x4& viewProjection)
 {
+	transform.rotation_.y += AngleToRadian(0.1f);
 	transform.UpdateMatrix();
 	Model::ModelDraw(transform, viewProjection, 0xffffffff, skydome.get());
 }

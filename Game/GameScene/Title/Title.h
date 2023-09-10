@@ -71,6 +71,9 @@ private:
 	int easeMaxFrame;
 
 
+	WorldTransform pushAtrans_;
+	std::unique_ptr<Texture2D> pushAtext_;
+
 private: // メンバ関数
 	//	パーツの初期位置をセット
 	void SetParts();
