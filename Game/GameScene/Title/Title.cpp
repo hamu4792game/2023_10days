@@ -180,6 +180,9 @@ void Title::CameraMove()
 			easeNowFrame = 0;
 			easeMaxFrame = 60;
 
+			//	突貫
+			pushAtrans_.scale_ = Vector3(0.0f, 0.0f, 0.0f);
+
 		}
 		break;
 	case Title::CAMERASTEP::First:
