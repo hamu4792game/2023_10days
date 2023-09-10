@@ -95,9 +95,6 @@ void GameScene::Initialize()
 	easeNum = 0.0f;
 	boxtransform.scale_ = Vector3(0.0f, 0.0f, 1.0f);
 
-
-	unsigned int currentTime = static_cast<unsigned int>(time(nullptr));
-	srand(currentTime);
 }
 
 void GameScene::Update()
@@ -177,7 +174,7 @@ void GameScene::Draw()
 		battle->Draw2D(viewProjectionMatrix2d);
 		break;
 	case GameScene::Scene::RESULT:
-		result->Draw(viewProjectionMatrix2d);
+		result->Draw2D(viewProjectionMatrix2d);
 		break;
 	}
 
