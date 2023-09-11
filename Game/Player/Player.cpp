@@ -671,6 +671,12 @@ void Player::SetKoroneGlobalVariable() {
 	globalVariables->AddItem(groupName, "whiteSpace", kBaseWhiteSpace_);
 	globalVariables->AddItem(groupName, "markScale", kGaugeMarkScale_);
 
+	globalVariables->CreateGroup("EvalutionFrame");
+
+	globalVariables->AddItem("EvalutionFrame", "perfect", kEvalutionframe_[Evalution::kPerfect]);
+	globalVariables->AddItem("EvalutionFrame", "great", kEvalutionframe_[Evalution::kGreat]);
+	globalVariables->AddItem("EvalutionFrame", "good", kEvalutionframe_[Evalution::kGood]);
+
 	ApplyKoroneGlobalVariable();
 }
 
