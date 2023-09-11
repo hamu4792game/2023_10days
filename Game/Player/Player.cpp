@@ -352,7 +352,7 @@ void Player::ATK_R_F() {
 				parts_[i].rotation_ = ES(ESALL[i], T_);
 			}
 			//Tを加算
-			T_ += AddT_;
+			T_ += AddT_*4.0f;
 			//シーン切り替え処理
 			if (T_ >= 1.0f) {
 				wave_A = BACK;

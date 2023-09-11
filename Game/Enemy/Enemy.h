@@ -178,6 +178,11 @@ private://Specha
 	//アニメーションのカウント
 	int countAnime_ = 0;
 
+	int countAnimeMax_ = 60;
+
+	float AddTtoWAIT_ = 1.0f / 15.0f;
+
+	//待機アニメーション実行関数
 	void WaitAnimetion(int num);
 
 	int ANIMENUM = 0;

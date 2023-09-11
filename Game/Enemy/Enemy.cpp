@@ -853,8 +853,7 @@ int GetRandomNum(int wideOrmax, bool isWide) {
 
 void Enemy::BlowAway() {
 
-	float AddTTTT;
-
+	
 	//死んだときに吹っ飛びアニメーション
 	if (isDead_) {
 
@@ -968,21 +967,65 @@ void Enemy::BlowAway() {
 
 
 	}
-	else {
+	else {//生きているときのアニメーション
 		switch (state_)
 		{
 		case Enemy::NONE:
-			AddTTTT = 1.0f / (30.0f * GetRandomNum(10, false));
 
-			T_ += AddTTTT;
-			if (T_ >= 1.0f) {
+			if (!SetAnimeStart) {
 				T_ = 0;
-				SetAnimeStart = false;
-				state_ = ONE;
-				mode_ = WAIT;
+				SetAnimeStart = true;
+				//次シーンまでの空きカウント
+				countAnimeMax_ = 60 + GetRandomNum(60, true);
+				//加算する値
+				countAnime_ = 0;
+				for (int i = 0; i < Num; i++) {
+					//ノーマル状態
+					ESALL[i] = normal_A[i];
+				}
+				isLoop = false;
+			
+			}else{
+			
+				//更新
+				for (int i = 0; i < Num; i++) {
+					parts_[i].rotation_ = ES(ESALL[i], T_);
+				}
+
+				//ループ時の処理の変更
+				if (!isLoop) {
+					T_ += AddTtoWAIT_*1.0f/3.0f;
+					if (T_ >= 1.0f) {
+						T_ = 1.0f;
+						isLoop = true;
+						//
+					}
+				}
+				else {
+					T_ -= AddTtoWAIT_ * 1.0f / 3.0f;
+					if (T_ <= 0.0f) {
+						T_ = 0.0f;
+						isLoop = false;
+					}
+				}
+
+			
+				if (++countAnime_ >= countAnimeMax_) {
+					T_ = 0;
+					SetAnimeStart = false;
+					//状態をアニメーション状態に
+					state_ = ONE;
+					//アニメーションの段階を初期化
+					mode_ = WAIT;
+					//度のアニメーションをするか取得
+					ANIMENUM = GetRandomNum(4, false);
+				}
 			}
 
-			ANIMENUM = GetRandomNum(4, false);
+
+			
+
+			
 			break;
 		case Enemy::ONE:
 			WaitAnimetion(ANIMENUM);
@@ -1049,9 +1092,7 @@ void Enemy::WaitAnimetion(int num) {
 		else {
 			//更新
 			for (int i = 0; i < Num; i++) {
-				if (i != Body) {
-					parts_[i].rotation_ = ES(ESALL[i], T_);
-				}
+				parts_[i].rotation_ = ES(ESALL[i], T_);
 			}
 
 			//ループ時の処理の変更
@@ -1074,13 +1115,42 @@ void Enemy::WaitAnimetion(int num) {
 			//シーン切り替え処理
 			if (++countAnime_ >= 180) {
 				SetAnimeStart = false;
-				state_ = NONE;
-				mode_ = WAIT;
+				//state_ = NONE;
+				mode_ = BACK;
 			}
 
 		}
 		break;
 	case Enemy::BACK:
+		if (!SetAnimeStart) {
+			T_ = 0;
+			SetAnimeStart = true;
+
+			GetER();
+			for (int i = 0; i < Num; i++) {
+				//仮でいきなり手を広げた状態
+				ESALL[i] = {
+					nowR[i],
+					normal_A[i].st,
+				};
+			}
+		}
+		else {
+			//更新
+			for (int i = 0; i < Num; i++) {
+				parts_[i].rotation_ = ES(ESALL[i], T_);
+			}
+
+			T_ += 1.0f / 60.0f;
+			if (T_ >= 1.0f) {
+				//アニメ状態をなしに
+				state_ = NONE;
+				T_ = 0;
+				SetAnimeStart = false;
+				mode_ = WAIT;
+			}
+		}
+
 		break;
 	default:
 		break;
