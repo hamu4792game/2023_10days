@@ -14,7 +14,6 @@ UI::UI() {
 
 		isDraw_[i] = false;
 	}
-
 }
 
 void UI::ResetIsDraw() {
@@ -28,18 +27,82 @@ void UI::ResetIsDraw() {
 
 void UI::SetGlobalVariable() {
 
-	/*GlobalVariables* globalVariables = GlobalVariables::GetInstance();
+	GlobalVariables* globalVariables = GlobalVariables::GetInstance();
 
-	globalVariables->CreateGroup("UI");
 
-	globalVariables->AddItem("UI", "ScoreSprite", worldTransforms_[kScore]->translation_);*/
+	for (int scene = 0; scene < kUseSceneNum_; scene++) {
+		for (int useClass = 0; useClass < kClassNum_; useClass++) {
+
+			globalVariables->CreateGroup(groupNames_[scene][useClass]);
+
+			if (useClass == ClassEmum::kUIClass) {
+
+				for (int name = 0; name < UI::kUITexturesMaxNum_; name++) {
+
+					uiPos_[scene][name] = { float(WinApp::kWindowWidth) / 2.0f , float(WinApp::kWindowHeight) / 2.0f };
+					uiScales_[scene][name] = 1.0f;
+
+					globalVariables->AddItem(groupNames_[scene][useClass], uiItemNames_[ParameterNum::kPos][name], uiPos_[scene][name]);
+					globalVariables->AddItem(groupNames_[scene][useClass], uiItemNames_[ParameterNum::kScale][name], uiScales_[scene][name]);
+
+				}
+			}
+			else if (useClass == ClassEmum::kScoreClass) {
+
+				for (int name = 0; name < UI::kScoreNum_; name++) {
+
+					scoreNumPos_[scene][name] = { float(WinApp::kWindowWidth) / 2.0f , float(WinApp::kWindowHeight) / 2.0f };
+					scoreNumScales_[scene][name] = 1.0f;
+
+					globalVariables->AddItem(groupNames_[scene][useClass], scoreItemNames_[ParameterNum::kPos][name], scoreNumPos_[scene][name]);
+					globalVariables->AddItem(groupNames_[scene][useClass], scoreItemNames_[ParameterNum::kScale][name], scoreNumScales_[scene][name]);
+
+				}
+			}
+		}
+	}
+
+	ApplyGlobalVariable();
 }
 
 void UI::ApplyGlobalVariable() {
 
-	/*GlobalVariables* globalVariables = GlobalVariables::GetInstance();
+	GlobalVariables* globalVariables = GlobalVariables::GetInstance();
 
-	worldTransforms_[kScore]->translation_= globalVariables->GetVector3Value("UI", "ScoreSprite");*/
+	for (int scene = 0; scene < kUseSceneNum_; scene++) {
+		for (int useClass = 0; useClass < kClassNum_; useClass++) {
+
+			if (useClass == ClassEmum::kUIClass) {
+
+				for (int name = 0; name < UI::kUITexturesMaxNum_; name++) {
+
+					uiPos_[scene][name] = globalVariables->GetVector2Value(groupNames_[scene][useClass], uiItemNames_[ParameterNum::kPos][name]);
+					uiScales_[scene][name] = globalVariables->GetFloatValue(groupNames_[scene][useClass], uiItemNames_[ParameterNum::kScale][name]);
+				}
+			}
+			else if (useClass == ClassEmum::kScoreClass) {
+
+				for (int name = 0; name < UI::kScoreNum_; name++) {
+
+					scoreNumPos_[scene][name] = globalVariables->GetVector2Value(groupNames_[scene][useClass], scoreItemNames_[ParameterNum::kPos][name]);
+					scoreNumScales_[scene][name] = globalVariables->GetFloatValue(groupNames_[scene][useClass], scoreItemNames_[ParameterNum::kScale][name]);
+
+				}
+			}
+		}
+	}
+
+}
+
+void UI::SetAllTransform(int scene) {
+
+	for (int name = 0; name < UI::kUITexturesMaxNum_; name++) {
+		SetWorldTransform(uiPos_[scene][name], uiScales_[scene][name], 0.0f, name);
+	}
+
+	for (int name = 0; name < UI::kScoreNum_; name++) {
+		score_->SetWorldTransform(scoreNumPos_[scene][name], scoreNumScales_[scene][name], 0.0f, name);
+	}
 
 }
 
@@ -64,7 +127,6 @@ void UI::Initialize() {
 	default:
 		break;
 	}
-
 }
 
 void UI::TitleInitialize() {
@@ -78,30 +140,26 @@ void UI::BattleInitialize() {
 
 	ResetIsDraw();
 
-	score_->SetWorldTransform({ 60.0f,60.0f }, 1.0f, 0.0f, Score::kScore);
-	score_->SetWorldTransform({ 960.0f,160.0f }, 1.5f, 0.0f, Score::kCombo);
-	score_->SetWorldTransform({ 960.0f,240.0f }, 0.8f, 0.0f, Score::kHighCombo);
-	score_->SetWorldTransform({ 960.0f,300.0f }, 0.8f, 0.0f, Score::kPerfectNum);
-	score_->SetWorldTransform({ 960.0f,360.0f }, 0.8f, 0.0f, Score::kGreatNum);
-	score_->SetWorldTransform({ 960.0f,420.0f }, 0.8f, 0.0f, Score::kGoodNum);
-	score_->SetWorldTransform({ 960.0f,480.0f }, 0.8f, 0.0f, Score::kMissNum);
-
-
 	score_->SetIsDraw(true, Score::kScore);
 	score_->SetIsDraw(true, Score::kCombo);
-	score_->SetIsDraw(true, Score::kHighCombo);
-	score_->SetIsDraw(true, Score::kPerfectNum);
-	score_->SetIsDraw(true, Score::kGreatNum);
-	score_->SetIsDraw(true, Score::kGoodNum);
-	score_->SetIsDraw(true, Score::kMissNum);
+	//score_->SetIsDraw(true, Score::kHighCombo);
+	//score_->SetIsDraw(true, Score::kPerfectNum);
+	//score_->SetIsDraw(true, Score::kGreatNum);
+	//score_->SetIsDraw(true, Score::kGoodNum);
+	//score_->SetIsDraw(true, Score::kMissNum);
+	score_->SetIsDraw(true, Score::kMemoHighScore);
+	//score_->SetIsDraw(true, Score::kMemoHighCombo);
 
-	for (int i = 0; i < kUITexturesMaxNum_; i++) {
-		isDraw_[i] = true;
+	colors_[UITextureNames::kPerfect] = 0xFFFF22FF;
+	colors_[UITextureNames::kGreat] = 0xEE1111FF;
+	colors_[UITextureNames::kGood] = 0x11EE11FF;
+	colors_[UITextureNames::kMiss] = 0x333333FF;
 
-		SetWorldTransform({ 960.0f,160.0f + 60.0f * i }, 1.0f, 0.0f, i);
-	}
+	isDraw_[UITextureNames::kScore] = true;
+	isDraw_[UITextureNames::kCombo] = true;
+	isDraw_[UITextureNames::kHighScore] = true;
 
-
+	SetAllTransform(Scene::kBattleScene);
 
 }
 
@@ -109,6 +167,32 @@ void UI::ResultInitialize() {
 
 	ResetIsDraw();
 
+	score_->Memo();
+
+	score_->SetIsDraw(true, Score::kScore);
+	//score_->SetIsDraw(true, Score::kCombo);
+	score_->SetIsDraw(true, Score::kHighCombo);
+	score_->SetIsDraw(true, Score::kPerfectNum);
+	score_->SetIsDraw(true, Score::kGreatNum);
+	score_->SetIsDraw(true, Score::kGoodNum);
+	score_->SetIsDraw(true, Score::kMissNum);
+	score_->SetIsDraw(true, Score::kMemoHighScore);
+	//score_->SetIsDraw(true, Score::kMemoHighCombo);
+
+	colors_[UITextureNames::kPerfect] = 0xFFFFFFFF;
+	colors_[UITextureNames::kGreat] = 0xFFFFFFFF;
+	colors_[UITextureNames::kGood] = 0xFFFFFFFF;
+	colors_[UITextureNames::kMiss] = 0xFFFFFFFF;
+
+	isDraw_[UITextureNames::kScore] = true;
+	isDraw_[UITextureNames::kCombo] = true;
+	isDraw_[UITextureNames::kHighScore] = true;
+	isDraw_[UITextureNames::kPerfect] = true;
+	isDraw_[UITextureNames::kGreat] = true;
+	isDraw_[UITextureNames::kGood] = true;
+	isDraw_[UITextureNames::kMiss] = true;
+
+	SetAllTransform(Scene::kResultScene);
 }
 
 void UI::SetWorldTransform(const Vector2& screenPos, float scale, float rotate, int textureName) {
@@ -127,8 +211,6 @@ void UI::SetWorldTransform(const Vector2& screenPos, float scale, float rotate, 
 }
 
 void UI::Update() {
-
-	ApplyGlobalVariable();
 
 	switch (GameScene::GetInstance()->scene)
 	{
@@ -154,16 +236,48 @@ void UI::TitleUpdate() {
 }
 
 void UI::BattleUpdate() {
+	ApplyGlobalVariable();
+	SetAllTransform(Scene::kBattleScene);
+
+	if (score_->GetEvaluation() == Score::Evaluation::kPerfect) {
+
+		isDraw_[UITextureNames::kPerfect] = true;
+		isDraw_[UITextureNames::kGreat] = false;
+		isDraw_[UITextureNames::kGood] = false;
+		isDraw_[UITextureNames::kMiss] = false;
+	}
+	else if (score_->GetEvaluation() == Score::Evaluation::kGreat) {
+
+		isDraw_[UITextureNames::kPerfect] = false;
+		isDraw_[UITextureNames::kGreat] = true;
+		isDraw_[UITextureNames::kGood] = false;
+		isDraw_[UITextureNames::kMiss] = false;
+	}
+	else if (score_->GetEvaluation() == Score::Evaluation::kGood) {
+
+		isDraw_[UITextureNames::kPerfect] = false;
+		isDraw_[UITextureNames::kGreat] = false;
+		isDraw_[UITextureNames::kGood] = true;
+		isDraw_[UITextureNames::kMiss] = false;
+	}
+	else if (score_->GetEvaluation() == Score::Evaluation::kMiss) {
+
+		isDraw_[UITextureNames::kPerfect] = false;
+		isDraw_[UITextureNames::kGreat] = false;
+		isDraw_[UITextureNames::kGood] = false;
+		isDraw_[UITextureNames::kMiss] = true;
+	}
 
 }
 
 void UI::ResultUpdate() {
-
+	ApplyGlobalVariable();
+	SetAllTransform(Scene::kResultScene);
 }
 
 void UI::DrawUITexture(const Matrix4x4& viewProjectionMat, int textureName) {
 	if (isDraw_[textureName]) {
-		Texture2D::TextureDraw(*(worldTransforms_[textureName].get()), viewProjectionMat, colors_[textureName], UITextures_[textureName].get());
+		Texture2D::TextureDraw(*(worldTransforms_[textureName].get()), viewProjectionMat, colors_[textureName], uiTextures_[textureName].get());
 	}
 }
 

@@ -17,6 +17,8 @@ public:
 
 	void Draw(Matrix4x4 viewProjection);
 
+	void Draw2D(const Matrix4x4& viewProjection);
+
 public: // korone
 
 	void SetUI(UI* ui) { ui_ = ui; }

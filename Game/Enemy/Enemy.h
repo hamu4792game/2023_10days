@@ -14,6 +14,14 @@ enum class MODE_A {
 	NOMOTIAN,
 };
 
+enum class blow {
+	DAISHA,
+	FIGURA,
+
+	NUM,
+};
+
+
 class Enemy
 {
 public:
@@ -45,6 +53,7 @@ public:
 
 	//	描画
 	void Draw(const Matrix4x4& viewProjection, std::vector<std::shared_ptr<Model>> botunModels);
+	void Draw(const Matrix4x4& viewProjection);
 
 public: // Korone
 
@@ -120,8 +129,60 @@ private://Specha
 
 	//現在の回転軸の保存先
 	std::vector<Vector3>nowR;
-	//大の字
-	std::vector<esing> sprawled[2];
+	
+	//飛ばす方向を保存
+	bool dire;
 
+	//保存
+	int ANIMETYPE;
+
+	//吹っ飛びアニメ数
+	static const int animeNUM = 4;
+
+	enum STATEANIME {
+		NONE,
+		ONE,
+		TWO,
+		TREE,
+	};
+
+	STATEANIME state_ = NONE;
+
+	enum A_MODE {
+		WAIT,
+		MOVE,
+		BACK,
+	};
+
+	A_MODE mode_ = WAIT;
+
+	//待機アニメーションまとめ
+	std::vector<esing> WAIT_[4];
+
+	//アニメーションの引数まとめ
+	std::vector<esing> sprawled[animeNUM];
+
+	//[3]の右バージョン
+	std::vector<esing> anoMotion;
+
+	//ループ時利用する
+	bool isLoop = false;
+
+	//アニメーションのカウント
+	int countAnime_ = 0;
+
+	void WaitAnimetion(int num);
+
+	int ANIMENUM = 0;
+
+	void GetER() {
+		for (int i = 0; i < PARTS::Num; i++) {
+			nowR[i] = parts_[i].rotation_;
+		}
+	}
 
 };
+
+
+//イージングの処理、好きに中身かえてちょ
+Vector3 ES(esing E, float t);

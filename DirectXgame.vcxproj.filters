@@ -110,6 +110,9 @@
     <ClCompile Include="GlobalVariables\GlobalVariables.cpp">
       <Filter>GlobalVariables</Filter>
     </ClCompile>
+    <ClCompile Include="Game\Skydome\Skydome.cpp">
+      <Filter>Game\Skydome</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Camera\Camera.h">
@@ -235,6 +238,9 @@
     <ClInclude Include="GlobalVariables\GlobalVariables.h">
       <Filter>GlobalVariables</Filter>
     </ClInclude>
+    <ClInclude Include="Game\Skydome\Skydome.h">
+      <Filter>Game\Skydome</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Engine">
@@ -326,6 +332,9 @@
     </Filter>
     <Filter Include="GlobalVariables">
       <UniqueIdentifier>{5db6066b-e521-4852-be15-c042cb93042a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Skydome">
+      <UniqueIdentifier>{98e905e7-226c-42f7-8f4f-b6dfa157f94f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

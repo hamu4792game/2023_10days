@@ -1,6 +1,7 @@
 #include "Battle.h"
-#include "externals/imgui/imgui.h"
+//#include "externals/imgui/imgui.h"
 #include "math/Vector4.h"
+#include "Game/GameScene/GameScene.h"
 
 // 確認のため追加 by.Korone
 #include "Engine/Input/KeyInput/KeyInput.h"
@@ -34,7 +35,8 @@ void Battle::Initialize()
 {
 	//	カメラの設定
 	camera_->transform.translation_ = Vector3(0.0f, 16.5f, -21.7f);
-	camera_->transform.rotation_.x = 0.471f;
+	camera_->transform.rotation_ = Vector3(0.471f, 0.0f, 0.0f);
+	camera_->transform.scale_ = Vector3(1.0f, 1.0f, 1.0f);
 
 	masterSpeed = 1.0f;
 
@@ -48,6 +50,8 @@ void Battle::Initialize()
 
 	player_->Initialize(mobModels_, worldTransform.get());
 
+	player_->SetDistance(kEnemyPopPosLength_);
+
 	player_->GaugeInitialize();
 
 }
@@ -55,56 +59,59 @@ void Battle::Initialize()
 
 void Battle::EnemyGeneration() {
 
-	for (int i = 0; i < kEnemyMaxNum_; i++) {
+	unsigned int currentTime = static_cast<unsigned int>(time(nullptr));
+	srand(currentTime);
 
-		Enemy* enemy = new Enemy();
+	while (enemyNum_ - enemyKillCount_ < kEnemyIntervalNum_) {
 
-		float  pos = kEnemyPopPosLength_ * (enemyNum_) + 1.0f;
-
-		int type = rand() % 4;
-
-		if (type == preEnemyType_) {
-
-			typeCount_++;
-			if (typeCount_ == 4) {
-
-				while (type == preEnemyType_)
-				{
-					type = rand() % 4;
-					if (type != preEnemyType_) {
-						break;
-					}
-				}
-
-				typeCount_ = 0;
-			}
+		if (enemyNum_ == kEnemyMaxNum_) {
+			break;
 		}
 		else {
-			typeCount_ = 0;
+			Enemy* enemy = new Enemy();
+
+			float  pos = kEnemyPopPosLength_ * (enemyNum_)+1.0f;
+
+			int type = rand() % 4;
+
+			if (type == preEnemyType_) {
+
+				typeCount_++;
+				if (typeCount_ == 4) {
+
+					while (type == preEnemyType_)
+					{
+						type = rand() % 4;
+						if (type != preEnemyType_) {
+							break;
+						}
+					}
+
+					typeCount_ = 0;
+				}
+			}
+			else {
+				typeCount_ = 0;
+			}
+
+			// Initializeを変える必要がある
+			enemy->InitializeSP(pos, type, enemyNum_, mobModels_type2);
+
+			enemies_.push_back(enemy);
+
+			enemyNum_++;
+
+			preEnemyType_ = type;
 		}
-
-		// Initializeを変える必要がある
-		enemy->InitializeSP(pos, type, enemyNum_, mobModels_type2);
-
-		enemies_.push_back(enemy);
-
-		enemyNum_++;
-
-		preEnemyType_ = type;
 	}
 
 }
 
 void Battle::EnemyReset() {
-	for (Enemy* enemy : enemies_) {
-		enemy->Die(0);
-	}
+
 	enemies_.remove_if([](Enemy* enemy) {
-		if (enemy->IsDead()) {
-			delete enemy;
-			return true;
-		}
-		return false;
+		delete enemy;
+		return true;
 	});
 
 	enemyNum_ = 0;
@@ -116,11 +123,6 @@ void Battle::EnemyReset() {
 
 void Battle::Update()
 {
-	//	カメラの調整
-	ImGui::DragFloat3("cameratr", &camera_->transform.translation_.x, 0.1f);
-	ImGui::DragFloat3("cameraro", &camera_->transform.rotation_.x, AngleToRadian(1.0f));
-	ImGui::DragFloat("master", &worldTransform->scale_.y, 0.01f);
-
 	for(Enemy* enemy : enemies_){
 		if (enemy->GetNum() == enemyKillCount_) {
 			player_->HitTest(enemy);
@@ -128,6 +130,7 @@ void Battle::Update()
 			if (score_->GetEvaluation()) {
 
 				enemyKillCount_++;
+				EnemyGeneration();
 			}
 
 			break;
@@ -140,19 +143,13 @@ void Battle::Update()
 		enemy->Update();
 	}
 
+	//	一旦仮置き 敵を最大数倒したらシーン切り替え
+	if (enemyKillCount_ >= kEnemyMaxNum_) {
+		GameScene::GetInstance()->sceneChangeFlag = true;
+	}
+
 	ui_->Update();
 
-	// 確認のため追加 by.Korone
-	if (KeyInput::PushKey(DIK_SPACE)) {
-		score_->AddPerfect();
-	}
-	if (KeyInput::PushKey(DIK_R)) {
-		score_->AddMiss();
-	}
-
-
-	//ImGui::DragFloat("worldRo", &transform.rotation_.x, AngleToRadian(1.0f));
-	//	行列の更新　回転行列のみ必要なためUpdateはしていない
 	player_->Update();
 	worldTransform->UpdateMatrix();
 

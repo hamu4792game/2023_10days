@@ -1,6 +1,6 @@
 #include "Engine/Camera/Camera.h"
 #include "Engine/Engine.h"
-#include "externals/imgui/imgui.h"
+//#include "externals/imgui/imgui.h"
 #include "Engine/Input/KeyInput/KeyInput.h"
 
 Camera::Camera(float farClip_, bool proType) {

@@ -81,9 +81,9 @@ private: // Korone
 
 	void HitEvalution(Enemy* enemy);
 
-	void SetGaugeGlobalVariable();
+	void SetKoroneGlobalVariable();
 
-	void ApplyGuageGlobalVariable();
+	void ApplyKoroneGlobalVariable();
 
 private:
 
@@ -118,6 +118,9 @@ private:
 	//	最大フレーム
 	float MAX_frame;
 
+public:
+	void SetDistance(const float& dis) { enemyDistance = dis; }
+
 private:
 
 	//	移動処理
@@ -145,7 +148,7 @@ private: // Korone
 
 	int intervalCount_ = 0;
 
-	int kEvalutionframe_[4] = { 20, 60, 120, 121 };
+	int kEvalutionframe_[4] = { 20, 60, 120, kEvalutionframe_[Evalution::kGood] + 1};
 
 	int evalutionCount_ = 0;
 
@@ -192,5 +195,58 @@ private: // Korone
 	uint32_t gaugeColors_[kGaugeDrawNum_] = {};
 
 	bool gaugeIsDraw_[kGaugeDrawNum_] = {};
+
+
+private: //Spe
+
+	enum ANIMETYPE {
+		Normal,
+		ATK_R,
+		ATK_L,
+
+		A_NUM,
+	};
+
+	//アニメーション状態、ここを変えるとそれぞれアニメーションが始まる
+	ANIMETYPE state_;
+
+	//行動管理
+	enum ANIMEWAVE {
+		ATKWAIT,//攻撃予備動作
+		ATK,
+		BACK,
+	};
+
+	//アニメーションモード、基本アニメーション関数内で変更
+	ANIMEWAVE wave_A;
+
+	//アニメーション初期化
+	void AnimeInitialize();
+
+	//アニメーションアップデート
+	void Animetion();
+
+	//右攻撃まとめ
+	void ATK_R_F();
+
+	//
+
+	//イージング
+	float T_;
+	//アニメーションフレーム加算地
+	float AddT_ = 1.0f / 30.0f;
+
+	//アニメーション開始時の初期化関数
+	bool isAnimeStart_;
+
+	//実際のイージングで使う構造体
+	std::vector<esing> ESALL;
+
+	//現在の回転軸の保存先
+	std::vector<Vector3>nowR;
+
+	void GetplayerR();
+	//大の字
+	std::vector<esing> AnimeType[A_NUM];
 
 };

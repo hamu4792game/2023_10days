@@ -32,7 +32,7 @@ public:
 
 	void SetScore(Score* score) { score_ = score; }
 
-	void SetUITexture(std::vector<std::shared_ptr<Texture2D>> UITextures) { UITextures_ = UITextures; }
+	void SetUITexture(std::vector<std::shared_ptr<Texture2D>> UITextures) { uiTextures_ = UITextures; }
 
 	void SetWorldTransform(const Vector2& screenPos, float scale, float rotate, int textureName);
 
@@ -52,6 +52,8 @@ private:
 
 	void ResetIsDraw();
 
+	void SetAllTransform(int scene);
+
 	void TitleInitialize();
 
 	void TitleUpdate();
@@ -70,12 +72,111 @@ private:
 
 private:
 	
+	static const int kUseSceneNum_ = 2;
 
-	std::vector<std::shared_ptr<Texture2D>> UITextures_;
+	// これはscoreクラスのstatic const int kParameterNum_と同じ数値にすること
+	static const int kScoreNum_ = 9;
+
+	enum Scene {
+		kBattleScene,
+		kResultScene,
+	};
+
+	static const int kClassNum_ = 2;
+
+	enum ClassEmum {
+		kUIClass,
+		kScoreClass,
+	};
+
+	static const int kUIParameterNum_ = 2;
+
+	enum ParameterNum {
+		kPos,
+		kScale
+	};
+
+	const char* groupNames_[kUseSceneNum_][kClassNum_] = {
+
+		// BattleScene
+		{
+		"UIBattleScene",
+		"ScoreBattleScene",
+		},
+		// ResultScene
+		{
+		"UIResultScene",
+		"ScoreResultScene",
+		}
+	};
+
+	const char* uiItemNames_[kUIParameterNum_][kUITexturesMaxNum_] = {
+
+		// Pos
+		{
+		"ScorePos",
+		"HighScorePos",
+		"ComboPos",
+		"HighComboPos",
+		"PerfectPos",
+		"GreatPos",
+		"GoodPos",
+		"MissPos",
+		},
+		// Scale
+		{
+		"ScoreScale",
+		"HighScoreScale",
+		"ComboScale",
+		"HighComboScale",
+		"PerfectScale",
+		"GreatScale",
+		"GoodScale",
+		"MissScale",
+		}
+	};
+
+	const char* scoreItemNames_[kUIParameterNum_][kScoreNum_] = {
+
+		// Pos
+		{
+		"ScorePos",
+		"HighScorePos",
+		"ComboPos",
+		"HighComboPos",
+		"TotalHighComboPos",
+		"PerfectPos",
+		"GreatPos",
+		"GoodPos",
+		"MissPos",
+		},
+		// Scale
+		{
+		"ScoreScale",
+		"HighScoreScale",
+		"ComboScale",
+		"HighComboScale",
+		"TotalHighComboScale",
+		"PerfectScale",
+		"GreatScale",
+		"GoodScale",
+		"MissScale",
+		}
+	};
+
+	std::vector<std::shared_ptr<Texture2D>> uiTextures_;
 
 	std::vector<std::shared_ptr<WorldTransform>> worldTransforms_;
 
+	Vector2 uiPos_[kUseSceneNum_][kUITexturesMaxNum_] = {};
+
+	float uiScales_[kUseSceneNum_][kUITexturesMaxNum_] = {};
+
 	Score* score_ = nullptr;
+
+	Vector2 scoreNumPos_[kUseSceneNum_][kScoreNum_] = {};
+
+	float scoreNumScales_[kUseSceneNum_][kScoreNum_] = {};
 
 	uint32_t colors_[kUITexturesMaxNum_] = {};
 

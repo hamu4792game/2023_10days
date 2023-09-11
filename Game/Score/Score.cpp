@@ -3,7 +3,7 @@
 Score::Score() {
 
 	for (int i = 0; i < kParameterNum_; i++) {
-		if (i == kScore || i == kMemoHighCombo) {
+		if (i == kScore || i == kMemoHighScore) {
 			for (int j = 0; j < kScoreMaxDigits_; j++) {
 				worldTransforms_[i].push_back(std::make_shared<WorldTransform>());
 			}
@@ -128,8 +128,12 @@ void Score::Draw2D(const Matrix4x4& viewProjectionMat) {
 
 void Score::Reset() {
 
-	for (int i = 0; i < 7; i++) {
-		parameters_[i] = 0;
+	for (int i = 0; i < kParameterNum_; i++) {
+		if (i != Parameter::kMemoHighScore) {
+			parameters_[i] = 0;
+
+		}
+		
 	}
 
 	isFullCom_ = false;
