@@ -15,8 +15,7 @@
 #include <algorithm>
 
 
-Player::Player(std::shared_ptr<Camera> camera)
-
+Player::Player(std::shared_ptr<Camera> camera) : kMax_frame(60.0f)
 {
 	camera_ = camera;
 	//for (uint16_t i = 0u; i < PARTS::Num; i++) {
@@ -46,9 +45,11 @@ void Player::Initialize(std::vector<std::shared_ptr<Model>> models, WorldTransfo
 
 	//	カメラとの親子関係
 	camera_->transform.parent_ = &transform;
-	offset = Vector3(0.0f, 30.0f, -50.0f);
-	camera_->transform.translation_ = offset;
-	camera_->transform.rotation_.x = 0.4f;
+
+	camera_->transform.translation_ = Vector3(18.0f, 10.0f, -20.0f);
+	camera_->transform.rotation_ = Vector3(0.383f, -6.785f, 0.0f);
+	
+	offset = Vector2(camera_->transform.rotation_.x, camera_->transform.rotation_.y);
 
 
 	//親子関係
@@ -63,8 +64,8 @@ void Player::Initialize(std::vector<std::shared_ptr<Model>> models, WorldTransfo
 	oldPos = 0.0f;
 	//enemyDistance = 10.0f;
 	frame = 0.0f;
-	MAX_frame = 60.0f;
 
+	MAX_frame = kMax_frame;
 
 #pragma region パーツの親子関係と座標の初期設定
 	parts_[Head].parent_ = &parts_[Body];
@@ -267,7 +268,82 @@ void Player::AnimeInitialize() {
 
 #pragma endregion
 
+#pragma region ノーマル状態
+	normal_A.resize(parts_.size());
 
+	normal_A[Body] = {
+		{0.0f, 0.0f, 0.0f},
+		{0.0f, 0.0f, 0.0f},
+	};
+	normal_A[BodyUnder] = {
+		{0.0f, 0.0f, 0.0f},
+		{0.0f, 0.0f, 0.0f},
+	};
+	normal_A[Head] = {
+		{0.0f, 0.0f, 0.0f},
+		{0.0f, 0.0f, 0.0f},
+	};
+
+
+	//左腕
+	normal_A[LArm1] = {
+		{0.0f, -0.1f, 1.4f},
+		{0.0f, 0.1f, 1.4f},
+	};
+	normal_A[LArm2] = {
+		{0.0f, 0.0f, 0.0f},
+		{0.0f, 0.0f, 0.0f},
+	};
+	normal_A[LHand] = {
+		{0.0f, 0.0f, 0.0f},
+		{0.0f, 0.0f, 0.0f},
+	};
+	//右腕
+	normal_A[RArm1] = {
+		{0.0f, -0.1f, -1.4f},
+		{0.0f, 0.1f, -1.4f},
+	};
+	normal_A[RArm2] = {
+		{0.0f, 0.0f, 0.0f},
+		{0.0f, 0.0f, 0.0f},
+	};
+	normal_A[RHand] = {
+		{0.0f, 0.0f, 0.0f},
+		{0.0f, 0.0f, 0.0f},
+	};
+
+	//足
+	normal_A[LLeg1] = {
+		{0.0f, 0.0f, 0.0f},
+		{0.0f, 0.0f, 0.0f},
+	};
+	normal_A[LLeg2] = {
+		{0.0f, 0.0f, 0.0f},
+		{0.0f, 0.0f, 0.0f},
+	};
+	normal_A[LFoot] = {
+		{0.0f, 0.0f, 0.0f},
+		{0.0f, 0.0f, 0.0f},
+	};
+
+	normal_A[RLeg1] = {
+		{0.0f, 0.0f, 0.0f},
+		{0.0f, 0.0f, 0.0f},
+	};
+	normal_A[RLeg2] = {
+		{0.0f, 0.0f, 0.0f},
+		{0.0f, 0.0f, 0.0f},
+	};
+	normal_A[RFoot] = {
+		{0.0f, 0.0f, 0.0f},
+		{0.0f, 0.0f, 0.0f},
+	};
+#pragma endregion
+
+	//初期ポーズ設定
+	for (int i = 0; i < Num; i++) {
+		parts_[i].rotation_ = ES(normal_A[i], 0);
+	}
 }
 
 //現在のプレイヤーの情報取得
@@ -357,7 +433,7 @@ void Player::ATK_R_F() {
 				parts_[i].rotation_ = ES(ESALL[i], T_);
 			}
 			//Tを加算
-			T_ += AddT_;
+			T_ += AddT_*4.0f;
 			//シーン切り替え処理
 			if (T_ >= 1.0f) {
 				wave_A = BACK;
@@ -420,18 +496,7 @@ void Player::ModelLoad()
 void Player::Update()
 {
 
-	//camera_->transform.translation_ = offset;
-	//if (KeyInput::GetKey(DIK_SPACE)) {
-	//	world_->rotation_.x += AngleToRadian(1.0f);
-	//
-	//
-	//	Vector2 ran(0.0f, 0.0f);
-	//	ran.x = static_cast<float>(std::rand() % 3 - 1);
-	//	ran.y = static_cast<float>(std::rand() % 3 - 1);
-	//	camera_->transform.translation_.x += ran.x;
-	//	camera_->transform.translation_.y += ran.y;
-	//}
-
+	camera_->transform.rotation_ = Vector3(offset.x, offset.y, camera_->transform.rotation_.z);
 
 	//ImGui::DragFloat("body", &parts_[Body].translation_.y, 0.1f);
 
@@ -517,8 +582,6 @@ void Player::Move() {
 		movePos += enemyDistance;
 		//	frameの初期化
 		frame = 0.0f;
-		//	待機フレームの初期化
-		waitFrame = 0.0f;
 
 		Battle::masterSpeed = 0.3f;
 
@@ -531,14 +594,11 @@ void Player::MoveType2() {
 	//	frame加算処理 通常加算速度 * 全体のframe速度
 	//frame += 1.0f * Battle::masterSpeed;
 
+	//	最大フレーム数をコンボに応じて減少
+	MAX_frame = kMax_frame - static_cast<float>(score_->GetCombo());
+
 	if (flag) {
-		waitFrame++;
-
-		//	仮 入力を受け付けたらフラグを建てる
-		if (/*KeyInput::PushKey(DIK_SPACE) || */score_->GetEvaluation()) {
-			waitFrame = MAX_frame;
-		}
-
+		
 		if (/*KeyInput::PushKey(DIK_SPACE) || */score_->GetEvaluation()) {
 			//	座標の更新
 			oldPos = transform.translation_.z;
@@ -546,10 +606,14 @@ void Player::MoveType2() {
 			movePos += enemyDistance;
 			//	frameの初期化
 			frame = 0.0f;
-			//	待機フレームの初期化
-			waitFrame = 0.0f;
 
 			flag = false;
+			if (score_->GetEvaluation() == Score::Evaluation::kPerfect || score_->GetEvaluation() == Score::Evaluation::kGreat) {
+				shakeFlag = true;
+			}
+			else {
+				shakeFlag = false;
+			}
 		}
 	}
 	else {
@@ -558,10 +622,28 @@ void Player::MoveType2() {
 		//	攻撃をするまでの移動処理
 		transform.translation_.z = Ease::UseEase(oldPos, movePos, frame, MAX_frame, Ease::EaseType::EaseOutSine);
 		if (frame >= MAX_frame) {
-			waitFrame = 0.0f;
 			flag = true;
 		}
+		//	パーフェクトの瞬間だけシェイク
+		else if (shakeFlag && frame < 5.0f) {
+			CameraShake();
+		}
 	}
+}
+
+void Player::CameraShake()
+{
+
+	Vector2 ran(0.0f, 0.0f);
+	ran.x = static_cast<float>(std::rand() % 3 - 1);
+	ran.y = static_cast<float>(std::rand() % 3 - 1);
+
+	ran.x = AngleToRadian(ran.x);
+	ran.y = AngleToRadian(ran.y);
+
+	camera_->transform.rotation_.x = offset.x + ran.x;
+	camera_->transform.rotation_.y = offset.y + ran.y;
+
 }
 
 void Player::HitTest(Enemy* enemy) {

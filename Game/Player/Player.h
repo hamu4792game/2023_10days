@@ -102,7 +102,7 @@ private:
 	//	カメラ共有ptr
 	std::shared_ptr<Camera> camera_ = nullptr;
 	//	カメラの初期位置
-	Vector3 offset;
+	Vector2 offset;
 
 	//	移動処理用のフラグ
 	bool flag = false;
@@ -115,7 +115,7 @@ private:
 	float enemyDistance;
 	//	加算していくフレーム
 	float frame;
-	float waitFrame;
+	const float kMax_frame;
 	//	最大フレーム
 	float MAX_frame;
 
@@ -130,6 +130,11 @@ private:
 	void Move();
 	//	tyoe2
 	void MoveType2();
+
+	//	カメラシェイクの処理
+	void CameraShake();
+
+	bool shakeFlag = false;
 
 private: // Korone
 
@@ -254,6 +259,9 @@ private: //Spe
 
 	//現在の回転軸の保存先
 	std::vector<Vector3>nowR;
+
+	//ノーマル状態
+	std::vector<esing>normal_A;
 
 	void GetplayerR();
 	//大の字

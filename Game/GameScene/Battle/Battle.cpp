@@ -1,5 +1,5 @@
 #include "Battle.h"
-//#include "externals/imgui/imgui.h"
+#include "externals/imgui/imgui.h"
 #include "math/Vector4.h"
 #include "Game/GameScene/GameScene.h"
 
@@ -36,10 +36,10 @@ Battle::~Battle() {
 void Battle::Initialize()
 {
 	//	カメラの設定
-	camera_->transform.translation_ = Vector3(0.0f, 16.5f, -21.7f);
-	camera_->transform.rotation_ = Vector3(0.471f, 0.0f, 0.0f);
-	camera_->transform.scale_ = Vector3(1.0f, 1.0f, 1.0f);
-
+	//camera_->transform.translation_ = Vector3(0.0f, 16.5f, -21.7f);
+	//camera_->transform.rotation_ = Vector3(0.471f, 0.0f, 0.0f);
+	
+	
 	masterSpeed = 1.0f;
 
 	EnemyReset();
@@ -74,7 +74,7 @@ void Battle::EnemyGeneration() {
 		else {
 			Enemy* enemy = new Enemy();
 
-			float  pos = kEnemyPopPosLength_ * (enemyNum_)+1.0f;
+			float  pos = kEnemyPopPosLength_ * (enemyNum_)+6.0f;
 
 			int type = rand() % 4;
 
@@ -144,8 +144,14 @@ void Battle::Update()
 		}
 	}
 
+
 	player_->GaugeUpdate();
 
+	enemies_.remove_if([](Enemy* enemy) {
+
+		return enemy->GetDelete() == true;
+
+		});
 	for (Enemy* enemy : enemies_) {
 		enemy->Update();
 	}

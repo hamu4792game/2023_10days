@@ -1,43 +1,5 @@
 #include "Enemy.h"
 #include<numbers>
-void Enemy::Initialize()
-{
-	parts_.resize(models_.size());
-	for (auto& i : parts_) {
-		i.parent_ = &parts_[Body];
-	}
-	parts_[Body].parent_ = &transform;
-}
-
-void Enemy::Initialize(int type, int num)
-{
-	switch (type)
-	{
-	case kA:
-		bottomType_ = BottomTypeClass::kA;
-		break;
-	case kB:
-		bottomType_ = BottomTypeClass::kB;
-		break;
-	case kX:
-		bottomType_ = BottomTypeClass::kX;
-		break;
-	case kY:
-		bottomType_ = BottomTypeClass::kY;
-		break;
-	default:
-		bottomType_ = BottomTypeClass::kA;
-		break;
-	}
-
-	num_ = num;
-
-	parts_.resize(models_.size());
-	for (auto& i : parts_) {
-		i.parent_ = &parts_[Body];
-	}
-	parts_[Body].parent_ = &transform;
-}
 
 void Enemy::InitializeSP(float pos, int type, int num,//	モデルデータ配列
 	std::vector<std::shared_ptr<Model>> models)
@@ -125,7 +87,9 @@ void Enemy::InitializeSP(float pos, int type, int num,//	モデルデータ配�
 	parts_[RFoot].translation_ = { 0.12f, -2.2f, 0.0f };
 #pragma endregion
 
-	
+	//	初期化　hamu
+	lifespan = 0u;
+	die_ = false;
 }
 
 
@@ -762,7 +726,82 @@ void Enemy::AnimeInitialize() {
 		{0.0f, 0.0f, 0.0f},
 	};
 #pragma endregion
+#pragma region ノーマル状態
+	normal_A.resize(parts_.size());
 
+	normal_A[Body] = {
+		{0.0f, 0.0f, 0.0f},
+		{0.0f, 0.0f, 0.0f},
+	};
+	normal_A[BodyUnder] = {
+		{0.0f, 0.0f, 0.0f},
+		{0.0f, 0.0f, 0.0f},
+	};
+	normal_A[Head] = {
+		{0.0f, 0.0f, 0.0f},
+		{0.0f, 0.0f, 0.0f},
+	};
+
+
+	//左腕
+	normal_A[LArm1] = {
+		{0.0f, -0.1f, 1.4f},
+		{0.0f, 0.1f, 1.4f},
+	};
+	normal_A[LArm2] = {
+		{0.0f, 0.0f, 0.0f},
+		{0.0f, 0.0f, 0.0f},
+	};
+	normal_A[LHand] = {
+		{0.0f, 0.0f, 0.0f},
+		{0.0f, 0.0f, 0.0f},
+	};
+	//右腕
+	normal_A[RArm1] = {
+		{0.0f, -0.1f, -1.4f},
+		{0.0f, 0.1f, -1.4f},
+	};
+	normal_A[RArm2] = {
+		{0.0f, 0.0f, 0.0f},
+		{0.0f, 0.0f, 0.0f},
+	};
+	normal_A[RHand] = {
+		{0.0f, 0.0f, 0.0f},
+		{0.0f, 0.0f, 0.0f},
+	};
+
+	//足
+	normal_A[LLeg1] = {
+		{0.0f, 0.0f, 0.0f},
+		{0.0f, 0.0f, 0.0f},
+	};
+	normal_A[LLeg2] = {
+		{0.0f, 0.0f, 0.0f},
+		{0.0f, 0.0f, 0.0f},
+	};
+	normal_A[LFoot] = {
+		{0.0f, 0.0f, 0.0f},
+		{0.0f, 0.0f, 0.0f},
+	};
+
+	normal_A[RLeg1] = {
+		{0.0f, 0.0f, 0.0f},
+		{0.0f, 0.0f, 0.0f},
+	};
+	normal_A[RLeg2] = {
+		{0.0f, 0.0f, 0.0f},
+		{0.0f, 0.0f, 0.0f},
+	};
+	normal_A[RFoot] = {
+		{0.0f, 0.0f, 0.0f},
+		{0.0f, 0.0f, 0.0f},
+	};
+#pragma endregion
+	//初期ポーズ設定
+	for (int i = 0; i < Num; i++) {
+
+		parts_[i].rotation_ = ES(normal_A[i], 0);
+	}
 
 }
 
@@ -814,15 +853,18 @@ int GetRandomNum(int wideOrmax, bool isWide) {
 
 void Enemy::BlowAway() {
 
-	float AddTTTT;
-
+	
 	//死んだときに吹っ飛びアニメーション
 	if (isDead_) {
+
 		if (!isStart_blow_away) {
 			isStart_blow_away = true;
 			//アニメ状態を最初にする
 			animeState_ = MODE_A::NOMOTIAN;
-			
+
+			//	念のため、初期化する	hamu
+			lifespan = 0u;
+
 			ANIMETYPE = GetRandomNum(animeNUM, false);
 
 			//ANIMETYPE = 3;
@@ -831,12 +873,13 @@ void Enemy::BlowAway() {
 			if (ANIMETYPE == 2) {
 				float theta;
 				if (dire) {
-					theta = -((float)std::numbers::pi / 4);
-					transform.rotation_.y = -((float)std::numbers::pi /6);
+					theta = -(std::numbers::pi_v<float> / 4);
+					transform.rotation_.y = -(std::numbers::pi_v<float> /6);
+					
 				}
 				else {
-					theta = ((float)std::numbers::pi / 4);
-					transform.rotation_.y = ((float)std::numbers::pi / 6);
+					theta = (std::numbers::pi_v<float> / 4);
+					transform.rotation_.y = (std::numbers::pi_v<float> / 6);
 				}
 				parts_[Body].rotation_.z = theta;
 				
@@ -901,10 +944,10 @@ void Enemy::BlowAway() {
 
 
 						if (ANIMETYPE == 1 || ANIMETYPE == 2) {
-							parts_[Body].rotation_.y += (1.0f / 5.0f) * (float)std::numbers::pi;
+							parts_[Body].rotation_.y += (1.0f / 5.0f) * std::numbers::pi_v<float>;
 						}
 						else {
-							parts_[Body].rotation_.z += (1.0f / 5.0f) * (float)std::numbers::pi;
+							parts_[Body].rotation_.z += (1.0f / 5.0f) * std::numbers::pi_v<float>;
 						}
 					}
 				}
@@ -913,22 +956,76 @@ void Enemy::BlowAway() {
 				break;
 			}
 		}
+
+
+		//	消えるまでのフレーム加算 hamu
+		lifespan++;
+		//	指定フレーム回したら削除フラグを建てる hamu
+		if (lifespan >= 180u) {
+			die_ = true;
+		}
+
+
 	}
-	else {
+	else {//生きているときのアニメーション
 		switch (state_)
 		{
 		case Enemy::NONE:
-			AddTTTT = 1.0f / (30.0f * GetRandomNum(10, false));
 
-			T_ += AddTTTT;
-			if (T_ >= 1.0f) {
+			if (!SetAnimeStart) {
 				T_ = 0;
-				SetAnimeStart = false;
-				state_ = ONE;
-				mode_ = WAIT;
+				SetAnimeStart = true;
+				//次シーンまでの空きカウント
+				countAnimeMax_ = 60 + GetRandomNum(60, true);
+				//加算する値
+				countAnime_ = 0;
+				for (int i = 0; i < Num; i++) {
+					//ノーマル状態
+					ESALL[i] = normal_A[i];
+				}
+				isLoop = false;
+			
+			}else{
+			
+				//更新
+				for (int i = 0; i < Num; i++) {
+					parts_[i].rotation_ = ES(ESALL[i], T_);
+				}
+
+				//ループ時の処理の変更
+				if (!isLoop) {
+					T_ += AddTtoWAIT_*1.0f/4.0f;
+					if (T_ >= 1.0f) {
+						T_ = 1.0f;
+						isLoop = true;
+						//
+					}
+				}
+				else {
+					T_ -= AddTtoWAIT_ * 1.0f / 3.0f;
+					if (T_ <= 0.0f) {
+						T_ = 0.0f;
+						isLoop = false;
+					}
+				}
+
+			
+				if (++countAnime_ >= countAnimeMax_) {
+					T_ = 0;
+					SetAnimeStart = false;
+					//状態をアニメーション状態に
+					state_ = ONE;
+					//アニメーションの段階を初期化
+					mode_ = WAIT;
+					//度のアニメーションをするか取得
+					ANIMENUM = GetRandomNum(4, false);
+				}
 			}
 
-			ANIMENUM = GetRandomNum(4, false);
+
+			
+
+			
 			break;
 		case Enemy::ONE:
 			WaitAnimetion(ANIMENUM);
@@ -995,9 +1092,7 @@ void Enemy::WaitAnimetion(int num) {
 		else {
 			//更新
 			for (int i = 0; i < Num; i++) {
-				if (i != Body) {
-					parts_[i].rotation_ = ES(ESALL[i], T_);
-				}
+				parts_[i].rotation_ = ES(ESALL[i], T_);
 			}
 
 			//ループ時の処理の変更
@@ -1020,13 +1115,42 @@ void Enemy::WaitAnimetion(int num) {
 			//シーン切り替え処理
 			if (++countAnime_ >= 180) {
 				SetAnimeStart = false;
-				state_ = NONE;
-				mode_ = WAIT;
+				//state_ = NONE;
+				mode_ = BACK;
 			}
 
 		}
 		break;
 	case Enemy::BACK:
+		if (!SetAnimeStart) {
+			T_ = 0;
+			SetAnimeStart = true;
+
+			GetER();
+			for (int i = 0; i < Num; i++) {
+				//仮でいきなり手を広げた状態
+				ESALL[i] = {
+					nowR[i],
+					normal_A[i].st,
+				};
+			}
+		}
+		else {
+			//更新
+			for (int i = 0; i < Num; i++) {
+				parts_[i].rotation_ = ES(ESALL[i], T_);
+			}
+
+			T_ += 1.0f / 60.0f;
+			if (T_ >= 1.0f) {
+				//アニメ状態をなしに
+				state_ = NONE;
+				T_ = 0;
+				SetAnimeStart = false;
+				mode_ = WAIT;
+			}
+		}
+
 		break;
 	default:
 		break;
