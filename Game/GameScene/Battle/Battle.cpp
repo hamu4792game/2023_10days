@@ -25,6 +25,7 @@ Battle::Battle(std::shared_ptr<Camera> camera)
 
 	timer_ = std::make_unique<Timer>();
 
+	bottonTransform_.resize(2);
 }
 
 Battle::~Battle() {
@@ -132,6 +133,7 @@ void Battle::Update()
 
 	for(Enemy* enemy : enemies_){
 		if (enemy->GetNum() == enemyKillCount_) {
+			type_ = static_cast<uint16_t>(enemy->GetBottomType());
 			player_->HitTest(enemy);
 			
 			if (score_->GetEvaluation()) {
@@ -175,6 +177,8 @@ void Battle::Draw(const Matrix4x4& viewProjection)
 	for (Enemy* enemy : enemies_) {
 		enemy->Draw(viewProjection, bottonModels_);
 	}
+	
+	
 }
 
 void Battle::Draw2D(const Matrix4x4& viewProjection) {
@@ -182,5 +186,9 @@ void Battle::Draw2D(const Matrix4x4& viewProjection) {
 	player_->GaugeDraw2D(viewProjection);
 	ui_->Draw2D(viewProjection);
 	timer_->Draw2D(viewProjection);
+
+	for (uint16_t i = 0u; i < bottonTransform_.size(); i++) {
+		Texture2D::TextureDraw(bottonTransform_[i], viewProjection, 0xffffffff, bottonTexture_[type_].get());
+	}
 
 }

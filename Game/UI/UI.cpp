@@ -4,6 +4,7 @@
 #include "Game/GameScene/GameScene.h"
 
 #include "GlobalVariables/GlobalVariables.h"
+#include "Engine/Easing/Ease.h"
 
 UI::UI() {
 
@@ -140,15 +141,11 @@ void UI::BattleInitialize() {
 
 	ResetIsDraw();
 
+	count_ = 0;
+
 	score_->SetIsDraw(true, Score::kScore);
 	score_->SetIsDraw(true, Score::kCombo);
-	//score_->SetIsDraw(true, Score::kHighCombo);
-	//score_->SetIsDraw(true, Score::kPerfectNum);
-	//score_->SetIsDraw(true, Score::kGreatNum);
-	//score_->SetIsDraw(true, Score::kGoodNum);
-	//score_->SetIsDraw(true, Score::kMissNum);
 	score_->SetIsDraw(true, Score::kMemoHighScore);
-	//score_->SetIsDraw(true, Score::kMemoHighCombo);
 
 	colors_[UITextureNames::kPerfect] = 0xFFFF22FF;
 	colors_[UITextureNames::kGreat] = 0xEE1111FF;
@@ -235,39 +232,148 @@ void UI::TitleUpdate() {
 
 }
 
+void UI::EvaluationUpdate() {
+
+	int type = 0;
+
+	if (isDraw_[UITextureNames::kPerfect]) {
+
+		type = UITextureNames::kPerfect;
+
+		Vector2 pos = Ease::UseEase(uiPos_[Scene::kBattleScene][type], { uiPos_[Scene::kBattleScene][type].x - 50,uiPos_[Scene::kBattleScene][type].y - 100 }, count_, 30, Ease::EaseIn, 3);
+
+		float rotate = Ease::UseEase(0.0f, 0.3f, count_, 30, Ease::EaseIn, 3);
+
+		SetWorldTransform(pos, uiScales_[Scene::kBattleScene][type], rotate, type);
+
+		if (count_ > 20) {
+			colors_[type] -= 0x00000010;
+		}
+		
+		if (count_ == 30) {
+			count_ = 0;
+			isDraw_[type] = false;
+		}
+		else {
+			count_++;
+		}
+	}
+	else if (isDraw_[UITextureNames::kGreat]) {
+
+		type = UITextureNames::kGreat;
+
+		Vector2 pos = Ease::UseEase(uiPos_[Scene::kBattleScene][type], { uiPos_[Scene::kBattleScene][type].x - 30,uiPos_[Scene::kBattleScene][type].y - 60 }, count_, 30, Ease::EaseIn, 3);
+
+		float rotate = Ease::UseEase(0.0f, 0.2f, count_, 30, Ease::EaseIn, 3);
+
+		SetWorldTransform(pos, uiScales_[Scene::kBattleScene][type], rotate, type);
+
+		if (count_ > 20) {
+			colors_[type] -= 0x00000010;
+		}
+
+		if (count_ == 30) {
+			count_ = 0;
+			isDraw_[type] = false;
+		}
+		else {
+			count_++;
+		}
+	}
+	else if (isDraw_[UITextureNames::kGood]) {
+
+		type = UITextureNames::kGood;
+
+		Vector2 pos = Ease::UseEase(uiPos_[Scene::kBattleScene][type], { uiPos_[Scene::kBattleScene][type].x - 15,uiPos_[Scene::kBattleScene][type].y - 30 }, count_, 30, Ease::EaseIn, 3);
+
+		float rotate = Ease::UseEase(0.0f, 0.2f, count_, 30, Ease::EaseIn, 3);
+
+		SetWorldTransform(pos, uiScales_[Scene::kBattleScene][type], rotate, type);
+
+		if (count_ > 20) {
+			colors_[type] -= 0x00000010;
+		}
+
+		if (count_ == 30) {
+			count_ = 0;
+			isDraw_[type] = false;
+		}
+		else {
+			count_++;
+		}
+	}
+	else if (isDraw_[UITextureNames::kMiss]) {
+
+		type = UITextureNames::kMiss;
+
+		Vector2 pos = Ease::UseEase(uiPos_[Scene::kBattleScene][type], { uiPos_[Scene::kBattleScene][type].x + 2,uiPos_[Scene::kBattleScene][type].y + 30 }, count_, 30, Ease::EaseIn, 3);
+
+		float rotate = Ease::UseEase(0.0f, -0.3f, count_, 30, Ease::EaseIn, 3);
+
+		SetWorldTransform(pos, uiScales_[Scene::kBattleScene][type], rotate, type);
+
+		if (count_ > 20) {
+			colors_[type] -= 0x00000010;
+		}
+
+		if (count_ == 30) {
+			count_ = 0;
+			isDraw_[type] = false;
+		}
+		else {
+			count_++;
+		}
+	}
+
+
+}
+
 void UI::BattleUpdate() {
 	ApplyGlobalVariable();
 	SetAllTransform(Scene::kBattleScene);
 
 	if (score_->GetEvaluation() == Score::Evaluation::kPerfect) {
 
+		count_ = 0;
+
 		isDraw_[UITextureNames::kPerfect] = true;
 		isDraw_[UITextureNames::kGreat] = false;
 		isDraw_[UITextureNames::kGood] = false;
-		isDraw_[UITextureNames::kMiss] = false;
+		isDraw_[UITextureNames::kMiss] = false; 
+		colors_[UITextureNames::kPerfect] = 0xFFFF22FF;
 	}
 	else if (score_->GetEvaluation() == Score::Evaluation::kGreat) {
+
+		count_ = 0;
 
 		isDraw_[UITextureNames::kPerfect] = false;
 		isDraw_[UITextureNames::kGreat] = true;
 		isDraw_[UITextureNames::kGood] = false;
 		isDraw_[UITextureNames::kMiss] = false;
+		colors_[UITextureNames::kGreat] = 0xEE1111FF;
 	}
 	else if (score_->GetEvaluation() == Score::Evaluation::kGood) {
+
+		count_ = 0;
 
 		isDraw_[UITextureNames::kPerfect] = false;
 		isDraw_[UITextureNames::kGreat] = false;
 		isDraw_[UITextureNames::kGood] = true;
 		isDraw_[UITextureNames::kMiss] = false;
+		colors_[UITextureNames::kGood] = 0x11EE11FF;
 	}
 	else if (score_->GetEvaluation() == Score::Evaluation::kMiss) {
+
+		count_ = 0;
 
 		isDraw_[UITextureNames::kPerfect] = false;
 		isDraw_[UITextureNames::kGreat] = false;
 		isDraw_[UITextureNames::kGood] = false;
 		isDraw_[UITextureNames::kMiss] = true;
+		colors_[UITextureNames::kMiss] = 0x333333FF;
 	}
 
+	EvaluationUpdate();
 }
 
 void UI::ResultUpdate() {
