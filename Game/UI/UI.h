@@ -46,6 +46,8 @@ public:
 
 private:
 
+	void EvaluationUpdate();
+
 	void SetGlobalVariable();
 
 	void ApplyGlobalVariable();
