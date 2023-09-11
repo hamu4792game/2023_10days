@@ -71,7 +71,7 @@ private:
 	//	中心座標
 	std::shared_ptr<WorldTransform> worldTransform;
 
-	std::vector<WorldTransform> bottonTransform_;
+	WorldTransform bottonTransform_;
 
 	uint16_t type_;
 

@@ -25,7 +25,6 @@ Battle::Battle(std::shared_ptr<Camera> camera)
 
 	timer_ = std::make_unique<Timer>();
 
-	bottonTransform_.resize(2);
 }
 
 Battle::~Battle() {
@@ -59,6 +58,10 @@ void Battle::Initialize()
 
 	timer_->Initialize();
 
+	bottonTransform_.parent_ = &camera_->transform;
+	bottonTransform_.translation_ = Vector3(0.0f, 0.0f, 1.0f);
+	bottonTransform_.scale_ = Vector3(0.06f, 0.06f, 0.06f);
+	
 }
 
 
@@ -128,6 +131,16 @@ void Battle::EnemyReset() {
 
 void Battle::Update()
 {
+	//ImGui::Text("%f:%f:%f", bottonTransform_[0].GetTranslate().x, bottonTransform_[0].GetTranslate().y, bottonTransform_[0].GetTranslate().z);
+	ImGui::DragFloat3("bottonTr", &bottonTransform_.translation_.x, 1.0f);
+	ImGui::DragFloat3("bottonRo", &bottonTransform_.rotation_.x, 0.1f);
+	ImGui::DragFloat3("bottonSc", &bottonTransform_.scale_.x, 0.01f);
+
+	//	ボタンの回転
+	if (!player_->GetMoveFlag()) {
+		bottonTransform_.rotation_.y += AngleToRadian(360.0f / player_->GetMAX_Frame());
+	}
+	bottonTransform_.UpdateMatrix();
 
 	timer_->Update();
 
@@ -167,7 +180,6 @@ void Battle::Update()
 
 	player_->Update();
 	worldTransform->UpdateMatrix();
-
 }
 
 void Battle::Draw(const Matrix4x4& viewProjection)
@@ -179,7 +191,7 @@ void Battle::Draw(const Matrix4x4& viewProjection)
 		enemy->Draw(viewProjection, bottonModels_);
 	}
 	
-	
+	Model::ModelDraw(bottonTransform_, viewProjection, 0xffffffff, bottonModels_[type_].get());
 }
 
 void Battle::Draw2D(const Matrix4x4& viewProjection) {
@@ -187,9 +199,5 @@ void Battle::Draw2D(const Matrix4x4& viewProjection) {
 	player_->GaugeDraw2D(viewProjection);
 	ui_->Draw2D(viewProjection);
 	timer_->Draw2D(viewProjection);
-
-	for (uint16_t i = 0u; i < bottonTransform_.size(); i++) {
-		Texture2D::TextureDraw(bottonTransform_[i], viewProjection, 0xffffffff, bottonTexture_[type_].get());
-	}
 
 }

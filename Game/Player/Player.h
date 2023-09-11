@@ -124,6 +124,10 @@ public:
 
 	const WorldTransform& GetPlayerTransform() { return transform; }
 
+	bool GetMoveFlag() { return flag; }
+
+	float GetMAX_Frame() { return MAX_frame; }
+
 private:
 
 	//	移動処理
