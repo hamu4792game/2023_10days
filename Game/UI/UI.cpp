@@ -169,28 +169,28 @@ void UI::ResultInitialize() {
 
 	score_->Memo();
 
-	score_->SetIsDraw(true, Score::kScore);
-	//score_->SetIsDraw(true, Score::kCombo);
-	score_->SetIsDraw(true, Score::kHighCombo);
-	score_->SetIsDraw(true, Score::kPerfectNum);
-	score_->SetIsDraw(true, Score::kGreatNum);
-	score_->SetIsDraw(true, Score::kGoodNum);
-	score_->SetIsDraw(true, Score::kMissNum);
-	score_->SetIsDraw(true, Score::kMemoHighScore);
-	//score_->SetIsDraw(true, Score::kMemoHighCombo);
+	score_->SetIsDraw(false, Score::kScore);
+	score_->SetIsDraw(false, Score::kHighCombo);
+	score_->SetIsDraw(false, Score::kPerfectNum);
+	score_->SetIsDraw(false, Score::kGreatNum);
+	score_->SetIsDraw(false, Score::kGoodNum);
+	score_->SetIsDraw(false, Score::kMissNum);
+	score_->SetIsDraw(false, Score::kMemoHighScore);
 
 	colors_[UITextureNames::kPerfect] = 0xFFFFFFFF;
 	colors_[UITextureNames::kGreat] = 0xFFFFFFFF;
 	colors_[UITextureNames::kGood] = 0xFFFFFFFF;
 	colors_[UITextureNames::kMiss] = 0xFFFFFFFF;
 
-	isDraw_[UITextureNames::kScore] = true;
-	isDraw_[UITextureNames::kCombo] = true;
-	isDraw_[UITextureNames::kHighScore] = true;
-	isDraw_[UITextureNames::kPerfect] = true;
-	isDraw_[UITextureNames::kGreat] = true;
-	isDraw_[UITextureNames::kGood] = true;
-	isDraw_[UITextureNames::kMiss] = true;
+	isDraw_[UITextureNames::kScore] = false;
+	isDraw_[UITextureNames::kCombo] = false;
+	isDraw_[UITextureNames::kHighScore] = false;
+	isDraw_[UITextureNames::kPerfect] = false;
+	isDraw_[UITextureNames::kGreat] = false;
+	isDraw_[UITextureNames::kGood] = false;
+	isDraw_[UITextureNames::kMiss] = false;
+
+	count_ = 0;
 
 	SetAllTransform(Scene::kResultScene);
 }
@@ -273,6 +273,43 @@ void UI::BattleUpdate() {
 void UI::ResultUpdate() {
 	ApplyGlobalVariable();
 	SetAllTransform(Scene::kResultScene);
+
+	count_++;
+
+	if (count_ == kInterval_ * 1) {
+
+		isDraw_[UITextureNames::kScore] = true;
+		isDraw_[UITextureNames::kHighScore] = true;
+
+		score_->SetIsDraw(true, Score::kScore);
+		score_->SetIsDraw(true, Score::kMemoHighScore);
+	}
+	else if (count_ == kInterval_ * 2) {
+
+		isDraw_[UITextureNames::kCombo] = true;
+		score_->SetIsDraw(true, Score::kHighCombo);
+	}
+	else if (count_ == kInterval_ * 3) {
+
+		isDraw_[UITextureNames::kPerfect] = true;
+		score_->SetIsDraw(true, Score::kPerfectNum);
+	}
+	else if (count_ == kInterval_ * 4) {
+
+		isDraw_[UITextureNames::kGreat] = true;
+		score_->SetIsDraw(true, Score::kGreatNum);
+	}
+	else if (count_ == kInterval_ * 5) {
+
+		isDraw_[UITextureNames::kGood] = true;
+		score_->SetIsDraw(true, Score::kGoodNum);
+	}
+	else if (count_ == kInterval_ * 6) {
+
+		isDraw_[UITextureNames::kMiss] = true;
+		score_->SetIsDraw(true, Score::kMissNum);
+	}
+
 }
 
 void UI::DrawUITexture(const Matrix4x4& viewProjectionMat, int textureName) {

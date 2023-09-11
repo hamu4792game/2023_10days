@@ -23,6 +23,8 @@ Battle::Battle(std::shared_ptr<Camera> camera)
 	ui_ = std::make_unique<UI>();
 	ui_->SetScore(score_.get());
 
+	timer_ = std::make_unique<Timer>();
+
 }
 
 Battle::~Battle() {
@@ -53,6 +55,8 @@ void Battle::Initialize()
 	player_->SetDistance(kEnemyPopPosLength_);
 
 	player_->GaugeInitialize();
+
+	timer_->Initialize();
 
 }
 
@@ -123,8 +127,8 @@ void Battle::EnemyReset() {
 
 void Battle::Update()
 {
-	ImGui::DragFloat3("cameraTra", &camera_->transform.translation_.x, 1.0f);
-	ImGui::DragFloat3("cameraRo", &camera_->transform.rotation_.x, AngleToRadian(1.0f));
+
+	timer_->Update();
 
 	for(Enemy* enemy : enemies_){
 		if (enemy->GetNum() == enemyKillCount_) {
@@ -153,7 +157,7 @@ void Battle::Update()
 	}
 
 	//	一旦仮置き 敵を最大数倒したらシーン切り替え
-	if (enemyKillCount_ >= kEnemyMaxNum_) {
+	if (enemyKillCount_ >= kEnemyMaxNum_ || timer_->GetTime() == 0) {
 		GameScene::GetInstance()->sceneChangeFlag = true;
 	}
 
@@ -177,4 +181,6 @@ void Battle::Draw2D(const Matrix4x4& viewProjection) {
 
 	player_->GaugeDraw2D(viewProjection);
 	ui_->Draw2D(viewProjection);
+	timer_->Draw2D(viewProjection);
+
 }

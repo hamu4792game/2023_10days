@@ -62,7 +62,7 @@ public:
 		evalutuin_ = Evaluation::kPerfect;
 		parameters_[kPerfectNum]++;
 		AddCombo();
-		AddScore(200 * (parameters_[kCombo] / 10 + 1));
+		AddScore(200 * (parameters_[kCombo] / 2 + 1));
 	}
 
 	// greatの加算。スコア、コンボも加算する。
@@ -70,7 +70,7 @@ public:
 		evalutuin_ = Evaluation::kGreat;
 		parameters_[kGreatNum]++;
 		AddCombo();
-		AddScore(100 * (parameters_[kCombo] / 10 + 1));
+		AddScore(100 * (parameters_[kCombo] / 2 + 1));
 	}
 
 	// goodの加算。スコアの加算、コンボを途切れさせる。
