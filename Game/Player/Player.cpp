@@ -13,7 +13,7 @@
 #include "GlobalVariables/GlobalVariables.h"
 
 
-Player::Player(std::shared_ptr<Camera> camera)
+Player::Player(std::shared_ptr<Camera> camera) : kMax_frame(60.0f)
 {
 	camera_ = camera;
 	//for (uint16_t i = 0u; i < PARTS::Num; i++) {
@@ -60,7 +60,7 @@ void Player::Initialize(std::vector<std::shared_ptr<Model>> models, WorldTransfo
 	oldPos = 0.0f;
 	//enemyDistance = 10.0f;
 	frame = 0.0f;
-	MAX_frame = 60.0f;
+	MAX_frame = kMax_frame;
 	
 
 #pragma region パーツの親子関係と座標の初期設定
@@ -499,8 +499,6 @@ void Player::Move() {
 		movePos += enemyDistance;
 		//	frameの初期化
 		frame = 0.0f;
-		//	待機フレームの初期化
-		waitFrame = 0.0f;
 
 		Battle::masterSpeed = 0.3f;
 
@@ -513,6 +511,9 @@ void Player::MoveType2() {
 	//	frame加算処理 通常加算速度 * 全体のframe速度
 	//frame += 1.0f * Battle::masterSpeed;
 
+	//	最大フレーム数をコンボに応じて減少
+	MAX_frame = kMax_frame - static_cast<float>(score_->GetCombo());
+
 	if (flag) {
 		
 		if (/*KeyInput::PushKey(DIK_SPACE) || */score_->GetEvaluation()) {
@@ -522,8 +523,6 @@ void Player::MoveType2() {
 			movePos += enemyDistance;
 			//	frameの初期化
 			frame = 0.0f;
-			//	待機フレームの初期化
-			waitFrame = 0.0f;
 
 			flag = false;
 			if (score_->GetEvaluation() == Score::Evaluation::kPerfect || score_->GetEvaluation() == Score::Evaluation::kGreat) {

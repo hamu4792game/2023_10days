@@ -114,7 +114,7 @@ private:
 	float enemyDistance;
 	//	加算していくフレーム
 	float frame;
-	float waitFrame;
+	const float kMax_frame;
 	//	最大フレーム
 	float MAX_frame;
 
