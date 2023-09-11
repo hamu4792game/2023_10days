@@ -755,51 +755,14 @@ void Player::GaugeUpdate() {
 		SetGaugeWorldTransform(Ease::UseEase(kGaugeMarkPos_[0], kGaugeMarkPos_[1],easeFrame, kEvalutionframe_[Evalution::kGood] * 2.0f,Ease::Constant),
 			{ kGaugeMarkScale_,kBaseScaleY_ }, 0.0f, GaugeDrawEnum::kMark);
 
-		/*	if (evalutionCount_ == 1) {
-				gaugeIsDraw_[GaugeDrawEnum::kGaugePerfect] = true;
-				gaugeIsDraw_[GaugeDrawEnum::kGaugeGreat] = true;
-				gaugeIsDraw_[GaugeDrawEnum::kGaugeGood] = true;
-			}
-
-			if (evalutionCount_ < kEvalutionframe_[Evalution::kPerfect]) {
-
-				float pos = Ease::UseEase(kGaugeStartPos_[Evalution::kPerfect], kGaugeEndPos_[Evalution::kPerfect], evalutionCount_, kEvalutionframe_[kPerfect], Ease::EaseType::Constant);
-				float scale = Ease::UseEase(kGaugeScale_[Evalution::kPerfect], 0.0f, evalutionCount_, kEvalutionframe_[Evalution::kPerfect], Ease::EaseType::Constant);
-
-				SetGaugeWorldTransform({ pos,kBasePos_.y}, { scale,kBaseScaleY_ }, 0.0f, GaugeDrawEnum::kGaugePerfect);
-			}
-			else if (evalutionCount_ == kEvalutionframe_[kPerfect]) {
-				gaugeIsDraw_[GaugeDrawEnum::kGaugePerfect] = false;
-			}
-			else if (evalutionCount_ < kEvalutionframe_[Evalution::kGreat]) {
-
-				float pos = Ease::UseEase(kGaugeStartPos_[Evalution::kGreat], kGaugeEndPos_[Evalution::kGreat], evalutionCount_ - kEvalutionframe_[Evalution::kPerfect], kEvalutionframe_[Evalution::kGreat] - kEvalutionframe_[Evalution::kPerfect], Ease::EaseType::Constant);
-				float scale = Ease::UseEase(kGaugeScale_[Evalution::kGreat], 0.0f, evalutionCount_ - kEvalutionframe_[Evalution::kPerfect], kEvalutionframe_[Evalution::kGreat] - kEvalutionframe_[Evalution::kPerfect], Ease::EaseType::Constant);
-
-				SetGaugeWorldTransform({ pos,kBasePos_.y }, { scale,kBaseScaleY_ }, 0.0f, GaugeDrawEnum::kGaugeGreat);
-			}
-			else if (evalutionCount_ == kEvalutionframe_[Evalution::kGreat]) {
-				gaugeIsDraw_[GaugeDrawEnum::kGaugeGreat] = false;
-			}
-			else if (evalutionCount_ < kEvalutionframe_[Evalution::kGood]) {
-
-				float pos = Ease::UseEase(kGaugeStartPos_[Evalution::kGood], kGaugeEndPos_[Evalution::kGood], evalutionCount_ - kEvalutionframe_[Evalution::kGreat], kEvalutionframe_[Evalution::kGood] - kEvalutionframe_[Evalution::kGreat], Ease::EaseType::Constant);
-				float scale = Ease::UseEase(kGaugeScale_[Evalution::kGood], 0.0f, evalutionCount_ - kEvalutionframe_[Evalution::kGreat], kEvalutionframe_[Evalution::kGood] - kEvalutionframe_[Evalution::kGreat], Ease::EaseType::Constant);
-
-				SetGaugeWorldTransform({ pos,kBasePos_.y }, { scale,kBaseScaleY_ }, 0.0f, GaugeDrawEnum::kGaugeGood);
-			}
-			else if (evalutionCount_ == kEvalutionframe_[Evalution::kGood]) {
-				gaugeIsDraw_[GaugeDrawEnum::kGaugeGood] = false;
-			}*/
+		if (score_->GetEvaluation()) {
+			gaugeIsDraw_[GaugeDrawEnum::kMark] = false;
+		}
 
 	}
 	else {
 
 		gaugeIsDraw_[GaugeDrawEnum::kMark] = false;
-
-		/*gaugeIsDraw_[GaugeDrawEnum::kGaugePerfect] = false;
-		gaugeIsDraw_[GaugeDrawEnum::kGaugeGreat] = false;
-		gaugeIsDraw_[GaugeDrawEnum::kGaugeGood] = false;*/
 
 	}
 
