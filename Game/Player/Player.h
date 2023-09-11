@@ -122,6 +122,8 @@ private:
 public:
 	void SetDistance(const float& dis) { enemyDistance = dis; }
 
+	const WorldTransform& GetPlayerTransform() { return transform; }
+
 private:
 
 	//	移動処理

@@ -113,6 +113,9 @@
     <ClCompile Include="Game\Skydome\Skydome.cpp">
       <Filter>Game\Skydome</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\TimeBaseLoopExecuter\TimeBaseLoopExecuter.cpp">
+      <Filter>Engine\TimeBaseLoopExecuter</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Camera\Camera.h">
@@ -241,6 +244,9 @@
     <ClInclude Include="Game\Skydome\Skydome.h">
       <Filter>Game\Skydome</Filter>
     </ClInclude>
+    <ClInclude Include="Engine\TimeBaseLoopExecuter\TimeBaseLoopExecuter.h">
+      <Filter>Engine\TimeBaseLoopExecuter</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Engine">
@@ -335,6 +341,9 @@
     </Filter>
     <Filter Include="Game\Skydome">
       <UniqueIdentifier>{98e905e7-226c-42f7-8f4f-b6dfa157f94f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\TimeBaseLoopExecuter">
+      <UniqueIdentifier>{c6624870-76a9-40a9-98f5-f85f997b9828}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

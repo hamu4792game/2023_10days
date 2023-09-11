@@ -8,7 +8,8 @@ public:
 	Skydome();
 	~Skydome() = default;
 
-	void Initialize(const WorldTransform& world);
+	void SetParent(const WorldTransform& world);
+	void NullParent();
 	void Initialize();
 
 	void ModelLoad();
