@@ -69,6 +69,7 @@ void GameScene::Initialize()
 	battle->SetNumberTextures(numberTextures_);
 	battle->SetUITextures(UITextures_);
 	battle->SetGaugeTextures(gaugeTextures_);
+	battle->SetTimerNumTextures(numberTextures_);
 
 	result->SetUI(battle->GetUI());
 
