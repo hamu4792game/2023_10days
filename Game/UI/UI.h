@@ -164,6 +164,10 @@ private:
 		}
 	};
 
+	int count_ = 0;
+
+	int kInterval_ = 40;
+
 	std::vector<std::shared_ptr<Texture2D>> uiTextures_;
 
 	std::vector<std::shared_ptr<WorldTransform>> worldTransforms_;
