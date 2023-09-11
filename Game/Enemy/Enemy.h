@@ -101,7 +101,7 @@ private: // hamu
 	uint16_t lifespan = 0u;
 public: // hamu
 	bool GetDelete() { return die_; }
-
+	void SetParent(const WorldTransform& world) { transform.parent_ = &world; }
 
 private://Specha
 

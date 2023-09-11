@@ -172,6 +172,7 @@ void Battle::Update()
 
 void Battle::Draw(const Matrix4x4& viewProjection)
 {
+	
 	player_->Draw(viewProjection);
 
 	for (Enemy* enemy : enemies_) {
