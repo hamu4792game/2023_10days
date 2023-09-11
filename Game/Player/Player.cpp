@@ -691,6 +691,10 @@ void Player::ApplyKoroneGlobalVariable() {
 	kBaseWhiteSpace_ = globalVariables->GetFloatValue(groupName, "whiteSpace");
 	kGaugeMarkScale_ = globalVariables->GetFloatValue(groupName, "markScale");
 
+	kEvalutionframe_[Evalution::kPerfect] = globalVariables->GetIntValue("EvalutionFrame", "perfect");
+	kEvalutionframe_[Evalution::kGreat] = globalVariables->GetIntValue("EvalutionFrame", "great");
+	kEvalutionframe_[Evalution::kGood] = globalVariables->GetIntValue("EvalutionFrame", "good");
+
 	SetFloatTransform();
 }
 
