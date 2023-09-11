@@ -116,6 +116,9 @@
     <ClCompile Include="Engine\TimeBaseLoopExecuter\TimeBaseLoopExecuter.cpp">
       <Filter>Engine\TimeBaseLoopExecuter</Filter>
     </ClCompile>
+    <ClCompile Include="Game\Timer\Timer.cpp">
+      <Filter>Game\Timer</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Camera\Camera.h">
@@ -247,6 +250,9 @@
     <ClInclude Include="Engine\TimeBaseLoopExecuter\TimeBaseLoopExecuter.h">
       <Filter>Engine\TimeBaseLoopExecuter</Filter>
     </ClInclude>
+    <ClInclude Include="Game\Timer\Timer.h">
+      <Filter>Game\Timer</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Engine">
@@ -344,6 +350,9 @@
     </Filter>
     <Filter Include="Engine\TimeBaseLoopExecuter">
       <UniqueIdentifier>{c6624870-76a9-40a9-98f5-f85f997b9828}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Timer">
+      <UniqueIdentifier>{ab1dcf6d-8449-4522-aa11-939eda4fc290}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

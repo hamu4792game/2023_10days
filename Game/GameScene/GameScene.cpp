@@ -69,6 +69,7 @@ void GameScene::Initialize()
 	battle->SetNumberTextures(numberTextures_);
 	battle->SetUITextures(UITextures_);
 	battle->SetGaugeTextures(gaugeTextures_);
+	battle->SetTimerNumTextures(numberTextures_);
 
 	result->SetUI(battle->GetUI());
 
@@ -103,6 +104,14 @@ void GameScene::Initialize()
 
 void GameScene::Update()
 {
+#ifdef _DEBUG
+	ImGui::Begin("camera");
+	ImGui::DragFloat3("rotate", &camera->transform.rotation_.x, 0.1f);
+	ImGui::End();
+#endif // _DEBUG
+
+	
+
 	//	シーン切替わり時の初期化
 	if (oldscene != scene) {
 		switch (scene)
