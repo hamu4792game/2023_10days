@@ -41,9 +41,9 @@ public: // Korone
 	enum GaugeDrawEnum {
 		kBack,
 		kGaugeBack,
-		kGaugePerfect,
-		kGaugeGreat,
 		kGaugeGood,
+		kGaugeGreat,
+		kGaugePerfect,
 		kMark
 	};
 
@@ -149,9 +149,9 @@ private: // Korone
 
 	int intervalCount_ = 0;
 
-	int kEvalutionframe_[kGaugeTransformNum_] = { 60, 100, 120 };
+	int kEvalutionFrame_[kGaugeTransformNum_] = { 60, 30, 10 };
 
-	int evalutionCount_ = 0;
+	float evalutionCount_ = 0;
 
 	//Score* score = nullptr;
 
@@ -168,18 +168,18 @@ private: // Korone
 	float kBaseWhiteSpace_ = 4.0f;
 
 	float kGaugeScale_[kGaugeTransformNum_] = {
-		kBaseScale_ * kEvalutionframe_[Evalution::kGood] / kEvalutionframe_[Evalution::kPerfect],
-		kBaseScale_ * (kEvalutionframe_[Evalution::kGreat] - kEvalutionframe_[Evalution::kGood]) / kEvalutionframe_[Evalution::kPerfect],
-		kBaseScale_ * (kEvalutionframe_[Evalution::kPerfect] - kEvalutionframe_[Evalution::kGreat]) / kEvalutionframe_[Evalution::kPerfect]
+		kBaseScale_,
+		kBaseScale_ *  kEvalutionFrame_[Evalution::kGreat] / kEvalutionFrame_[Evalution::kGood],
+		kBaseScale_* kEvalutionFrame_[Evalution::kPerfect] / kEvalutionFrame_[Evalution::kGood],
 	};
 
 	Vector2 kBasePos_ = { float(WinApp::kWindowWidth) / 2.0f, 600.0f };
 
-	float kGaugeStartPos_[kGaugeTransformNum_] = {
-		kBasePos_.x - kTextureSize_ / 2 * kBaseScale_ + kTextureSize_ / 2 * kGaugeScale_[Evalution::kGood],
-		kGaugeStartPos_[Evalution::kGood] + kTextureSize_ / 2 * kGaugeScale_[Evalution::kGood] + kTextureSize_ / 2 * kGaugeScale_[Evalution::kGreat],
-		kGaugeStartPos_[Evalution::kGreat] + kTextureSize_ / 2 * kGaugeScale_[Evalution::kGreat] + kTextureSize_ / 2 * kGaugeScale_[Evalution::kPerfect],
-	};
+	//float kGaugeStartPos_[kGaugeTransformNum_] = {
+	//	kBasePos_.x - kTextureSize_ / 2 * kBaseScale_ + kTextureSize_ / 2 * kGaugeScale_[Evalution::kGood],
+	//	kGaugeStartPos_[Evalution::kGood] + kTextureSize_ / 2 * kGaugeScale_[Evalution::kGood] + kTextureSize_ / 2 * kGaugeScale_[Evalution::kGreat],
+	//	kGaugeStartPos_[Evalution::kGreat] + kTextureSize_ / 2 * kGaugeScale_[Evalution::kGreat] + kTextureSize_ / 2 * kGaugeScale_[Evalution::kPerfect],
+	//};
 
 	float kGaugeMarkScale_ = 1.0f;
 
