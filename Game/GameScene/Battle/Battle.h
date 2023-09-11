@@ -41,6 +41,8 @@ public:
 	void SetUITextures(std::vector<std::shared_ptr<Texture2D>> texturedate) { ui_->SetUITexture(texturedate); }
 	void SetGaugeTextures(std::vector<std::shared_ptr<Texture2D>> textures) { player_->SetGaugeTextures(textures); }
 
+	const WorldTransform& GetPlayerTransform() { return player_->GetPlayerTransform(); }
+
 public: // korone
 
 	UI* GetUI() { return ui_.get(); }
@@ -84,7 +86,7 @@ private: //Korone
 	int enemyKillCount_ = 0;
 
 	// enemyの配置の間隔
-	float kEnemyPopPosLength_ = 10.0f;
+	float kEnemyPopPosLength_ = 20.0f;
 
 	int preEnemyType_ = 0;
 	int typeCount_ = 0;

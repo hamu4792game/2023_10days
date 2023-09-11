@@ -109,9 +109,11 @@ void GameScene::Update()
 		{
 		case GameScene::Scene::TITLE:
 			title->Initialize();
+			skydome->NullParent();
 			break;
 		case GameScene::Scene::BATTLE:
 			battle->Initialize();
+			skydome->SetParent(battle->GetPlayerTransform());
 			break;
 		case GameScene::Scene::RESULT:
 			result->Initialize();
