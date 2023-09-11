@@ -796,6 +796,7 @@ void Player::MoveType2() {
 
 	//	最大フレーム数をコンボに応じて減少
 	MAX_frame = kMax_frame - static_cast<float>(score_->GetCombo());
+	MAX_frame = std::clamp<float>(MAX_frame, 30.0f, 60.0f);
 
 	if (flag) {
 		

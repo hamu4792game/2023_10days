@@ -33,6 +33,8 @@ void Title::Initialize()
 
 	SetParts();
 
+	cameraStep = CAMERASTEP::Zero;
+
 	chara.parent_ = &worldTransform;
 	chara.translation_ = Vector3(0.0f, -6.5f, 0.0f);
 	chara.rotation_ = Vector3(0.0f, -1.641f, 0.0f);
@@ -262,7 +264,7 @@ void Title::CameraMove()
 	case Title::CAMERASTEP::BounceFace:
 		easeNowFrame++;
 		if (easeNowFrame >= easeMaxFrame + 20) {
-			cameraStep = CAMERASTEP::Zero;
+			//cameraStep = CAMERASTEP::Zero;
 
 			//	シーンチェンジ
 			GameScene::GetInstance()->sceneChangeFlag = true;

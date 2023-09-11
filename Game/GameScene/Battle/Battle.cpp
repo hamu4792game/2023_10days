@@ -2,6 +2,7 @@
 #include "externals/imgui/imgui.h"
 #include "math/Vector4.h"
 #include "Game/GameScene/GameScene.h"
+#include <algorithm>
 
 // 確認のため追加 by.Korone
 #include "Engine/Input/KeyInput/KeyInput.h"
@@ -62,6 +63,12 @@ void Battle::Initialize()
 	bottonTransform_.translation_ = Vector3(0.0f, 0.0f, 1.0f);
 	bottonTransform_.scale_ = Vector3(0.06f, 0.06f, 0.06f);
 	
+	tutorialFlag_ = true;
+
+
+	blackTrans_.scale_ = Vector3(80.0f, 45.0f, 1.0f);
+	blackTrans_.cMono->pibot = Vector2(642.0f, 359.0f);
+	blackTrans_.cMono->rate = 800.0f;
 }
 
 
@@ -135,6 +142,8 @@ void Battle::Update()
 	ImGui::DragFloat3("bottonTr", &bottonTransform_.translation_.x, 1.0f);
 	ImGui::DragFloat3("bottonRo", &bottonTransform_.rotation_.x, 0.1f);
 	ImGui::DragFloat3("bottonSc", &bottonTransform_.scale_.x, 0.01f);
+	ImGui::DragFloat2("block", &blackTrans_.cMono->pibot.x, 1.0f);
+	ImGui::DragFloat("block", &blackTrans_.cMono->rate, 1.0f);
 
 	//	ボタンの回転
 	if (!player_->GetMoveFlag()) {
@@ -142,7 +151,22 @@ void Battle::Update()
 	}
 	bottonTransform_.UpdateMatrix();
 
-	timer_->Update();
+	//	
+	if (!tutorialFlag_) {
+		timer_->Update();
+	}
+	else {
+		if (score_->GetEvaluation()) {
+			tutorialFlag_ = false;
+		}
+		else
+		{
+			blackTrans_.cMono->rate -= 10.0f;
+			blackTrans_.cMono->rate = std::clamp<float>(blackTrans_.cMono->rate, 110.0f, 800.0f);
+			blackTrans_.UpdateMatrix();
+		}
+		
+	}
 
 	for(Enemy* enemy : enemies_){
 		if (enemy->GetNum() == enemyKillCount_) {
@@ -200,4 +224,7 @@ void Battle::Draw2D(const Matrix4x4& viewProjection) {
 	ui_->Draw2D(viewProjection);
 	timer_->Draw2D(viewProjection);
 
+	if (tutorialFlag_) {
+		Texture2D::TextureDraw(blackTrans_, viewProjection, 0x000000aa, blackBox_.get());
+	}
 }

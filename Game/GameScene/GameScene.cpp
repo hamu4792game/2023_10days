@@ -55,6 +55,9 @@ void GameScene::Initialize()
 	for (uint16_t i = 0u; i < Player::kGaugeResourceNum_; i++) {
 		gaugeTextures_.push_back(std::make_shared<Texture2D>());
 	}
+	//	箱
+	box = std::make_shared<Texture2D>();
+	boxP = std::make_shared<Texture2D>();
 
 	//	モデルのロード
 	ModelLoad();
@@ -72,6 +75,7 @@ void GameScene::Initialize()
 	battle->SetUITextures(UITextures_);
 	battle->SetGaugeTextures(gaugeTextures_);
 	battle->SetTimerNumTextures(numberTextures_);
+	battle->SetBlackBoxTexture(boxP);
 
 	result->SetUI(battle->GetUI());
 
@@ -197,7 +201,7 @@ void GameScene::Draw()
 	}
 
 	if (sceneChangeFlag) {
-		Texture2D::TextureDraw(boxtransform, viewProjectionMatrix2d, 0x000000ff, &box);
+		Texture2D::TextureDraw(boxtransform, viewProjectionMatrix2d, 0x000000ff, box.get());
 	}
 
 	//Model::ModelDraw(pos, viewProjectionMatrix, 0xffffffff, model.get());
@@ -290,7 +294,8 @@ void GameScene::ModelLoad()
 	shopModel_[1]->Texture("Resources/plane/plane.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl", "hud/board.png");
 	shopModel_[2]->Texture("Resources/plane/plane.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl", "hud/onetime.png");
 
-	box.Texture("Resources/hud/block.png", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl");
+	box->Texture("Resources/hud/block.png", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl");
+	boxP->Texture("Resources/hud/block.png", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2Dex.PS.hlsl");
 }
 
 
