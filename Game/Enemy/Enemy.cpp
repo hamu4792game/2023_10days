@@ -87,7 +87,9 @@ void Enemy::InitializeSP(float pos, int type, int num,//	モデルデータ配�
 	parts_[RFoot].translation_ = { 0.12f, -2.2f, 0.0f };
 #pragma endregion
 
-	
+	//	初期化　hamu
+	lifespan = 0u;
+	die_ = false;
 }
 
 
@@ -855,11 +857,15 @@ void Enemy::BlowAway() {
 
 	//死んだときに吹っ飛びアニメーション
 	if (isDead_) {
+
 		if (!isStart_blow_away) {
 			isStart_blow_away = true;
 			//アニメ状態を最初にする
 			animeState_ = MODE_A::NOMOTIAN;
-			
+
+			//	念のため、初期化する	hamu
+			lifespan = 0u;
+
 			ANIMETYPE = GetRandomNum(animeNUM, false);
 
 			//ANIMETYPE = 3;
@@ -868,12 +874,13 @@ void Enemy::BlowAway() {
 			if (ANIMETYPE == 2) {
 				float theta;
 				if (dire) {
-					theta = -((float)std::numbers::pi / 4);
-					transform.rotation_.y = -((float)std::numbers::pi /6);
+					theta = -(std::numbers::pi_v<float> / 4);
+					transform.rotation_.y = -(std::numbers::pi_v<float> /6);
+					
 				}
 				else {
-					theta = ((float)std::numbers::pi / 4);
-					transform.rotation_.y = ((float)std::numbers::pi / 6);
+					theta = (std::numbers::pi_v<float> / 4);
+					transform.rotation_.y = (std::numbers::pi_v<float> / 6);
 				}
 				parts_[Body].rotation_.z = theta;
 				
@@ -938,10 +945,10 @@ void Enemy::BlowAway() {
 
 
 						if (ANIMETYPE == 1 || ANIMETYPE == 2) {
-							parts_[Body].rotation_.y += (1.0f / 5.0f) * (float)std::numbers::pi;
+							parts_[Body].rotation_.y += (1.0f / 5.0f) * std::numbers::pi_v<float>;
 						}
 						else {
-							parts_[Body].rotation_.z += (1.0f / 5.0f) * (float)std::numbers::pi;
+							parts_[Body].rotation_.z += (1.0f / 5.0f) * std::numbers::pi_v<float>;
 						}
 					}
 				}
@@ -950,6 +957,16 @@ void Enemy::BlowAway() {
 				break;
 			}
 		}
+
+
+		//	消えるまでのフレーム加算 hamu
+		lifespan++;
+		//	指定フレーム回したら削除フラグを建てる hamu
+		if (lifespan >= 180u) {
+			die_ = true;
+		}
+
+
 	}
 	else {
 		switch (state_)

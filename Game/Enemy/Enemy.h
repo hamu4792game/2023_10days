@@ -94,6 +94,13 @@ private: // Korone
 
 	bool isDead_ = false;
 
+private: // hamu
+	//	完全に死亡(消える)フラグ
+	bool die_ = false;
+	//	寿命までのカウントダウン
+	uint16_t lifespan = 0u;
+public: // hamu
+	bool GetDelete() { return die_; }
 
 
 private://Specha
