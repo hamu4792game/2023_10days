@@ -39,7 +39,11 @@ public:
 	void SetBottonModels(std::vector<std::shared_ptr<Model>> modeldate) { bottonModels_= modeldate; }
 	void SetNumberTextures(std::vector<std::shared_ptr<Texture2D>> texturedate) { score_->SetNumberTexture(texturedate); }
 	void SetUITextures(std::vector<std::shared_ptr<Texture2D>> texturedate) { ui_->SetUITexture(texturedate); }
+	void SetGaugeTextures(std::vector<std::shared_ptr<Texture2D>> textures) { player_->SetGaugeTextures(textures); }
 
+public: // korone
+
+	UI* GetUI() { return ui_.get(); }
 
 private://	必要なメンバ変数
 
@@ -71,12 +75,11 @@ private: // Korone
 
 	void EnemyReset();
 
-	void ScoreDraw(const Matrix4x4& viewProjection);
-
 private: //Korone
 
-	int kEnemyMaxNum_ = 100;
-	//int kEnemyIntervalNum_ = 5;
+	int kEnemyMaxNum_ = 40;
+	int kEnemyIntervalNum_ = 5;
+
 	int enemyNum_ = 0;
 	int enemyKillCount_ = 0;
 

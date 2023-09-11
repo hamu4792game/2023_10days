@@ -11,25 +11,34 @@
 
 #include "Game/GameScene/GameScene.h"
 
+#include "GlobalVariables/GlobalVariables.h"
+
 
 int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR lpCmdLine, _In_ int nShowCmd) {
 	static D3DResourceLeakChecker leak;
 	//OutputDebugStringA("Hello,DirectX!\n");
 	int32_t windowWidth = 1280; int32_t windowHeight = 720;
-	Engine::Initialize("2023_10days", windowWidth, windowHeight);
+	Engine::Initialize("閉店一分前", windowWidth, windowHeight);
 	
+	// グローバル変数の読み込み
+	GlobalVariables::GetInstance()->LoadFiles();
+
 	GameScene::GetInstance()->Initialize();
 
 	//	ウィンドウの×ボタンが押されるまでループ
 	while (!WinApp::ProcessMessage()) {
 		//	フレームの開始
 		Engine::BeginFrame();
-
+#ifdef _DEBUG
 		//	ImGui のフレームに一つ目の ImGui のウィンドウを描く
 		ImGui::Begin("Control panel");
 		ImGui::Text("Frame rate: %6.2f fps", ImGui::GetIO().Framerate);
 		ImGui::End();
+#endif 
 
+
+		// グローバル変数の更新
+		GlobalVariables::GetInstance()->Update();
 
 		GameScene::GetInstance()->Update();
 

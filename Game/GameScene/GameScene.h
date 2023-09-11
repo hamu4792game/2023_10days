@@ -9,6 +9,7 @@
 #include "Engine/Texture/Texture2D.h"
 
 #include "Game/Ground/Ground.h"
+#include "Game/Skydome/Skydome.h"
 
 class GameScene
 {
@@ -23,6 +24,8 @@ public:
 	};
 	Scene scene = Scene::TITLE;
 	Scene oldscene = Scene::TITLE;
+
+	bool sceneChangeFlag = false;
 
 	//	シングルトンインスタンス
 	static GameScene* GetInstance();
@@ -43,6 +46,7 @@ private:
 	std::unique_ptr<Result> result;
 
 	std::unique_ptr<Ground> ground;
+	std::unique_ptr<Skydome> skydome;
 
 private: // モデル用変数
 	// プレイヤーデータのモデル配列
@@ -55,10 +59,16 @@ private: // モデル用変数
 	// UIのperfectやcomboなど
 	std::vector<std::shared_ptr<Texture2D>> UITextures_;
 
+	std::vector<std::shared_ptr<Model>> shopModel_;
+
+	// ゲージ用
+	std::vector<std::shared_ptr<Texture2D>> gaugeTextures_;
+
 private:
 	//	パーツ用データの元
 	std::vector<WorldTransform> parts_;
 
+private:
 
 public:
 
@@ -72,7 +82,13 @@ public:
 private: // メンバ関数
 	//	モデルのロード
 	void ModelLoad();
-	//	パーツデータの初期座標のセット
-	void SetParts();
+
+	//	シーンチェンジ用
+	Texture2D box;
+	WorldTransform boxtransform;
+	float boxScale = 0.0f;
+	float easeNum = 0.0f;
+	bool flag = false;
+	void SceneChange();
 
 };

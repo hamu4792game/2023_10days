@@ -1,0 +1,44 @@
+{
+    "UIResultScene": {
+        "ComboPos": [
+            400.0,
+            300.0
+        ],
+        "ComboScale": 1.0,
+        "GoodPos": [
+            400.0,
+            480.0
+        ],
+        "GoodScale": 1.0,
+        "GreatPos": [
+            400.0,
+            420.0
+        ],
+        "GreatScale": 1.0,
+        "HighComboPos": [
+            400.0,
+            360.0
+        ],
+        "HighComboScale": 1.0,
+        "HighScorePos": [
+            400.0,
+            250.0
+        ],
+        "HighScoreScale": 0.699999988079071,
+        "MissPos": [
+            400.0,
+            540.0
+        ],
+        "MissScale": 1.0,
+        "PerfectPos": [
+            400.0,
+            360.0
+        ],
+        "PerfectScale": 1.0,
+        "ScorePos": [
+            400.0,
+            200.0
+        ],
+        "ScoreScale": 1.0
+    }
+}

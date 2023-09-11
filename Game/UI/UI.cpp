@@ -1,6 +1,9 @@
 #include "UI.h"
 
 #include "Game/Score/Score.h"
+#include "Game/GameScene/GameScene.h"
+
+#include "GlobalVariables/GlobalVariables.h"
 
 UI::UI() {
 
@@ -8,40 +11,285 @@ UI::UI() {
 		worldTransforms_.push_back(std::make_shared<WorldTransform>());
 
 		colors_[i] = 0xFFFFFFFF;
+
+		isDraw_[i] = false;
+	}
+}
+
+void UI::ResetIsDraw() {
+
+	for (int i = 0; i < kUITexturesMaxNum_; i++) {
+		isDraw_[i] = false;
+	}
+
+	score_->ResetIsDraw();
+}
+
+void UI::SetGlobalVariable() {
+
+	GlobalVariables* globalVariables = GlobalVariables::GetInstance();
+
+
+	for (int scene = 0; scene < kUseSceneNum_; scene++) {
+		for (int useClass = 0; useClass < kClassNum_; useClass++) {
+
+			globalVariables->CreateGroup(groupNames_[scene][useClass]);
+
+			if (useClass == ClassEmum::kUIClass) {
+
+				for (int name = 0; name < UI::kUITexturesMaxNum_; name++) {
+
+					uiPos_[scene][name] = { float(WinApp::kWindowWidth) / 2.0f , float(WinApp::kWindowHeight) / 2.0f };
+					uiScales_[scene][name] = 1.0f;
+
+					globalVariables->AddItem(groupNames_[scene][useClass], uiItemNames_[ParameterNum::kPos][name], uiPos_[scene][name]);
+					globalVariables->AddItem(groupNames_[scene][useClass], uiItemNames_[ParameterNum::kScale][name], uiScales_[scene][name]);
+
+				}
+			}
+			else if (useClass == ClassEmum::kScoreClass) {
+
+				for (int name = 0; name < UI::kScoreNum_; name++) {
+
+					scoreNumPos_[scene][name] = { float(WinApp::kWindowWidth) / 2.0f , float(WinApp::kWindowHeight) / 2.0f };
+					scoreNumScales_[scene][name] = 1.0f;
+
+					globalVariables->AddItem(groupNames_[scene][useClass], scoreItemNames_[ParameterNum::kPos][name], scoreNumPos_[scene][name]);
+					globalVariables->AddItem(groupNames_[scene][useClass], scoreItemNames_[ParameterNum::kScale][name], scoreNumScales_[scene][name]);
+
+				}
+			}
+		}
+	}
+
+	ApplyGlobalVariable();
+}
+
+void UI::ApplyGlobalVariable() {
+
+	GlobalVariables* globalVariables = GlobalVariables::GetInstance();
+
+	for (int scene = 0; scene < kUseSceneNum_; scene++) {
+		for (int useClass = 0; useClass < kClassNum_; useClass++) {
+
+			if (useClass == ClassEmum::kUIClass) {
+
+				for (int name = 0; name < UI::kUITexturesMaxNum_; name++) {
+
+					uiPos_[scene][name] = globalVariables->GetVector2Value(groupNames_[scene][useClass], uiItemNames_[ParameterNum::kPos][name]);
+					uiScales_[scene][name] = globalVariables->GetFloatValue(groupNames_[scene][useClass], uiItemNames_[ParameterNum::kScale][name]);
+				}
+			}
+			else if (useClass == ClassEmum::kScoreClass) {
+
+				for (int name = 0; name < UI::kScoreNum_; name++) {
+
+					scoreNumPos_[scene][name] = globalVariables->GetVector2Value(groupNames_[scene][useClass], scoreItemNames_[ParameterNum::kPos][name]);
+					scoreNumScales_[scene][name] = globalVariables->GetFloatValue(groupNames_[scene][useClass], scoreItemNames_[ParameterNum::kScale][name]);
+
+				}
+			}
+		}
+	}
+
+}
+
+void UI::SetAllTransform(int scene) {
+
+	for (int name = 0; name < UI::kUITexturesMaxNum_; name++) {
+		SetWorldTransform(uiPos_[scene][name], uiScales_[scene][name], 0.0f, name);
+	}
+
+	for (int name = 0; name < UI::kScoreNum_; name++) {
+		score_->SetWorldTransform(scoreNumPos_[scene][name], scoreNumScales_[scene][name], 0.0f, name);
 	}
 
 }
 
 void UI::Initialize() {
 
+	SetGlobalVariable();
 
+	switch (GameScene::GetInstance()->scene)
+	{
+	case GameScene::Scene::TITLE:
+
+		TitleInitialize();
+		break;
+	case GameScene::Scene::BATTLE:
+
+		BattleInitialize();
+		break;
+	case GameScene::Scene::RESULT:
+
+		ResultInitialize();
+		break;
+	default:
+		break;
+	}
+}
+
+void UI::TitleInitialize() {
+	
+	ResetIsDraw();
+	
 
 }
 
-void UI::SetWorldTransform(const Vector2& screenPos, float scale, float rotate, UITextureNames textureName) {
+void UI::BattleInitialize() {
+
+	ResetIsDraw();
+
+	score_->SetIsDraw(true, Score::kScore);
+	score_->SetIsDraw(true, Score::kCombo);
+	//score_->SetIsDraw(true, Score::kHighCombo);
+	//score_->SetIsDraw(true, Score::kPerfectNum);
+	//score_->SetIsDraw(true, Score::kGreatNum);
+	//score_->SetIsDraw(true, Score::kGoodNum);
+	//score_->SetIsDraw(true, Score::kMissNum);
+	score_->SetIsDraw(true, Score::kMemoHighScore);
+	//score_->SetIsDraw(true, Score::kMemoHighCombo);
+
+	colors_[UITextureNames::kPerfect] = 0xFFFF22FF;
+	colors_[UITextureNames::kGreat] = 0xEE1111FF;
+	colors_[UITextureNames::kGood] = 0x11EE11FF;
+	colors_[UITextureNames::kMiss] = 0x333333FF;
+
+	isDraw_[UITextureNames::kScore] = true;
+	isDraw_[UITextureNames::kCombo] = true;
+	isDraw_[UITextureNames::kHighScore] = true;
+
+	SetAllTransform(Scene::kBattleScene);
+
+}
+
+void UI::ResultInitialize() {
+
+	ResetIsDraw();
+
+	score_->Memo();
+
+	score_->SetIsDraw(true, Score::kScore);
+	//score_->SetIsDraw(true, Score::kCombo);
+	score_->SetIsDraw(true, Score::kHighCombo);
+	score_->SetIsDraw(true, Score::kPerfectNum);
+	score_->SetIsDraw(true, Score::kGreatNum);
+	score_->SetIsDraw(true, Score::kGoodNum);
+	score_->SetIsDraw(true, Score::kMissNum);
+	score_->SetIsDraw(true, Score::kMemoHighScore);
+	//score_->SetIsDraw(true, Score::kMemoHighCombo);
+
+	colors_[UITextureNames::kPerfect] = 0xFFFFFFFF;
+	colors_[UITextureNames::kGreat] = 0xFFFFFFFF;
+	colors_[UITextureNames::kGood] = 0xFFFFFFFF;
+	colors_[UITextureNames::kMiss] = 0xFFFFFFFF;
+
+	isDraw_[UITextureNames::kScore] = true;
+	isDraw_[UITextureNames::kCombo] = true;
+	isDraw_[UITextureNames::kHighScore] = true;
+	isDraw_[UITextureNames::kPerfect] = true;
+	isDraw_[UITextureNames::kGreat] = true;
+	isDraw_[UITextureNames::kGood] = true;
+	isDraw_[UITextureNames::kMiss] = true;
+
+	SetAllTransform(Scene::kResultScene);
+}
+
+void UI::SetWorldTransform(const Vector2& screenPos, float scale, float rotate, int textureName) {
 
 	Vector2 pos = { screenPos.x - WinApp::kWindowWidth / 2, WinApp::kWindowHeight / 2 - screenPos.y };
 
-	worldTransforms_[textureName].get()->translation_.x = pos.x;
-	worldTransforms_[textureName].get()->translation_.y = pos.y;
+	worldTransforms_[textureName]->translation_.x = pos.x;
+	worldTransforms_[textureName]->translation_.y = pos.y;
 
-	worldTransforms_[textureName].get()->rotation_.z = rotate;
+	worldTransforms_[textureName]->rotation_.z = rotate;
 
-	worldTransforms_[textureName].get()->scale_.x = scale;
-	worldTransforms_[textureName].get()->scale_.y = scale;
+	worldTransforms_[textureName]->scale_.x = scale;
+	worldTransforms_[textureName]->scale_.y = scale;
 
-	worldTransforms_[textureName].get()->UpdateMatrix();
+	worldTransforms_[textureName]->UpdateMatrix();
 }
 
 void UI::Update() {
 
+	switch (GameScene::GetInstance()->scene)
+	{
+	case GameScene::Scene::TITLE:
+
+		TitleUpdate();
+		break;
+	case GameScene::Scene::BATTLE:
+
+		BattleUpdate();
+		break;
+	case GameScene::Scene::RESULT:
+
+		ResultUpdate();
+		break;
+	default:
+		break;
+	}
 }
 
-void UI::DrawUITexture(const Matrix4x4& viewProjectionMat, UITextureNames textureName) {
+void UI::TitleUpdate() {
 
-	Texture2D::TextureDraw(*(worldTransforms_[textureName].get()), viewProjectionMat, colors_[textureName], UITextures_[textureName].get());
+}
+
+void UI::BattleUpdate() {
+	ApplyGlobalVariable();
+	SetAllTransform(Scene::kBattleScene);
+
+	if (score_->GetEvaluation() == Score::Evaluation::kPerfect) {
+
+		isDraw_[UITextureNames::kPerfect] = true;
+		isDraw_[UITextureNames::kGreat] = false;
+		isDraw_[UITextureNames::kGood] = false;
+		isDraw_[UITextureNames::kMiss] = false;
+	}
+	else if (score_->GetEvaluation() == Score::Evaluation::kGreat) {
+
+		isDraw_[UITextureNames::kPerfect] = false;
+		isDraw_[UITextureNames::kGreat] = true;
+		isDraw_[UITextureNames::kGood] = false;
+		isDraw_[UITextureNames::kMiss] = false;
+	}
+	else if (score_->GetEvaluation() == Score::Evaluation::kGood) {
+
+		isDraw_[UITextureNames::kPerfect] = false;
+		isDraw_[UITextureNames::kGreat] = false;
+		isDraw_[UITextureNames::kGood] = true;
+		isDraw_[UITextureNames::kMiss] = false;
+	}
+	else if (score_->GetEvaluation() == Score::Evaluation::kMiss) {
+
+		isDraw_[UITextureNames::kPerfect] = false;
+		isDraw_[UITextureNames::kGreat] = false;
+		isDraw_[UITextureNames::kGood] = false;
+		isDraw_[UITextureNames::kMiss] = true;
+	}
+
+}
+
+void UI::ResultUpdate() {
+	ApplyGlobalVariable();
+	SetAllTransform(Scene::kResultScene);
+}
+
+void UI::DrawUITexture(const Matrix4x4& viewProjectionMat, int textureName) {
+	if (isDraw_[textureName]) {
+		Texture2D::TextureDraw(*(worldTransforms_[textureName].get()), viewProjectionMat, colors_[textureName], uiTextures_[textureName].get());
+	}
+}
+
+void UI::DrawUITextures(const Matrix4x4& viewProjectionMat) {
+
+	for (int i = 0; i < kUITexturesMaxNum_; i++) {
+		DrawUITexture(viewProjectionMat, i);
+	}
 }
 
 void UI::Draw2D(const Matrix4x4& viewProjectionMat) {
 
+	score_->Draw2D(viewProjectionMat);
+	DrawUITextures(viewProjectionMat);
 }
