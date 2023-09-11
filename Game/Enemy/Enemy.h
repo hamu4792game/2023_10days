@@ -44,8 +44,7 @@ public:
 	Enemy() = default;
 	~Enemy() = default;
 
-	void Initialize();
-
+	
 	void ModelLoad();
 
 	//	更新処理
@@ -57,8 +56,7 @@ public:
 
 public: // Korone
 
-	void Initialize(int type, int num);
-
+	
 	//修正版
 	void InitializeSP(float pos, int type, int num,
 		std::vector<std::shared_ptr<Model>> models);
@@ -165,6 +163,8 @@ private://Specha
 	//[3]の右バージョン
 	std::vector<esing> anoMotion;
 
+	//ノーマル状態
+	std::vector<esing>normal_A;
 	//ループ時利用する
 	bool isLoop = false;
 
