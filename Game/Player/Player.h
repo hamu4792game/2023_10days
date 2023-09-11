@@ -182,6 +182,10 @@ private: // Korone
 
 	Vector2 kBasePos_ = { float(WinApp::kWindowWidth) / 2.0f, 600.0f };
 
+	float kMaxAddFrame_ = 4.0f;
+
+	int kMaxSpeedCombNum_ = 30;
+
 	//float kGaugeStartPos_[kGaugeTransformNum_] = {
 	//	kBasePos_.x - kTextureSize_ / 2 * kBaseScale_ + kTextureSize_ / 2 * kGaugeScale_[Evalution::kGood],
 	//	kGaugeStartPos_[Evalution::kGood] + kTextureSize_ / 2 * kGaugeScale_[Evalution::kGood] + kTextureSize_ / 2 * kGaugeScale_[Evalution::kGreat],

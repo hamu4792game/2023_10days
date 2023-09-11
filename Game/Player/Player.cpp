@@ -654,8 +654,10 @@ void Player::HitTest(Enemy* enemy) {
 
 	if (flag) {
 
+		int combo = std::clamp(score_->GetCombo(), 0, kMaxSpeedCombNum_);
+
 		// ここの加算の割合を上げれば加速する
-		evalutionCount_++;
+		evalutionCount_ += Ease::UseEase(1.0f, kMaxAddFrame_, combo, kMaxSpeedCombNum_, Ease::Constant);
 
 		if (KeyInput::GetInstance()->GetPadConnect()) {
 
@@ -731,7 +733,7 @@ void Player::GaugeInitialize() {
 	gaugeColors_[GaugeDrawEnum::kGaugeGreat] = 0xEEEE11EE;
 	gaugeColors_[GaugeDrawEnum::kGaugeGood] = 0x33FF55EE;
 
-	gaugeColors_[GaugeDrawEnum::kMark] = 0xFFFFFFFF;
+	gaugeColors_[GaugeDrawEnum::kMark] = 0x000000FF;
 
 	SetGaugeWorldTransform({ kBasePos_.x,kBasePos_.y }, { kBaseScale_ + kBaseWhiteSpace_,kBaseScaleY_ + kBaseWhiteSpace_ }, 0.0f, GaugeDrawEnum::kBack);
 	SetGaugeWorldTransform({ kBasePos_.x,kBasePos_.y }, { kBaseScale_,kBaseScaleY_ }, 0.0f, GaugeDrawEnum::kGaugeBack);
@@ -757,6 +759,10 @@ void Player::SetKoroneGlobalVariable() {
 	globalVariables->AddItem(groupName, "scaleY", kBaseScaleY_);
 	globalVariables->AddItem(groupName, "whiteSpace", kBaseWhiteSpace_);
 	globalVariables->AddItem(groupName, "markScale", kGaugeMarkScale_);
+	
+	globalVariables->AddItem(groupName, "maxSpeed", kMaxAddFrame_);
+	globalVariables->AddItem(groupName, "maxSpeedCombo", kMaxSpeedCombNum_);
+	
 	globalVariables->CreateGroup("EvalutionFrame");
 
 	globalVariables->AddItem("EvalutionFrame", "perfect", kEvalutionframe_[Evalution::kPerfect]);
@@ -776,6 +782,9 @@ void Player::ApplyKoroneGlobalVariable() {
 	kBaseScaleY_ = globalVariables->GetFloatValue(groupName, "scaleY");
 	kBaseWhiteSpace_ = globalVariables->GetFloatValue(groupName, "whiteSpace");
 	kGaugeMarkScale_ = globalVariables->GetFloatValue(groupName, "markScale");
+
+	kMaxAddFrame_ = globalVariables->GetFloatValue(groupName, "maxSpeed");
+	kMaxSpeedCombNum_ = globalVariables->GetIntValue(groupName, "maxSpeedCombo");
 
 	kEvalutionframe_[Evalution::kPerfect] = globalVariables->GetIntValue("EvalutionFrame", "perfect");
 	kEvalutionframe_[Evalution::kGreat] = globalVariables->GetIntValue("EvalutionFrame", "great");
