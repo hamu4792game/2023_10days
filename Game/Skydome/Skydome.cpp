@@ -5,6 +5,16 @@ Skydome::Skydome()
 	skydome = std::make_unique<Model>();
 }
 
+void Skydome::SetParent(const WorldTransform& world)
+{
+	transform.parent_ = &world;
+}
+
+void Skydome::NullParent()
+{
+	transform.parent_ = nullptr;
+}
+
 void Skydome::Initialize()
 {
 	transform.scale_ = Vector3(400.0f, 400.0f, 400.0f);

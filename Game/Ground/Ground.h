@@ -18,6 +18,6 @@ public:
 private:
 
 	std::unique_ptr<Model> ground;
-	WorldTransform transform;
+	std::vector<WorldTransform>transform;
 
 };
