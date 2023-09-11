@@ -14,7 +14,6 @@
 
 
 Player::Player(std::shared_ptr<Camera> camera)
-
 {
 	camera_ = camera;
 	//for (uint16_t i = 0u; i < PARTS::Num; i++) {
@@ -44,11 +43,9 @@ void Player::Initialize(std::vector<std::shared_ptr<Model>> models, WorldTransfo
 
 	//	カメラとの親子関係
 	camera_->transform.parent_ = &transform;
-	offset = Vector3(0.0f, 30.0f, -50.0f);
-	camera_->transform.translation_ = offset;
-	camera_->transform.rotation_.x = 0.4f;
-	
-	
+	camera_->transform.translation_ = Vector3(18.0f, 10.0f, -20.0f);
+	camera_->transform.rotation_ = Vector3(0.383f, -6.785f, 0.0f);
+		
 	//親子関係
 	parts_[Body].parent_ = &transform;
 
