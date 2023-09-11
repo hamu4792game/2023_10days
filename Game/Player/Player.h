@@ -101,7 +101,7 @@ private:
 	//	カメラ共有ptr
 	std::shared_ptr<Camera> camera_ = nullptr;
 	//	カメラの初期位置
-	Vector3 offset;
+	Vector2 offset;
 
 	//	移動処理用のフラグ
 	bool flag = false;
@@ -129,6 +129,11 @@ private:
 	void Move();
 	//	tyoe2
 	void MoveType2();
+
+	//	カメラシェイクの処理
+	void CameraShake();
+
+	bool shakeFlag = false;
 
 private: // Korone
 
