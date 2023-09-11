@@ -455,11 +455,11 @@ void Player::HitTestInitialize() {
 
 void Player::HitEvalution(Enemy* enemy) {
 
-	float hitCount = std::abs(evalutionCount_ - kEvalutionFrame_[kGood]);
+	float hitCount = std::abs(evalutionCount_ - kEvalutionframe_[kGood]);
 
-	hitCount = std::clamp<float>(hitCount, 0.0f, float(kEvalutionFrame_[kGood]));
+	hitCount = std::clamp<float>(hitCount, 0.0f, float(kEvalutionframe_[kGood]));
 
-	if (hitCount <= kEvalutionFrame_[kPerfect]) {
+	if (hitCount <= kEvalutionframe_[kPerfect]) {
 
 		enemy->Die(1);
 		score_->AddPerfect();
@@ -467,7 +467,7 @@ void Player::HitEvalution(Enemy* enemy) {
 		evalutionCount_ = 0.0f;
 
 	}
-	else if (hitCount <= kEvalutionFrame_[kGreat]) {
+	else if (hitCount <= kEvalutionframe_[kGreat]) {
 
 		enemy->Die(0);
 		score_->AddGreat();
@@ -475,7 +475,7 @@ void Player::HitEvalution(Enemy* enemy) {
 		evalutionCount_ = 0.0f;
 
 	}
-	else if (hitCount <= kEvalutionFrame_[kGood]) {
+	else if (hitCount <= kEvalutionframe_[kGood]) {
 
 		enemy->Die(1);
 		score_->AddGood();
@@ -625,7 +625,7 @@ void Player::HitTest(Enemy* enemy) {
 			}
 		}
 
-		if (evalutionCount_ > kEvalutionFrame_[kGood] * 2.0f) {
+		if (evalutionCount_ > kEvalutionframe_[kGood] * 2.0f) {
 
 			evalutionCount_ = 0.0f;
 		}
@@ -675,6 +675,11 @@ void Player::SetKoroneGlobalVariable() {
 	globalVariables->AddItem(groupName, "scaleY", kBaseScaleY_);
 	globalVariables->AddItem(groupName, "whiteSpace", kBaseWhiteSpace_);
 	globalVariables->AddItem(groupName, "markScale", kGaugeMarkScale_);
+	globalVariables->CreateGroup("EvalutionFrame");
+
+	globalVariables->AddItem("EvalutionFrame", "perfect", kEvalutionframe_[Evalution::kPerfect]);
+	globalVariables->AddItem("EvalutionFrame", "great", kEvalutionframe_[Evalution::kGreat]);
+	globalVariables->AddItem("EvalutionFrame", "good", kEvalutionframe_[Evalution::kGood]);
 
 	ApplyKoroneGlobalVariable();
 }
@@ -689,6 +694,10 @@ void Player::ApplyKoroneGlobalVariable() {
 	kBaseScaleY_ = globalVariables->GetFloatValue(groupName, "scaleY");
 	kBaseWhiteSpace_ = globalVariables->GetFloatValue(groupName, "whiteSpace");
 	kGaugeMarkScale_ = globalVariables->GetFloatValue(groupName, "markScale");
+
+	kEvalutionframe_[Evalution::kPerfect] = globalVariables->GetIntValue("EvalutionFrame", "perfect");
+	kEvalutionframe_[Evalution::kGreat] = globalVariables->GetIntValue("EvalutionFrame", "great");
+	kEvalutionframe_[Evalution::kGood] = globalVariables->GetIntValue("EvalutionFrame", "good");
 
 	SetFloatTransform();
 }
@@ -713,8 +722,8 @@ void Player::SetFloatTransform() {
 	SetGaugeWorldTransform({ kBasePos_.x,kBasePos_.y }, { kBaseScale_ + kBaseWhiteSpace_,kBaseScaleY_ + kBaseWhiteSpace_ }, 0.0f, GaugeDrawEnum::kBack);
 	SetGaugeWorldTransform({ kBasePos_.x,kBasePos_.y }, { kBaseScale_,kBaseScaleY_ }, 0.0f, GaugeDrawEnum::kGaugeBack);
 
-	kGaugeScale_[Evalution::kPerfect] = kBaseScale_ * kEvalutionFrame_[Evalution::kPerfect] / kEvalutionFrame_[Evalution::kGood];
-	kGaugeScale_[Evalution::kGreat] = kBaseScale_ * kEvalutionFrame_[Evalution::kGreat] / kEvalutionFrame_[Evalution::kGood];
+	kGaugeScale_[Evalution::kPerfect] = kBaseScale_ * kEvalutionframe_[Evalution::kPerfect] / kEvalutionframe_[Evalution::kGood];
+	kGaugeScale_[Evalution::kGreat] = kBaseScale_ * kEvalutionframe_[Evalution::kGreat] / kEvalutionframe_[Evalution::kGood];
 	kGaugeScale_[Evalution::kGood] = kBaseScale_;
 
 	//kGaugeStartPos_[Evalution::kPerfect] = kGaugeStartPos_[Evalution::kGreat] + kTextureSize_ / 2 * kGaugeScale_[Evalution::kGreat] + kTextureSize_ / 2 * kGaugeScale_[Evalution::kPerfect];
@@ -741,9 +750,9 @@ void Player::GaugeUpdate() {
 
 		gaugeIsDraw_[GaugeDrawEnum::kMark] = true;
 
-		float easeFrame = std::clamp<float>(evalutionCount_, 0.0f, float(kEvalutionFrame_[Evalution::kGood]) * 2.0f);
+		float easeFrame = std::clamp<float>(evalutionCount_, 0.0f, float(kEvalutionframe_[Evalution::kGood]) * 2.0f);
 
-		SetGaugeWorldTransform(Ease::UseEase(kGaugeMarkPos_[0], kGaugeMarkPos_[1],easeFrame, kEvalutionFrame_[Evalution::kGood] * 2.0f,Ease::Constant),
+		SetGaugeWorldTransform(Ease::UseEase(kGaugeMarkPos_[0], kGaugeMarkPos_[1],easeFrame, kEvalutionframe_[Evalution::kGood] * 2.0f,Ease::Constant),
 			{ kGaugeMarkScale_,kBaseScaleY_ }, 0.0f, GaugeDrawEnum::kMark);
 
 		/*	if (evalutionCount_ == 1) {

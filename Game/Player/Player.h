@@ -151,7 +151,7 @@ private: // Korone
 
 	int intervalCount_ = 0;
 
-	int kEvalutionFrame_[kGaugeTransformNum_] = { 60, 30, 10 };
+	int kEvalutionframe_[kGaugeTransformNum_] = { 60, 30, 10 };
 
 	float evalutionCount_ = 0;
 
@@ -171,8 +171,8 @@ private: // Korone
 
 	float kGaugeScale_[kGaugeTransformNum_] = {
 		kBaseScale_,
-		kBaseScale_ *  kEvalutionFrame_[Evalution::kGreat] / kEvalutionFrame_[Evalution::kGood],
-		kBaseScale_* kEvalutionFrame_[Evalution::kPerfect] / kEvalutionFrame_[Evalution::kGood],
+		kBaseScale_ *  kEvalutionframe_[Evalution::kGreat] / kEvalutionframe_[Evalution::kGood],
+		kBaseScale_* kEvalutionframe_[Evalution::kPerfect] / kEvalutionframe_[Evalution::kGood],
 	};
 
 	Vector2 kBasePos_ = { float(WinApp::kWindowWidth) / 2.0f, 600.0f };
