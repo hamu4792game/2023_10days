@@ -112,6 +112,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="Engine\Manager\TextureManager.cpp" />
     <ClCompile Include="Engine\Texture\Model.cpp" />
     <ClCompile Include="Engine\Texture\Texture2D.cpp" />
+    <ClCompile Include="Engine\TimeBaseLoopExecuter\TimeBaseLoopExecuter.cpp" />
     <ClCompile Include="Engine\WorldTransform\WorldTransform.cpp" />
     <ClCompile Include="externals\imgui\imgui.cpp" />
     <ClCompile Include="externals\imgui\imgui_demo.cpp" />
@@ -156,6 +157,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Engine\Manager\TextureManager.h" />
     <ClInclude Include="Engine\Texture\Model.h" />
     <ClInclude Include="Engine\Texture\Texture2D.h" />
+    <ClInclude Include="Engine\TimeBaseLoopExecuter\TimeBaseLoopExecuter.h" />
     <ClInclude Include="Engine\WorldTransform\WorldTransform.h" />
     <ClInclude Include="externals\imgui\imconfig.h" />
     <ClInclude Include="externals\imgui\imgui.h" />

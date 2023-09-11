@@ -12,6 +12,7 @@
 #include "Game/GameScene/GameScene.h"
 
 #include "GlobalVariables/GlobalVariables.h"
+#include "Engine/TimeBaseLoopExecuter/TimeBaseLoopExecuter.h"
 
 
 int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR lpCmdLine, _In_ int nShowCmd) {
@@ -25,14 +26,21 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR lpCmdLine, _In
 
 	GameScene::GetInstance()->Initialize();
 
+	
+	//std::unique_ptr<TimeBaseLoopExecuter> fpsManager;
+	//fpsManager = std::make_unique<TimeBaseLoopExecuter>(50.0f);
+
 	//	ウィンドウの×ボタンが押されるまでループ
 	while (!WinApp::ProcessMessage()) {
 		//	フレームの開始
+		TimeBaseLoopExecuter fpsManager;
+		
 		Engine::BeginFrame();
 #ifdef _DEBUG
 		//	ImGui のフレームに一つ目の ImGui のウィンドウを描く
 		ImGui::Begin("Control panel");
 		ImGui::Text("Frame rate: %6.2f fps", ImGui::GetIO().Framerate);
+		//ImGui::Text("Frame rate2: %6.2f fps", fpsManager);
 		ImGui::End();
 #endif 
 
@@ -48,6 +56,7 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR lpCmdLine, _In
 
 		//	フレームの終了
 		Engine::EndFrame();
+		fpsManager.TimeAdjustment();
 		if (KeyInput::PushKey(DIK_ESCAPE)) {
 			break;
 		}
