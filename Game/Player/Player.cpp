@@ -436,6 +436,79 @@ void Player::AnimeInitialize() {
 	};
 #pragma endregion
 
+#pragma region ダウン
+	pDown.resize(parts_.size());
+	bodyEsing = {
+		{0.0f,-6.0f,0.0f},
+		{0.0f, -3.0f, 0.0f},
+	};
+	pDown[Body] = {
+		{1.75f,0.0f,0.0f},
+		{0.95f,0.0f,0.0f},
+	};
+	pDown[Head] = {
+		{0.0f, 0.0f, 0.0f},
+		{0.0f, 0.0f, 0.0f},
+
+	};
+	pDown[BodyUnder] = {
+		{0.0f, 0.0f, 0.0f},
+		{-0.58f, 0.0f, 0.0f},
+	};
+	//
+	pDown[LArm1] = {
+		{0.0f, -0.3f, -1.4f},
+		{0.58f, 0.56f,  0.0f },
+	};
+	pDown[LArm2] = {
+		{0.0f, 0.0f, -0.3f},
+		{0.59f, 2.19f, 0.0f },
+	};
+	pDown[LHand] = {
+		{0.0f, 0.0f, 0.0f},
+		{0.0f, 0.0f, 0.0f},
+	};
+	//
+	pDown[RArm1] = {
+		{0.0f, 0.3f, 1.4f},
+		{0.0f, -1.0f,  -1.3f},
+	};
+	pDown[RArm2] = {
+		{0.0f, 0.0f, 0.3f},
+		{0.0f, 0.0f, 0.0f},
+	};
+	pDown[RHand] = {
+		{0.0f, 0.0f, 0.0f},
+		{0.0f, 0.0f, 0.0f},
+	};
+
+	//
+	pDown[LLeg1] = {
+		{0.2f, 0.0f, 0.0f},
+		{-2.27f, 0.0f, 0.0f},
+	};
+	pDown[LLeg2] = {
+		{0.09f, 0.0f, 0.0f},
+		{1.9f,  0.0f, 0.0f},
+	};
+	pDown[LFoot] = {
+		{0.0f, 0.0f, 0.0f},
+		{0.0f, 0.0f, 0.0f},
+	};
+	pDown[RLeg1] = {
+		{0.2f, 0.0f, 0.0f},
+		{0.0f, 0.0f, 0.0f},
+	};
+	pDown[RLeg2] = {
+		{0.4f, 0.0f, 0.0f},
+		{1.58f, 0.0f, 0.0f},
+
+	};
+	pDown[RFoot] = {
+		{1.0f, 0.0f, 0.0f},
+		{-0.17f, 0.0f, 0.0f},
+	};
+#pragma endregion
 
 
 	//初期ポーズ設定
@@ -460,6 +533,8 @@ void Player::Animetion() {
 	case Player::NOMOTION:
 		if (score_->GetEvaluation()) {
 			state_ = PUNCH;
+			isAnimeStart_ = false;
+			wave_A = ATKWAIT;
 			ANIMENUM = GetRandomNum(A_NUM, false);
 		}
 		break;
@@ -470,6 +545,10 @@ void Player::Animetion() {
 		break;
 	case Player::MISTERYPOWER:
 		break;
+
+	case Player::MISS:
+		PDown();
+		break;
 	default:
 		break;
 	}
@@ -477,7 +556,7 @@ void Player::Animetion() {
 	
 }
 
-//右攻撃
+//パンチ攻撃
 void Player::ATK_R_F(int num) {
 
 	switch (wave_A)
@@ -583,6 +662,26 @@ void Player::ATK_R_F(int num) {
 }
 
 //
+void Player::PDown() {
+	switch (wave_A)
+	{
+	case Player::ATKWAIT:
+		if (!isAnimeStart_) {
+			isAnimeStart_ = true;
+			T_ = 0;
+		}
+		else {
+
+		}
+		break;
+	case Player::ATK:
+		break;
+	case Player::BACK:
+		break;
+	default:
+		break;
+	}
+}
 #pragma endregion
 
 

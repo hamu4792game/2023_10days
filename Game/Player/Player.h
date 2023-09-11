@@ -224,6 +224,7 @@ private: //Spe
 		KICK,
 
 		A_NUM,
+		MISS,
 	};
 
 	enum ANIMESTATE {
@@ -257,7 +258,8 @@ private: //Spe
 	//右攻撃まとめ
 	void ATK_R_F(int num);
 
-	//
+	//プレイヤーダウンアニメ
+	void PDown();
 
 	//イージング
 	float T_;
@@ -281,7 +283,16 @@ private: //Spe
 
 
 	void GetplayerR();
-	//大の字
+	//攻撃
+
 	std::vector<esing> AnimeType[A_NUM];
+
+	//ボデイのイージング用
+	esing bodyEsing;
+
+	esing BDE;
+
+	//ダウンアニメ
+	std::vector<esing> pDown;
 
 };
