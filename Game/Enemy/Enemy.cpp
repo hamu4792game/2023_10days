@@ -994,7 +994,7 @@ void Enemy::BlowAway() {
 
 				//ループ時の処理の変更
 				if (!isLoop) {
-					T_ += AddTtoWAIT_*1.0f/3.0f;
+					T_ += AddTtoWAIT_*1.0f/4.0f;
 					if (T_ >= 1.0f) {
 						T_ = 1.0f;
 						isLoop = true;

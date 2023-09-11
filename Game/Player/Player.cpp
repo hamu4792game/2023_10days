@@ -262,7 +262,82 @@ void Player::AnimeInitialize() {
 
 #pragma endregion
 
+#pragma region ノーマル状態
+	normal_A.resize(parts_.size());
 
+	normal_A[Body] = {
+		{0.0f, 0.0f, 0.0f},
+		{0.0f, 0.0f, 0.0f},
+	};
+	normal_A[BodyUnder] = {
+		{0.0f, 0.0f, 0.0f},
+		{0.0f, 0.0f, 0.0f},
+	};
+	normal_A[Head] = {
+		{0.0f, 0.0f, 0.0f},
+		{0.0f, 0.0f, 0.0f},
+	};
+
+
+	//左腕
+	normal_A[LArm1] = {
+		{0.0f, -0.1f, 1.4f},
+		{0.0f, 0.1f, 1.4f},
+	};
+	normal_A[LArm2] = {
+		{0.0f, 0.0f, 0.0f},
+		{0.0f, 0.0f, 0.0f},
+	};
+	normal_A[LHand] = {
+		{0.0f, 0.0f, 0.0f},
+		{0.0f, 0.0f, 0.0f},
+	};
+	//右腕
+	normal_A[RArm1] = {
+		{0.0f, -0.1f, -1.4f},
+		{0.0f, 0.1f, -1.4f},
+	};
+	normal_A[RArm2] = {
+		{0.0f, 0.0f, 0.0f},
+		{0.0f, 0.0f, 0.0f},
+	};
+	normal_A[RHand] = {
+		{0.0f, 0.0f, 0.0f},
+		{0.0f, 0.0f, 0.0f},
+	};
+
+	//足
+	normal_A[LLeg1] = {
+		{0.0f, 0.0f, 0.0f},
+		{0.0f, 0.0f, 0.0f},
+	};
+	normal_A[LLeg2] = {
+		{0.0f, 0.0f, 0.0f},
+		{0.0f, 0.0f, 0.0f},
+	};
+	normal_A[LFoot] = {
+		{0.0f, 0.0f, 0.0f},
+		{0.0f, 0.0f, 0.0f},
+	};
+
+	normal_A[RLeg1] = {
+		{0.0f, 0.0f, 0.0f},
+		{0.0f, 0.0f, 0.0f},
+	};
+	normal_A[RLeg2] = {
+		{0.0f, 0.0f, 0.0f},
+		{0.0f, 0.0f, 0.0f},
+	};
+	normal_A[RFoot] = {
+		{0.0f, 0.0f, 0.0f},
+		{0.0f, 0.0f, 0.0f},
+	};
+#pragma endregion
+
+	//初期ポーズ設定
+	for (int i = 0; i < Num; i++) {
+		parts_[i].rotation_ = ES(normal_A[i], 0);
+	}
 }
 
 //現在のプレイヤーの情報取得

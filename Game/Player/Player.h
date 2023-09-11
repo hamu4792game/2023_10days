@@ -247,6 +247,9 @@ private: //Spe
 	//現在の回転軸の保存先
 	std::vector<Vector3>nowR;
 
+	//ノーマル状態
+	std::vector<esing>normal_A;
+
 	void GetplayerR();
 	//大の字
 	std::vector<esing> AnimeType[A_NUM];
