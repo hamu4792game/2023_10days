@@ -942,7 +942,8 @@ void Player::HitTest(Enemy* enemy) {
 
 		if (KeyInput::GetInstance()->GetPadConnect()) {
 
-			if (KeyInput::GetInstance()->GetPadButtonDown(XINPUT_GAMEPAD_A)) {
+			if (KeyInput::GetInstance()->GetPadButtonDown(XINPUT_GAMEPAD_A) ||
+				KeyInput::GetInstance()->GetPadButtonDown(XINPUT_GAMEPAD_DPAD_DOWN)) {
 				if (enemy->GetBottomType() == Enemy::BottomTypeClass::kA) {
 
 					HitEvalution(enemy);
@@ -955,7 +956,8 @@ void Player::HitTest(Enemy* enemy) {
 				}
 
 			}
-			else if (KeyInput::GetInstance()->GetPadButtonDown(XINPUT_GAMEPAD_B)) {
+			else if (KeyInput::GetInstance()->GetPadButtonDown(XINPUT_GAMEPAD_B) || 
+				KeyInput::GetInstance()->GetPadButtonDown(XINPUT_GAMEPAD_DPAD_RIGHT)) {
 				if (enemy->GetBottomType() == Enemy::BottomTypeClass::kB) {
 					HitEvalution(enemy);
 				}
@@ -966,7 +968,8 @@ void Player::HitTest(Enemy* enemy) {
 					evalutionCount_ = 0;
 				}
 			}
-			else if (KeyInput::GetInstance()->GetPadButtonDown(XINPUT_GAMEPAD_X)) {
+			else if (KeyInput::GetInstance()->GetPadButtonDown(XINPUT_GAMEPAD_X) ||
+				KeyInput::GetInstance()->GetPadButtonDown(XINPUT_GAMEPAD_DPAD_LEFT)) {
 				if (enemy->GetBottomType() == Enemy::BottomTypeClass::kX) {
 					HitEvalution(enemy);
 				}
@@ -977,7 +980,8 @@ void Player::HitTest(Enemy* enemy) {
 					evalutionCount_ = 0;
 				}
 			}
-			else if (KeyInput::GetInstance()->GetPadButtonDown(XINPUT_GAMEPAD_Y)) {
+			else if (KeyInput::GetInstance()->GetPadButtonDown(XINPUT_GAMEPAD_Y) ||
+				KeyInput::GetInstance()->GetPadButtonDown(XINPUT_GAMEPAD_DPAD_UP)) {
 				if (enemy->GetBottomType() == Enemy::BottomTypeClass::kY) {
 					HitEvalution(enemy);
 				}
@@ -990,7 +994,7 @@ void Player::HitTest(Enemy* enemy) {
 			}
 		}
 
-		if (KeyInput::GetKey(DIK_UPARROW)) {
+		if (KeyInput::PushKey(DIK_UPARROW)) {
 			if (enemy->GetBottomType() == Enemy::BottomTypeClass::kY) {
 				HitEvalution(enemy);
 			}
