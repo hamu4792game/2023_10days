@@ -689,23 +689,9 @@ void Player::PDown() {
 				parts_[Body].translation_,
 				bodyEsing.st
 			};
-		}
-		else {
-			//更新
-			for (int i = 0; i < Num; i++) {
-				parts_[i].rotation_ = ES(ESALL[i], T_);
-			}
-			parts_[Body].translation_ = ES(BDE, T_);
-			//Tを加算
-			T_ += AddT_*scaleSPD;
-			//シーン切り替え処理
-			if (T_ >= 1.0f) {
-				wave_A = ATK;
-				//state_ = NOMOTION;
-				T_ = 0;
-				isAnimeStart_ = false;
-			}
 
+			easeNowFrame = 0.0f;
+			easeMaxFrame = MAX_frame / 5.0f;
 		}
 		break;
 	case Player::ATK:
@@ -721,24 +707,9 @@ void Player::PDown() {
 			}
 			//ボディの座標も動かすので設定
 			BDE = bodyEsing;
-		}
-		else {
-			//更新
-			for (int i = 0; i < Num; i++) {
-				parts_[i].rotation_ = ES(ESALL[i], T_);
-			}
-			parts_[Body].translation_ = ES(BDE, T_);
 
-			//Tを加算
-			T_ += AddT_*scaleSPD/2;
-			//シーン切り替え処理
-			if (T_ >= 1.0f) {
-				wave_A = BACK;
-				//state_ = NOMOTION;
-				T_ = 0;
-				isAnimeStart_ = false;
-			}
-
+			easeMaxFrame = MAX_frame / 3.0f - easeNowFrame;
+			easeNowFrame = 0.0f;
 		}
 		break;
 	case Player::BACK:
@@ -760,30 +731,55 @@ void Player::PDown() {
 				bodyEsing.ed,
 				{0.0f,0.0f,0.0f}
 			};
-		}
-		else {
-			//更新
-			for (int i = 0; i < Num; i++) {
-				parts_[i].rotation_ = ES(ESALL[i], T_);
-			}
-			parts_[Body].translation_ = ES(BDE, T_);
 
-			//Tを加算
-			T_ += AddT_*scaleSPD/2;
-			//シーン切り替え処理
-			if (T_ >= 1.0f) {
-				wave_A = ATKWAIT;
-				state_ = NOMOTION;
-				T_ = 0;
-				isAnimeStart_ = false;
-				parts_[Body].translation_ = { 0.0f,0.0f,0.0f };
-			}
-
+			easeMaxFrame = MAX_frame / 3.0f;
+			easeNowFrame = 0.0f;
 		}
 		break;
 	default:
 		break;
 	}
+
+	easeNowFrame += 1.0f * Battle::masterSpeed;
+	float tn = Ease::MakeEaseT(easeNowFrame, easeMaxFrame, Ease::EaseType::Constant);
+	//更新
+	for (int i = 0; i < Num; i++) {
+		parts_[i].rotation_ = Ease::UseEase(ESALL[i].st, ESALL[i].ed, tn);
+	}
+	parts_[Body].translation_ = Ease::UseEase(BDE.st, BDE.ed, tn);
+
+	switch (wave_A)
+	{
+	case Player::ATKWAIT:
+		//シーン切り替え処理
+		if (easeNowFrame >= easeMaxFrame) {
+			wave_A = ATK;
+			//state_ = NOMOTION;
+			T_ = 0;
+			isAnimeStart_ = false;
+		}
+		break;
+	case Player::ATK:
+		//シーン切り替え処理
+		if (easeNowFrame >= easeMaxFrame) {
+			wave_A = BACK;
+			//state_ = NOMOTION;
+			T_ = 0;
+			isAnimeStart_ = false;
+		}
+		break;
+	case Player::BACK:
+		//シーン切り替え処理
+		if (easeNowFrame >= easeMaxFrame) {
+			wave_A = ATKWAIT;
+			state_ = NOMOTION;
+			T_ = 0;
+			isAnimeStart_ = false;
+			parts_[Body].translation_ = { 0.0f,0.0f,0.0f };
+		}
+		break;
+	}
+
 }
 #pragma endregion
 

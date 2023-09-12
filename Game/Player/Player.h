@@ -277,6 +277,10 @@ private: //Spe
 	//アニメーションフレーム加算地
 	float AddT_ = 1.0f / 30.0f;
 
+	//	
+	float easeNowFrame;
+	float easeMaxFrame;
+
 	//アニメーション開始時の初期化関数
 	bool isAnimeStart_;
 
