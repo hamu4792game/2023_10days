@@ -1071,6 +1071,8 @@ void Player::GaugeInitialize() {
 
 	evalutionCount_ = 0;
 
+	memoF_ = 0.0f;
+
 	SetGaugeWorldTransform({ kBasePos_.x,kBasePos_.y }, { kBaseScale_ + kBaseWhiteSpace_,kBaseScaleY_ + kBaseWhiteSpace_ }, 0.0f, GaugeDrawEnum::kBack);
 	SetGaugeWorldTransform({ kBasePos_.x,kBasePos_.y }, { kBaseScale_,kBaseScaleY_ }, 0.0f, GaugeDrawEnum::kGaugeBack);
 	SetGaugeWorldTransform({ kGaugeStartPos_[Evalution::kPerfect],kBasePos_.y }, { kGaugeScale_[Evalution::kPerfect],kBaseScaleY_ }, 0.0f, GaugeDrawEnum::kGaugePerfect);
