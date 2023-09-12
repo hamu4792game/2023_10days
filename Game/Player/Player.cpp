@@ -876,14 +876,14 @@ void Player::EatRamen() {
 		float ADD = 1.0f / 30.0f;
 		if (!isLoop_) {
 			T_ += ADD;
-			if (T >= 1.0f) {
+			if (T_ >= 1.0f) {
 				isLoop_ = true;
 				T_ = 1.0f;
 			}
 		}
 		else {
 			T_ -= ADD;
-			if (T <= 0.0f) {
+			if (T_ <= 0.0f) {
 				isLoop_ = false;
 				T_ = 0;
 			}
