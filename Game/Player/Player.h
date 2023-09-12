@@ -246,8 +246,6 @@ private: //Spe
 	enum ANIMESTATE {
 		NOMOTION,
 		PUNCH,
-		BAT,
-		MISTERYPOWER,
 		MISS_,
 	};
 

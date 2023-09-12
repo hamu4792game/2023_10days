@@ -543,14 +543,9 @@ void Player::Animetion() {
 			ANIMENUM = GetRandomNum(A_NUM, false);
 		}
 		break;
-	case Player::PUNCH:
+	case Player::PUNCH://パンチまとめ
 		ATK_R_F(ANIMENUM);
 		break;
-	case Player::BAT:
-		break;
-	case Player::MISTERYPOWER:
-		break;
-
 	case Player::MISS_:
 		PDown();
 		break;

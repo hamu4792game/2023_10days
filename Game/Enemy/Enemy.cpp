@@ -452,8 +452,6 @@ void Enemy::AnimeInitialize() {
 		{0.79f,0.0f,0.0f},
 	};
 #pragma endregion
-
-
 #pragma region 待機
 	WAIT_[0].resize(parts_.size());
 	WAIT_[0][Body] = {
@@ -799,7 +797,6 @@ void Enemy::AnimeInitialize() {
 #pragma endregion
 	//初期ポーズ設定
 	for (int i = 0; i < Num; i++) {
-
 		parts_[i].rotation_ = ES(normal_A[i], 0);
 	}
 
@@ -856,15 +853,16 @@ void Enemy::BlowAway() {
 	
 	//死んだときに吹っ飛びアニメーション
 	if (isDead_) {
-
 		if (!isStart_blow_away) {
 			isStart_blow_away = true;
-			//アニメ状態を最初にする
-			animeState_ = MODE_A::NOMOTIAN;
+			//アニメ状態を普通のランダムとびに
+			//animeState_ = MODE_A::NORMAL;
+
+			animeState_ = MODE_A::BAKUSAN;
+
 
 			//	念のため、初期化する	hamu
 			lifespan = 0u;
-
 			ANIMETYPE = GetRandomNum(animeNUM, false);
 
 			//ANIMETYPE = 3;
@@ -914,15 +912,7 @@ void Enemy::BlowAway() {
 		else {
 			switch (animeState_)
 			{
-			case MODE_A::WAVE1:
-				break;
-			case MODE_A::WAVE2:
-				break;
-			case MODE_A::WAVE3:
-				break;
-			case MODE_A::WAVE4:
-				break;
-			case MODE_A::NOMOTIAN:
+			case MODE_A::NORMAL:
 				
 				//アニメーション初期設定
 				if (!SetAnimeStart) {
@@ -941,8 +931,6 @@ void Enemy::BlowAway() {
 					//回転
 					
 					if (ANIMETYPE != 3) {
-
-
 						if (ANIMETYPE == 1 || ANIMETYPE == 2) {
 							parts_[Body].rotation_.y += (1.0f / 5.0f) * std::numbers::pi_v<float>;
 						}
@@ -951,21 +939,22 @@ void Enemy::BlowAway() {
 						}
 					}
 				}
-				break;			
+				break;
+
+			case MODE_A::BAKUSAN:
+				Exploding_limbs();
+
+				break;
 			default:
 				break;
 			}
 		}
-
-
 		//	消えるまでのフレーム加算 hamu
 		lifespan++;
 		//	指定フレーム回したら削除フラグを建てる hamu
 		if (lifespan >= 180u) {
 			die_ = true;
 		}
-
-
 	}
 	else {//生きているときのアニメーション
 		switch (state_)
@@ -1021,18 +1010,9 @@ void Enemy::BlowAway() {
 					ANIMENUM = GetRandomNum(4, false);
 				}
 			}
-
-
-			
-
-			
 			break;
 		case Enemy::ONE:
 			WaitAnimetion(ANIMENUM);
-			break;
-		case Enemy::TWO:
-			break;
-		case Enemy::TREE:
 			break;
 		default:
 			break;
@@ -1156,6 +1136,43 @@ void Enemy::WaitAnimetion(int num) {
 		break;
 	}
 	
+}
+
+void Enemy::Exploding_limbs() {
+	if (!SetAnimeStart) {
+		SetAnimeStart = true;
+
+		//親子関係の削除
+		for (int i = 0; i < Num; i++) {
+			//親子関係を消す
+			parts_[i].parent_ = nullptr;
+			//ワールド座標を平行移動にぶち込む
+			parts_[i].translation_ = parts_[i].GetTranslate();
+			
+			//サイズ初期化
+			Random_R.resize(parts_.size());
+			Random_V.resize(parts_.size());
+
+			//ランダムな回転軸を作成
+			Random_R[i] = {
+				(float)GetRandomNum(3,true) / 10.0f,
+				(float)GetRandomNum(3,true) / 10.0f,
+				(float)GetRandomNum(3,true) / 10.0f,
+			};
+
+			Random_V[i] = {
+				(float)GetRandomNum(1,true),
+				(float)GetRandomNum(1,true),
+				(float)GetRandomNum(5,false),
+			};
+		}
+	}
+	else {
+		for (int i = 0; i < Num; i++) {
+			parts_[i].rotation_ += Random_R[i];
+			parts_[i].translation_ += Random_V[i];
+		}
+	}
 }
 
 void Enemy::Update()

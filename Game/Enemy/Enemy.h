@@ -6,12 +6,9 @@
 
 
 enum class MODE_A {
-	WAVE1,
-	WAVE2,
-	WAVE3,
-	WAVE4,
+	NORMAL,
 
-	NOMOTIAN,
+	BAKUSAN,
 };
 
 enum class blow {
@@ -115,6 +112,16 @@ private://Specha
 	//アニメーションに関する初期化処理
 	void AnimeInitialize();
 
+	//四肢爆散アニメーション
+	void Exploding_limbs();
+
+
+	//爆散で使うパーツに与える移動ベクトル
+	std::vector<Vector3>Random_V;
+	//爆散で使うパーツに与える回転ベクトル
+	std::vector<Vector3>Random_R;
+
+
 	//WAVEごとのアニメーションの初期化処理
 	bool SetAnimeStart = false;
 
@@ -144,8 +151,6 @@ private://Specha
 	enum STATEANIME {
 		NONE,
 		ONE,
-		TWO,
-		TREE,
 	};
 
 	STATEANIME state_ = NONE;
