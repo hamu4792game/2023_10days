@@ -1172,35 +1172,10 @@ void Player::GaugeUpdate() {
 	ApplyKoroneGlobalVariable();
 
 
-	SetGaugeWorldTransform(kBasePos_, { kGaugeScale_[Evalution::kPerfect],kBaseScaleY_ }, 0.0f, GaugeDrawEnum::kGaugePerfect);
-	SetGaugeWorldTransform(kBasePos_, { kGaugeScale_[Evalution::kGreat],kBaseScaleY_ }, 0.0f, GaugeDrawEnum::kGaugeGreat);
-	SetGaugeWorldTransform(kBasePos_, { kGaugeScale_[Evalution::kGood],kBaseScaleY_ }, 0.0f, GaugeDrawEnum::kGaugeGood);
+	SetGaugeWorldTransform({ kGaugeStartPos_[Evalution::kPerfect],kBasePos_.y }, { kGaugeScale_[Evalution::kPerfect],kBaseScaleY_ }, 0.0f, GaugeDrawEnum::kGaugePerfect);
+	SetGaugeWorldTransform({ kGaugeStartPos_[Evalution::kGreat],kBasePos_.y }, { kGaugeScale_[Evalution::kGreat],kBaseScaleY_ }, 0.0f, GaugeDrawEnum::kGaugeGreat);
+	SetGaugeWorldTransform({ kGaugeStartPos_[Evalution::kGood],kBasePos_.y }, { kGaugeScale_[Evalution::kGood],kBaseScaleY_ }, 0.0f, GaugeDrawEnum::kGaugeGood);
 
-	//if (flag) {
-
-
-	//	gaugeIsDraw_[GaugeDrawEnum::kMark] = true;
-
-	//	float easeFrame = std::clamp<float>(evalutionCount_, 0.0f, float(kEvalutionframe_[Evalution::kGood]));
-
-	//	SetGaugeWorldTransform(Ease::UseEase(kGaugeMarkPos_[0], kGaugeMarkPos_[1],easeFrame, kEvalutionframe_[Evalution::kGood],Ease::Constant),
-	//		{ kGaugeMarkScale_,kBaseScaleY_ }, 0.0f, GaugeDrawEnum::kMark);
-
-
-	//	if (score_->GetEvaluation()) {
-	//		//gaugeIsDraw_[GaugeDrawEnum::kMark] = false;
-	//		MarkUpdate();
-	//	}
-
-
-	//}
-	//else {
-	//	
-
-
-	//	//gaugeIsDraw_[GaugeDrawEnum::kMark] = false;
-
-	//}
 
 	if (flag) {
 
