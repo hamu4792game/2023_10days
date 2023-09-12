@@ -832,6 +832,12 @@ void Player::HitEvalution(Enemy* enemy) {
 		memoFrame_ = evalutionCount_;
 		evalutionCount_ = 0;
 	}
+	else if (evalutionCount_ > kEvalutionframe_[kGood]) {
+		enemy->Die(1);
+		score_->AddMiss();
+		memoFrame_ = float(kEvalutionframe_[kGood]);
+		evalutionCount_ = 0;
+	}
 
 }
 
@@ -1040,12 +1046,16 @@ void Player::HitTest(Enemy* enemy) {
 			}
 		}
 
-		if (evalutionCount_ > kEvalutionframe_[kGood]) {
+		if (evalutionCount_ > kEvalutionframe_[kGood] && *tutorialFlag_ == false) {
 
 			score_->AddMiss();
 			enemy->Die(1);
 			memoFrame_ = evalutionCount_;
 			evalutionCount_ = 0;
+		}
+		else if (evalutionCount_ > kEvalutionframe_[kGood]) {
+
+			evalutionCount_ = float(kEvalutionframe_[kGood]);
 		}
 
 	}

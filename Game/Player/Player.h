@@ -36,6 +36,8 @@ public: // Korone
 
 	static const int kGaugeResourceNum_ = 2;
 
+	void SetFlag(bool* flag) { tutorialFlag_ = flag; }
+
 	enum GaugeDrawEnum {
 		kBack,
 		kGaugeBack,
@@ -148,6 +150,8 @@ private: // Korone
 		kGood,
 		kMiss
 	};
+
+	bool* tutorialFlag_ = nullptr;
 
 	static const int kGaugeTransformNum_ = 3;
 

@@ -19,6 +19,8 @@ Battle::Battle(std::shared_ptr<Camera> camera)
 
 	player_->SetScore(score_.get());
 
+	player_->SetFlag(&tutorialFlag_);
+
 	worldTransform = std::make_shared<WorldTransform>();
 
 	ui_ = std::make_unique<UI>();
