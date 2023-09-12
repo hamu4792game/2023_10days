@@ -44,8 +44,7 @@ public:
 	Enemy() = default;
 	~Enemy() = default;
 
-	void Initialize();
-
+	
 	void ModelLoad();
 
 	//	更新処理
@@ -57,8 +56,7 @@ public:
 
 public: // Korone
 
-	void Initialize(int type, int num);
-
+	
 	//修正版
 	void InitializeSP(float pos, int type, int num,
 		std::vector<std::shared_ptr<Model>> models);
@@ -96,7 +94,14 @@ private: // Korone
 
 	bool isDead_ = false;
 
-
+private: // hamu
+	//	完全に死亡(消える)フラグ
+	bool die_ = false;
+	//	寿命までのカウントダウン
+	uint16_t lifespan = 0u;
+public: // hamu
+	bool GetDelete() { return die_; }
+	void SetParent(const WorldTransform& world) { transform.parent_ = &world; }
 
 private://Specha
 
@@ -165,12 +170,19 @@ private://Specha
 	//[3]の右バージョン
 	std::vector<esing> anoMotion;
 
+	//ノーマル状態
+	std::vector<esing>normal_A;
 	//ループ時利用する
 	bool isLoop = false;
 
 	//アニメーションのカウント
 	int countAnime_ = 0;
 
+	int countAnimeMax_ = 60;
+
+	float AddTtoWAIT_ = 1.0f / 15.0f;
+
+	//待機アニメーション実行関数
 	void WaitAnimetion(int num);
 
 	int ANIMENUM = 0;
@@ -186,3 +198,5 @@ private://Specha
 
 //イージングの処理、好きに中身かえてちょ
 Vector3 ES(esing E, float t);
+
+int GetRandomNum(int wideOrmax, bool isWide);

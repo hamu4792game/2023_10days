@@ -3,6 +3,7 @@
 #include "Engine/Easing/Ease.h"
 #include "Engine/Input/KeyInput/KeyInput.h"
 #include "Game/GameScene/GameScene.h"
+#include "externals/imgui/imgui.h"
 
 Title::Title(std::shared_ptr<Camera> camera)
 {
@@ -11,6 +12,7 @@ Title::Title(std::shared_ptr<Camera> camera)
 	for (uint16_t index = 0u; index < 30u; index++) {
 		enemy_.push_back(std::make_unique<Enemy>());
 	}
+	player = std::make_unique<Enemy>();
 	pushAtext_ = std::make_unique<Texture2D>();
 	pushAtext_->Texture("Resources/hud/pushA.png", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl");
 	
@@ -23,6 +25,8 @@ void Title::Initialize()
 	for (uint16_t i = 0u; i < 30u; i++) {
 		enemy_[i]->InitializeSP(15.0f + static_cast<float>(5.0f * i), Enemy::BottomType::kA, i, mobModels_type2);
 	}
+	player->InitializeSP(0.0f, Enemy::BottomType::kA, 0, mobModels_);
+	player->SetParent(chara);
 	parts_.resize(mobModels_.size());
 
 	shopTrans.resize(shopModels_.size());
@@ -30,6 +34,7 @@ void Title::Initialize()
 	SetParts();
 
 	chara.parent_ = &worldTransform;
+	chara.translation_ = Vector3(0.0f, -6.5f, 0.0f);
 	chara.rotation_ = Vector3(0.0f, -1.641f, 0.0f);
 
 	shopTrans[static_cast<uint16_t>(SHOPPARTS::Base)].parent_ = &worldTransform;
@@ -63,9 +68,17 @@ void Title::Update()
 {
 	CameraMove();
 
+	ImGui::DragFloat3("cameraTra", &camera_->transform.translation_.x, 1.0f);
+	ImGui::DragFloat3("cameraRo", &camera_->transform.rotation_.x, AngleToRadian(1.0f));
+
+	ImGui::DragFloat("rate", &pushAtrans_.cMono->rate, 0.1f);
+	ImGui::DragFloat2("pibot", &pushAtrans_.cMono->pibot.x, 0.1f);
+
 	worldTransform.UpdateMatrix();
 
 	chara.UpdateMatrix();
+
+	player->Update();
 
 	for (auto& shop : shopTrans) {
 		shop.UpdateMatrix();
@@ -92,9 +105,15 @@ void Title::Draw(Matrix4x4 viewProjection)
 		Model::ModelDraw(shopTrans[i], viewProjection, 0xffffffff, shopModels_[i].get());
 	}
 
-	for (uint16_t i = 0u; i < parts_.size(); i++) {
-		Model::ModelDraw(parts_[i], viewProjection, 0xffffffff, mobModels_[i].get());
+	if (cameraStep == CAMERASTEP::BounceFace) {
+		for (uint16_t i = 0u; i < parts_.size(); i++) {
+			Model::ModelDraw(parts_[i], viewProjection, 0xffffffff, mobModels_[i].get());
+		}
 	}
+	else {
+		player->Draw(viewProjection);
+	}
+	
 
 	for (auto& ene : enemy_) {
 		ene->Draw(viewProjection);
@@ -234,6 +253,7 @@ void Title::CameraMove()
 			endPoint = camera_->transform.translation_;
 			easeNowFrame = 0;
 			easeMaxFrame = 30;
+			chara.translation_.y = 0.0f;
 		}
 		else if (easeNowFrame <= easeMaxFrame) {
 			camera_->transform.translation_ = Ease::UseEase(startingPoint, endPoint, easeNowFrame, easeMaxFrame, Ease::EaseType::EaseOutBounce);

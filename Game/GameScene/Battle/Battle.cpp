@@ -1,5 +1,5 @@
 #include "Battle.h"
-//#include "externals/imgui/imgui.h"
+#include "externals/imgui/imgui.h"
 #include "math/Vector4.h"
 #include "Game/GameScene/GameScene.h"
 
@@ -23,6 +23,9 @@ Battle::Battle(std::shared_ptr<Camera> camera)
 	ui_ = std::make_unique<UI>();
 	ui_->SetScore(score_.get());
 
+	timer_ = std::make_unique<Timer>();
+
+	bottonTransform_.resize(2);
 }
 
 Battle::~Battle() {
@@ -34,10 +37,10 @@ Battle::~Battle() {
 void Battle::Initialize()
 {
 	//	カメラの設定
-	camera_->transform.translation_ = Vector3(0.0f, 16.5f, -21.7f);
-	camera_->transform.rotation_ = Vector3(0.471f, 0.0f, 0.0f);
-	camera_->transform.scale_ = Vector3(1.0f, 1.0f, 1.0f);
-
+	//camera_->transform.translation_ = Vector3(0.0f, 16.5f, -21.7f);
+	//camera_->transform.rotation_ = Vector3(0.471f, 0.0f, 0.0f);
+	
+	
 	masterSpeed = 1.0f;
 
 	EnemyReset();
@@ -53,6 +56,8 @@ void Battle::Initialize()
 	player_->SetDistance(kEnemyPopPosLength_);
 
 	player_->GaugeInitialize();
+
+	timer_->Initialize();
 
 }
 
@@ -70,7 +75,7 @@ void Battle::EnemyGeneration() {
 		else {
 			Enemy* enemy = new Enemy();
 
-			float  pos = kEnemyPopPosLength_ * (enemyNum_)+1.0f;
+			float  pos = kEnemyPopPosLength_ * (enemyNum_)+6.0f;
 
 			int type = rand() % 4;
 
@@ -123,8 +128,12 @@ void Battle::EnemyReset() {
 
 void Battle::Update()
 {
+
+	timer_->Update();
+
 	for(Enemy* enemy : enemies_){
 		if (enemy->GetNum() == enemyKillCount_) {
+			type_ = static_cast<uint16_t>(enemy->GetBottomType());
 			player_->HitTest(enemy);
 			
 			if (score_->GetEvaluation()) {
@@ -137,14 +146,20 @@ void Battle::Update()
 		}
 	}
 
+
 	player_->GaugeUpdate();
 
+	enemies_.remove_if([](Enemy* enemy) {
+
+		return enemy->GetDelete() == true;
+
+		});
 	for (Enemy* enemy : enemies_) {
 		enemy->Update();
 	}
 
 	//	一旦仮置き 敵を最大数倒したらシーン切り替え
-	if (enemyKillCount_ >= kEnemyMaxNum_) {
+	if (enemyKillCount_ >= kEnemyMaxNum_ || timer_->GetTime() == 0) {
 		GameScene::GetInstance()->sceneChangeFlag = true;
 	}
 
@@ -157,15 +172,24 @@ void Battle::Update()
 
 void Battle::Draw(const Matrix4x4& viewProjection)
 {
+	
 	player_->Draw(viewProjection);
 
 	for (Enemy* enemy : enemies_) {
 		enemy->Draw(viewProjection, bottonModels_);
 	}
+	
+	
 }
 
 void Battle::Draw2D(const Matrix4x4& viewProjection) {
 
 	player_->GaugeDraw2D(viewProjection);
 	ui_->Draw2D(viewProjection);
+	timer_->Draw2D(viewProjection);
+
+	for (uint16_t i = 0u; i < bottonTransform_.size(); i++) {
+		Texture2D::TextureDraw(bottonTransform_[i], viewProjection, 0xffffffff, bottonTexture_[type_].get());
+	}
+
 }

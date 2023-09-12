@@ -54,6 +54,7 @@ private: // モデル用変数
 	std::vector<std::shared_ptr<Model>> mobModels_type2;
 	//	ボタンUIのモデル 4個
 	std::vector<std::shared_ptr<Model>> bottonModels_;
+	std::vector<std::shared_ptr<Texture2D>> bottonTexture_;
 	//	数字UIのtexture 0～9の10個
 	std::vector<std::shared_ptr<Texture2D>> numberTextures_;
 	// UIのperfectやcomboなど

@@ -11,6 +11,7 @@
 #include "Game/Player/Player.h"
 #include "Game/Enemy/Enemy.h"
 #include "Game/UI/UI.h"
+#include "Game/Timer/Timer.h"
 
 class Battle
 {
@@ -37,9 +38,11 @@ public:
 	void SetModels(std::vector<std::shared_ptr<Model>> modeldate) { mobModels_ = modeldate; }
 	void SetModelsType2(std::vector<std::shared_ptr<Model>> modeldate) { mobModels_type2 = modeldate; }
 	void SetBottonModels(std::vector<std::shared_ptr<Model>> modeldate) { bottonModels_= modeldate; }
+	void SetBottonTextures(std::vector<std::shared_ptr<Texture2D>> modeldate) { bottonTexture_= modeldate; }
 	void SetNumberTextures(std::vector<std::shared_ptr<Texture2D>> texturedate) { score_->SetNumberTexture(texturedate); }
 	void SetUITextures(std::vector<std::shared_ptr<Texture2D>> texturedate) { ui_->SetUITexture(texturedate); }
 	void SetGaugeTextures(std::vector<std::shared_ptr<Texture2D>> textures) { player_->SetGaugeTextures(textures); }
+	void SetTimerNumTextures(std::vector<std::shared_ptr<Texture2D>> texturedate) { timer_->SetNumberTexture(texturedate); }
 
 	const WorldTransform& GetPlayerTransform() { return player_->GetPlayerTransform(); }
 
@@ -59,13 +62,18 @@ private: // シーンで必要なモデル配列
 	std::vector<std::shared_ptr<Model>> mobModels_type2;
 
 	std::vector<std::shared_ptr<Model>> bottonModels_;
+	std::vector<std::shared_ptr<Texture2D>> bottonTexture_;
 	
-
+	
 
 private:
 	
 	//	中心座標
 	std::shared_ptr<WorldTransform> worldTransform;
+
+	std::vector<WorldTransform> bottonTransform_;
+
+	uint16_t type_;
 
 public:
 	//	マスターフレーム速度。リアルタイム加減速
@@ -94,6 +102,8 @@ private: //Korone
 	std::unique_ptr<Score> score_;
 
 	std::unique_ptr<UI> ui_;
+
+	std::unique_ptr<Timer> timer_;
 	
 	std::list<Enemy*> enemies_;
 

@@ -1,5 +1,4 @@
 #include "Ground.h"
-#include "externals/imgui/imgui.h"
 
 Ground::Ground()
 {
@@ -22,7 +21,6 @@ void Ground::ModelLoad()
 
 void Ground::Draw(const Matrix4x4& viewProjection)
 {
-	//ImGui::DragFloat3("cameraTrans", &transform.scale_.x, 0.1f);
 	for (uint16_t i = 0u; i < 2; i++) {
 		transform[i].UpdateMatrix();
 		Model::ModelDraw(transform[i], viewProjection, 0xffffffff, ground.get());
