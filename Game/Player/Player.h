@@ -84,6 +84,8 @@ private: // Korone
 
 	void ApplyKoroneGlobalVariable();
 
+	void MarkUpdate();
+
 private:
 
 	
@@ -141,10 +143,10 @@ private:
 private: // Korone
 
 	enum Evalution {
-		kGood,
-		kGreat,
 		kPerfect,
-		//kMiss
+		kGreat,
+		kGood,
+		kMiss
 	};
 
 	static const int kGaugeTransformNum_ = 3;
@@ -158,7 +160,8 @@ private: // Korone
 
 	int intervalCount_ = 0;
 
-	int kEvalutionframe_[kGaugeTransformNum_] = { 60, 30, 10 };
+	int kEvalutionframe_[4] = { 20, 60, 120, kEvalutionframe_[Evalution::kGood] + 1 };
+
 
 	float evalutionCount_ = 0;
 
@@ -177,9 +180,9 @@ private: // Korone
 	float kBaseWhiteSpace_ = 4.0f;
 
 	float kGaugeScale_[kGaugeTransformNum_] = {
-		kBaseScale_,
-		kBaseScale_ *  kEvalutionframe_[Evalution::kGreat] / kEvalutionframe_[Evalution::kGood],
-		kBaseScale_* kEvalutionframe_[Evalution::kPerfect] / kEvalutionframe_[Evalution::kGood],
+			kBaseScale_ * kEvalutionframe_[Evalution::kPerfect] / kEvalutionframe_[Evalution::kGood],
+			kBaseScale_ * (kEvalutionframe_[Evalution::kGreat] - kEvalutionframe_[Evalution::kPerfect]) / kEvalutionframe_[Evalution::kGood],
+			kBaseScale_ * (kEvalutionframe_[Evalution::kGood] - kEvalutionframe_[Evalution::kGreat]) / kEvalutionframe_[Evalution::kGood]
 	};
 
 	Vector2 kBasePos_ = { float(WinApp::kWindowWidth) / 2.0f, 600.0f };
@@ -188,10 +191,22 @@ private: // Korone
 
 	int kMaxSpeedCombNum_ = 30;
 
-	//float kGaugeStartPos_[kGaugeTransformNum_] = {
-	//	kBasePos_.x - kTextureSize_ / 2 * kBaseScale_ + kTextureSize_ / 2 * kGaugeScale_[Evalution::kGood],
-	//	kGaugeStartPos_[Evalution::kGood] + kTextureSize_ / 2 * kGaugeScale_[Evalution::kGood] + kTextureSize_ / 2 * kGaugeScale_[Evalution::kGreat],
-	//	kGaugeStartPos_[Evalution::kGreat] + kTextureSize_ / 2 * kGaugeScale_[Evalution::kGreat] + kTextureSize_ / 2 * kGaugeScale_[Evalution::kPerfect],
+	float memoFrame_ = 0;
+
+	float markCount_ = 0;
+
+	int kMaxMarkFrame_ = 30;
+
+	float kGaugeStartPos_[kGaugeTransformNum_] = {
+			kBasePos_.x - kTextureSize_ / 2 * kBaseScale_ + kTextureSize_ / 2 * kGaugeScale_[Evalution::kPerfect],
+			kGaugeStartPos_[Evalution::kPerfect] + kTextureSize_ / 2 * kGaugeScale_[Evalution::kPerfect] + kTextureSize_ / 2 * kGaugeScale_[Evalution::kGreat],
+			kGaugeStartPos_[Evalution::kGreat] + kTextureSize_ / 2 * kGaugeScale_[Evalution::kGreat] + kTextureSize_ / 2 * kGaugeScale_[Evalution::kGood],
+	};
+
+	//float kGaugeEndPos_[kGaugeTransformNum_] = {
+	//	kGaugeStartPos_[Evalution::kPerfect] + kTextureSize_ / 2 * kGaugeScale_[Evalution::kPerfect],
+	//	kGaugeStartPos_[Evalution::kGreat] + kTextureSize_ / 2 * kGaugeScale_[Evalution::kGreat],
+	//	kGaugeStartPos_[Evalution::kGood] + kTextureSize_ / 2 * kGaugeScale_[Evalution::kGood]
 	//};
 
 	float kGaugeMarkScale_ = 1.0f;
