@@ -29,8 +29,8 @@ void GameScene::Initialize()
 
 	//	ロード前の生成
 	//プレイヤーモデルの初期化
-	mobModels_.resize(4);
-	for (uint16_t i = 0u; i < 4; i++) {
+	mobModels_.resize(static_cast<int>(ModelType::Max_Num));
+	for (uint16_t i = 0u; i < static_cast<uint16_t>(ModelType::Max_Num); i++) {
 		for (uint16_t index = 0u; index < PARTS::Num; index++) {
 			mobModels_[i].push_back(std::make_shared<Model>());
 		}
@@ -65,8 +65,8 @@ void GameScene::Initialize()
 	//	モデルのロード
 	ModelLoad();
 	//	モデルのセット
-	title->SetModels(mobModels_[0]);
-	title->SetModelsType2(mobModels_[1]);
+	title->SetModels(mobModels_);
+	//title->SetModelsType2(mobModels_[1]);
 	title->SetBottonModels(bottonModels_);
 	title->SetShopModel(shopModel_);
 
@@ -214,46 +214,109 @@ void GameScene::Draw()
 void GameScene::ModelLoad()
 {
 	//頭・身体・腰
-	mobModels_[0][Body]->Texture("Resources/player/Parts/pBody/pBody.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl");
-	mobModels_[0][Head]->Texture("Resources/player/Parts/pHead/pHead.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl");
-	mobModels_[0][BodyUnder]->Texture("Resources/player/Parts/pBodyUnder/pBodyUnder.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl");
+	mobModels_[static_cast<int>(ModelType::Player)][Body]->Texture("Resources/player/Parts/pBody/pBody.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl");
+	mobModels_[static_cast<int>(ModelType::Player)][Head]->Texture("Resources/player/Parts/pHead/pHead.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl");
+	mobModels_[static_cast<int>(ModelType::Player)][BodyUnder]->Texture("Resources/player/Parts/pBodyUnder/pBodyUnder.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl");
 	//左腕１・左腕２・左手
-	mobModels_[0][LArm1]->Texture("Resources/player/Parts/pLArm1/pLArm1.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl");
-	mobModels_[0][LArm2]->Texture("Resources/player/Parts/pLArm2/pLArm2.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl");
-	mobModels_[0][LHand]->Texture("Resources/player/Parts/pLHand/pLHand.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl");
+	mobModels_[static_cast<int>(ModelType::Player)][LArm1]->Texture("Resources/player/Parts/pLArm1/pLArm1.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl");
+	mobModels_[static_cast<int>(ModelType::Player)][LArm2]->Texture("Resources/player/Parts/pLArm2/pLArm2.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl");
+	mobModels_[static_cast<int>(ModelType::Player)][LHand]->Texture("Resources/player/Parts/pLHand/pLHand.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl");
 	//右腕１・右腕２・右手
-	mobModels_[0][RArm1]->Texture("Resources/player/Parts/pRArm1/pRArm1.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl");
-	mobModels_[0][RArm2]->Texture("Resources/player/Parts/pRArm2/pRArm2.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl");
-	mobModels_[0][RHand]->Texture("Resources/player/Parts/pRHand/pRHand.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl");
+	mobModels_[static_cast<int>(ModelType::Player)][RArm1]->Texture("Resources/player/Parts/pRArm1/pRArm1.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl");
+	mobModels_[static_cast<int>(ModelType::Player)][RArm2]->Texture("Resources/player/Parts/pRArm2/pRArm2.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl");
+	mobModels_[static_cast<int>(ModelType::Player)][RHand]->Texture("Resources/player/Parts/pRHand/pRHand.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl");
 	//左足首１・左足首２・左足
-	mobModels_[0][LLeg1]->Texture("Resources/player/Parts/pLLeg1/pLLeg1.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl");
-	mobModels_[0][LLeg2]->Texture("Resources/player/Parts/pLLeg/pLLeg.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl");
-	mobModels_[0][LFoot]->Texture("Resources/player/Parts/pLFoot/pLFoot.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl");
+	mobModels_[static_cast<int>(ModelType::Player)][LLeg1]->Texture("Resources/player/Parts/pLLeg1/pLLeg1.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl");
+	mobModels_[static_cast<int>(ModelType::Player)][LLeg2]->Texture("Resources/player/Parts/pLLeg/pLLeg.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl");
+	mobModels_[static_cast<int>(ModelType::Player)][LFoot]->Texture("Resources/player/Parts/pLFoot/pLFoot.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl");
 	//右足首１・右足首２・右足
-	mobModels_[0][RLeg1]->Texture("Resources/player/Parts/pRLeg1/pRLeg1.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl");
-	mobModels_[0][RLeg2]->Texture("Resources/player/Parts/pRLeg2/pRLeg2.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl");
-	mobModels_[0][RFoot]->Texture("Resources/player/Parts/pRFoot/pRFoot.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl");
+	mobModels_[static_cast<int>(ModelType::Player)][RLeg1]->Texture("Resources/player/Parts/pRLeg1/pRLeg1.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl");
+	mobModels_[static_cast<int>(ModelType::Player)][RLeg2]->Texture("Resources/player/Parts/pRLeg2/pRLeg2.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl");
+	mobModels_[static_cast<int>(ModelType::Player)][RFoot]->Texture("Resources/player/Parts/pRFoot/pRFoot.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl");
 
 	//頭・身体・腰
-	mobModels_[1][Body]->Texture("Resources/player/Parts/pBody/pBody.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl", "player/happakun.png");
-	mobModels_[1][Head]->Texture("Resources/player/Parts/pHead/pHead.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl", "player/tomatokun.png");
-	mobModels_[1][BodyUnder]->Texture("Resources/player/Parts/pBodyUnder/pBodyUnder.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl", "player/tomatokun.png");
+	mobModels_[static_cast<int>(ModelType::Type1)][Body]->Texture("Resources/player/Parts/pBody/pBody.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl", "player/happakun.png");
+	mobModels_[static_cast<int>(ModelType::Type1)][Head]->Texture("Resources/player/Parts/pHead/pHead.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl", "player/tomatokun.png");
+	mobModels_[static_cast<int>(ModelType::Type1)][BodyUnder]->Texture("Resources/player/Parts/pBodyUnder/pBodyUnder.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl", "player/tomatokun.png");
 	//左腕１・左腕２・左手
-	mobModels_[1][LArm1]->Texture("Resources/player/Parts/pLArm1/pLArm1.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl", "player/bluepro.png");
-	mobModels_[1][LArm2]->Texture("Resources/player/Parts/pLArm2/pLArm2.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl", "player/bluepro.png");
-	mobModels_[1][LHand]->Texture("Resources/player/Parts/pLHand/pLHand.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl", "player/bluepro.png");
+	mobModels_[static_cast<int>(ModelType::Type1)][LArm1]->Texture("Resources/player/Parts/pLArm1/pLArm1.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl", "player/bluepro.png");
+	mobModels_[static_cast<int>(ModelType::Type1)][LArm2]->Texture("Resources/player/Parts/pLArm2/pLArm2.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl", "player/bluepro.png");
+	mobModels_[static_cast<int>(ModelType::Type1)][LHand]->Texture("Resources/player/Parts/pLHand/pLHand.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl", "player/bluepro.png");
 	//右腕１・右腕２・右手
-	mobModels_[1][RArm1]->Texture("Resources/player/Parts/pRArm1/pRArm1.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl", "player/bluepro.png");
-	mobModels_[1][RArm2]->Texture("Resources/player/Parts/pRArm2/pRArm2.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl", "player/bluepro.png");
-	mobModels_[1][RHand]->Texture("Resources/player/Parts/pRHand/pRHand.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl", "player/bluepro.png");
+	mobModels_[static_cast<int>(ModelType::Type1)][RArm1]->Texture("Resources/player/Parts/pRArm1/pRArm1.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl", "player/bluepro.png");
+	mobModels_[static_cast<int>(ModelType::Type1)][RArm2]->Texture("Resources/player/Parts/pRArm2/pRArm2.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl", "player/bluepro.png");
+	mobModels_[static_cast<int>(ModelType::Type1)][RHand]->Texture("Resources/player/Parts/pRHand/pRHand.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl", "player/bluepro.png");
 	//左足首１・左足首２・左足
-	mobModels_[1][LLeg1]->Texture("Resources/player/Parts/pLLeg1/pLLeg1.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl", "player/Yostar.png");
-	mobModels_[1][LLeg2]->Texture("Resources/player/Parts/pLLeg/pLLeg.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl", "player/Yostar.png");
-	mobModels_[1][LFoot]->Texture("Resources/player/Parts/pLFoot/pLFoot.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl", "player/Yostar.png");
+	mobModels_[static_cast<int>(ModelType::Type1)][LLeg1]->Texture("Resources/player/Parts/pLLeg1/pLLeg1.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl", "player/Yostar.png");
+	mobModels_[static_cast<int>(ModelType::Type1)][LLeg2]->Texture("Resources/player/Parts/pLLeg/pLLeg.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl", "player/Yostar.png");
+	mobModels_[static_cast<int>(ModelType::Type1)][LFoot]->Texture("Resources/player/Parts/pLFoot/pLFoot.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl", "player/Yostar.png");
 	//右足首１・右足首２・右足
-	mobModels_[1][RLeg1]->Texture("Resources/player/Parts/pRLeg1/pRLeg1.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl", "player/Yostar.png");
-	mobModels_[1][RLeg2]->Texture("Resources/player/Parts/pRLeg2/pRLeg2.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl", "player/Yostar.png");
-	mobModels_[1][RFoot]->Texture("Resources/player/Parts/pRFoot/pRFoot.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl", "player/Yostar.png");
+	mobModels_[static_cast<int>(ModelType::Type1)][RLeg1]->Texture("Resources/player/Parts/pRLeg1/pRLeg1.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl", "player/Yostar.png");
+	mobModels_[static_cast<int>(ModelType::Type1)][RLeg2]->Texture("Resources/player/Parts/pRLeg2/pRLeg2.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl", "player/Yostar.png");
+	mobModels_[static_cast<int>(ModelType::Type1)][RFoot]->Texture("Resources/player/Parts/pRFoot/pRFoot.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl", "player/Yostar.png");
+
+	//頭・身体・腰
+	mobModels_[static_cast<int>(ModelType::Type2)][Body]->Texture("Resources/player/Parts/pBody/pBody.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl", "player/happakun.png");
+	mobModels_[static_cast<int>(ModelType::Type2)][Head]->Texture("Resources/player/Parts/pHead/pHead.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl", "player/tomatokun.png");
+	mobModels_[static_cast<int>(ModelType::Type2)][BodyUnder]->Texture("Resources/player/Parts/pBodyUnder/pBodyUnder.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl", "player/tomatokun.png");
+	//左腕１・左腕２・左手
+	mobModels_[static_cast<int>(ModelType::Type2)][LArm1]->Texture("Resources/player/Parts/pLArm1/pLArm1.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl", "player/bluepro.png");
+	mobModels_[static_cast<int>(ModelType::Type2)][LArm2]->Texture("Resources/player/Parts/pLArm2/pLArm2.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl", "player/bluepro.png");
+	mobModels_[static_cast<int>(ModelType::Type2)][LHand]->Texture("Resources/player/Parts/pLHand/pLHand.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl", "player/bluepro.png");
+	//右腕１・右腕２・右手
+	mobModels_[static_cast<int>(ModelType::Type2)][RArm1]->Texture("Resources/player/Parts/pRArm1/pRArm1.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl", "player/bluepro.png");
+	mobModels_[static_cast<int>(ModelType::Type2)][RArm2]->Texture("Resources/player/Parts/pRArm2/pRArm2.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl", "player/bluepro.png");
+	mobModels_[static_cast<int>(ModelType::Type2)][RHand]->Texture("Resources/player/Parts/pRHand/pRHand.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl", "player/bluepro.png");
+	//左足首１・左足首２・左足
+	mobModels_[static_cast<int>(ModelType::Type2)][LLeg1]->Texture("Resources/player/Parts/pLLeg1/pLLeg1.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl", "player/Yostar.png");
+	mobModels_[static_cast<int>(ModelType::Type2)][LLeg2]->Texture("Resources/player/Parts/pLLeg/pLLeg.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl", "player/Yostar.png");
+	mobModels_[static_cast<int>(ModelType::Type2)][LFoot]->Texture("Resources/player/Parts/pLFoot/pLFoot.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl", "player/Yostar.png");
+	//右足首１・右足首２・右足
+	mobModels_[static_cast<int>(ModelType::Type2)][RLeg1]->Texture("Resources/player/Parts/pRLeg1/pRLeg1.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl", "player/Yostar.png");
+	mobModels_[static_cast<int>(ModelType::Type2)][RLeg2]->Texture("Resources/player/Parts/pRLeg2/pRLeg2.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl", "player/Yostar.png");
+	mobModels_[static_cast<int>(ModelType::Type2)][RFoot]->Texture("Resources/player/Parts/pRFoot/pRFoot.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl", "player/Yostar.png");
+
+	//頭・身体・腰
+	mobModels_[static_cast<int>(ModelType::Type3)][Body]->Texture("Resources/player/Parts/pBody/pBody.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl", "player/happakun.png");
+	mobModels_[static_cast<int>(ModelType::Type3)][Head]->Texture("Resources/player/Parts/pHead/pHead.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl", "player/tomatokun.png");
+	mobModels_[static_cast<int>(ModelType::Type3)][BodyUnder]->Texture("Resources/player/Parts/pBodyUnder/pBodyUnder.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl", "player/tomatokun.png");
+	//左腕１・左腕２・左手
+	mobModels_[static_cast<int>(ModelType::Type3)][LArm1]->Texture("Resources/player/Parts/pLArm1/pLArm1.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl", "player/bluepro.png");
+	mobModels_[static_cast<int>(ModelType::Type3)][LArm2]->Texture("Resources/player/Parts/pLArm2/pLArm2.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl", "player/bluepro.png");
+	mobModels_[static_cast<int>(ModelType::Type3)][LHand]->Texture("Resources/player/Parts/pLHand/pLHand.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl", "player/bluepro.png");
+	//右腕１・右腕２・右手
+	mobModels_[static_cast<int>(ModelType::Type3)][RArm1]->Texture("Resources/player/Parts/pRArm1/pRArm1.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl", "player/bluepro.png");
+	mobModels_[static_cast<int>(ModelType::Type3)][RArm2]->Texture("Resources/player/Parts/pRArm2/pRArm2.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl", "player/bluepro.png");
+	mobModels_[static_cast<int>(ModelType::Type3)][RHand]->Texture("Resources/player/Parts/pRHand/pRHand.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl", "player/bluepro.png");
+	//左足首１・左足首２・左足
+	mobModels_[static_cast<int>(ModelType::Type3)][LLeg1]->Texture("Resources/player/Parts/pLLeg1/pLLeg1.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl", "player/Yostar.png");
+	mobModels_[static_cast<int>(ModelType::Type3)][LLeg2]->Texture("Resources/player/Parts/pLLeg/pLLeg.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl", "player/Yostar.png");
+	mobModels_[static_cast<int>(ModelType::Type3)][LFoot]->Texture("Resources/player/Parts/pLFoot/pLFoot.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl", "player/Yostar.png");
+	//右足首１・右足首２・右足
+	mobModels_[static_cast<int>(ModelType::Type3)][RLeg1]->Texture("Resources/player/Parts/pRLeg1/pRLeg1.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl", "player/Yostar.png");
+	mobModels_[static_cast<int>(ModelType::Type3)][RLeg2]->Texture("Resources/player/Parts/pRLeg2/pRLeg2.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl", "player/Yostar.png");
+	mobModels_[static_cast<int>(ModelType::Type3)][RFoot]->Texture("Resources/player/Parts/pRFoot/pRFoot.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl", "player/Yostar.png");
+
+	//頭・身体・腰
+	mobModels_[static_cast<int>(ModelType::Type4)][Body]->Texture("Resources/player/Parts/pBody/pBody.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl", "player/happakun.png");
+	mobModels_[static_cast<int>(ModelType::Type4)][Head]->Texture("Resources/player/Parts/pHead/pHead.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl", "player/tomatokun.png");
+	mobModels_[static_cast<int>(ModelType::Type4)][BodyUnder]->Texture("Resources/player/Parts/pBodyUnder/pBodyUnder.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl", "player/tomatokun.png");
+	//左腕１・左腕２・左手
+	mobModels_[static_cast<int>(ModelType::Type4)][LArm1]->Texture("Resources/player/Parts/pLArm1/pLArm1.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl", "player/bluepro.png");
+	mobModels_[static_cast<int>(ModelType::Type4)][LArm2]->Texture("Resources/player/Parts/pLArm2/pLArm2.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl", "player/bluepro.png");
+	mobModels_[static_cast<int>(ModelType::Type4)][LHand]->Texture("Resources/player/Parts/pLHand/pLHand.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl", "player/bluepro.png");
+	//右腕１・右腕２・右手
+	mobModels_[static_cast<int>(ModelType::Type4)][RArm1]->Texture("Resources/player/Parts/pRArm1/pRArm1.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl", "player/bluepro.png");
+	mobModels_[static_cast<int>(ModelType::Type4)][RArm2]->Texture("Resources/player/Parts/pRArm2/pRArm2.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl", "player/bluepro.png");
+	mobModels_[static_cast<int>(ModelType::Type4)][RHand]->Texture("Resources/player/Parts/pRHand/pRHand.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl", "player/bluepro.png");
+	//左足首１・左足首２・左足
+	mobModels_[static_cast<int>(ModelType::Type4)][LLeg1]->Texture("Resources/player/Parts/pLLeg1/pLLeg1.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl", "player/Yostar.png");
+	mobModels_[static_cast<int>(ModelType::Type4)][LLeg2]->Texture("Resources/player/Parts/pLLeg/pLLeg.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl", "player/Yostar.png");
+	mobModels_[static_cast<int>(ModelType::Type4)][LFoot]->Texture("Resources/player/Parts/pLFoot/pLFoot.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl", "player/Yostar.png");
+	//右足首１・右足首２・右足
+	mobModels_[static_cast<int>(ModelType::Type4)][RLeg1]->Texture("Resources/player/Parts/pRLeg1/pRLeg1.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl", "player/Yostar.png");
+	mobModels_[static_cast<int>(ModelType::Type4)][RLeg2]->Texture("Resources/player/Parts/pRLeg2/pRLeg2.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl", "player/Yostar.png");
+	mobModels_[static_cast<int>(ModelType::Type4)][RFoot]->Texture("Resources/player/Parts/pRFoot/pRFoot.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl", "player/Yostar.png");
 
 	//	数字texture
 	numberTextures_[0]->Texture("Resources/number/0.png", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl");

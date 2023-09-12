@@ -30,6 +30,16 @@ public:
 	//	シングルトンインスタンス
 	static GameScene* GetInstance();
 
+
+	enum class ModelType {
+		Player,
+		Type1,
+		Type2,
+		Type3,
+		Type4,
+
+		Max_Num
+	};
 	
 private:
 	

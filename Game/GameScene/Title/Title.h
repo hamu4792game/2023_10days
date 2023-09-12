@@ -21,15 +21,17 @@ public:
 	void Draw(Matrix4x4 viewProjection);
 	void Draw2D(Matrix4x4 viewProjection2d);
 public: // setter
-	void SetModels(std::vector<std::shared_ptr<Model>> modeldate) { mobModels_ = modeldate; }
-	void SetModelsType2(std::vector<std::shared_ptr<Model>> modeldate) { mobModels_type2 = modeldate; }
+	void SetModels(std::vector<std::vector<std::shared_ptr<Model>>> modeldate) { mobModels_ = modeldate; }
+	//void SetModelsType2(std::vector<std::shared_ptr<Model>> modeldate) { mobModels_type2 = modeldate; }
 	void SetBottonModels(std::vector<std::shared_ptr<Model>> modeldate) { bottonModels_ = modeldate; }
 	void SetShopModel(std::vector<std::shared_ptr<Model>> modeldate) { shopModels_ = modeldate; }
 
 private: // シーンで必要なモデル配列
 	//	プレイヤーデータのモデル配列
-	std::vector<std::shared_ptr<Model>> mobModels_;
-	std::vector<std::shared_ptr<Model>> mobModels_type2;
+	//std::vector<std::shared_ptr<Model>> mobModels_;
+	//std::vector<std::shared_ptr<Model>> mobModels_type2;
+
+	std::vector<std::vector<std::shared_ptr<Model>>> mobModels_;
 
 	std::vector<std::shared_ptr<Model>> bottonModels_;
 

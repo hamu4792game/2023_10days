@@ -21,13 +21,17 @@ Title::Title(std::shared_ptr<Camera> camera)
 void Title::Initialize()
 {
 	worldTransform.translation_ = Vector3(0.0f, 6.5f, 0.0f);
-
+	int index = 0;
 	for (uint16_t i = 0u; i < 30u; i++) {
-		enemy_[i]->InitializeSP(15.0f + static_cast<float>(5.0f * i), Enemy::BottomType::kA, i, mobModels_type2);
+		index++;
+		if (index >= static_cast<int>(GameScene::ModelType::Max_Num)) {
+			index = 1;
+		}
+		enemy_[i]->InitializeSP(15.0f + static_cast<float>(5.0f * i), Enemy::BottomType::kA, i, mobModels_[index]);
 	}
-	player->InitializeSP(0.0f, Enemy::BottomType::kA, 0, mobModels_);
+	player->InitializeSP(0.0f, Enemy::BottomType::kA, 0, mobModels_[0]);
 	player->SetParent(chara);
-	parts_.resize(mobModels_.size());
+	parts_.resize(mobModels_[0].size());
 
 	shopTrans.resize(shopModels_.size());
 
@@ -103,7 +107,7 @@ void Title::Draw(Matrix4x4 viewProjection)
 
 	if (cameraStep == CAMERASTEP::BounceFace) {
 		for (uint16_t i = 0u; i < parts_.size(); i++) {
-			Model::ModelDraw(parts_[i], viewProjection, 0xffffffff, mobModels_[i].get());
+			Model::ModelDraw(parts_[i], viewProjection, 0xffffffff, mobModels_[0][i].get());
 		}
 	}
 	else {
