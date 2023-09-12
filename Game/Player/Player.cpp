@@ -892,11 +892,14 @@ void Player::MoveType2() {
 			frame = 0.0f;
 
 			flag = false;
+			Battle::masterSpeed = 1.0f;
+			shakeFlag = false;
+
 			if (score_->GetEvaluation() == Score::Evaluation::kPerfect || score_->GetEvaluation() == Score::Evaluation::kGreat) {
 				shakeFlag = true;
 			}
-			else {
-				shakeFlag = false;
+			else if (score_->GetEvaluation() == Score::Evaluation::kMiss) {
+				Battle::masterSpeed = 0.8f;
 			}
 		}
 	}
