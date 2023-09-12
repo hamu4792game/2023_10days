@@ -792,8 +792,6 @@ void Player::Update()
 
 	camera_->transform.rotation_ = Vector3(offset.x, offset.y, camera_->transform.rotation_.z);
 
-	//ImGui::DragFloat("body", &parts_[Body].translation_.y, 0.1f);
-
 	//	待機時間
 	//	移動処理
 	MoveType2();
@@ -814,41 +812,6 @@ void Player::HitTestInitialize() {
 
 void Player::HitEvalution(Enemy* enemy) {
 
-	//float hitCount = std::abs(evalutionCount_ - kEvalutionframe_[kGood]);
-
-	//hitCount = std::clamp<float>(hitCount, 0.0f, float(kEvalutionframe_[kGood]));
-
-	//if (hitCount <= kEvalutionframe_[kPerfect]) {
-
-	//	enemy->Die(1);
-	//	score_->AddPerfect();
-
-	//	evalutionCount_ = 0.0f;
-
-	//}
-	//else if (hitCount <= kEvalutionframe_[kGreat]) {
-
-	//	enemy->Die(0);
-	//	score_->AddGreat();
-
-	//	evalutionCount_ = 0.0f;
-
-	//}
-	//else if (hitCount <= kEvalutionframe_[kGood]) {
-
-	//	enemy->Die(1);
-	//	score_->AddGood();
-
-	//	evalutionCount_ = 0.0f;
-	//}
-
-	////else {
-
-	////	//enemy->Die();
-	////	score_->AddMiss();
-
-	////	evalutionCount_ = 0;
-	////}
 
 	if (evalutionCount_ <= kEvalutionframe_[kPerfect]) {
 
@@ -874,13 +837,6 @@ void Player::HitEvalution(Enemy* enemy) {
 		evalutionCount_ = 0;
 	}
 
-	//else {
-
-	//	//enemy->Die();
-	//	score_->AddMiss();
-
-	//	evalutionCount_ = 0;
-	//}
 }
 
 //	使ってない
@@ -975,76 +931,6 @@ void Player::CameraShake()
 }
 
 void Player::HitTest(Enemy* enemy) {
-
-	//// 毎フレーム1回のみの更新。カウントがフレーム数と一致しなくなるため。
-
-	//score_->ResetEvalution();
-
-	//if (flag) {
-
-	//	int combo = std::clamp(score_->GetCombo(), 0, kMaxSpeedCombNum_);
-
-	//	// ここの加算の割合を上げれば加速する
-	//	evalutionCount_ += Ease::UseEase(1.0f, kMaxAddFrame_, combo, kMaxSpeedCombNum_, Ease::Constant);
-
-	//	if (KeyInput::GetInstance()->GetPadConnect()) {
-
-	//		if (KeyInput::GetInstance()->GetPadButtonDown(XINPUT_GAMEPAD_A)) {
-	//			if (enemy->GetBottomType() == Enemy::BottomTypeClass::kA) {
-
-	//				HitEvalution(enemy);
-	//			}
-	//			else {
-	//				enemy->Die(0);
-	//				score_->AddMiss();
-
-	//				evalutionCount_ = 0.0f;
-	//			}
-
-	//		}
-	//		else if (KeyInput::GetInstance()->GetPadButtonDown(XINPUT_GAMEPAD_B)) {
-	//			if (enemy->GetBottomType() == Enemy::BottomTypeClass::kB) {
-	//				HitEvalution(enemy);
-	//			}
-	//			else {
-	//				enemy->Die(1);
-	//				score_->AddMiss();
-
-	//				evalutionCount_ = 0.0f;
-	//			}
-	//		}
-	//		else if (KeyInput::GetInstance()->GetPadButtonDown(XINPUT_GAMEPAD_X)) {
-	//			if (enemy->GetBottomType() == Enemy::BottomTypeClass::kX) {
-	//				HitEvalution(enemy);
-	//			}
-	//			else {
-	//				enemy->Die(1);
-	//				score_->AddMiss();
-
-	//				evalutionCount_ = 0.0f;
-	//			}
-	//		}
-	//		else if (KeyInput::GetInstance()->GetPadButtonDown(XINPUT_GAMEPAD_Y)) {
-	//			if (enemy->GetBottomType() == Enemy::BottomTypeClass::kY) {
-	//				HitEvalution(enemy);
-	//			}
-	//			else {
-	//				enemy->Die(0);
-	//				score_->AddMiss();
-
-	//				evalutionCount_ = 0.0f;
-	//			}
-	//		}
-	//	}
-
-	//	if (evalutionCount_ > kEvalutionframe_[kGood] * 2.0f) {
-
-	//		evalutionCount_ = 0.0f;
-	//	}
-
-	//}
-
-	// 毎フレーム1回のみの更新。カウントがフレーム数と一致しなくなるため。
 
 	score_->ResetEvalution();
 
@@ -1212,23 +1098,8 @@ void Player::SetGaugeWorldTransform(const Vector2& screenPos, const Vector2& sca
 
 void Player::SetFloatTransform() {
 
-	//SetGaugeWorldTransform({ kBasePos_.x,kBasePos_.y }, { kBaseScale_ + kBaseWhiteSpace_,kBaseScaleY_ + kBaseWhiteSpace_ }, 0.0f, GaugeDrawEnum::kBack);
-	//SetGaugeWorldTransform({ kBasePos_.x,kBasePos_.y }, { kBaseScale_,kBaseScaleY_ }, 0.0f, GaugeDrawEnum::kGaugeBack);
-
-	//kGaugeScale_[Evalution::kPerfect] = kBaseScale_ * kEvalutionframe_[Evalution::kPerfect] / kEvalutionframe_[Evalution::kGood];
-	//kGaugeScale_[Evalution::kGreat] = kBaseScale_ * kEvalutionframe_[Evalution::kGreat] / kEvalutionframe_[Evalution::kGood];
-	//kGaugeScale_[Evalution::kGood] = kBaseScale_;
-
-	////kGaugeStartPos_[Evalution::kPerfect] = kGaugeStartPos_[Evalution::kGreat] + kTextureSize_ / 2 * kGaugeScale_[Evalution::kGreat] + kTextureSize_ / 2 * kGaugeScale_[Evalution::kPerfect];
-	////kGaugeStartPos_[Evalution::kGreat] = kGaugeStartPos_[Evalution::kGood] + kTextureSize_ / 2 * kGaugeScale_[Evalution::kGood] + kTextureSize_ / 2 * kGaugeScale_[Evalution::kGreat];
-	////kGaugeStartPos_[Evalution::kGood] = kBasePos_.x - kTextureSize_ / 2 * kBaseScale_ + kTextureSize_ / 2 * kGaugeScale_[Evalution::kGood];
-
 	kGaugeMarkPos_[0] = { kBasePos_.x - kTextureSize_ / 2 * kBaseScale_ + kTextureSize_ / 2 * kGaugeMarkScale_, kBasePos_.y };
 	kGaugeMarkPos_[1] = { kBasePos_.x + kTextureSize_ / 2 * kBaseScale_ - kTextureSize_ / 2 * kGaugeMarkScale_, kBasePos_.y };
-	//kGaugeEndPos_[Evalution::kPerfect] = kGaugeStartPos_[Evalution::kPerfect] + kTextureSize_ / 2 * kGaugeScale_[Evalution::kPerfect];
-	//kGaugeEndPos_[Evalution::kGreat] = kGaugeStartPos_[Evalution::kGreat] + kTextureSize_ / 2 * kGaugeScale_[Evalution::kGreat];
-	//kGaugeEndPos_[Evalution::kGood] = kGaugeStartPos_[Evalution::kGood] + kTextureSize_ / 2 * kGaugeScale_[Evalution::kGood];
-
 
 	SetGaugeWorldTransform({ kBasePos_.x,kBasePos_.y }, { kBaseScale_ + kBaseWhiteSpace_,kBaseScaleY_ + kBaseWhiteSpace_ }, 0.0f, GaugeDrawEnum::kBack);
 	SetGaugeWorldTransform({ kBasePos_.x,kBasePos_.y }, { kBaseScale_,kBaseScaleY_ }, 0.0f, GaugeDrawEnum::kGaugeBack);
@@ -1241,19 +1112,13 @@ void Player::SetFloatTransform() {
 	kGaugeStartPos_[Evalution::kGreat] = kGaugeStartPos_[Evalution::kPerfect] + kTextureSize_ / 2 * kGaugeScale_[Evalution::kPerfect] + kTextureSize_ / 2 * kGaugeScale_[Evalution::kGreat];
 	kGaugeStartPos_[Evalution::kGood] = kGaugeStartPos_[Evalution::kGreat] + kTextureSize_ / 2 * kGaugeScale_[Evalution::kGreat] + kTextureSize_ / 2 * kGaugeScale_[Evalution::kGood];
 
-	/*kGaugeEndPos_[Evalution::kPerfect] = kGaugeStartPos_[Evalution::kPerfect] + kTextureSize_ / 2 * kGaugeScale_[Evalution::kPerfect];
-	kGaugeEndPos_[Evalution::kGreat] = kGaugeStartPos_[Evalution::kGreat] + kTextureSize_ / 2 * kGaugeScale_[Evalution::kGreat];
-	kGaugeEndPos_[Evalution::kGood] = kGaugeStartPos_[Evalution::kGood] + kTextureSize_ / 2 * kGaugeScale_[Evalution::kGood];*/
+
 
 }
 
 void Player::GaugeUpdate() {
 
 	ApplyKoroneGlobalVariable();
-
-	/*SetGaugeWorldTransform(kBasePos_, { kGaugeScale_[Evalution::kPerfect],kBaseScaleY_ }, 0.0f, GaugeDrawEnum::kGaugePerfect);
-	SetGaugeWorldTransform(kBasePos_, { kGaugeScale_[Evalution::kGreat],kBaseScaleY_ }, 0.0f, GaugeDrawEnum::kGaugeGreat);
-	SetGaugeWorldTransform(kBasePos_, { kGaugeScale_[Evalution::kGood],kBaseScaleY_ }, 0.0f, GaugeDrawEnum::kGaugeGood);*/
 
 	if (flag) {
 
@@ -1265,7 +1130,7 @@ void Player::GaugeUpdate() {
 			{ kGaugeMarkScale_,kBaseScaleY_ }, 0.0f, GaugeDrawEnum::kMark);
 
 		if (score_->GetEvaluation()) {
-			//gaugeIsDraw_[GaugeDrawEnum::kMark] = false;
+			
 			MarkUpdate();
 		}
 
@@ -1273,62 +1138,8 @@ void Player::GaugeUpdate() {
 	else {
 		
 
-		//gaugeIsDraw_[GaugeDrawEnum::kMark] = false;
-
 	}
 
-	/*if (flag) {
-
-		int combo = std::clamp(score_->GetCombo(), 0, kMaxSpeedCombNum_);
-
-		if (evalutionCount_ == Ease::UseEase(1.0f, kMaxAddFrame_, combo, kMaxSpeedCombNum_, Ease::Constant)) {
-			gaugeIsDraw_[GaugeDrawEnum::kGaugePerfect] = true;
-			gaugeIsDraw_[GaugeDrawEnum::kGaugeGreat] = true;
-			gaugeIsDraw_[GaugeDrawEnum::kGaugeGood] = true;
-		}
-
-		if (evalutionCount_ < kEvalutionframe_[Evalution::kPerfect]) {
-
-			float pos = Ease::UseEase(kGaugeStartPos_[Evalution::kPerfect], kGaugeEndPos_[Evalution::kPerfect], evalutionCount_, kEvalutionframe_[kPerfect], Ease::EaseType::Constant);
-			float scale = Ease::UseEase(kGaugeScale_[Evalution::kPerfect], 0.0f, evalutionCount_, kEvalutionframe_[Evalution::kPerfect], Ease::EaseType::Constant);
-
-			SetGaugeWorldTransform({ pos,kBasePos_.y }, { scale,kBaseScaleY_ }, 0.0f, GaugeDrawEnum::kGaugePerfect);
-		}
-		else if (evalutionCount_ >= kEvalutionframe_[kPerfect]) {
-			gaugeIsDraw_[GaugeDrawEnum::kGaugePerfect] = false;
-		}
-		if (evalutionCount_ < kEvalutionframe_[Evalution::kGreat]) {
-
-			float pos = Ease::UseEase(kGaugeStartPos_[Evalution::kGreat], kGaugeEndPos_[Evalution::kGreat], evalutionCount_ - kEvalutionframe_[Evalution::kPerfect], kEvalutionframe_[Evalution::kGreat] - kEvalutionframe_[Evalution::kPerfect], Ease::EaseType::Constant);
-			float scale = Ease::UseEase(kGaugeScale_[Evalution::kGreat], 0.0f, evalutionCount_ - kEvalutionframe_[Evalution::kPerfect], kEvalutionframe_[Evalution::kGreat] - kEvalutionframe_[Evalution::kPerfect], Ease::EaseType::Constant);
-
-			SetGaugeWorldTransform({ pos,kBasePos_.y }, { scale,kBaseScaleY_ }, 0.0f, GaugeDrawEnum::kGaugeGreat);
-		}
-		else if (evalutionCount_ >= kEvalutionframe_[Evalution::kGreat]) {
-			gaugeIsDraw_[GaugeDrawEnum::kGaugeGreat] = false;
-		}
-		if (evalutionCount_ < kEvalutionframe_[Evalution::kGood]) {
-
-			float pos = Ease::UseEase(kGaugeStartPos_[Evalution::kGood], kGaugeEndPos_[Evalution::kGood], evalutionCount_ - kEvalutionframe_[Evalution::kGreat], kEvalutionframe_[Evalution::kGood] - kEvalutionframe_[Evalution::kGreat], Ease::EaseType::Constant);
-			float scale = Ease::UseEase(kGaugeScale_[Evalution::kGood], 0.0f, evalutionCount_ - kEvalutionframe_[Evalution::kGreat], kEvalutionframe_[Evalution::kGood] - kEvalutionframe_[Evalution::kGreat], Ease::EaseType::Constant);
-
-			SetGaugeWorldTransform({ pos,kBasePos_.y }, { scale,kBaseScaleY_ }, 0.0f, GaugeDrawEnum::kGaugeGood);
-		}
-		else if (evalutionCount_ >= kEvalutionframe_[Evalution::kGood]) {
-			gaugeIsDraw_[GaugeDrawEnum::kGaugeGood] = false;
-		}
-
-	}
-	else {
-
-		gaugeIsDraw_[GaugeDrawEnum::kGaugePerfect] = false;
-		gaugeIsDraw_[GaugeDrawEnum::kGaugeGreat] = false;
-		gaugeIsDraw_[GaugeDrawEnum::kGaugeGood] = false;
-
-		SetGaugeWorldTransform({ kGaugeStartPos_[Evalution::kPerfect],kBasePos_.y }, { kGaugeScale_[Evalution::kPerfect],18.0f }, 0.0f, GaugeDrawEnum::kGaugePerfect);
-		SetGaugeWorldTransform({ kGaugeStartPos_[Evalution::kGreat],kBasePos_.y }, { kGaugeScale_[Evalution::kGreat],18.0f }, 0.0f, GaugeDrawEnum::kGaugeGreat);
-		SetGaugeWorldTransform({ kGaugeStartPos_[Evalution::kGood],kBasePos_.y }, { kGaugeScale_[Evalution::kGood],18.0f }, 0.0f, GaugeDrawEnum::kGaugeGood);
-	}*/
 
 }
 
@@ -1350,11 +1161,6 @@ void Player::MarkUpdate() {
 	if (markCount_ > kMaxMarkFrame_) {
 		markCount_ = float(kMaxMarkFrame_);
 	}
-
-	/*float scale = Ease::UseEase(1.0f, 2.0f, markCount_, kMaxMarkFrame_, Ease::Constant);
-
-	SetGaugeWorldTransform(Ease::UseEase(kGaugeMarkPos_[0], kGaugeMarkPos_[1], easeFrame, kEvalutionframe_[Evalution::kGood], Ease::Constant),
-		{ kGaugeMarkScale_ * scale,kBaseScaleY_ * scale }, 0.0f, GaugeDrawEnum::kMark);*/
 
 }
 
