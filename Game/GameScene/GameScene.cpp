@@ -25,7 +25,7 @@ void GameScene::Initialize()
 	//	シーンの生成
 	title = std::make_unique<Title>(camera);
 	battle = std::make_unique<Battle>(camera);
-	result = std::make_unique<Result>();
+	result = std::make_unique<Result>(camera);
 
 	//	ロード前の生成
 	//プレイヤーモデルの初期化
@@ -84,6 +84,9 @@ void GameScene::Initialize()
 	battle->SetBlackBoxTexture(boxP);
 
 	result->SetUI(battle->GetUI());
+	result->SetModels(mobModels_[0]);
+	result->SetTentyoModel(tentyo_);
+	result->SetShopModel(shopModel_);
 
 	//	シーンの初期化
 	title->Initialize();
@@ -155,7 +158,7 @@ void GameScene::Update()
 	case GameScene::Scene::BATTLE:
 		battle->Update();
 		if (KeyInput::PushKey(DIK_P)) {
-			scene = Scene::TITLE;
+			sceneChangeFlag = true;
 		}
 		break;
 	case GameScene::Scene::RESULT:

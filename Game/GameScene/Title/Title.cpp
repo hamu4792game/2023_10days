@@ -78,10 +78,10 @@ void Title::Initialize()
 void Title::Update()
 {
 
-	ImGui::DragFloat3("cameraTrans", &camera_->transform.translation_.x, 1.0f);
-	ImGui::DragFloat3("cameraRotate", &camera_->transform.rotation_.x, AngleToRadian(1.0f));
-	ImGui::DragFloat3("shopTra", &tentyoTransform[Body].translation_.x, 1.0f);
-	ImGui::DragFloat3("shopRota", &tentyoTransform[Body].rotation_.x, AngleToRadian(1.0f));
+	//ImGui::DragFloat3("cameraTrans", &camera_->transform.translation_.x, 1.0f);
+	//ImGui::DragFloat3("cameraRotate", &camera_->transform.rotation_.x, AngleToRadian(1.0f));
+	//ImGui::DragFloat3("shopTra", &tentyoTransform[Body].translation_.x, 1.0f);
+	//ImGui::DragFloat3("shopRota", &tentyoTransform[Body].rotation_.x, AngleToRadian(1.0f));
 
 
 	CameraMove();
