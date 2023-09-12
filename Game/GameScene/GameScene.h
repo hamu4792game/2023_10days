@@ -61,6 +61,7 @@ private:
 private: // モデル用変数
 	// プレイヤーデータのモデル配列
 	std::vector<std::vector<std::shared_ptr<Model>>> mobModels_;
+	std::vector<std::shared_ptr<Model>> tentyo_;
 	//	ボタンUIのモデル 4個
 	std::vector<std::shared_ptr<Model>> bottonModels_;
 	std::vector<std::shared_ptr<Texture2D>> bottonTexture_;

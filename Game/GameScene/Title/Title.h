@@ -25,6 +25,7 @@ public: // setter
 	//void SetModelsType2(std::vector<std::shared_ptr<Model>> modeldate) { mobModels_type2 = modeldate; }
 	void SetBottonModels(std::vector<std::shared_ptr<Model>> modeldate) { bottonModels_ = modeldate; }
 	void SetShopModel(std::vector<std::shared_ptr<Model>> modeldate) { shopModels_ = modeldate; }
+	void SetTentyoModel(std::vector<std::shared_ptr<Model>> modeldate) { tentyoModels_ = modeldate; }
 
 private: // シーンで必要なモデル配列
 	//	プレイヤーデータのモデル配列
@@ -37,12 +38,16 @@ private: // シーンで必要なモデル配列
 
 	std::vector<std::shared_ptr<Model>> shopModels_;
 
+	std::vector<std::shared_ptr<Model>> tentyoModels_;
+
 	
 private:
 	//	中心座標
 	WorldTransform worldTransform;
 	//	キャラ用
 	WorldTransform chara;
+
+	std::vector<WorldTransform> tentyoTransform;
 
 	//	モデルデータ配列
 	std::vector<WorldTransform> parts_;
