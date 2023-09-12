@@ -232,6 +232,7 @@ private: //Spe
 		PUNCH,
 		BAT,
 		MISTERYPOWER,
+		MISS_,
 	};
 
 	//アニメーション状態、ここを変えるとそれぞれアニメーションが始まる
@@ -284,6 +285,8 @@ private: //Spe
 
 	void GetplayerR();
 	//攻撃
+
+	const float scaleSPD = 4.0f;
 
 	std::vector<esing> AnimeType[A_NUM];
 
