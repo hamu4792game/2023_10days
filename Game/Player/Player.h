@@ -208,6 +208,19 @@ private: // Korone
 		{kBasePos_.x + kTextureSize_ / 2 * kBaseScale_ - kTextureSize_ / 2 * kGaugeMarkScale_, kBasePos_.y }
 	};
 
+	float kGaugeEndPos_[kGaugeTransformNum_] = {
+		kGaugeStartPos_[Evalution::kPerfect] + kTextureSize_ / 2 * kGaugeScale_[Evalution::kPerfect],
+		kGaugeStartPos_[Evalution::kGreat] + kTextureSize_ / 2 * kGaugeScale_[Evalution::kGreat],
+		kGaugeStartPos_[Evalution::kGood] + kTextureSize_ / 2 * kGaugeScale_[Evalution::kGood]
+	};
+
+	/*float kGaugePerfectScale_ = kBaseScale_ * kEvalutionframe_[Evalution::kPerfect] / kEvalutionframe_[Evalution::kGood];
+
+	float kGaugeGreatScale_ = kBaseScale_ * (kEvalutionframe_[Evalution::kGreat] - kEvalutionframe_[Evalution::kPerfect]) / kEvalutionframe_[Evalution::kGood];
+
+	float kGaugeGoodScale_ = kBaseScale_ * (kEvalutionframe_[Evalution::kGood] - kEvalutionframe_[Evalution::kGreat]) / kEvalutionframe_[Evalution::kGood];*/
+
+
 	uint32_t gaugeColors_[kGaugeDrawNum_] = {};
 
 	bool gaugeIsDraw_[kGaugeDrawNum_] = {};

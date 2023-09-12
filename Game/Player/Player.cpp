@@ -1112,6 +1112,9 @@ void Player::SetFloatTransform() {
 	kGaugeStartPos_[Evalution::kGreat] = kGaugeStartPos_[Evalution::kPerfect] + kTextureSize_ / 2 * kGaugeScale_[Evalution::kPerfect] + kTextureSize_ / 2 * kGaugeScale_[Evalution::kGreat];
 	kGaugeStartPos_[Evalution::kGood] = kGaugeStartPos_[Evalution::kGreat] + kTextureSize_ / 2 * kGaugeScale_[Evalution::kGreat] + kTextureSize_ / 2 * kGaugeScale_[Evalution::kGood];
 
+	kGaugeEndPos_[Evalution::kPerfect] = kGaugeStartPos_[Evalution::kPerfect] + kTextureSize_ / 2 * kGaugeScale_[Evalution::kPerfect];
+	kGaugeEndPos_[Evalution::kGreat] = kGaugeStartPos_[Evalution::kGreat] + kTextureSize_ / 2 * kGaugeScale_[Evalution::kGreat];
+	kGaugeEndPos_[Evalution::kGood] = kGaugeStartPos_[Evalution::kGood] + kTextureSize_ / 2 * kGaugeScale_[Evalution::kGood];
 
 
 }
@@ -1120,24 +1123,89 @@ void Player::GaugeUpdate() {
 
 	ApplyKoroneGlobalVariable();
 
+
+	SetGaugeWorldTransform(kBasePos_, { kGaugeScale_[Evalution::kPerfect],kBaseScaleY_ }, 0.0f, GaugeDrawEnum::kGaugePerfect);
+	SetGaugeWorldTransform(kBasePos_, { kGaugeScale_[Evalution::kGreat],kBaseScaleY_ }, 0.0f, GaugeDrawEnum::kGaugeGreat);
+	SetGaugeWorldTransform(kBasePos_, { kGaugeScale_[Evalution::kGood],kBaseScaleY_ }, 0.0f, GaugeDrawEnum::kGaugeGood);
+
+	//if (flag) {
+
+
+	//	gaugeIsDraw_[GaugeDrawEnum::kMark] = true;
+
+	//	float easeFrame = std::clamp<float>(evalutionCount_, 0.0f, float(kEvalutionframe_[Evalution::kGood]));
+
+	//	SetGaugeWorldTransform(Ease::UseEase(kGaugeMarkPos_[0], kGaugeMarkPos_[1],easeFrame, kEvalutionframe_[Evalution::kGood],Ease::Constant),
+	//		{ kGaugeMarkScale_,kBaseScaleY_ }, 0.0f, GaugeDrawEnum::kMark);
+
+
+	//	if (score_->GetEvaluation()) {
+	//		//gaugeIsDraw_[GaugeDrawEnum::kMark] = false;
+	//		MarkUpdate();
+	//	}
+
+
+	//}
+	//else {
+	//	
+
+
+	//	//gaugeIsDraw_[GaugeDrawEnum::kMark] = false;
+
+	//}
+
 	if (flag) {
 
-		gaugeIsDraw_[GaugeDrawEnum::kMark] = true;
+		int combo = std::clamp(score_->GetCombo(), 0, kMaxSpeedCombNum_);
 
-		float easeFrame = std::clamp<float>(evalutionCount_, 0.0f, float(kEvalutionframe_[Evalution::kGood]));
+		if (evalutionCount_ == Ease::UseEase(1.0f, kMaxAddFrame_, combo, kMaxSpeedCombNum_, Ease::Constant)) {
+			gaugeIsDraw_[GaugeDrawEnum::kGaugePerfect] = true;
+			gaugeIsDraw_[GaugeDrawEnum::kGaugeGreat] = true;
+			gaugeIsDraw_[GaugeDrawEnum::kGaugeGood] = true;
+		}
 
-		SetGaugeWorldTransform(Ease::UseEase(kGaugeMarkPos_[0], kGaugeMarkPos_[1],easeFrame, kEvalutionframe_[Evalution::kGood],Ease::Constant),
-			{ kGaugeMarkScale_,kBaseScaleY_ }, 0.0f, GaugeDrawEnum::kMark);
+		if (evalutionCount_ < kEvalutionframe_[Evalution::kPerfect]) {
+
+			float pos = Ease::UseEase(kGaugeStartPos_[Evalution::kPerfect], kGaugeEndPos_[Evalution::kPerfect], evalutionCount_, kEvalutionframe_[kPerfect], Ease::EaseType::Constant);
+			float scale = Ease::UseEase(kGaugeScale_[Evalution::kPerfect], 0.0f, evalutionCount_, kEvalutionframe_[Evalution::kPerfect], Ease::EaseType::Constant);
+
+			SetGaugeWorldTransform({ pos,kBasePos_.y }, { scale,kBaseScaleY_ }, 0.0f, GaugeDrawEnum::kGaugePerfect);
+		}
+		else if (evalutionCount_ >= kEvalutionframe_[kPerfect]) {
+			gaugeIsDraw_[GaugeDrawEnum::kGaugePerfect] = false;
+		}
+		if (evalutionCount_ < kEvalutionframe_[Evalution::kGreat]) {
+
+			float pos = Ease::UseEase(kGaugeStartPos_[Evalution::kGreat], kGaugeEndPos_[Evalution::kGreat], evalutionCount_ - kEvalutionframe_[Evalution::kPerfect], kEvalutionframe_[Evalution::kGreat] - kEvalutionframe_[Evalution::kPerfect], Ease::EaseType::Constant);
+			float scale = Ease::UseEase(kGaugeScale_[Evalution::kGreat], 0.0f, evalutionCount_ - kEvalutionframe_[Evalution::kPerfect], kEvalutionframe_[Evalution::kGreat] - kEvalutionframe_[Evalution::kPerfect], Ease::EaseType::Constant);
+
+			SetGaugeWorldTransform({ pos,kBasePos_.y }, { scale,kBaseScaleY_ }, 0.0f, GaugeDrawEnum::kGaugeGreat);
+		}
+		else if (evalutionCount_ >= kEvalutionframe_[Evalution::kGreat]) {
+			gaugeIsDraw_[GaugeDrawEnum::kGaugeGreat] = false;
+		}
+		if (evalutionCount_ < kEvalutionframe_[Evalution::kGood]) {
+
+			float pos = Ease::UseEase(kGaugeStartPos_[Evalution::kGood], kGaugeEndPos_[Evalution::kGood], evalutionCount_ - kEvalutionframe_[Evalution::kGreat], kEvalutionframe_[Evalution::kGood] - kEvalutionframe_[Evalution::kGreat], Ease::EaseType::Constant);
+			float scale = Ease::UseEase(kGaugeScale_[Evalution::kGood], 0.0f, evalutionCount_ - kEvalutionframe_[Evalution::kGreat], kEvalutionframe_[Evalution::kGood] - kEvalutionframe_[Evalution::kGreat], Ease::EaseType::Constant);
+
+			SetGaugeWorldTransform({ pos,kBasePos_.y }, { scale,kBaseScaleY_ }, 0.0f, GaugeDrawEnum::kGaugeGood);
+		}
+		else if (evalutionCount_ >= kEvalutionframe_[Evalution::kGood]) {
+			gaugeIsDraw_[GaugeDrawEnum::kGaugeGood] = false;
+		}
 
 		if (score_->GetEvaluation()) {
-			
-			MarkUpdate();
+			gaugeIsDraw_[GaugeDrawEnum::kGaugePerfect] = false;
+			gaugeIsDraw_[GaugeDrawEnum::kGaugeGreat] = false;
+			gaugeIsDraw_[GaugeDrawEnum::kGaugeGood] = false;
 		}
 
 	}
-	else {
-		
 
+		SetGaugeWorldTransform({ kGaugeStartPos_[Evalution::kPerfect],kBasePos_.y }, { kGaugeScale_[Evalution::kPerfect],18.0f }, 0.0f, GaugeDrawEnum::kGaugePerfect);
+		SetGaugeWorldTransform({ kGaugeStartPos_[Evalution::kGreat],kBasePos_.y }, { kGaugeScale_[Evalution::kGreat],18.0f }, 0.0f, GaugeDrawEnum::kGaugeGreat);
+		SetGaugeWorldTransform({ kGaugeStartPos_[Evalution::kGood],kBasePos_.y }, { kGaugeScale_[Evalution::kGood],18.0f }, 0.0f, GaugeDrawEnum::kGaugeGood);
 	}
 
 
