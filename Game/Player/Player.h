@@ -153,8 +153,6 @@ private: // Korone
 
 	Score* score_ = nullptr;
 
-	//Input* input_ = nullptr;
-
 	// 一番遅いフレーム。これを基準にコンボ数によって早くする。
 	const int kIntervalFrame_ = 30;
 
@@ -203,12 +201,6 @@ private: // Korone
 			kGaugeStartPos_[Evalution::kGreat] + kTextureSize_ / 2 * kGaugeScale_[Evalution::kGreat] + kTextureSize_ / 2 * kGaugeScale_[Evalution::kGood],
 	};
 
-	//float kGaugeEndPos_[kGaugeTransformNum_] = {
-	//	kGaugeStartPos_[Evalution::kPerfect] + kTextureSize_ / 2 * kGaugeScale_[Evalution::kPerfect],
-	//	kGaugeStartPos_[Evalution::kGreat] + kTextureSize_ / 2 * kGaugeScale_[Evalution::kGreat],
-	//	kGaugeStartPos_[Evalution::kGood] + kTextureSize_ / 2 * kGaugeScale_[Evalution::kGood]
-	//};
-
 	float kGaugeMarkScale_ = 1.0f;
 
 	Vector2 kGaugeMarkPos_[2] = {
@@ -227,6 +219,7 @@ private: // Korone
 	float kGaugeGreatScale_ = kBaseScale_ * (kEvalutionframe_[Evalution::kGreat] - kEvalutionframe_[Evalution::kPerfect]) / kEvalutionframe_[Evalution::kGood];
 
 	float kGaugeGoodScale_ = kBaseScale_ * (kEvalutionframe_[Evalution::kGood] - kEvalutionframe_[Evalution::kGreat]) / kEvalutionframe_[Evalution::kGood];*/
+
 
 	uint32_t gaugeColors_[kGaugeDrawNum_] = {};
 
