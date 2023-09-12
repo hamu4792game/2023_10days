@@ -140,7 +140,7 @@ void Battle::Update()
 {
 	//	ボタンの回転
 	if (!player_->GetMoveFlag()) {
-		bottonTransform_.rotation_.y += AngleToRadian(360.0f / player_->GetMAX_Frame()) * Battle::masterSpeed;
+		bottonTransform_.rotation_.y += AngleToRadian(720.0f / player_->GetMAX_Frame()) * Battle::masterSpeed;
 	}
 	else {
 		bottonTransform_.rotation_.y = 0.0f;

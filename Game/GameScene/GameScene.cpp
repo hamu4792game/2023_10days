@@ -279,16 +279,16 @@ void GameScene::ModelLoad()
 	gaugeTextures_[Player::GaugeResource::kGaugeResource]->Texture("Resources/gauge/white.png", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl");
 
 	//ボタンオブジェクトロード
-	bottonModels_[0]->Texture("Resources/hud/botton.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl","hud/A/Abottn.png");
-	bottonModels_[1]->Texture("Resources/hud/botton.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl","hud/B/Bbottn.png");
-	bottonModels_[2]->Texture("Resources/hud/botton.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl","hud/X/Xbottn.png");
-	bottonModels_[3]->Texture("Resources/hud/botton.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl","hud/Y/Ybottn.png");
+	bottonModels_[0]->Texture("Resources/hud/botton.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl","hud/A/DownBot.png");
+	bottonModels_[1]->Texture("Resources/hud/botton.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl","hud/B/RightBot.png");
+	bottonModels_[2]->Texture("Resources/hud/botton.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl","hud/X/LeftBot.png");
+	bottonModels_[3]->Texture("Resources/hud/botton.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl","hud/Y/UpBot.png");
 
 	//	
-	bottonTexture_[0]->Texture("Resources/hud/A/Abottn.png", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl");
-	bottonTexture_[1]->Texture("Resources/hud/B/Bbottn.png", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl");
-	bottonTexture_[2]->Texture("Resources/hud/X/Xbottn.png", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl");
-	bottonTexture_[3]->Texture("Resources/hud/Y/Ybottn.png", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl");
+	bottonTexture_[0]->Texture("Resources/hud/A/DownBot.png", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl");
+	bottonTexture_[1]->Texture("Resources/hud/B/RightBot.png", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl");
+	bottonTexture_[2]->Texture("Resources/hud/X/LeftBot.png", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl");
+	bottonTexture_[3]->Texture("Resources/hud/Y/UpBot.png", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl");
 
 	shopModel_[0]->Texture("Resources/shop/shop.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl", "shop/shop.png");
 	shopModel_[1]->Texture("Resources/plane/plane.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl", "hud/board.png");

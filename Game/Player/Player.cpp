@@ -990,9 +990,53 @@ void Player::HitTest(Enemy* enemy) {
 			}
 		}
 
-		if (evalutionCount_ >= kEvalutionframe_[kMiss]) {
-			enemy->Die(1);
-			score_->AddMiss();
+		if (KeyInput::GetKey(DIK_UPARROW)) {
+			if (enemy->GetBottomType() == Enemy::BottomTypeClass::kY) {
+				HitEvalution(enemy);
+			}
+			else {
+				enemy->Die(0);
+				score_->AddMiss();
+
+				evalutionCount_ = 0.0f;
+			}
+		}
+		else if (KeyInput::PushKey(DIK_DOWNARROW)) {
+			if (enemy->GetBottomType() == Enemy::BottomTypeClass::kA) {
+
+				HitEvalution(enemy);
+			}
+			else {
+				enemy->Die(0);
+				score_->AddMiss();
+
+				evalutionCount_ = 0.0f;
+			}
+		}
+		else if (KeyInput::PushKey(DIK_LEFTARROW)) {
+			if (enemy->GetBottomType() == Enemy::BottomTypeClass::kX) {
+				HitEvalution(enemy);
+			}
+			else {
+				enemy->Die(1);
+				score_->AddMiss();
+
+				evalutionCount_ = 0.0f;
+			}
+		}
+		else if (KeyInput::PushKey(DIK_RIGHTARROW)) {
+			if (enemy->GetBottomType() == Enemy::BottomTypeClass::kB) {
+				HitEvalution(enemy);
+			}
+			else {
+				enemy->Die(1);
+				score_->AddMiss();
+
+				evalutionCount_ = 0.0f;
+			}
+		}
+
+		if (evalutionCount_ > kEvalutionframe_[kGood] * 2.0f) {
 
 			memoFrame_ = evalutionCount_;
 			evalutionCount_ = 0;
