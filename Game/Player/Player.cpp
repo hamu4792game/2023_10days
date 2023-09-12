@@ -1043,6 +1043,7 @@ void Player::HitTest(Enemy* enemy) {
 		if (evalutionCount_ > kEvalutionframe_[kGood]) {
 
 			score_->AddMiss();
+			enemy->Die(1);
 			memoFrame_ = evalutionCount_;
 			evalutionCount_ = 0;
 		}
