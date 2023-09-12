@@ -61,6 +61,21 @@ void Timer::Update() {
 		time_--;
 	}
 
+	if (time_ == 10) {
+		color_ = 0xEE1111FF;
+	}
+
+	if (time_ <= 10) {
+
+		Vector2 pos = pos_;
+
+		pos.x += rand() % 20 - 10;
+		pos.y += rand() % 20 - 10;
+
+		float scale = scale_ + 0.3f;
+
+		SetWorldTransform(pos, scale, 0.0f);
+	}
 }
 
 // posは一番左の数字の真ん中の座標。
