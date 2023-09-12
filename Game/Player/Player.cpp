@@ -1036,8 +1036,9 @@ void Player::HitTest(Enemy* enemy) {
 			}
 		}
 
-		if (evalutionCount_ > kEvalutionframe_[kGood] * 2.0f) {
+		if (evalutionCount_ > kEvalutionframe_[kGood]) {
 
+			score_->AddMiss();
 			memoFrame_ = evalutionCount_;
 			evalutionCount_ = 0;
 		}
