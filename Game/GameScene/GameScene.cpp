@@ -265,6 +265,7 @@ void GameScene::ModelLoad()
 	numberTextures_[9]->Texture("Resources/number/9.png", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl");
 
 	// UIのperfectやcomboなど
+	UITextures_[UI::kBack]->Texture("Resources/gauge/white.png", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl");
 	UITextures_[UI::kScore]->Texture("Resources/hud/ScoreTextures/SCORE.png", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl");
 	UITextures_[UI::kHighScore]->Texture("Resources/hud/ScoreTextures/HIGHSCORE.png", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl");
 	UITextures_[UI::kCombo]->Texture("Resources/hud/ScoreTextures/COMBO.png", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl");

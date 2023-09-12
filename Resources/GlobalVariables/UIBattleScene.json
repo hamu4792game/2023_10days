@@ -1,5 +1,10 @@
 {
     "UIBattleScene": {
+        "BackPos": [
+            640.0,
+            360.0
+        ],
+        "BackScale": 1.0,
         "ComboPos": [
             1075.0,
             270.0

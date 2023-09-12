@@ -179,6 +179,9 @@ void UI::ResultInitialize() {
 	colors_[UITextureNames::kGood] = 0xFFFFFFFF;
 	colors_[UITextureNames::kMiss] = 0xFFFFFFFF;
 
+	colors_[UITextureNames::kBack] = 0x222222FF;
+
+	isDraw_[UITextureNames::kBack] = true;
 	isDraw_[UITextureNames::kScore] = false;
 	isDraw_[UITextureNames::kCombo] = false;
 	isDraw_[UITextureNames::kHighScore] = false;
@@ -453,6 +456,6 @@ void UI::DrawUITextures(const Matrix4x4& viewProjectionMat) {
 
 void UI::Draw2D(const Matrix4x4& viewProjectionMat) {
 
-	score_->Draw2D(viewProjectionMat);
 	DrawUITextures(viewProjectionMat);
+	score_->Draw2D(viewProjectionMat);
 }

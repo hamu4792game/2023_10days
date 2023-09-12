@@ -1,5 +1,10 @@
 {
     "UIResultScene": {
+        "BackPos": [
+            640.0,
+            360.0
+        ],
+        "BackScale": 170.0,
         "ComboPos": [
             400.0,
             300.0

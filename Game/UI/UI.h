@@ -12,6 +12,7 @@ class UI {
 public:
 
 	enum UITextureNames {
+		kBack,
 		kScore,
 		kHighScore,
 		kCombo,
@@ -22,7 +23,7 @@ public:
 		kMiss,
 	};
 
-	static const int kUITexturesMaxNum_ = 8;
+	static const int kUITexturesMaxNum_ = 9;
 
 public:
 
@@ -118,6 +119,7 @@ private:
 
 		// Pos
 		{
+		"BackPos",
 		"ScorePos",
 		"HighScorePos",
 		"ComboPos",
@@ -129,6 +131,7 @@ private:
 		},
 		// Scale
 		{
+		"BackScale",
 		"ScoreScale",
 		"HighScoreScale",
 		"ComboScale",
