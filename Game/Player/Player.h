@@ -316,4 +316,5 @@ private: //Spe
 	//ダウンアニメ
 	std::vector<esing> pDown;
 
+	std::vector<esing> eatRamen;
 };

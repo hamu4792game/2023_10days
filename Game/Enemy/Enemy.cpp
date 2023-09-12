@@ -1177,7 +1177,6 @@ void Enemy::Exploding_limbs() {
 
 void Enemy::Update()
 {
-	
 	//死んだときのアニメーション
 	BlowAway();
 

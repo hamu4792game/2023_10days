@@ -113,9 +113,7 @@ void Player::Initialize(std::vector<std::shared_ptr<Model>> models, WorldTransfo
 #pragma region Animation関数
 void Player::AnimeInitialize() {
 
-
 	state_ =NOMOTION;
-
 
 	wave_A = ATKWAIT;
 
@@ -508,6 +506,83 @@ void Player::AnimeInitialize() {
 		{0.0f,-3.0f,0.0f},
 	};
 #pragma endregion
+
+#pragma region ラーメン食べる
+
+	eatRamen.resize(parts_.size());
+	eatRamen[Body] = {
+		{0.3f, 0.0f, 0.0f},
+		{0.4f, 0.0f, 0.0f},
+	};
+	eatRamen[Head] = {
+		{0.4f, 0.0f, 0.0f},
+		{0.4f, 0.0f, 0.0f},
+	};
+	eatRamen[BodyUnder] = {
+		{-0.3f, 0.0f, 0.0f},
+		{-0.4f, 0.0f, 0.0f},
+	};
+	//
+	eatRamen[LArm1] = {
+		{0.15f, 0.5f, 0.0f},
+		{0.15f, 0.5f, 0.0f},
+	};
+	eatRamen[LArm2] = {
+		{0.0f, 0.76f, 0.0f},
+		{0.0f, 0.76f, 0.0f},
+	};
+	eatRamen[LHand] = {
+		{0.0f, 0.0f, 0.0f},
+		{0.0f, 0.0f, 0.0f},
+	};
+	//
+	eatRamen[RArm1] = {
+		{0.1f, -0.13f, 0.0f},
+		{-0.5f, -0.13f, 0.0f},
+	};
+
+	eatRamen[RArm2] = {
+		{0.0f, -2.39f, 0.0f},
+		{0.0f, -2.39f, 0.0f},
+	};
+	eatRamen[RHand] = {
+		{0.0f, 0.0f, 0.0f},
+		{0.0f, 0.0f, 0.0f},
+	};
+
+
+	//
+	eatRamen[LLeg1] = {
+		{-1.5f, -0.3f, 0.0f},
+		{-1.5f, -0.3f, 0.0f},
+	};
+
+	eatRamen[LLeg2] = {
+		{1.5f, 0.0f, 0.0f},
+		{1.5f, 0.0f, 0.0f},
+	};
+	eatRamen[LFoot] = {
+		{0.0f, 0.0f, 0.0f},
+		{0.0f, 0.0f, 0.0f},
+	};
+
+	//
+	eatRamen[RLeg1] = {
+		{-1.5f, 0.3f, 0.0f},
+		{-1.5f, 0.3f, 0.0f},
+	};
+
+	eatRamen[RLeg2] = {
+		{1.5f, 0.0f, 0.0f},
+		{1.5f, 0.0f, 0.0f},
+	};
+	eatRamen[RFoot] = {
+		{0.0f, 0.0f, 0.0f},
+		{0.0f, 0.0f, 0.0f},
+	};
+#pragma endregion
+
+
 
 
 	//初期ポーズ設定
