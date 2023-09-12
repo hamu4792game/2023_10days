@@ -191,6 +191,8 @@ private: // Korone
 
 	float memoFrame_ = 0;
 
+	float memoF_ = 0;
+
 	float markCount_ = 0;
 
 	int kMaxMarkFrame_ = 30;
