@@ -1171,39 +1171,6 @@ void Enemy::Update()
 	BottonW_.UpdateMatrix();
 }
 
-
-void Enemy::Draw(const Matrix4x4& viewProjection, std::vector<std::shared_ptr<Model>> botunModels)
-{
-	for (uint16_t i = 0u; i < parts_.size(); i++)
-	{
-		Model::ModelDraw(parts_[i], viewProjection, 0xffffffff, models_[i].get());
-	}
-
-
-	if (!isDead_) {
-		//ボタン描画
-		switch (type_)
-		{
-		case Enemy::kA:
-			Model::ModelDraw(BottonW_, viewProjection, 0xffffffff, botunModels[0].get());
-			break;
-		case Enemy::kB:
-			Model::ModelDraw(BottonW_, viewProjection, 0xffffffff, botunModels[1].get());
-
-			break;
-		case Enemy::kX:
-			Model::ModelDraw(BottonW_, viewProjection, 0xffffffff, botunModels[2].get());
-
-			break;
-		case Enemy::kY:
-			Model::ModelDraw(BottonW_, viewProjection, 0xffffffff, botunModels[3].get());
-			break;
-		default:
-			break;
-		}
-	}
-}
-
 void Enemy::Draw(const Matrix4x4& viewProjection)
 {
 	for (uint16_t i = 0u; i < parts_.size(); i++)

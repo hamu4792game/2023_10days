@@ -250,7 +250,7 @@ void Battle::Draw(const Matrix4x4& viewProjection)
 	player_->Draw(viewProjection);
 
 	for (Enemy* enemy : enemies_) {
-		enemy->Draw(viewProjection, bottonModels_);
+		enemy->Draw(viewProjection);
 	}
 	
 	if (enemyKillCount_ < 40) {
