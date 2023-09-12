@@ -1161,9 +1161,9 @@ void Enemy::Exploding_limbs() {
 			};
 
 			Random_V[i] = {
-				(float)GetRandomNum(1,true),
-				(float)GetRandomNum(1,true),
-				(float)GetRandomNum(5,false),
+				(float)GetRandomNum(1,true)/5.0f,
+				(float)GetRandomNum(1,true)/5.0f,
+				(float)GetRandomNum(1,false)+1.0f/2,
 			};
 		}
 	}
