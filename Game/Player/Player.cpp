@@ -1206,7 +1206,6 @@ void Player::GaugeUpdate() {
 		SetGaugeWorldTransform({ kGaugeStartPos_[Evalution::kPerfect],kBasePos_.y }, { kGaugeScale_[Evalution::kPerfect],18.0f }, 0.0f, GaugeDrawEnum::kGaugePerfect);
 		SetGaugeWorldTransform({ kGaugeStartPos_[Evalution::kGreat],kBasePos_.y }, { kGaugeScale_[Evalution::kGreat],18.0f }, 0.0f, GaugeDrawEnum::kGaugeGreat);
 		SetGaugeWorldTransform({ kGaugeStartPos_[Evalution::kGood],kBasePos_.y }, { kGaugeScale_[Evalution::kGood],18.0f }, 0.0f, GaugeDrawEnum::kGaugeGood);
-	}
 
 
 }
