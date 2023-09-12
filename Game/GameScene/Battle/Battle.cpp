@@ -1,7 +1,8 @@
 #include "Battle.h"
-#include "externals/imgui/imgui.h"
+//#include "externals/imgui/imgui.h"
 #include "math/Vector4.h"
 #include "Game/GameScene/GameScene.h"
+#include <algorithm>
 
 // 確認のため追加 by.Korone
 #include "Engine/Input/KeyInput/KeyInput.h"
@@ -25,7 +26,6 @@ Battle::Battle(std::shared_ptr<Camera> camera)
 
 	timer_ = std::make_unique<Timer>();
 
-	bottonTransform_.resize(2);
 }
 
 Battle::~Battle() {
@@ -59,6 +59,16 @@ void Battle::Initialize()
 
 	timer_->Initialize();
 
+	bottonTransform_.parent_ = &camera_->transform;
+	bottonTransform_.translation_ = Vector3(0.0f, 0.0f, 1.0f);
+	bottonTransform_.scale_ = Vector3(0.06f, 0.06f, 0.06f);
+	
+	tutorialFlag_ = true;
+
+
+	blackTrans_.scale_ = Vector3(80.0f, 45.0f, 1.0f);
+	blackTrans_.cMono->pibot = Vector2(642.0f, 359.0f);
+	blackTrans_.cMono->rate = 800.0f;
 }
 
 
@@ -128,8 +138,31 @@ void Battle::EnemyReset() {
 
 void Battle::Update()
 {
+	//	ボタンの回転
+	if (!player_->GetMoveFlag()) {
+		bottonTransform_.rotation_.y += AngleToRadian(360.0f / player_->GetMAX_Frame());
+	}
+	else {
+		bottonTransform_.rotation_.y = 0.0f;
+	}
+	bottonTransform_.UpdateMatrix();
 
-	timer_->Update();
+	//	
+	if (!tutorialFlag_) {
+		timer_->Update();
+	}
+	else {
+		if (score_->GetEvaluation()) {
+			tutorialFlag_ = false;
+		}
+		else
+		{
+			blackTrans_.cMono->rate -= 10.0f;
+			blackTrans_.cMono->rate = std::clamp<float>(blackTrans_.cMono->rate, 110.0f, 800.0f);
+			blackTrans_.UpdateMatrix();
+		}
+		
+	}
 
 	for(Enemy* enemy : enemies_){
 		if (enemy->GetNum() == enemyKillCount_) {
@@ -167,7 +200,6 @@ void Battle::Update()
 
 	player_->Update();
 	worldTransform->UpdateMatrix();
-
 }
 
 void Battle::Draw(const Matrix4x4& viewProjection)
@@ -179,7 +211,7 @@ void Battle::Draw(const Matrix4x4& viewProjection)
 		enemy->Draw(viewProjection, bottonModels_);
 	}
 	
-	
+	Model::ModelDraw(bottonTransform_, viewProjection, 0xffffffff, bottonModels_[type_].get());
 }
 
 void Battle::Draw2D(const Matrix4x4& viewProjection) {
@@ -188,8 +220,7 @@ void Battle::Draw2D(const Matrix4x4& viewProjection) {
 	ui_->Draw2D(viewProjection);
 	timer_->Draw2D(viewProjection);
 
-	for (uint16_t i = 0u; i < bottonTransform_.size(); i++) {
-		Texture2D::TextureDraw(bottonTransform_[i], viewProjection, 0xffffffff, bottonTexture_[type_].get());
+	if (tutorialFlag_) {
+		Texture2D::TextureDraw(blackTrans_, viewProjection, 0x000000aa, blackBox_.get());
 	}
-
 }

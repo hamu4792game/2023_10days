@@ -1,6 +1,6 @@
 #include "Player.h"
 #include "Engine/Input/KeyInput/KeyInput.h"
-#include "externals/imgui/imgui.h"
+//#include "externals/imgui/imgui.h"
 
 
 #include "Game/Enemy/Enemy.h"
@@ -18,12 +18,6 @@
 Player::Player(std::shared_ptr<Camera> camera) : kMax_frame(60.0f)
 {
 	camera_ = camera;
-	//for (uint16_t i = 0u; i < PARTS::Num; i++) {
-	//	models_.push_back(std::make_unique<Model>());
-	//}
-
-	//parts_.resize(models_.size());
-
 	for (int i = 0; i < kGaugeDrawNum_; i++) {
 		gaugeWorldTransforms_.push_back(std::make_shared<WorldTransform>());
 	}
@@ -793,15 +787,6 @@ void Player::PDown() {
 }
 #pragma endregion
 
-
-
-void Player::ModelLoad()
-{
-
-
-	//models_[Body]->Texture("Resources/player/body.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl");
-}
-
 void Player::Update()
 {
 
@@ -866,6 +851,7 @@ void Player::HitEvalution(Enemy* enemy) {
 	//}
 }
 
+//	使ってない
 void Player::Move() {
 
 	//	攻撃(入力)された時
@@ -905,6 +891,7 @@ void Player::MoveType2() {
 
 	//	最大フレーム数をコンボに応じて減少
 	MAX_frame = kMax_frame - static_cast<float>(score_->GetCombo());
+	MAX_frame = std::clamp<float>(MAX_frame, 30.0f, 60.0f);
 
 	if (flag) {
 		

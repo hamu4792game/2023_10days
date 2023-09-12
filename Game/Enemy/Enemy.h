@@ -44,9 +44,6 @@ public:
 	Enemy() = default;
 	~Enemy() = default;
 
-	
-	void ModelLoad();
-
 	//	更新処理
 	void Update();
 

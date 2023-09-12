@@ -1158,11 +1158,6 @@ void Enemy::WaitAnimetion(int num) {
 	
 }
 
-void Enemy::ModelLoad()
-{
-	//models_[Body]->Texture("Resources/player/body.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl");
-}
-
 void Enemy::Update()
 {
 	
