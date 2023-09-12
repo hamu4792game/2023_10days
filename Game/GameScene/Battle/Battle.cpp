@@ -1,5 +1,5 @@
 #include "Battle.h"
-#include "externals/imgui/imgui.h"
+//#include "externals/imgui/imgui.h"
 #include "math/Vector4.h"
 #include "Game/GameScene/GameScene.h"
 #include <algorithm>
@@ -138,16 +138,12 @@ void Battle::EnemyReset() {
 
 void Battle::Update()
 {
-	//ImGui::Text("%f:%f:%f", bottonTransform_[0].GetTranslate().x, bottonTransform_[0].GetTranslate().y, bottonTransform_[0].GetTranslate().z);
-	ImGui::DragFloat3("bottonTr", &bottonTransform_.translation_.x, 1.0f);
-	ImGui::DragFloat3("bottonRo", &bottonTransform_.rotation_.x, 0.1f);
-	ImGui::DragFloat3("bottonSc", &bottonTransform_.scale_.x, 0.01f);
-	ImGui::DragFloat2("block", &blackTrans_.cMono->pibot.x, 1.0f);
-	ImGui::DragFloat("block", &blackTrans_.cMono->rate, 1.0f);
-
 	//	ボタンの回転
 	if (!player_->GetMoveFlag()) {
 		bottonTransform_.rotation_.y += AngleToRadian(360.0f / player_->GetMAX_Frame());
+	}
+	else {
+		bottonTransform_.rotation_.y = 0.0f;
 	}
 	bottonTransform_.UpdateMatrix();
 
