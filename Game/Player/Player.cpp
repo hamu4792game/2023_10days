@@ -1,6 +1,6 @@
 #include "Player.h"
 #include "Engine/Input/KeyInput/KeyInput.h"
-#include "externals/imgui/imgui.h"
+//#include "externals/imgui/imgui.h"
 
 
 #include "Game/Enemy/Enemy.h"
@@ -18,12 +18,6 @@
 Player::Player(std::shared_ptr<Camera> camera) : kMax_frame(60.0f)
 {
 	camera_ = camera;
-	//for (uint16_t i = 0u; i < PARTS::Num; i++) {
-	//	models_.push_back(std::make_unique<Model>());
-	//}
-
-	//parts_.resize(models_.size());
-
 	for (int i = 0; i < kGaugeDrawNum_; i++) {
 		gaugeWorldTransforms_.push_back(std::make_shared<WorldTransform>());
 	}
@@ -508,6 +502,11 @@ void Player::AnimeInitialize() {
 		{1.0f, 0.0f, 0.0f},
 		{-0.17f, 0.0f, 0.0f},
 	};
+
+	bodyEsing = {
+		{0.0f,-6.0f,0.0f},
+		{0.0f,-3.0f,0.0f},
+	};
 #pragma endregion
 
 
@@ -531,7 +530,13 @@ void Player::Animetion() {
 	switch (state_)
 	{
 	case Player::NOMOTION:
-		if (score_->GetEvaluation()) {
+		//ミスだった場合
+		if (score_->GetEvaluation() == Score::Evaluation::kMiss) {
+			state_ = MISS_;
+			isAnimeStart_ = false;
+			wave_A = ATKWAIT;
+			//ミスじゃなっかった場合
+		}else if (score_->GetEvaluation()) {
 			state_ = PUNCH;
 			isAnimeStart_ = false;
 			wave_A = ATKWAIT;
@@ -546,7 +551,7 @@ void Player::Animetion() {
 	case Player::MISTERYPOWER:
 		break;
 
-	case Player::MISS:
+	case Player::MISS_:
 		PDown();
 		break;
 	default:
@@ -613,7 +618,7 @@ void Player::ATK_R_F(int num) {
 				parts_[i].rotation_ = ES(ESALL[i], T_);
 			}
 			//Tを加算
-			T_ += AddT_*4.0f;
+			T_ += AddT_*scaleSPD;
 			//シーン切り替え処理
 			if (T_ >= 1.0f) {
 				wave_A = BACK;
@@ -669,29 +674,118 @@ void Player::PDown() {
 		if (!isAnimeStart_) {
 			isAnimeStart_ = true;
 			T_ = 0;
+
+			//現在の回転量の取得
+			GetplayerR();
+			for (int i = 0; i < Num; i++) {
+				//ダウンポーズ設定
+				ESALL[i] = {
+					nowR[i],
+					pDown[i].st
+				};
+			}
+			//ボディの座標も動かすので設定
+			BDE = {
+				parts_[Body].translation_,
+				bodyEsing.st
+			};
 		}
 		else {
+			//更新
+			for (int i = 0; i < Num; i++) {
+				parts_[i].rotation_ = ES(ESALL[i], T_);
+			}
+			parts_[Body].translation_ = ES(BDE, T_);
+			//Tを加算
+			T_ += AddT_*scaleSPD;
+			//シーン切り替え処理
+			if (T_ >= 1.0f) {
+				wave_A = ATK;
+				//state_ = NOMOTION;
+				T_ = 0;
+				isAnimeStart_ = false;
+			}
 
 		}
 		break;
 	case Player::ATK:
+		if (!isAnimeStart_) {
+			isAnimeStart_ = true;
+			T_ = 0;
+
+			//現在の回転量の取得
+			//GetplayerR();
+			for (int i = 0; i < Num; i++) {
+				//ダウンポーズ設定
+				ESALL[i] = pDown[i];			
+			}
+			//ボディの座標も動かすので設定
+			BDE = bodyEsing;
+		}
+		else {
+			//更新
+			for (int i = 0; i < Num; i++) {
+				parts_[i].rotation_ = ES(ESALL[i], T_);
+			}
+			parts_[Body].translation_ = ES(BDE, T_);
+
+			//Tを加算
+			T_ += AddT_*scaleSPD/2;
+			//シーン切り替え処理
+			if (T_ >= 1.0f) {
+				wave_A = BACK;
+				//state_ = NOMOTION;
+				T_ = 0;
+				isAnimeStart_ = false;
+			}
+
+		}
 		break;
 	case Player::BACK:
+		if (!isAnimeStart_) {
+			isAnimeStart_ = true;
+			T_ = 0;
+
+			//現在の回転量の取得
+			//GetplayerR();
+			for (int i = 0; i < Num; i++) {
+				//ダウンポーズ設定
+				ESALL[i] = { 
+					pDown[i].ed,
+					ATK_W[i]
+				};
+			}
+			//ボディの座標も動かすので設定
+			BDE = { 
+				bodyEsing.ed,
+				{0.0f,0.0f,0.0f}
+			};
+		}
+		else {
+			//更新
+			for (int i = 0; i < Num; i++) {
+				parts_[i].rotation_ = ES(ESALL[i], T_);
+			}
+			parts_[Body].translation_ = ES(BDE, T_);
+
+			//Tを加算
+			T_ += AddT_*scaleSPD/2;
+			//シーン切り替え処理
+			if (T_ >= 1.0f) {
+				wave_A = ATKWAIT;
+				state_ = NOMOTION;
+				T_ = 0;
+				isAnimeStart_ = false;
+				parts_[Body].translation_ = { 0.0f,0.0f,0.0f };
+			}
+
+		}
 		break;
 	default:
 		break;
 	}
 }
 #pragma endregion
-
-
-
-void Player::ModelLoad()
-{
-
-
-	//models_[Body]->Texture("Resources/player/body.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl");
-}
 
 void Player::Update()
 {
@@ -789,6 +883,7 @@ void Player::HitEvalution(Enemy* enemy) {
 	//}
 }
 
+//	使ってない
 void Player::Move() {
 
 	//	攻撃(入力)された時
@@ -828,6 +923,7 @@ void Player::MoveType2() {
 
 	//	最大フレーム数をコンボに応じて減少
 	MAX_frame = kMax_frame - static_cast<float>(score_->GetCombo());
+	MAX_frame = std::clamp<float>(MAX_frame, 30.0f, 60.0f);
 
 	if (flag) {
 		

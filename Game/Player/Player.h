@@ -21,8 +21,6 @@ public:
 	//モデルデータ配列,パーツWのデータ配列、親の処理
 	void Initialize(std::vector<std::shared_ptr<Model>> models,WorldTransform* world);
 
-	void ModelLoad();
-
 	//	更新処理
 	void Update();
 
@@ -125,6 +123,10 @@ public:
 	void SetDistance(const float& dis) { enemyDistance = dis; }
 
 	const WorldTransform& GetPlayerTransform() { return transform; }
+
+	bool GetMoveFlag() { return flag; }
+
+	float GetMAX_Frame() { return MAX_frame; }
 
 private:
 
@@ -247,6 +249,7 @@ private: //Spe
 		PUNCH,
 		BAT,
 		MISTERYPOWER,
+		MISS_,
 	};
 
 	//アニメーション状態、ここを変えるとそれぞれアニメーションが始まる
@@ -299,6 +302,8 @@ private: //Spe
 
 	void GetplayerR();
 	//攻撃
+
+	const float scaleSPD = 4.0f;
 
 	std::vector<esing> AnimeType[A_NUM];
 

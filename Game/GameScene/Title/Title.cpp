@@ -3,7 +3,7 @@
 #include "Engine/Easing/Ease.h"
 #include "Engine/Input/KeyInput/KeyInput.h"
 #include "Game/GameScene/GameScene.h"
-#include "externals/imgui/imgui.h"
+//#include "externals/imgui/imgui.h"
 
 Title::Title(std::shared_ptr<Camera> camera)
 {
@@ -32,6 +32,8 @@ void Title::Initialize()
 	shopTrans.resize(shopModels_.size());
 
 	SetParts();
+
+	cameraStep = CAMERASTEP::Zero;
 
 	chara.parent_ = &worldTransform;
 	chara.translation_ = Vector3(0.0f, -6.5f, 0.0f);
@@ -67,12 +69,6 @@ void Title::Initialize()
 void Title::Update()
 {
 	CameraMove();
-
-	ImGui::DragFloat3("cameraTra", &camera_->transform.translation_.x, 1.0f);
-	ImGui::DragFloat3("cameraRo", &camera_->transform.rotation_.x, AngleToRadian(1.0f));
-
-	ImGui::DragFloat("rate", &pushAtrans_.cMono->rate, 0.1f);
-	ImGui::DragFloat2("pibot", &pushAtrans_.cMono->pibot.x, 0.1f);
 
 	worldTransform.UpdateMatrix();
 
@@ -262,7 +258,7 @@ void Title::CameraMove()
 	case Title::CAMERASTEP::BounceFace:
 		easeNowFrame++;
 		if (easeNowFrame >= easeMaxFrame + 20) {
-			cameraStep = CAMERASTEP::Zero;
+			//cameraStep = CAMERASTEP::Zero;
 
 			//	シーンチェンジ
 			GameScene::GetInstance()->sceneChangeFlag = true;

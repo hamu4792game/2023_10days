@@ -43,6 +43,7 @@ public:
 	void SetUITextures(std::vector<std::shared_ptr<Texture2D>> texturedate) { ui_->SetUITexture(texturedate); }
 	void SetGaugeTextures(std::vector<std::shared_ptr<Texture2D>> textures) { player_->SetGaugeTextures(textures); }
 	void SetTimerNumTextures(std::vector<std::shared_ptr<Texture2D>> texturedate) { timer_->SetNumberTexture(texturedate); }
+	void SetBlackBoxTexture(std::shared_ptr<Texture2D > texturedate) { blackBox_ = texturedate; }
 
 	const WorldTransform& GetPlayerTransform() { return player_->GetPlayerTransform(); }
 
@@ -64,16 +65,20 @@ private: // シーンで必要なモデル配列
 	std::vector<std::shared_ptr<Model>> bottonModels_;
 	std::vector<std::shared_ptr<Texture2D>> bottonTexture_;
 	
-	
+	//	ただの背景
+	std::shared_ptr<Texture2D> blackBox_;
+	WorldTransform blackTrans_;
 
 private:
 	
 	//	中心座標
 	std::shared_ptr<WorldTransform> worldTransform;
 
-	std::vector<WorldTransform> bottonTransform_;
+	WorldTransform bottonTransform_;
 
 	uint16_t type_;
+
+	bool tutorialFlag_ = false;
 
 public:
 	//	マスターフレーム速度。リアルタイム加減速

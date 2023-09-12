@@ -85,7 +85,8 @@ private: // メンバ関数
 	void ModelLoad();
 
 	//	シーンチェンジ用
-	Texture2D box;
+	std::shared_ptr<Texture2D> box;
+	std::shared_ptr<Texture2D> boxP;
 	WorldTransform boxtransform;
 	float boxScale = 0.0f;
 	float easeNum = 0.0f;

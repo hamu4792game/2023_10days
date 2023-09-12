@@ -21,6 +21,7 @@ void Timer::Initialize() {
 
 	SetGlobalVariable();
 
+	ApplyGlobalVariable();
 }
 
 void Timer::SetGlobalVariable() {
