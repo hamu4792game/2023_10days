@@ -163,9 +163,9 @@ void Battle::Update()
 		GameScene::GetInstance()->sceneChangeFlag = true;
 	}
 
-	ui_->Update();
 
 	player_->Update();
+	ui_->Update();
 	worldTransform->UpdateMatrix();
 
 }
