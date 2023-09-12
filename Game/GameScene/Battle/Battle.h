@@ -35,8 +35,7 @@ public:
 	void Draw2D(const Matrix4x4& viewProjection);
 
 
-	void SetModels(std::vector<std::shared_ptr<Model>> modeldate) { mobModels_ = modeldate; }
-	void SetModelsType2(std::vector<std::shared_ptr<Model>> modeldate) { mobModels_type2 = modeldate; }
+	void SetModels(std::vector<std::vector<std::shared_ptr<Model>>> modeldate) { mobModels_ = modeldate; }
 	void SetBottonModels(std::vector<std::shared_ptr<Model>> modeldate) { bottonModels_= modeldate; }
 	void SetBottonTextures(std::vector<std::shared_ptr<Texture2D>> modeldate) { bottonTexture_= modeldate; }
 	void SetNumberTextures(std::vector<std::shared_ptr<Texture2D>> texturedate) { score_->SetNumberTexture(texturedate); }
@@ -59,8 +58,7 @@ private://	必要なメンバ変数
 
 private: // シーンで必要なモデル配列
 	//	プレイヤーデータのモデル配列
-	std::vector<std::shared_ptr<Model>> mobModels_;
-	std::vector<std::shared_ptr<Model>> mobModels_type2;
+	std::vector<std::vector<std::shared_ptr<Model>>> mobModels_;
 
 	std::vector<std::shared_ptr<Model>> bottonModels_;
 	std::vector<std::shared_ptr<Texture2D>> bottonTexture_;

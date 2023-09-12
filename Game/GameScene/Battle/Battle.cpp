@@ -53,7 +53,7 @@ void Battle::Initialize()
 
 	ui_->Initialize();
 
-	player_->Initialize(mobModels_, worldTransform.get());
+	player_->Initialize(mobModels_[0], worldTransform.get());
 
 	player_->SetDistance(kEnemyPopPosLength_);
 
@@ -141,7 +141,7 @@ void Battle::EnemyGeneration() {
 			}
 
 			// Initializeを変える必要がある
-			enemy->InitializeSP(pos, type, enemyNum_, mobModels_type2);
+			enemy->InitializeSP(pos, type, enemyNum_, mobModels_[1 + type]);
 
 			enemies_.push_back(enemy);
 

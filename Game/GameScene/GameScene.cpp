@@ -70,8 +70,7 @@ void GameScene::Initialize()
 	title->SetBottonModels(bottonModels_);
 	title->SetShopModel(shopModel_);
 
-	battle->SetModels(mobModels_[0]);
-	battle->SetModelsType2(mobModels_[1]);
+	battle->SetModels(mobModels_);
 	battle->SetBottonModels(bottonModels_);
 	battle->SetBottonTextures(bottonTexture_);
 	battle->SetNumberTextures(numberTextures_);
