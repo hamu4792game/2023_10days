@@ -328,6 +328,24 @@ void UI::EvaluationUpdate() {
 
 }
 
+void UI::ComboUpdate() {
+
+	comboCountFrame_++;
+
+	if (score_->GetEvaluation()) {
+		comboCountFrame_ = 0;
+	}
+
+	if (comboCountFrame_ > kMaxFrameCombo_) {
+		comboCountFrame_ = kMaxFrameCombo_;
+	}
+
+	float scale = Ease::UseEase(0.0f, scoreNumScales_[Scene::kBattleScene][Score::Parameter::kCombo], comboCountFrame_, kMaxFrameCombo_, Ease::EaseOutBounce);
+
+	score_->SetWorldTransform(scoreNumPos_[Scene::kBattleScene][Score::Parameter::kCombo], scale, 0.0f, Score::Parameter::kCombo);
+
+}
+
 void UI::BattleUpdate() {
 	ApplyGlobalVariable();
 	SetAllTransform(Scene::kBattleScene);
@@ -372,6 +390,8 @@ void UI::BattleUpdate() {
 		isDraw_[UITextureNames::kMiss] = true;
 		colors_[UITextureNames::kMiss] = 0x333333FF;
 	}
+
+	ComboUpdate();
 
 	EvaluationUpdate();
 }

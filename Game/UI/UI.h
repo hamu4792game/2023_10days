@@ -48,6 +48,8 @@ private:
 
 	void EvaluationUpdate();
 
+	void ComboUpdate();
+
 	void SetGlobalVariable();
 
 	void ApplyGlobalVariable();
@@ -167,6 +169,10 @@ private:
 	};
 
 	int count_ = 0;
+
+	int comboCountFrame_ = 0;
+
+	int kMaxFrameCombo_ = 30;
 
 	int kInterval_ = 40;
 
