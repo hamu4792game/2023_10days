@@ -101,7 +101,7 @@ private: // hamu
 	uint16_t lifespan = 0u;
 public: // hamu
 	bool GetDelete() { return die_; }
-
+	void SetParent(const WorldTransform& world) { transform.parent_ = &world; }
 
 private://Specha
 
@@ -198,3 +198,5 @@ private://Specha
 
 //イージングの処理、好きに中身かえてちょ
 Vector3 ES(esing E, float t);
+
+int GetRandomNum(int wideOrmax, bool isWide);

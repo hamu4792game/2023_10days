@@ -28,7 +28,7 @@ WorldTransform& WorldTransform::operator=(const WorldTransform& trans)
 Matrix4x4 WorldTransform::UpdateMatrix()
 {
 	//	monocuroを動かせばcMonoに代入される
-	this->cMono->pibot = monocuro.pibot;
+	//this->cMono->pibot = monocuro.pibot;
 
 	//	スケール、回転、平行移動を合成して行列を計算する
 	this->worldMatrix = MakeAffineMatrix(scale_, rotation_, translation_);

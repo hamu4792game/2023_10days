@@ -219,15 +219,25 @@ private: // Korone
 private: //Spe
 
 	enum ANIMETYPE {
-		Normal,
+		TACLE,
 		ATK_R,
-		ATK_L,
+		KICK,
 
 		A_NUM,
+		MISS,
+	};
+
+	enum ANIMESTATE {
+		NOMOTION,
+		PUNCH,
+		BAT,
+		MISTERYPOWER,
 	};
 
 	//アニメーション状態、ここを変えるとそれぞれアニメーションが始まる
-	ANIMETYPE state_;
+	ANIMESTATE state_;
+
+	int ANIMENUM = 0;
 
 	//行動管理
 	enum ANIMEWAVE {
@@ -246,9 +256,10 @@ private: //Spe
 	void Animetion();
 
 	//右攻撃まとめ
-	void ATK_R_F();
+	void ATK_R_F(int num);
 
-	//
+	//プレイヤーダウンアニメ
+	void PDown();
 
 	//イージング
 	float T_;
@@ -267,8 +278,21 @@ private: //Spe
 	//ノーマル状態
 	std::vector<esing>normal_A;
 
+	//攻撃モーションの構え(こぶし
+	std::vector<Vector3> ATK_W;
+
+
 	void GetplayerR();
-	//大の字
+	//攻撃
+
 	std::vector<esing> AnimeType[A_NUM];
+
+	//ボデイのイージング用
+	esing bodyEsing;
+
+	esing BDE;
+
+	//ダウンアニメ
+	std::vector<esing> pDown;
 
 };

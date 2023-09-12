@@ -46,6 +46,10 @@ public:
 
 private:
 
+	void EvaluationUpdate();
+
+	void ComboUpdate();
+
 	void SetGlobalVariable();
 
 	void ApplyGlobalVariable();
@@ -163,6 +167,14 @@ private:
 		"MissScale",
 		}
 	};
+
+	int count_ = 0;
+
+	int comboCountFrame_ = 0;
+
+	int kMaxFrameCombo_ = 30;
+
+	int kInterval_ = 40;
 
 	std::vector<std::shared_ptr<Texture2D>> uiTextures_;
 

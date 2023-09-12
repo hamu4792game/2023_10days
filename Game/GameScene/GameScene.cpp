@@ -36,6 +36,7 @@ void GameScene::Initialize()
 	//ボタンモデルの初期化
 	for (uint32_t i = 0u; i < 4; i++) {
 		bottonModels_.push_back(std::make_shared<Model>());
+		bottonTexture_.push_back(std::make_shared<Texture2D>());
 	}
 	//	数字テクスチャの初期化
 	for (uint16_t i = 0u; i < 10; i++) {
@@ -66,6 +67,7 @@ void GameScene::Initialize()
 	battle->SetModels(mobModels_);
 	battle->SetModelsType2(mobModels_type2);
 	battle->SetBottonModels(bottonModels_);
+	battle->SetBottonTextures(bottonTexture_);
 	battle->SetNumberTextures(numberTextures_);
 	battle->SetUITextures(UITextures_);
 	battle->SetGaugeTextures(gaugeTextures_);
@@ -279,6 +281,10 @@ void GameScene::ModelLoad()
 	bottonModels_[3]->Texture("Resources/hud/Y/Y.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl");
 
 	//	
+	bottonTexture_[0]->Texture("Resources/hud/A/Abottn.png", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl");
+	bottonTexture_[1]->Texture("Resources/hud/B/Bbottn.png", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl");
+	bottonTexture_[2]->Texture("Resources/hud/X/Xbottn.png", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl");
+	bottonTexture_[3]->Texture("Resources/hud/Y/Ybottn.png", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl");
 
 	shopModel_[0]->Texture("Resources/shop/shop.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl", "shop/shop.png");
 	shopModel_[1]->Texture("Resources/plane/plane.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl", "hud/board.png");

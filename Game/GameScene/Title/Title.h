@@ -44,6 +44,7 @@ private:
 
 	//	モデルデータ配列
 	std::vector<WorldTransform> parts_;
+	std::unique_ptr<Enemy> player;
 	std::vector<WorldTransform> shopTrans;
 
 	std::vector<std::unique_ptr<Enemy>> enemy_;

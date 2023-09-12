@@ -119,7 +119,9 @@ void Player::Initialize(std::vector<std::shared_ptr<Model>> models, WorldTransfo
 #pragma region Animation関数
 void Player::AnimeInitialize() {
 
-	state_ = Normal;
+
+	state_ =NOMOTION;
+
 
 	wave_A = ATKWAIT;
 
@@ -131,17 +133,17 @@ void Player::AnimeInitialize() {
 	ESALL.resize(parts_.size());
 
 #pragma region 各アニメの身体パーツ
-	AnimeType[Normal].resize(parts_.size());
+	AnimeType[TACLE].resize(parts_.size());
 
-	AnimeType[Normal][Body] = {
+	AnimeType[TACLE][Body] = {
 		{0.9f, 0.0f, 0.0f},
 		{1.0f, 0.0f, 0.0f},
 	};
-	AnimeType[Normal][Head] = {
+	AnimeType[TACLE][Head] = {
 		{-0.7f, 0.0f, 0.0f},
 		{-0.7f, 0.0f, 0.0f},
 	};
-	AnimeType[Normal][BodyUnder] = {
+	AnimeType[TACLE][BodyUnder] = {
 		{-0.35f, 0.0f, 0.0f},
 		{-0.45f, 0.0f, 0.0f},
 	};
@@ -210,8 +212,8 @@ void Player::AnimeInitialize() {
 		{0.0f, -1.11f, 0.0f},
 	};
 	AnimeType[1][BodyUnder] = {
-		{0.0f,0.0f,0.0f},
-		{0.0f, -2.31f, 0},
+		 {0.0f,0.8f,0.0f},
+		{0.4f, -1.5f, 0},
 	};
 
 	AnimeType[1][LArm1] = {
@@ -241,32 +243,126 @@ void Player::AnimeInitialize() {
 	};
 
 	AnimeType[1][LLeg1] = {
-		{-0.57f, -0.22f, 0.0f},
-		{-0.57f, -0.22f, 0.0f},
+	  {0.0f, 0.0f, -0.3f},
+		{-2.0f, 0.0f, 0.0f},
 	};
 	AnimeType[1][LLeg2] = {
-		{0.6f, 0.0f, 0.0f},
-		{0.6f, 0.0f, 0.0f},
+		  {0.0f, 0.0f, 0.2f},
+		{2.5f, 0.0f, 0.0f},
 	};
 	AnimeType[1][LFoot] = {
-		{0.0f, 0.0f, 0.0f},
-		{0.0f, 0.0f, 0.0f},
+	   {0.0f, 0.0f, 0.1f},
+		{0.5f, 0.0f, 0.0f},
 	};
 
 	AnimeType[1][RLeg1] = {
-		{-0.6f, 0.9f, 0.0f},
-		{-0.6f, 0.9f, 0.0f},
+		 {0.0f, 0.0f, 0.3f},
+		{0.0f, 0.0f, 0.0f},
 	};
 	AnimeType[1][RLeg2] = {
-		{0.7f, 0.0f, 0.0f},
-		{0.7f, 0.0f, 0.0f},
+		 {0.0f, 0.0f, -0.2f},
+		{0.0f, 0.0f, 0.0f},
 	};
 	AnimeType[1][RFoot] = {
+		  {0.0f, 0.0f, -0.1f},
+		{0.0f, 0.0f, 0.0f},
+	};
+
+	AnimeType[KICK].resize(parts_.size());
+
+	AnimeType[2][Body] = {
+		{0.2f, 0.0f, 0.0f},
+		{-0.15f, 0.0f, 0.0f},
+	};
+	AnimeType[2][Head] = {
+		{0.0f, 0.0f, 0.0f},
+		{0.0f, 0.0f, 0.0f},
+	};
+	AnimeType[2][BodyUnder] = {
+		{-0.2f, 0.0f, 0.0f},
+		{0.35f, 0.0f, 0.0f},
+	};
+
+	AnimeType[2][RArm1] = {
+		{0.0f, 0.0f, -1.0f},
+		{0.0f, 0.9f, -1.0f},
+	};
+	AnimeType[2][RArm2] = {
+		{0.0f, -2.3f, 0.0f},
+		{0.0f, -1.7f, 0.0f},
+	};
+	AnimeType[2][RHand] = {
 		{0.0f, 0.0f, 0.0f},
 		{0.0f, 0.0f, 0.0f},
 	};
 
+	AnimeType[2][LArm1] = {
+		{0.0f, 0.0f, 1.0f},
+		{0.0f, -0.9f, 1.0f},
+	};
+	AnimeType[2][LArm2] = {
+		{0.0f, 2.3f, 0.0f},
+		{0.0f, 1.7f, 0.0f},
+	};
+	AnimeType[2][LHand] = {
+		{0.0f, 0.0f, 0.0f},
+		{0.0f, 0.0f, 0.0f},
+	};
+
+	AnimeType[2][RLeg1] = {
+		{0.0f, 0.0f, 0.0f},
+		{0.0f, 0.0f, 0.0f},
+	};
+	AnimeType[2][RLeg2] = {
+		{0.0f, 0.0f, 0.0f},
+		{0.25f, 0.0f, 0.0f},
+	};
+	AnimeType[2][RFoot] = {
+		{0.0f, 0.0f, 0.0f},
+		{-0.35f, 0.0f, 0.0f},
+	};
+
+	AnimeType[2][LLeg1] = {
+		{-2.5f, 0.0f, 0.0f},
+		{-2.2f, 0.0f, 0.0f},
+	};
+	AnimeType[2][LLeg2] = {
+		{2.6f, 0.0f, 0.0f},
+		{0.3f, 0.0f, 0.0f},
+	};
+	AnimeType[2][LFoot] = {
+		{0.8f, 0.0f, 0.0f},
+		{0.1f, 0.0f, 0.0f},
+	};
+
 #pragma endregion
+
+#pragma region 武器構え
+
+	ATK_W.resize(parts_.size());
+
+	ATK_W[Body] = { 0.1f, 0.0f, 0.0f };
+	ATK_W[Head] = { 0.0f, 0.0f, 0.0f };
+	ATK_W[BodyUnder] = { -0.1f, 0.0f, 0.0f };
+
+	ATK_W[LArm1] = { 0.0f, 0.0f, 1.0f };
+	ATK_W[LArm2] = { 0.0f, 2.3f, 0.0f };
+	ATK_W[LHand] = { 0.0f, 0.0f, 0.0f };
+
+	ATK_W[RArm1] = { 0.0f, 0.0f, -1.0f };
+	ATK_W[RArm2] = { 0.0f, -2.3f, 0.0f };
+	ATK_W[RHand] = { 0.0f, 0.0f, 0.0f };
+
+
+	ATK_W[LLeg1] = { 0.0f, 0.0f, -0.1f };
+	ATK_W[LLeg2] = { 0.0f, 0.0f, 0.1f };
+	ATK_W[LFoot] = { 0.0f, 0.0f, 0.0f };
+
+	ATK_W[RLeg1] = { 0.0f, 0.0f, 0.1f };
+	ATK_W[RLeg2] = { 0.0f, 0.0f, -0.1f };
+	ATK_W[RFoot] = { 0.0f, 0.0f, 0.0f };
+#pragma endregion
+
 
 #pragma region ノーマル状態
 	normal_A.resize(parts_.size());
@@ -340,6 +436,81 @@ void Player::AnimeInitialize() {
 	};
 #pragma endregion
 
+#pragma region ダウン
+	pDown.resize(parts_.size());
+	bodyEsing = {
+		{0.0f,-6.0f,0.0f},
+		{0.0f, -3.0f, 0.0f},
+	};
+	pDown[Body] = {
+		{1.75f,0.0f,0.0f},
+		{0.95f,0.0f,0.0f},
+	};
+	pDown[Head] = {
+		{0.0f, 0.0f, 0.0f},
+		{0.0f, 0.0f, 0.0f},
+
+	};
+	pDown[BodyUnder] = {
+		{0.0f, 0.0f, 0.0f},
+		{-0.58f, 0.0f, 0.0f},
+	};
+	//
+	pDown[LArm1] = {
+		{0.0f, -0.3f, -1.4f},
+		{0.58f, 0.56f,  0.0f },
+	};
+	pDown[LArm2] = {
+		{0.0f, 0.0f, -0.3f},
+		{0.59f, 2.19f, 0.0f },
+	};
+	pDown[LHand] = {
+		{0.0f, 0.0f, 0.0f},
+		{0.0f, 0.0f, 0.0f},
+	};
+	//
+	pDown[RArm1] = {
+		{0.0f, 0.3f, 1.4f},
+		{0.0f, -1.0f,  -1.3f},
+	};
+	pDown[RArm2] = {
+		{0.0f, 0.0f, 0.3f},
+		{0.0f, 0.0f, 0.0f},
+	};
+	pDown[RHand] = {
+		{0.0f, 0.0f, 0.0f},
+		{0.0f, 0.0f, 0.0f},
+	};
+
+	//
+	pDown[LLeg1] = {
+		{0.2f, 0.0f, 0.0f},
+		{-2.27f, 0.0f, 0.0f},
+	};
+	pDown[LLeg2] = {
+		{0.09f, 0.0f, 0.0f},
+		{1.9f,  0.0f, 0.0f},
+	};
+	pDown[LFoot] = {
+		{0.0f, 0.0f, 0.0f},
+		{0.0f, 0.0f, 0.0f},
+	};
+	pDown[RLeg1] = {
+		{0.2f, 0.0f, 0.0f},
+		{0.0f, 0.0f, 0.0f},
+	};
+	pDown[RLeg2] = {
+		{0.4f, 0.0f, 0.0f},
+		{1.58f, 0.0f, 0.0f},
+
+	};
+	pDown[RFoot] = {
+		{1.0f, 0.0f, 0.0f},
+		{-0.17f, 0.0f, 0.0f},
+	};
+#pragma endregion
+
+
 	//初期ポーズ設定
 	for (int i = 0; i < Num; i++) {
 		parts_[i].rotation_ = ES(normal_A[i], 0);
@@ -359,25 +530,34 @@ void Player::Animetion() {
 
 	switch (state_)
 	{
-	case Player::Normal:
+	case Player::NOMOTION:
 		if (score_->GetEvaluation()) {
-			state_ = ATK_R;
+			state_ = PUNCH;
+			isAnimeStart_ = false;
+			wave_A = ATKWAIT;
+			ANIMENUM = GetRandomNum(A_NUM, false);
 		}
 		break;
-	case Player::ATK_R:
-		ATK_R_F();
+	case Player::PUNCH:
+		ATK_R_F(ANIMENUM);
 		break;
-	case Player::ATK_L:
+	case Player::BAT:
 		break;
-	case Player::A_NUM:
+	case Player::MISTERYPOWER:
+		break;
+
+	case Player::MISS:
+		PDown();
 		break;
 	default:
 		break;
 	}
+
+	
 }
 
-//右攻撃
-void Player::ATK_R_F() {
+//パンチ攻撃
+void Player::ATK_R_F(int num) {
 
 	switch (wave_A)
 	{
@@ -392,7 +572,7 @@ void Player::ATK_R_F() {
 				//仮でいきなり手を広げた状態
 				ESALL[i] = {
 					nowR[i],
-					AnimeType[ATK_R][i].st
+					AnimeType[num][i].st
 				};
 			}
 		}
@@ -402,7 +582,7 @@ void Player::ATK_R_F() {
 			}
 
 			//予備動作無し
-			T_ = 1.0f;
+			T_ += 1.0f/3.0f;
 			if (T_ >= 1.0f) {
 				wave_A = ATK;
 				T_ = 0;
@@ -423,7 +603,7 @@ void Player::ATK_R_F() {
 				//仮でいきなり手を広げた状態
 				ESALL[i] = {
 					nowR[i],
-					AnimeType[ATK_R][i].ed,
+					AnimeType[num][i].ed,
 				};
 			}
 		}
@@ -451,10 +631,10 @@ void Player::ATK_R_F() {
 
 			//現在の回転量の取得
 			for (int i = 0; i < Num; i++) {
-				//仮でいきなり手を広げた状態
+				
 				ESALL[i] = {
 					nowR[i],
-					AnimeType[ATK_R][i].st,
+					ATK_W[i]
 				};
 			}
 		}
@@ -468,7 +648,7 @@ void Player::ATK_R_F() {
 			//シーン切り替え処理
 			if (T_ >= 1.0f) {
 				wave_A = ATKWAIT;
-				state_ = Normal;
+				state_ = NOMOTION;
 				T_ = 0;
 				isAnimeStart_ = false;
 			}
@@ -482,6 +662,26 @@ void Player::ATK_R_F() {
 }
 
 //
+void Player::PDown() {
+	switch (wave_A)
+	{
+	case Player::ATKWAIT:
+		if (!isAnimeStart_) {
+			isAnimeStart_ = true;
+			T_ = 0;
+		}
+		else {
+
+		}
+		break;
+	case Player::ATK:
+		break;
+	case Player::BACK:
+		break;
+	default:
+		break;
+	}
+}
 #pragma endregion
 
 
