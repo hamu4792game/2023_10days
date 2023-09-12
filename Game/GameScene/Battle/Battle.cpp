@@ -62,6 +62,7 @@ void Battle::Initialize()
 	timer_->Initialize();
 
 	bottonTransform_.parent_ = &camera_->transform;
+	//bottonTransform_.parent_ = &player_->GetPlayerTransform();
 	bottonTransform_.translation_ = Vector3(0.0f, 0.0f, 1.0f);
 	bottonTransform_.scale_ = Vector3(0.06f, 0.06f, 0.06f);
 	
@@ -71,8 +72,36 @@ void Battle::Initialize()
 	blackTrans_.scale_ = Vector3(80.0f, 45.0f, 1.0f);
 	blackTrans_.cMono->pibot = Vector2(642.0f, 359.0f);
 	blackTrans_.cMono->rate = 800.0f;
+
+	rand_ = 0;
+	randCount_ = 0;
 }
 
+
+void Battle::ButtonRand()
+{
+	
+	int ram = std::rand() % 2;
+
+	if (ram == rand_) {
+		randCount_++;
+
+		if (randCount_ == 3) {
+			while (ram == rand_) {
+
+				ram = std::rand() % 2;
+			}
+
+			rand_ = ram;
+			randCount_ = 0;
+		}
+	}
+	else {
+		rand_ = ram;
+	}
+
+
+}
 
 void Battle::EnemyGeneration() {
 
@@ -147,8 +176,7 @@ void Battle::Update()
 	else {
 		bottonTransform_.rotation_.y = 0.0f;
 	}
-	bottonTransform_.UpdateMatrix();
-
+	
 	//	
 	if (!tutorialFlag_) {
 		timer_->Update();
@@ -166,23 +194,24 @@ void Battle::Update()
 		
 	}
 
-	for(Enemy* enemy : enemies_){
+	for (Enemy* enemy : enemies_) {
 		if (enemy->GetNum() == enemyKillCount_) {
 			type_ = static_cast<uint16_t>(enemy->GetBottomType());
 			player_->HitTest(enemy);
-			
+
 			if (score_->GetEvaluation()) {
 
 				enemyKillCount_++;
 				EnemyGeneration();
+				ButtonRand();
 			}
 
 			break;
 		}
 	}
 
-
 	player_->GaugeUpdate();
+	
 
 	enemies_.remove_if([](Enemy* enemy) {
 
@@ -202,6 +231,17 @@ void Battle::Update()
 	player_->Update();
 	ui_->Update();
 	worldTransform->UpdateMatrix();
+
+	
+	if (score_->GetCombo() > 5 && rand_ == 1) {
+
+	}
+	else {
+		camera_->transform.UpdateMatrix();
+	}
+	
+	
+	bottonTransform_.UpdateMatrix();
 }
 
 void Battle::Draw(const Matrix4x4& viewProjection)
@@ -213,7 +253,10 @@ void Battle::Draw(const Matrix4x4& viewProjection)
 		enemy->Draw(viewProjection, bottonModels_);
 	}
 	
-	Model::ModelDraw(bottonTransform_, viewProjection, 0xffffffff, bottonModels_[type_].get());
+	if (enemyKillCount_ < 40) {
+		Model::ModelDraw(bottonTransform_, viewProjection, 0xffffffff, bottonModels_[type_].get());
+	}
+
 }
 
 void Battle::Draw2D(const Matrix4x4& viewProjection) {

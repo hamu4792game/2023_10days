@@ -1,6 +1,6 @@
 #include "Player.h"
 #include "Engine/Input/KeyInput/KeyInput.h"
-//#include "externals/imgui/imgui.h"
+#include "externals/imgui/imgui.h"
 
 
 #include "Game/Enemy/Enemy.h"
@@ -788,6 +788,10 @@ void Player::Update()
 
 	camera_->transform.rotation_ = Vector3(offset.x, offset.y, camera_->transform.rotation_.z);
 
+	ImGui::DragFloat3("cameraTrans", &camera_->transform.translation_.x, 1.0f);
+	ImGui::DragFloat3("cameraRotate", &camera_->transform.rotation_.x, 0.1f);
+
+
 	//	待機時間
 	//	移動処理
 	MoveType2();
@@ -798,6 +802,8 @@ void Player::Update()
 	for (auto& i : parts_) {
 		i.UpdateMatrix();
 	}
+
+	//camera_->transform.UpdateMatrix();
 }
 
 void Player::HitTestInitialize() {
@@ -901,7 +907,7 @@ void Player::MoveType2() {
 				shakeFlag = true;
 			}
 			else if (score_->GetEvaluation() == Score::Evaluation::kMiss) {
-				Battle::masterSpeed = 0.8f;
+				Battle::masterSpeed = 0.6f;
 			}
 		}
 	}

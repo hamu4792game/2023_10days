@@ -78,6 +78,10 @@ private:
 
 	uint16_t type_;
 
+	int rand_ = 0;
+	int randCount_ = 0;
+	void ButtonRand();
+
 	bool tutorialFlag_ = false;
 
 public:
