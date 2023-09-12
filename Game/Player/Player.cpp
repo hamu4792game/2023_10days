@@ -851,16 +851,54 @@ void Player::PDown() {
 	}
 
 }
+
+//ラーメン食べるモーション
+void Player::EatRamen() {
+	//アニメーション初期化
+	if (!isAnimeStart_) {
+		isAnimeStart_ = true;
+		isLoop_ = false;
+
+		//アニメーションポーズ設定
+		for (int i = 0; i < PARTS::Num; i++) {
+			parts_[i].rotation_ = eatRamen[i].st;
+		}
+		T_ = 0;
+		
+	}//更新
+	else {
+
+		for (int i = 0; i < PARTS::Num; i++) {
+			parts_[i].rotation_ = ES(eatRamen[i], T_);
+		}
+
+		//以下ループT
+		float ADD = 1.0f / 30.0f;
+		if (!isLoop_) {
+			T_ += ADD;
+			if (T >= 1.0f) {
+				isLoop_ = true;
+				T_ = 1.0f;
+			}
+		}
+		else {
+			T_ -= ADD;
+			if (T <= 0.0f) {
+				isLoop_ = false;
+				T_ = 0;
+			}
+		}
+
+	}
+}
 #pragma endregion
 
 void Player::Update()
 {
-
 	camera_->transform.rotation_ = Vector3(offset.x, offset.y, camera_->transform.rotation_.z);
 
 	ImGui::DragFloat3("cameraTrans", &camera_->transform.translation_.x, 1.0f);
 	ImGui::DragFloat3("cameraRotate", &camera_->transform.rotation_.x, 0.1f);
-
 
 	//	待機時間
 	//	移動処理

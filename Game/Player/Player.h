@@ -276,6 +276,9 @@ private: //Spe
 	//プレイヤーダウンアニメ
 	void PDown();
 
+	//ラーメン食べるアニメーション
+	void EatRamen();
+
 	//イージング
 	float T_;
 	//アニメーションフレーム加算地
@@ -287,6 +290,9 @@ private: //Spe
 
 	//アニメーション開始時の初期化関数
 	bool isAnimeStart_;
+
+	//ループアニメーション管理用
+	bool isLoop_;
 
 	//実際のイージングで使う構造体
 	std::vector<esing> ESALL;
