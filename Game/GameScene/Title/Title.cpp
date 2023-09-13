@@ -196,13 +196,6 @@ void Title::Initialize()
 	tentyoTransform[RLeg1].translation_ = { 0.3f, -1.7f, 0.0f };
 	tentyoTransform[RLeg2].translation_ = { 0.0f, -2.2f, 0.0f };
 	tentyoTransform[RFoot].translation_ = { 0.12f, -2.2f, 0.0f };
-
-
-	if (score_->IsFullCom()) {
-		// フルコンの時
-
-	}
-
 #pragma endregion
 	
 	//普通
@@ -215,11 +208,16 @@ void Title::Initialize()
 	Tpos[2] = Vector3(0.0f, 30.0f, 210.0f);
 	Trota[2] = Vector3(0.0f, -3.14f, 0.0f);
 	//看板前
-	Tpos[3] = Vector3(0.0f,6.64f,179.8f);
+	Tpos[3] = Vector3(0.0f,7.0f,179.8f);
 	Trota[3] = Vector3(0.0f, -3.14f, 0.0f);
 
-	int GetTpos = GetRandomNum(3, false);
+	int GetTpos = 3;// GetRandomNum(3, false);
 
+	if (score_->IsFullCom()) {
+		// フルコンの時
+		//店長を看板前に設置
+		GetTpos = 3;
+	}
 	TenchoW_.translation_ = Tpos[GetTpos];
 	TenchoW_.rotation_ = Trota[GetTpos];
 }
