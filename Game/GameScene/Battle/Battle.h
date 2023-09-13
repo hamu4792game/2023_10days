@@ -4,7 +4,7 @@
 #include "Engine/Texture/Model.h"
 #include "Engine/WorldTransform/WorldTransform.h"
 #include "Game/Player/Player.h"
-
+#include "Engine/Input/AudioInput/AudioInput.h"
 
 
 #include "Game/Score/Score.h"
@@ -81,6 +81,17 @@ private:
 	void ButtonRand();
 
 	bool tutorialFlag_ = false;
+
+private: // sound
+	AudioInput bgm;
+	//	こづき
+	AudioInput sLittlePunch;
+	//	パーフェクトで
+	AudioInput sBigPunch;
+	//	倒れる
+	AudioInput sFallDown;
+	//	合言葉は「四肢爆散」
+	AudioInput sHitToKill;
 
 public:
 	//	マスターフレーム速度。リアルタイム加減速

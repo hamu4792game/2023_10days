@@ -147,6 +147,7 @@ void GameScene::Update()
 			break;
 		case GameScene::Scene::RESULT:
 			result->Initialize();
+			skydome->NullParent();
 			break;
 		}
 	}
