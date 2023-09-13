@@ -365,7 +365,7 @@ void Result::Initialize()
 	isOkiStart_ = false;
 
 	//	クリアできなかった時の初期位置設定
-	if (!clearFlag_) {
+	if (*clearFlag_ == false) {
 		camera_->transform.translation_ = Vector3(0.0f, 1.9f, 6.5f);
 		camera_->transform.rotation_ = Vector3(0.0f, 0.0f, 0.0f);
 		cameraR_target_.translation_ = Vector3(-28.1f, 40.0f, 77.0f);
@@ -417,7 +417,7 @@ void Result::Update()
 
 #endif // _DEBUG
 
-	if (clearFlag_) {
+	if (*clearFlag_ == true) {
 		// 時間内に来た時
 		EatRamen();
 		OkiSyogun();
