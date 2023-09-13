@@ -6,42 +6,42 @@
         ],
         "ComboScale": 1.0,
         "GoodPos": [
-            790.0,
+            770.0,
             480.0
         ],
         "GoodScale": 1.0,
         "GreatPos": [
-            790.0,
+            770.0,
             420.0
         ],
         "GreatScale": 1.0,
         "HighComboPos": [
-            790.0,
+            770.0,
             300.0
         ],
         "HighComboScale": 1.0,
         "HighScorePos": [
-            740.0,
+            701.4500122070313,
             250.0
         ],
         "HighScoreScale": 0.699999988079071,
         "MissPos": [
-            790.0,
+            770.0,
             540.0
         ],
         "MissScale": 1.0,
         "PerfectPos": [
-            790.0,
+            770.0,
             360.0
         ],
         "PerfectScale": 1.0,
         "ScorePos": [
-            700.0,
+            661.6500244140625,
             200.0
         ],
         "ScoreScale": 1.0,
         "TotalHighComboPos": [
-            790.0,
+            770.0,
             150.0
         ],
         "TotalHighComboScale": 1.0
