@@ -1,0 +1,49 @@
+{
+    "ScoreResultScene2": {
+        "ComboPos": [
+            1027.1099853515625,
+            360.0
+        ],
+        "ComboScale": 0.5899999737739563,
+        "GoodPos": [
+            1063.0,
+            525.0
+        ],
+        "GoodScale": 0.5899999737739563,
+        "GreatPos": [
+            1063.0,
+            490.0
+        ],
+        "GreatScale": 0.5899999737739563,
+        "HighComboPos": [
+            1063.0,
+            420.0
+        ],
+        "HighComboScale": 0.5899999737739563,
+        "HighScorePos": [
+            1025.0,
+            385.0
+        ],
+        "HighScoreScale": 0.41100001335144043,
+        "MissPos": [
+            1063.0,
+            560.0
+        ],
+        "MissScale": 0.5899999737739563,
+        "PerfectPos": [
+            1063.0,
+            455.0
+        ],
+        "PerfectScale": 0.5899999737739563,
+        "ScorePos": [
+            1000.0,
+            350.0
+        ],
+        "ScoreScale": 0.5899999737739563,
+        "TotalHighComboPos": [
+            1000.0,
+            360.0
+        ],
+        "TotalHighComboScale": 0.5899999737739563
+    }
+}

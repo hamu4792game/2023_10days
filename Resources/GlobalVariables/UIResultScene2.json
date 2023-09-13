@@ -1,0 +1,49 @@
+{
+    "UIResultScene2": {
+        "BackPos": [
+            1000.8099975585938,
+            460.0
+        ],
+        "BackScale": 1.0,
+        "ComboPos": [
+            890.0,
+            420.0
+        ],
+        "ComboScale": 0.5899999737739563,
+        "GoodPos": [
+            890.0,
+            525.0
+        ],
+        "GoodScale": 0.5899999737739563,
+        "GreatPos": [
+            890.0,
+            490.0
+        ],
+        "GreatScale": 0.5899999737739563,
+        "HighComboPos": [
+            890.0,
+            360.0
+        ],
+        "HighComboScale": 0.5899999737739563,
+        "HighScorePos": [
+            890.0,
+            385.0
+        ],
+        "HighScoreScale": 0.41100001335144043,
+        "MissPos": [
+            890.0,
+            560.0
+        ],
+        "MissScale": 0.5899999737739563,
+        "PerfectPos": [
+            890.0,
+            455.0
+        ],
+        "PerfectScale": 0.5899999737739563,
+        "ScorePos": [
+            890.0,
+            350.0
+        ],
+        "ScoreScale": 0.5899999737739563
+    }
+}
