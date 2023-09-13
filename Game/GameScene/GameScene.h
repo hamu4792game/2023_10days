@@ -80,10 +80,6 @@ private:
 	//	パーツ用データの元
 	std::vector<WorldTransform> parts_;
 
-private: // 音
-	AudioInput bgm;
-
-
 public:
 
 	void Initialize();

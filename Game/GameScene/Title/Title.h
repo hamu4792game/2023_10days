@@ -4,6 +4,7 @@
 #include "Engine/Texture/Model.h"
 #include "Engine/Texture/Texture2D.h"
 #include "Engine/Camera/Camera.h"
+#include "Engine/Input/AudioInput/AudioInput.h"
 
 #include "Game/Enemy/Enemy.h"
 #include "Game/Player/Player.h"
@@ -81,6 +82,12 @@ private:
 
 	WorldTransform pushAtrans_;
 	std::unique_ptr<Texture2D> pushAtext_;
+
+
+private: // 音
+	AudioInput bgm;
+	AudioInput sDawnsound;
+	AudioInput sAppearance;
 
 private: // メンバ関数
 	//	パーツの初期位置をセット

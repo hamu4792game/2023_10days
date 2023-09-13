@@ -16,6 +16,14 @@ Title::Title(std::shared_ptr<Camera> camera)
 	pushAtext_ = std::make_unique<Texture2D>();
 	pushAtext_->Texture("Resources/hud/pushA.png", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl");
 	
+	//	音声のロード
+	bgm.SoundLoadWave("Resources/sound/bgm.wav");
+	bgm.SoundPlayWave(true);
+	bgm.SetVolume(0.2f);
+
+	sDawnsound.SoundLoadWave("Resources/sound/dawn.wav");
+	sAppearance.SoundLoadWave("Resources/sound/appearance.wav");
+
 }
 
 void Title::Initialize()
@@ -269,6 +277,7 @@ void Title::CameraMove()
 			//	突貫
 			pushAtrans_.scale_ = Vector3(0.0f, 0.0f, 0.0f);
 
+			sAppearance.SoundPlayWave();
 		}
 		break;
 	case Title::CAMERASTEP::First:
@@ -305,6 +314,8 @@ void Title::CameraMove()
 			easeNowFrame = 0;
 			easeMaxFrame = 30;
 
+			
+
 		}
 		break;
 	case Title::CAMERASTEP::Bounce:
@@ -323,6 +334,9 @@ void Title::CameraMove()
 			easeNowFrame = 0;
 			easeMaxFrame = 30;
 			chara.translation_.y = 0.0f;
+
+			sDawnsound.SoundPlayWave();
+
 		}
 		else if (easeNowFrame <= easeMaxFrame) {
 			camera_->transform.translation_ = Ease::UseEase(startingPoint, endPoint, easeNowFrame, easeMaxFrame, Ease::EaseType::EaseOutBounce);
