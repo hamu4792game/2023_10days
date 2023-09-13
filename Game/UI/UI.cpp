@@ -193,7 +193,7 @@ void UI::ResultInitialize() {
 	colors_[UITextureNames::kGood] = 0xFFFFFFFF;
 	colors_[UITextureNames::kMiss] = 0xFFFFFFFF;
 
-	colors_[UITextureNames::kBack] = 0x222222FF;
+	colors_[UITextureNames::kBack] = 0x22222299;
 
 	isDraw_[UITextureNames::kBack] = true;
 	isDraw_[UITextureNames::kScore] = false;
