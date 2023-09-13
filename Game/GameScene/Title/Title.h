@@ -95,7 +95,17 @@ private: // メンバ関数
 
 	void CameraMove();
 
+	//店長T
+	WorldTransform TenchoW_;
+	//王騎将軍ポーズ
+	std::vector<esing> okisyogun;
+	void OkiSyogun();
+	bool isL_ = false;
+	bool isOkiStart_ = false;
 
+	float OkiT_ = 0;
 
-	
+	//店長座標
+	Vector3 Tpos[4];
+	Vector3 Trota[4];
 };

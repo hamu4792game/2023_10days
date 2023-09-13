@@ -435,6 +435,7 @@ void Result::Draw(Matrix4x4 viewProjection)
 	for (uint16_t i = 0u; i < shopModels_.size(); i++) {
 		Model::ModelDraw(shopTransform_[i], viewProjection, 0xffffffff, shopModels_[i].get());
 	}
+	
 	for (uint16_t i = 0u; i < tentyoModels_.size(); i++) {
 		Model::ModelDraw(tentyoTransform_[i], viewProjection, 0xffffffff, tentyoModels_[i].get());
 	}
@@ -503,7 +504,7 @@ void Result::OkiSyogun() {
 	else {
 
 		for (int i = 0; i < PARTS::Num; i++) {
-			tentyoTransform_[i].rotation_ = ES(okisyogun[i], T_);
+			tentyoTransform_[i].rotation_ = ES(okisyogun[i], OkiT_);
 		}
 
 		//以下ループT
@@ -512,7 +513,7 @@ void Result::OkiSyogun() {
 			OkiT_ += ADD;
 			if (OkiT_ >= 1.0f) {
 				isL_ = true;
-				T_ = 1.0f;
+				OkiT_ = 1.0f;
 			}
 		}
 		else {

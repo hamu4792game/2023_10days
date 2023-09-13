@@ -83,6 +83,76 @@ void Title::Initialize()
 	pushAtrans_.translation_ = Vector3(0.0f, -230.0f, 0.0f);
 	pushAtrans_.scale_ = Vector3(1.5f, 1.5f, 1.0f);
 
+#pragma region 王騎将軍ポーズ
+	okisyogun.resize(tentyoTransform.size());
+	okisyogun[Body] = {
+		{0.0f,0.0f,0.0f},
+		{0.0f, 0.0f, 0.0f},
+	};
+	okisyogun[BodyUnder] = {
+		{0.0f, 0.0f, 0.0f},
+		{0.0f, 0.0f, 0.0f},
+	};
+	okisyogun[Head] = {
+		{0.0f, 0.0f, 0.0f},
+		{0.3f, 0.0f, 0.0f},
+	};
+
+	//ude
+	okisyogun[LArm1] = {
+		{0.0f, 0.6f, 1.1f},
+		{0.0f, 0.6f, 1.1f},
+	};
+	okisyogun[LArm2] = {
+		{0.0f, 2.7f, -0.95f},
+		{0.0f, 2.7f, -0.95f},
+	};
+	okisyogun[LHand] = {
+		{0.0f, 0.75f, 0.0f},
+		{0.0f, 0.75f, 0.0f},
+	};
+
+	okisyogun[RArm1] = {
+		{0.0f, -0.53f, -1.0f},
+		{0.0f, -0.53f, -1.0f},
+	};
+	okisyogun[RArm2] = {
+		{0.0f, -2.54f, 0.7f},
+		{0.0f, -2.54f, 0.7f},
+	};
+	okisyogun[RHand] = {
+		{0.0f, -0.5f, 0.0f},
+		{0.0f, -0.5f, 0.0f},
+	};
+
+	//asi
+	okisyogun[LLeg1] = {
+		{0.0f, 0.0f, 0.0f},
+		{0.0f, 0.0f, 0.0f},
+	};
+	okisyogun[LLeg2] = {
+		{0.0f, 0.0f, 0.0f},
+		{0.0f, 0.0f, 0.0f},
+	};
+	okisyogun[LFoot] = {
+		{0.0f, 0.0f, 0.0f},
+		{0.0f, 0.0f, 0.0f},
+	};
+	okisyogun[RLeg1] = {
+		{0.0f, 0.0f, 0.0f},
+		{0.0f, 0.0f, 0.0f},
+	};
+	okisyogun[RLeg2] = {
+		{0.0f, 0.0f, 0.0f},
+		{0.0f, 0.0f, 0.0f},
+	};
+	okisyogun[RFoot] = {
+		{0.0f, 0.0f, 0.0f},
+		{0.0f, 0.0f, 0.0f},
+	};
+#pragma endregion
+
+	tentyoTransform[Body].parent_ = &TenchoW_;
 #pragma region パーツの親子関係と座標の初期設定
 	tentyoTransform[Head].parent_ = &tentyoTransform[Body];
 	tentyoTransform[BodyUnder].parent_ = &tentyoTransform[Body];
@@ -127,17 +197,78 @@ void Title::Initialize()
 
 
 #pragma endregion
+	
+	Tpos[0] = Vector3(-3.6f, 6.6f, 190.0f);
+	Trota[0]= Vector3(0.0f, -3.4f, 0.0f);
 
+	Tpos[1] = Vector3(-16.11f,3.5f,-7.0f);
+	Trota[1] = Vector3(0.0f,-1.4f,0.0f);
+
+	Tpos[2] = Vector3(0.0f, 30.0f, 210.0f);
+	Trota[2] = Vector3(0.0f, -3.14f, 0.0f);
+
+	Tpos[3] = Vector3(0.0f,6.64f,179.8f);
+	Trota[3] = Vector3(0.0f, -3.14f, 0.0f);
+
+	int GetTpos = GetRandomNum(3, false);
+
+	TenchoW_.translation_ = Tpos[GetTpos];
+	TenchoW_.rotation_ = Trota[GetTpos];
+}
+
+//将軍ポーズ店長
+void Title::OkiSyogun() {
+	if (!isOkiStart_) {
+		isOkiStart_ = true;
+		//アニメーションポーズ設定
+		for (int i = 0; i < PARTS::Num; i++) {
+			tentyoTransform[i].rotation_ = okisyogun[i].st;
+		}
+		isL_ = false;
+		OkiT_ = 0;
+	}
+	else {
+
+		for (int i = 0; i < PARTS::Num; i++) {
+			tentyoTransform[i].rotation_ = ES(okisyogun[i], OkiT_);
+		}
+
+		//以下ループT
+		float ADD = 1.0f / 30.0f;
+		if (!isL_) {
+			OkiT_ += ADD;
+			if (OkiT_ >= 1.0f) {
+				isL_ = true;
+				OkiT_ = 1.0f;
+			}
+		}
+		else {
+			OkiT_ -= ADD;
+			if (OkiT_ <= 0.0f) {
+				isL_ = false;
+				OkiT_ = 0;
+			}
+		}
+	}
 }
 
 void Title::Update()
 {
+#ifdef _DEBUG
+	ImGui::Begin("tentyo");
+	ImGui::DragFloat3("t pos", &TenchoW_.translation_.x,0.01f);
+	ImGui::DragFloat3("t rota", &TenchoW_.rotation_.x,0.01f);
+	ImGui::End();
+#endif // _DEBUG
+
+	OkiSyogun();
 
 	//ImGui::DragFloat3("cameraTrans", &camera_->transform.translation_.x, 1.0f);
 	//ImGui::DragFloat3("cameraRotate", &camera_->transform.rotation_.x, AngleToRadian(1.0f));
 	//ImGui::DragFloat3("shopTra", &tentyoTransform[Body].translation_.x, 1.0f);
 	//ImGui::DragFloat3("shopRota", &tentyoTransform[Body].rotation_.x, AngleToRadian(1.0f));
 	
+
 	if (cameraStep == CAMERASTEP::Zero) {
 		if (KeyInput::GetInstance()->GetPadButton(XINPUT_GAMEPAD_DPAD_LEFT) || KeyInput::GetKey(DIK_LEFTARROW)) {
 			camera_->transform.rotation_.y -= AngleToRadian(1.0f);
@@ -145,7 +276,7 @@ void Title::Update()
 		else if (KeyInput::GetInstance()->GetPadButton(XINPUT_GAMEPAD_DPAD_RIGHT) || KeyInput::GetKey(DIK_RIGHTARROW)) {
 			camera_->transform.rotation_.y += AngleToRadian(1.0f);
 		}
-		camera_->transform.rotation_.y = std::clamp<float>(camera_->transform.rotation_.y, AngleToRadian(25.0f), AngleToRadian(70.0f));
+		camera_->transform.rotation_.y = std::clamp<float>(camera_->transform.rotation_.y, AngleToRadian(25.0f), AngleToRadian(90.0f));
 	}
 	
 
@@ -167,6 +298,7 @@ void Title::Update()
 	for (auto& parts : parts_) {
 		parts.UpdateMatrix();
 	}
+	TenchoW_.UpdateMatrix();
 	for (auto& tentyoParts : tentyoTransform) {
 		tentyoParts.UpdateMatrix();
 	}
@@ -258,7 +390,7 @@ void Title::SetParts()
 #pragma endregion
 	
 
-	tentyoTransform[Body].parent_ = &shopTrans[static_cast<uint16_t>(SHOPPARTS::Signboard)];
+	tentyoTransform[Body].translation_;
 
 #pragma region 店長パーツの親子関係と座標の初期設定
 	tentyoTransform[Head].parent_ = &tentyoTransform[Body];
