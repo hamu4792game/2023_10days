@@ -18,9 +18,7 @@ Title::Title(std::shared_ptr<Camera> camera)
 	pushAtext_->Texture("Resources/hud/pushA.png", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl");
 	
 	//	音声のロード
-	bgm.SoundLoadWave("Resources/sound/bgm.wav");
-	bgm.SoundPlayWave(true);
-	bgm.SetVolume(0.08f);
+	
 
 	sDawnsound.SoundLoadWave("Resources/sound/dawn.wav");
 	sAppearance.SoundLoadWave("Resources/sound/appearance.wav");
@@ -482,6 +480,7 @@ void Title::CameraMove()
 			pushAtrans_.scale_ = Vector3(0.0f, 0.0f, 0.0f);
 
 			sAppearance.SoundPlayWave();
+			sAppearance.SetVolume(0.5f);
 		}
 		break;
 	case Title::CAMERASTEP::First:
@@ -540,6 +539,7 @@ void Title::CameraMove()
 			chara.translation_.y = 0.0f;
 
 			sDawnsound.SoundPlayWave();
+			sDawnsound.SetVolume(0.5f);
 
 		}
 		else if (easeNowFrame <= easeMaxFrame) {

@@ -89,7 +89,6 @@ private:
 	bool clearFlag_ = false;
 
 private: // sound
-	AudioInput bgm;
 	//	こづき
 	AudioInput sLittlePunch;
 	//	パーフェクトで

@@ -30,7 +30,6 @@ Battle::Battle(std::shared_ptr<Camera> camera)
 	timer_ = std::make_unique<Timer>();
 
 	//	soundのロード
-	bgm.SoundLoadWave("Resources/sound/battleBGM.wav");
 	sLittlePunch.SoundLoadWave("Resources/sound/littlePunch.wav");
 	sBigPunch.SoundLoadWave("Resources/sound/bigPunch.wav");
 	sFallDown.SoundLoadWave("Resources/sound/fallDown.wav");
@@ -219,6 +218,7 @@ void Battle::Update()
 				if (score_->GetCombo() >= 15) {
 					sHitToKill.SoundStop();
 					sHitToKill.SoundPlayWave();
+					sHitToKill.SetVolume(0.6f);
 					enemy->SetAnimeState(MODE_A::BAKUSAN);
 				}
 				else
@@ -227,10 +227,12 @@ void Battle::Update()
 					if (score_->GetEvaluation() == Score::Evaluation::kPerfect) {
 						sBigPunch.SoundStop();
 						sBigPunch.SoundPlayWave();
+						sBigPunch.SetVolume(0.6f);
 					}
 					else if (score_->GetEvaluation() == Score::Evaluation::kMiss) {
 						sFallDown.SoundStop();
 						sFallDown.SoundPlayWave();
+						sFallDown.SetVolume(0.6f);
 					}
 					else {
 						sLittlePunch.SoundStop();
