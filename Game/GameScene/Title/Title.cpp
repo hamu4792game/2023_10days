@@ -200,15 +200,16 @@ void Title::Initialize()
 
 #pragma endregion
 	
+	//普通
 	Tpos[0] = Vector3(-3.6f, 6.6f, 190.0f);
 	Trota[0]= Vector3(0.0f, -3.4f, 0.0f);
-
+	//カメラ右
 	Tpos[1] = Vector3(-16.11f,3.5f,-7.0f);
 	Trota[1] = Vector3(0.0f,-1.4f,0.0f);
-
+	//店の上
 	Tpos[2] = Vector3(0.0f, 30.0f, 210.0f);
 	Trota[2] = Vector3(0.0f, -3.14f, 0.0f);
-
+	//看板前
 	Tpos[3] = Vector3(0.0f,6.64f,179.8f);
 	Trota[3] = Vector3(0.0f, -3.14f, 0.0f);
 
