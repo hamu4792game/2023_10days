@@ -4,6 +4,7 @@
 #include "Engine/Input/KeyInput/KeyInput.h"
 #include "Game/GameScene/GameScene.h"
 #include "externals/imgui/imgui.h"
+#include <algorithm>
 
 Title::Title(std::shared_ptr<Camera> camera)
 {
@@ -19,7 +20,7 @@ Title::Title(std::shared_ptr<Camera> camera)
 	//	音声のロード
 	bgm.SoundLoadWave("Resources/sound/bgm.wav");
 	bgm.SoundPlayWave(true);
-	bgm.SetVolume(0.2f);
+	bgm.SetVolume(0.1f);
 
 	sDawnsound.SoundLoadWave("Resources/sound/dawn.wav");
 	sAppearance.SoundLoadWave("Resources/sound/appearance.wav");
@@ -75,6 +76,7 @@ void Title::Initialize()
 	camera_->transform.parent_ = &worldTransform;
 	camera_->transform.translation_ = Vector3(-25.0f, -0.5f, -5.0f);
 	camera_->transform.rotation_ = Vector3(0.035f, 1.256f, 0.0f);
+	camera_->transform.scale_ = Vector3(1.0f, 1.0f, 1.0f);
 
 	endPoint = Vector3(0.0f, 0.0f, 170.0f);
 
@@ -90,7 +92,17 @@ void Title::Update()
 	//ImGui::DragFloat3("cameraRotate", &camera_->transform.rotation_.x, AngleToRadian(1.0f));
 	//ImGui::DragFloat3("shopTra", &tentyoTransform[Body].translation_.x, 1.0f);
 	//ImGui::DragFloat3("shopRota", &tentyoTransform[Body].rotation_.x, AngleToRadian(1.0f));
-
+	
+	if (cameraStep == CAMERASTEP::Zero) {
+		if (KeyInput::GetInstance()->GetPadButton(XINPUT_GAMEPAD_DPAD_LEFT) || KeyInput::GetKey(DIK_LEFTARROW)) {
+			camera_->transform.rotation_.y -= AngleToRadian(1.0f);
+		}
+		else if (KeyInput::GetInstance()->GetPadButton(XINPUT_GAMEPAD_DPAD_RIGHT) || KeyInput::GetKey(DIK_RIGHTARROW)) {
+			camera_->transform.rotation_.y += AngleToRadian(1.0f);
+		}
+		camera_->transform.rotation_.y = std::clamp<float>(camera_->transform.rotation_.y, AngleToRadian(25.0f), AngleToRadian(70.0f));
+	}
+	
 
 	CameraMove();
 
