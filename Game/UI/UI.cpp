@@ -147,6 +147,10 @@ void UI::BattleInitialize() {
 	score_->SetIsDraw(true, Score::kCombo);
 	score_->SetIsDraw(true, Score::kMemoHighScore);
 
+	score_->SetColor(0xCCCC11FF, Score::kScore);
+	score_->SetColor(0xCCCC11FF, Score::kMemoHighScore);
+	score_->SetColor(0x30CCDDFF, Score::kCombo);
+
 	colors_[UITextureNames::kPerfect] = 0xFFFFFFFF;
 	colors_[UITextureNames::kGreat] = 0xFFFFFFFF;
 	colors_[UITextureNames::kGood] = 0xFFFFFFFF;
@@ -172,6 +176,16 @@ void UI::ResultInitialize() {
 	score_->SetIsDraw(false, Score::kGreatNum);
 	score_->SetIsDraw(false, Score::kGoodNum);
 	score_->SetIsDraw(false, Score::kMissNum);
+
+	score_->SetColor(0xCCCC11FF, Score::kScore);
+	score_->SetColor(0xCCCC11FF, Score::kMemoHighScore);
+	score_->SetColor(0x30CCDDFF, Score::kHighCombo);
+	score_->SetColor(0xCCCC11FF, Score::kPerfectNum);
+	score_->SetColor(0xCC2222FF, Score::kGreatNum);
+	score_->SetColor(0x77BB11FF, Score::kGoodNum);
+	score_->SetColor(0x777777FF, Score::kMissNum);
+
+
 	score_->SetIsDraw(false, Score::kMemoHighScore);
 
 	colors_[UITextureNames::kPerfect] = 0xFFFFFFFF;

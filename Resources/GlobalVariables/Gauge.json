@@ -1,13 +1,13 @@
 {
     "Gauge": {
         "markScale": 1.0,
-        "maxSpeed": 4.0,
-        "maxSpeedCombo": 30,
+        "maxSpeed": 3.5,
+        "maxSpeedCombo": 25,
         "pos": [
             640.0,
-            630.0
+            600.0
         ],
-        "scaleX": 100.0,
+        "scaleX": 110.0,
         "scaleY": 18.0,
         "whiteSpace": 4.0
     }

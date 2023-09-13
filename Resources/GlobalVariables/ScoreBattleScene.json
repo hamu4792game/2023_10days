@@ -1,7 +1,7 @@
 {
     "ScoreBattleScene": {
         "ComboPos": [
-            1000.0,
+            1055.0,
             360.0
         ],
         "ComboScale": 1.5,
@@ -36,7 +36,7 @@
         ],
         "PerfectScale": 1.0,
         "ScorePos": [
-            980.0,
+            990.0,
             100.0
         ],
         "ScoreScale": 1.0,

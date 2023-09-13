@@ -6,18 +6,18 @@
         ],
         "BackScale": 1.0,
         "ComboPos": [
-            1075.0,
+            1090.0,
             270.0
         ],
         "ComboScale": 1.2999999523162842,
         "GoodPos": [
-            300.0,
-            360.0
+            1000.0,
+            400.0
         ],
         "GoodScale": 2.0,
         "GreatPos": [
-            300.0,
-            360.0
+            1000.0,
+            400.0
         ],
         "GreatScale": 2.0,
         "HighComboPos": [
@@ -26,18 +26,18 @@
         ],
         "HighComboScale": 1.0,
         "HighScorePos": [
-            1120.0,
+            1100.0,
             140.0
         ],
         "HighScoreScale": 0.6000000238418579,
         "MissPos": [
-            300.0,
-            360.0
+            1000.0,
+            400.0
         ],
         "MissScale": 2.0,
         "PerfectPos": [
-            300.0,
-            360.0
+            1000.0,
+            400.0
         ],
         "PerfectScale": 2.0,
         "ScorePos": [
