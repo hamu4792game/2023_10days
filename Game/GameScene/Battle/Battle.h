@@ -52,6 +52,8 @@ public: // korone
 
 	UI* GetUI() { return ui_.get(); }
 
+	Score* GetScore() { return score_.get(); }
+
 private://	必要なメンバ変数
 
 	std::shared_ptr<Camera> camera_;

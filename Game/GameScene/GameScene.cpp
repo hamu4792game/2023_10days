@@ -73,6 +73,7 @@ void GameScene::Initialize()
 	//title->SetModelsType2(mobModels_[1]);
 	title->SetBottonModels(bottonModels_);
 	title->SetShopModel(shopModel_);
+	title->SetScore(battle->GetScore());
 
 	battle->SetModels(mobModels_);
 	battle->SetBottonModels(bottonModels_);
