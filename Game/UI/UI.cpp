@@ -147,10 +147,10 @@ void UI::BattleInitialize() {
 	score_->SetIsDraw(true, Score::kCombo);
 	score_->SetIsDraw(true, Score::kMemoHighScore);
 
-	colors_[UITextureNames::kPerfect] = 0xFFFF22FF;
-	colors_[UITextureNames::kGreat] = 0xEE1111FF;
-	colors_[UITextureNames::kGood] = 0x11EE11FF;
-	colors_[UITextureNames::kMiss] = 0x333333FF;
+	colors_[UITextureNames::kPerfect] = 0xFFFFFFFF;
+	colors_[UITextureNames::kGreat] = 0xFFFFFFFF;
+	colors_[UITextureNames::kGood] = 0xFFFFFFFF;
+	colors_[UITextureNames::kMiss] = 0xFFFFFFFF;
 
 	isDraw_[UITextureNames::kScore] = true;
 	isDraw_[UITextureNames::kCombo] = true;
@@ -361,7 +361,7 @@ void UI::BattleUpdate() {
 		isDraw_[UITextureNames::kGreat] = false;
 		isDraw_[UITextureNames::kGood] = false;
 		isDraw_[UITextureNames::kMiss] = false; 
-		colors_[UITextureNames::kPerfect] = 0xFFFF22FF;
+		colors_[UITextureNames::kPerfect] = 0xFFFFFFFF;
 	}
 	else if (score_->GetEvaluation() == Score::Evaluation::kGreat) {
 
@@ -371,7 +371,7 @@ void UI::BattleUpdate() {
 		isDraw_[UITextureNames::kGreat] = true;
 		isDraw_[UITextureNames::kGood] = false;
 		isDraw_[UITextureNames::kMiss] = false;
-		colors_[UITextureNames::kGreat] = 0xEE1111FF;
+		colors_[UITextureNames::kGreat] = 0xFFFFFFFF;
 	}
 	else if (score_->GetEvaluation() == Score::Evaluation::kGood) {
 
@@ -381,7 +381,7 @@ void UI::BattleUpdate() {
 		isDraw_[UITextureNames::kGreat] = false;
 		isDraw_[UITextureNames::kGood] = true;
 		isDraw_[UITextureNames::kMiss] = false;
-		colors_[UITextureNames::kGood] = 0x11EE11FF;
+		colors_[UITextureNames::kGood] = 0xFFFFFFFF;
 	}
 	else if (score_->GetEvaluation() == Score::Evaluation::kMiss) {
 
@@ -391,7 +391,7 @@ void UI::BattleUpdate() {
 		isDraw_[UITextureNames::kGreat] = false;
 		isDraw_[UITextureNames::kGood] = false;
 		isDraw_[UITextureNames::kMiss] = true;
-		colors_[UITextureNames::kMiss] = 0x333333FF;
+		colors_[UITextureNames::kMiss] = 0xFFFFFFFF;
 	}
 
 	ComboUpdate();
