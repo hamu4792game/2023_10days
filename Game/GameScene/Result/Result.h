@@ -3,6 +3,7 @@
 #include "Game/UI/UI.h"
 #include "Engine/Texture/Model.h"
 #include "Engine/Camera/Camera.h"
+#include"EEnum.h"
 
 class Result
 {
@@ -50,6 +51,24 @@ private:
 	std::shared_ptr<Camera> camera_;
 
 
+	//ラーメン食べるアニメーション
+	void EatRamen();
+	bool isLoop_ = false;
+	bool isAnimeStart_ = false;
+
+	float T_ = 0;
+
+	//ラーメン食う！！
+	std::vector<esing> eatRamen;
+
+	//王騎将軍ポーズ
+	std::vector<esing> okisyogun;
+
+	void OkiSyogun();
+	bool isL_ = false;
+	bool isOkiStart_=false;
+
+	float OkiT_ = 0;
 public: // korone
 
 	void SetUI(UI* ui) { ui_ = ui; }
