@@ -857,8 +857,8 @@ void Enemy::BlowAway() {
 			isStart_blow_away = true;
 			//アニメ状態を普通のランダムとびに
 			//animeState_ = MODE_A::NORMAL;
-
-			animeState_ = MODE_A::BAKUSAN;
+			//
+			//animeState_ = MODE_A::BAKUSAN;
 
 
 			//	念のため、初期化する	hamu
@@ -1161,9 +1161,9 @@ void Enemy::Exploding_limbs() {
 			};
 
 			Random_V[i] = {
-				(float)GetRandomNum(1,true)/5.0f,
-				(float)GetRandomNum(1,true)/5.0f,
-				(float)GetRandomNum(1,false)+1.0f/2,
+				(float)GetRandomNum(1,true) / 5.0f,
+				(float)GetRandomNum(1,true) / 5.0f,
+				(float)GetRandomNum(1,false) + 2.0f / 2.0f,
 			};
 		}
 	}

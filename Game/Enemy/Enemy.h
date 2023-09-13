@@ -96,6 +96,7 @@ private: // hamu
 public: // hamu
 	bool GetDelete() { return die_; }
 	void SetParent(const WorldTransform& world) { transform.parent_ = &world; }
+	void SetAnimeState(MODE_A state) { animeState_ = state; }
 
 private://Specha
 

@@ -211,10 +211,12 @@ void Battle::Update()
 				enemyKillCount_++;
 				EnemyGeneration();
 				ButtonRand();
+				enemy->SetAnimeState(MODE_A::NORMAL);
 
-				if (score_->GetCombo() >= 20) {
+				if (score_->GetCombo() >= 15) {
 					sHitToKill.SoundStop();
 					sHitToKill.SoundPlayWave();
+					enemy->SetAnimeState(MODE_A::BAKUSAN);
 				}
 				else
 				{
