@@ -82,6 +82,8 @@ private:
 
 	WorldTransform pushAtrans_;
 	std::unique_ptr<Texture2D> pushAtext_;
+	Vector4 color;
+	bool colorFlg;
 
 
 private: // 音
