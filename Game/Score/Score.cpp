@@ -136,7 +136,7 @@ void Score::Reset() {
 		
 	}
 
-	isFullCom_ = false;
+	// isFullCom_ = false;
 
 
 	ResetEvalution();

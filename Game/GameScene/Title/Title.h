@@ -9,6 +9,8 @@
 #include "Game/Enemy/Enemy.h"
 #include "Game/Player/Player.h"
 
+#include "Game/Score/Score.h"
+
 class Title
 {
 public:
@@ -28,6 +30,8 @@ public: // setter
 	void SetShopModel(std::vector<std::shared_ptr<Model>> modeldate) { shopModels_ = modeldate; }
 	void SetTentyoModel(std::vector<std::shared_ptr<Model>> modeldate) { tentyoModels_ = modeldate; }
 
+	void SetScore(Score* score) { score_ = score; }
+
 private: // シーンで必要なモデル配列
 	//	プレイヤーデータのモデル配列
 	//std::vector<std::shared_ptr<Model>> mobModels_;
@@ -41,6 +45,9 @@ private: // シーンで必要なモデル配列
 
 	std::vector<std::shared_ptr<Model>> tentyoModels_;
 
+private: // korone
+
+	Score* score_ = nullptr;
 	
 private:
 	//	中心座標

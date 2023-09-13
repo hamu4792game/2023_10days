@@ -198,6 +198,11 @@ void Title::Initialize()
 	tentyoTransform[RFoot].translation_ = { 0.12f, -2.2f, 0.0f };
 
 
+	if (score_->IsFullCom()) {
+		// フルコンの時
+
+	}
+
 #pragma endregion
 	
 	Tpos[0] = Vector3(-3.6f, 6.6f, 190.0f);
@@ -280,7 +285,6 @@ void Title::Update()
 		}
 		camera_->transform.rotation_.y = std::clamp<float>(camera_->transform.rotation_.y, AngleToRadian(25.0f), AngleToRadian(90.0f));
 	}
-	
 
 	CameraMove();
 
