@@ -88,6 +88,8 @@ void GameScene::Initialize()
 	result->SetTentyoModel(tentyo_);
 	result->SetShopModel(shopModel_);
 
+	result->SetClearFlag_(battle->GetClearFlag());
+
 	//	シーンの初期化
 	title->Initialize();
 	battle->Initialize();

@@ -3,7 +3,8 @@
 #include "Game/UI/UI.h"
 #include "Engine/Texture/Model.h"
 #include "Engine/Camera/Camera.h"
-#include"EEnum.h"
+#include "EEnum.h"
+#include "Engine/Input/AudioInput/AudioInput.h"
 
 class Result
 {
@@ -23,6 +24,9 @@ public: // Modelデータのロード
 	void SetModels(std::vector<std::shared_ptr<Model>> modeldate) { mobModels_ = modeldate; }
 	void SetShopModel(std::vector<std::shared_ptr<Model>> modeldate) { shopModels_ = modeldate; }
 	void SetTentyoModel(std::vector<std::shared_ptr<Model>> modeldate) { tentyoModels_ = modeldate; }
+
+private: // 音関係
+	//AudioInput pon;
 
 private: // Modelの宣言
 
@@ -72,11 +76,14 @@ private:
 	bool isL_ = false;
 	bool isOkiStart_=false;
 
+	bool* clearFlag_ = nullptr;
+
 	float OkiT_ = 0;
 public: // korone
 
 	void SetUI(UI* ui) { ui_ = ui; }
 
+	void SetClearFlag_(bool* flag) { clearFlag_ = flag; }
 
 private:
 

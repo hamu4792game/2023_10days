@@ -20,7 +20,7 @@ Title::Title(std::shared_ptr<Camera> camera)
 	//	音声のロード
 	bgm.SoundLoadWave("Resources/sound/bgm.wav");
 	bgm.SoundPlayWave(true);
-	bgm.SetVolume(0.1f);
+	bgm.SetVolume(0.08f);
 
 	sDawnsound.SoundLoadWave("Resources/sound/dawn.wav");
 	sAppearance.SoundLoadWave("Resources/sound/appearance.wav");
@@ -68,7 +68,9 @@ void Title::Initialize()
 	shopTrans[static_cast<uint16_t>(SHOPPARTS::BoardText)].rotation_ = Vector3(0.0f, 0.0f, 0.0f);
 	//shopTrans[static_cast<uint16_t>(SHOPPARTS::BoardText)].scale_ = Vector3(1.0f, 1.0f, 1.0f);
 
-	
+	//	色
+	color = Vector4(255.0f, 255.0f, 255.0f, 255.0f);
+	colorFlg = false;
 
 
 	//	カメラの設定
@@ -339,7 +341,7 @@ void Title::Draw(Matrix4x4 viewProjection)
 void Title::Draw2D(Matrix4x4 viewProjection2d)
 {
 	if (cameraStep == Title::CAMERASTEP::Zero) {
-		Texture2D::TextureDraw(pushAtrans_, viewProjection2d, 0x000000ff, pushAtext_.get());
+		Texture2D::TextureDraw(pushAtrans_, viewProjection2d, ChangeColor(color), pushAtext_.get());
 	}
 }
 
@@ -452,7 +454,17 @@ void Title::CameraMove()
 		}
 
 
-		if (KeyInput::PushKey(DIK_SPACE) || KeyInput::GetInstance()->GetPadButtonDown(XINPUT_GAMEPAD_A)) {
+		colorFlg ? color.w += 5.0f : color.w -= 5.0f;
+		color.w = std::clamp(color.w, 0.0f, 255.0f);
+		if (color.w == 0.0f || color.w == 255.0f) {
+			colorFlg = !colorFlg;
+		}
+
+		if (KeyInput::PushKey(DIK_SPACE) || KeyInput::PushKey(DIK_RETURN)
+			|| KeyInput::GetInstance()->GetPadButtonDown(XINPUT_GAMEPAD_A)
+			|| KeyInput::GetInstance()->GetPadButtonDown(XINPUT_GAMEPAD_B)
+			|| KeyInput::GetInstance()->GetPadButtonDown(XINPUT_GAMEPAD_Y)
+			|| KeyInput::GetInstance()->GetPadButtonDown(XINPUT_GAMEPAD_X)) {
 			cameraStep = CAMERASTEP::First;
 
 			// Firstのためのセット

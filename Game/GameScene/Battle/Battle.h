@@ -34,6 +34,8 @@ public:
 
 	void Draw2D(const Matrix4x4& viewProjection);
 
+	bool* GetClearFlag() { return &clearFlag_; }
+
 
 	void SetModels(std::vector<std::vector<std::shared_ptr<Model>>> modeldate) { mobModels_ = modeldate; }
 	void SetBottonModels(std::vector<std::shared_ptr<Model>> modeldate) { bottonModels_= modeldate; }
@@ -81,6 +83,8 @@ private:
 	void ButtonRand();
 
 	bool tutorialFlag_ = false;
+
+	bool clearFlag_ = false;
 
 private: // sound
 	AudioInput bgm;

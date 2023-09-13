@@ -6,6 +6,7 @@
 
 Result::Result(std::shared_ptr<Camera> camera) {
 	camera_ = camera;
+
 }
 
 void Result::Initialize()
@@ -394,19 +395,21 @@ void Result::Update()
 
 #endif // _DEBUG
 
+	if (clearFlag_) {
+		// 時間内に来た時
+
+
+	}
+	else {
+		// 間に合わなかった時
+
+	}
+
 	EatRamen();
 	//Kuyasii();
 	OkiSyogun();
 	
 	ui_->Update();
-	
-	if (KeyInput::GetInstance()->GetPadButtonDown(XINPUT_GAMEPAD_A) ||
-		KeyInput::GetInstance()->GetPadButtonDown(XINPUT_GAMEPAD_B) ||
-		KeyInput::GetInstance()->GetPadButtonDown(XINPUT_GAMEPAD_X) ||
-		KeyInput::GetInstance()->GetPadButtonDown(XINPUT_GAMEPAD_Y) ||
-		KeyInput::PushKey(DIK_SPACE)) {
-		GameScene::GetInstance()->sceneChangeFlag = true;
-	}
 
 	cameraR_target_.UpdateMatrix();
 	camera_->transform.UpdateMatrix();

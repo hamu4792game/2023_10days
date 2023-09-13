@@ -6,6 +6,8 @@
 #include "GlobalVariables/GlobalVariables.h"
 #include "Engine/Easing/Ease.h"
 
+#include "Engine/Input/KeyInput/KeyInput.h"
+
 UI::UI() {
 
 	for (int i = 0; i < kUITexturesMaxNum_; i++) {
@@ -15,6 +17,7 @@ UI::UI() {
 
 		isDraw_[i] = false;
 	}
+	pon.SoundLoadWave("Resources/sound/pon.wav");
 }
 
 void UI::ResetIsDraw() {
@@ -440,31 +443,53 @@ void UI::ResultUpdate() {
 
 		score_->SetIsDraw(true, Score::kScore);
 		score_->SetIsDraw(true, Score::kMemoHighScore);
+		pon.SoundStop();
+		pon.SoundPlayWave();
 	}
 	else if (count_ == kInterval_ * 4) {
 
 		isDraw_[UITextureNames::kCombo] = true;
 		score_->SetIsDraw(true, Score::kHighCombo);
+		pon.SoundStop();
+		pon.SoundPlayWave();
 	}
 	else if (count_ == kInterval_ * 5) {
 
 		isDraw_[UITextureNames::kPerfect] = true;
 		score_->SetIsDraw(true, Score::kPerfectNum);
+		pon.SoundStop();
+		pon.SoundPlayWave();
 	}
 	else if (count_ == kInterval_ * 6) {
 
 		isDraw_[UITextureNames::kGreat] = true;
 		score_->SetIsDraw(true, Score::kGreatNum);
+		pon.SoundStop();
+		pon.SoundPlayWave();
 	}
 	else if (count_ == kInterval_ * 7) {
 
 		isDraw_[UITextureNames::kGood] = true;
 		score_->SetIsDraw(true, Score::kGoodNum);
+		pon.SoundStop();
+		pon.SoundPlayWave();
 	}
 	else if (count_ == kInterval_ * 8) {
 
 		isDraw_[UITextureNames::kMiss] = true;
 		score_->SetIsDraw(true, Score::kMissNum);
+		pon.SoundStop();
+		pon.SoundPlayWave();
+	}
+
+	if (count_ >= kInterval_ * 8) {
+		if (KeyInput::GetInstance()->GetPadButtonDown(XINPUT_GAMEPAD_A) ||
+			KeyInput::GetInstance()->GetPadButtonDown(XINPUT_GAMEPAD_B) ||
+			KeyInput::GetInstance()->GetPadButtonDown(XINPUT_GAMEPAD_X) ||
+			KeyInput::GetInstance()->GetPadButtonDown(XINPUT_GAMEPAD_Y) ||
+			KeyInput::PushKey(DIK_SPACE)) {
+			GameScene::GetInstance()->sceneChangeFlag = true;
+		}
 	}
 
 }
