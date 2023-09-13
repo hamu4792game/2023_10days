@@ -100,6 +100,12 @@ void GameScene::Initialize()
 
 	//camera->transform.translation_.z = -20.0f;
 
+	//	音声のロード
+	bgm.SoundLoadWave("Resources/sound/bgm.wav");
+	bgm.SoundPlayWave(true);
+	bgm.SetVolume(0.2f);
+
+
 	ground = std::make_unique<Ground>();
 	ground->Initialize();
 	ground->ModelLoad();

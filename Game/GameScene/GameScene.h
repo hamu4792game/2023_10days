@@ -7,6 +7,7 @@
 
 #include "Engine/Texture/Model.h"
 #include "Engine/Texture/Texture2D.h"
+#include "Engine/Input/AudioInput/AudioInput.h"
 
 #include "Game/Ground/Ground.h"
 #include "Game/Skydome/Skydome.h"
@@ -79,7 +80,9 @@ private:
 	//	パーツ用データの元
 	std::vector<WorldTransform> parts_;
 
-private:
+private: // 音
+	AudioInput bgm;
+
 
 public:
 
