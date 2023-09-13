@@ -6,6 +6,7 @@
 
 Result::Result(std::shared_ptr<Camera> camera) {
 	camera_ = camera;
+
 }
 
 void Result::Initialize()

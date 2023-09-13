@@ -2,6 +2,7 @@
 
 
 #include "Engine/Texture/Texture2D.h"
+#include "Engine/Input/AudioInput/AudioInput.h"
 
 class Score;
 
@@ -196,5 +197,8 @@ private:
 	uint32_t colors_[kUITexturesMaxNum_] = {};
 
 	bool isDraw_[kUITexturesMaxNum_] = {};
+
+private: // 音
+	AudioInput pon;
 
 };
