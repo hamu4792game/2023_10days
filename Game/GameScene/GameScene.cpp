@@ -120,6 +120,10 @@ void GameScene::Initialize()
 	easeNum = 0.0f;
 	boxtransform.scale_ = Vector3(0.0f, 0.0f, 1.0f);
 
+	bgm.SoundLoadWave("Resources/sound/battleBGM.wav");
+	bgm.SoundPlayWave(true);
+	bgm.SetVolume(0.08f);
+
 }
 
 void GameScene::Update()

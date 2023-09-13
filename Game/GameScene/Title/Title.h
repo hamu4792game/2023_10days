@@ -94,7 +94,6 @@ private:
 
 
 private: // 音
-	AudioInput bgm;
 	AudioInput sDawnsound;
 	AudioInput sAppearance;
 
