@@ -507,80 +507,6 @@ void Player::AnimeInitialize() {
 	};
 #pragma endregion
 
-#pragma region ラーメン食べる
-
-	eatRamen.resize(parts_.size());
-	eatRamen[Body] = {
-		{0.3f, 0.0f, 0.0f},
-		{0.4f, 0.0f, 0.0f},
-	};
-	eatRamen[Head] = {
-		{0.4f, 0.0f, 0.0f},
-		{0.4f, 0.0f, 0.0f},
-	};
-	eatRamen[BodyUnder] = {
-		{-0.3f, 0.0f, 0.0f},
-		{-0.4f, 0.0f, 0.0f},
-	};
-	//
-	eatRamen[LArm1] = {
-		{0.15f, 0.5f, 0.0f},
-		{0.15f, 0.5f, 0.0f},
-	};
-	eatRamen[LArm2] = {
-		{0.0f, 0.76f, 0.0f},
-		{0.0f, 0.76f, 0.0f},
-	};
-	eatRamen[LHand] = {
-		{0.0f, 0.0f, 0.0f},
-		{0.0f, 0.0f, 0.0f},
-	};
-	//
-	eatRamen[RArm1] = {
-		{0.1f, -0.13f, 0.0f},
-		{-0.5f, -0.13f, 0.0f},
-	};
-
-	eatRamen[RArm2] = {
-		{0.0f, -2.39f, 0.0f},
-		{0.0f, -2.39f, 0.0f},
-	};
-	eatRamen[RHand] = {
-		{0.0f, 0.0f, 0.0f},
-		{0.0f, 0.0f, 0.0f},
-	};
-
-
-	//
-	eatRamen[LLeg1] = {
-		{-1.5f, -0.3f, 0.0f},
-		{-1.5f, -0.3f, 0.0f},
-	};
-
-	eatRamen[LLeg2] = {
-		{1.5f, 0.0f, 0.0f},
-		{1.5f, 0.0f, 0.0f},
-	};
-	eatRamen[LFoot] = {
-		{0.0f, 0.0f, 0.0f},
-		{0.0f, 0.0f, 0.0f},
-	};
-
-	//
-	eatRamen[RLeg1] = {
-		{-1.5f, 0.3f, 0.0f},
-		{-1.5f, 0.3f, 0.0f},
-	};
-
-	eatRamen[RLeg2] = {
-		{1.5f, 0.0f, 0.0f},
-		{1.5f, 0.0f, 0.0f},
-	};
-	eatRamen[RFoot] = {
-		{0.0f, 0.0f, 0.0f},
-		{0.0f, 0.0f, 0.0f},
-	};
-#pragma endregion
 
 
 
@@ -852,45 +778,7 @@ void Player::PDown() {
 
 }
 
-//ラーメン食べるモーション
-void Player::EatRamen() {
-	//アニメーション初期化
-	if (!isAnimeStart_) {
-		isAnimeStart_ = true;
-		isLoop_ = false;
 
-		//アニメーションポーズ設定
-		for (int i = 0; i < PARTS::Num; i++) {
-			parts_[i].rotation_ = eatRamen[i].st;
-		}
-		T_ = 0;
-		
-	}//更新
-	else {
-
-		for (int i = 0; i < PARTS::Num; i++) {
-			parts_[i].rotation_ = ES(eatRamen[i], T_);
-		}
-
-		//以下ループT
-		float ADD = 1.0f / 30.0f;
-		if (!isLoop_) {
-			T_ += ADD;
-			if (T_ >= 1.0f) {
-				isLoop_ = true;
-				T_ = 1.0f;
-			}
-		}
-		else {
-			T_ -= ADD;
-			if (T_ <= 0.0f) {
-				isLoop_ = false;
-				T_ = 0;
-			}
-		}
-
-	}
-}
 #pragma endregion
 
 void Player::Update()

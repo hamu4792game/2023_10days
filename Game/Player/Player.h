@@ -276,9 +276,7 @@ private: //Spe
 	//プレイヤーダウンアニメ
 	void PDown();
 
-	//ラーメン食べるアニメーション
-	void EatRamen();
-
+	
 	//イージング
 	float T_;
 	//アニメーションフレーム加算地
@@ -322,5 +320,5 @@ private: //Spe
 	//ダウンアニメ
 	std::vector<esing> pDown;
 
-	std::vector<esing> eatRamen;
+	
 };

@@ -120,6 +120,7 @@ void Result::Initialize()
 #pragma endregion
 
 
+
 	//以下数値設定
 	camera_->transform.translation_ = Vector3(0.0f, 3.0f, -40.0f);
 	camera_->transform.rotation_ = Vector3(0.0f, 0.0f, 0.0f);
@@ -130,6 +131,7 @@ void Result::Initialize()
 
 	playerW_.translation_ = Vector3(1.7f, 1.0f, 1.0f);
 	playerW_.scale_ = Vector3(0.2f, 0.2f, 0.2f);
+	playerW_.rotation_ = Vector3(0.0f, 3.14f, 0.0f);
 
 	tentyoW_.translation_ = Vector3(-1.7f, 1.3f, 2.0f);
 	tentyoW_.scale_ = Vector3(0.2f, 0.2f, 0.2f);
@@ -137,6 +139,83 @@ void Result::Initialize()
 
 	cameraR_target_.translation_ = Vector3(0.0f, 7.7f, 0.0f);
 	cameraR_target_.rotation_ = Vector3(0.7f, 0.0f, 0.0f);
+
+
+#pragma region ラーメン食べる
+
+	eatRamen.resize(parts_.size());
+	eatRamen[Body] = {
+		{0.3f, 0.0f, 0.0f},
+		{0.4f, 0.0f, 0.0f},
+	};
+	eatRamen[Head] = {
+		{0.4f, 0.0f, 0.0f},
+		{0.4f, 0.0f, 0.0f},
+	};
+	eatRamen[BodyUnder] = {
+		{-0.3f, 0.0f, 0.0f},
+		{-0.4f, 0.0f, 0.0f},
+	};
+	//
+	eatRamen[LArm1] = {
+		{-0.15f, 0.5f, 0.0f},
+		{-0.15f, 0.5f, 0.0f},
+	};
+	eatRamen[LArm2] = {
+		{0.0f, 1.76f, 0.0f},
+		{0.0f, 1.76f, 0.0f},
+	};
+	eatRamen[LHand] = {
+		{0.0f, 0.0f, 0.0f},
+		{0.0f, 0.0f, 0.0f},
+	};
+	//
+	eatRamen[RArm1] = {
+		{0.1f, -0.13f, 0.0f},
+		{-0.5f, -0.13f, 0.0f},
+	};
+
+	eatRamen[RArm2] = {
+		{0.0f, -2.39f, 0.0f},
+		{0.0f, -2.39f, 0.0f},
+	};
+	eatRamen[RHand] = {
+		{0.0f, 0.0f, 0.0f},
+		{0.0f, 0.0f, 0.0f},
+	};
+
+
+	//
+	eatRamen[LLeg1] = {
+		{-1.5f, -0.3f, 0.0f},
+		{-1.5f, -0.3f, 0.0f},
+	};
+
+	eatRamen[LLeg2] = {
+		{1.5f, 0.0f, 0.0f},
+		{1.5f, 0.0f, 0.0f},
+	};
+	eatRamen[LFoot] = {
+		{0.0f, 0.0f, 0.0f},
+		{0.0f, 0.0f, 0.0f},
+	};
+
+	//
+	eatRamen[RLeg1] = {
+		{-1.5f, 0.3f, 0.0f},
+		{-1.5f, 0.3f, 0.0f},
+	};
+
+	eatRamen[RLeg2] = {
+		{1.5f, 0.0f, 0.0f},
+		{1.5f, 0.0f, 0.0f},
+	};
+	eatRamen[RFoot] = {
+		{0.0f, 0.0f, 0.0f},
+		{0.0f, 0.0f, 0.0f},
+	};
+#pragma endregion
+
 }
 
 void Result::Update()
@@ -170,12 +249,13 @@ void Result::Update()
 	ImGui::Text("tentyo");
 	ImGui::DragFloat3("T pos", &tentyoW_.translation_.x, 0.1f);
 	ImGui::DragFloat3("T Rotate", &tentyoW_.rotation_.x, 0.1f);
-#endif // _DEBUG
-
-	
-	
 	ImGui::End();
 
+#endif // _DEBUG
+
+	EatRamen();
+	
+	
 	ui_->Update();
 	
 	if (KeyInput::GetInstance()->GetPadButtonDown(XINPUT_GAMEPAD_A) ||
@@ -222,3 +302,48 @@ void Result::Draw2D(const Matrix4x4& viewProjection) {
 
 	ui_->Draw2D(viewProjection);
 }
+
+
+
+
+#pragma region animation
+//ラーメン食べるモーション
+void Result::EatRamen() {
+	//アニメーション初期化
+	if (!isAnimeStart_) {
+		isAnimeStart_ = true;
+		isLoop_ = false;
+
+		//アニメーションポーズ設定
+		for (int i = 0; i < PARTS::Num; i++) {
+			parts_[i].rotation_ = eatRamen[i].st;
+		}
+		T_ = 0;
+
+	}//更新
+	else {
+
+		for (int i = 0; i < PARTS::Num; i++) {
+			parts_[i].rotation_ = ES(eatRamen[i], T_);
+		}
+
+		//以下ループT
+		float ADD = 1.0f / 30.0f;
+		if (!isLoop_) {
+			T_ += ADD;
+			if (T_ >= 1.0f) {
+				isLoop_ = true;
+				T_ = 1.0f;
+			}
+		}
+		else {
+			T_ -= ADD;
+			if (T_ <= 0.0f) {
+				isLoop_ = false;
+				T_ = 0;
+			}
+		}
+
+	}
+}
+#pragma endregion
