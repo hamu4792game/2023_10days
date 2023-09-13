@@ -211,7 +211,7 @@ void Title::Initialize()
 	Tpos[3] = Vector3(0.0f,7.0f,179.8f);
 	Trota[3] = Vector3(0.0f, -3.14f, 0.0f);
 
-	int GetTpos = 3;// GetRandomNum(3, false);
+	int GetTpos = GetRandomNum(3, false);
 
 	if (score_->IsFullCom()) {
 		// フルコンの時
