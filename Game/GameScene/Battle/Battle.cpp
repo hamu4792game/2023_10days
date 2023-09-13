@@ -299,7 +299,7 @@ void Battle::Draw(const Matrix4x4& viewProjection)
 		enemy->Draw(viewProjection);
 	}
 	
-	if (enemyKillCount_ < 40) {
+	if (enemyKillCount_ < kEnemyMaxNum_) {
 		Model::ModelDraw(bottonTransform_, viewProjection, 0xffffffff, bottonModels_[type_].get());
 	}
 

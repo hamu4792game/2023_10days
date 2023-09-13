@@ -105,7 +105,7 @@ private: // Korone
 
 private: //Korone
 
-	int kEnemyMaxNum_ = 40;
+	int kEnemyMaxNum_ = 50;
 	int kEnemyIntervalNum_ = 5;
 
 	int enemyNum_ = 0;

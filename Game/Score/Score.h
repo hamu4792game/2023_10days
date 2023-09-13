@@ -126,7 +126,7 @@ private:
 
 private:
 	// 最大桁数
-	static const int kScoreMaxDigits_ = 5;
+	static const int kScoreMaxDigits_ = 6;
 	static const int kComboMaxDigits_ = 2;
 	static const int kEvaluationMaxDigits_ = 3;
 
