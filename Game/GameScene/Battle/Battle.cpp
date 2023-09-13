@@ -28,6 +28,13 @@ Battle::Battle(std::shared_ptr<Camera> camera)
 
 	timer_ = std::make_unique<Timer>();
 
+	//	soundのロード
+	bgm.SoundLoadWave("Resources/sound/battleBGM.wav");
+	sLittlePunch.SoundLoadWave("Resources/sound/littlePunch.wav");
+	sBigPunch.SoundLoadWave("Resources/sound/bigPunch.wav");
+	sFallDown.SoundLoadWave("Resources/sound/fallDown.wav");
+	sHitToKill.SoundLoadWave("Resources/sound/hitToKill.wav");
+
 }
 
 Battle::~Battle() {
@@ -204,6 +211,27 @@ void Battle::Update()
 				enemyKillCount_++;
 				EnemyGeneration();
 				ButtonRand();
+
+				if (score_->GetCombo() >= 20) {
+					sHitToKill.SoundStop();
+					sHitToKill.SoundPlayWave();
+				}
+				else
+				{
+					//	ここで音の変化
+					if (score_->GetEvaluation() == Score::Evaluation::kPerfect) {
+						sBigPunch.SoundStop();
+						sBigPunch.SoundPlayWave();
+					}
+					else if (score_->GetEvaluation() == Score::Evaluation::kMiss) {
+						sFallDown.SoundStop();
+						sFallDown.SoundPlayWave();
+					}
+					else {
+						sLittlePunch.SoundStop();
+						sLittlePunch.SoundPlayWave();
+					}
+				}
 			}
 
 			break;

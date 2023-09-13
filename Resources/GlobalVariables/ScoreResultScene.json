@@ -1,22 +1,22 @@
 {
     "ScoreResultScene": {
         "ComboPos": [
-            780.0,
+            800.0,
             100.0
         ],
         "ComboScale": 1.0,
         "GoodPos": [
-            780.0,
+            790.0,
             480.0
         ],
         "GoodScale": 1.0,
         "GreatPos": [
-            780.0,
+            790.0,
             420.0
         ],
         "GreatScale": 1.0,
         "HighComboPos": [
-            780.0,
+            790.0,
             300.0
         ],
         "HighComboScale": 1.0,
@@ -26,12 +26,12 @@
         ],
         "HighScoreScale": 0.699999988079071,
         "MissPos": [
-            780.0,
+            790.0,
             540.0
         ],
         "MissScale": 1.0,
         "PerfectPos": [
-            780.0,
+            790.0,
             360.0
         ],
         "PerfectScale": 1.0,
@@ -41,7 +41,7 @@
         ],
         "ScoreScale": 1.0,
         "TotalHighComboPos": [
-            780.0,
+            790.0,
             150.0
         ],
         "TotalHighComboScale": 1.0
