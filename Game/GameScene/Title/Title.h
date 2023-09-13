@@ -95,4 +95,7 @@ private: // メンバ関数
 
 	void CameraMove();
 
+
+
+	
 };

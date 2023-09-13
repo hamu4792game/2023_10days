@@ -64,6 +64,10 @@ private:
 	//王騎将軍ポーズ
 	std::vector<esing> okisyogun;
 
+	//悔しいです！！！！！！！！！
+	std::vector<esing> kuyasii;
+	void Kuyasii();
+
 	void OkiSyogun();
 	bool isL_ = false;
 	bool isOkiStart_=false;

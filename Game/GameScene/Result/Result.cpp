@@ -285,6 +285,75 @@ void Result::Initialize()
 	};
 #pragma endregion
 
+#pragma region 悔しいモーション
+	kuyasii.resize(parts_.size());
+	kuyasii[Body] = {
+		{1.8f, 0.0f, 0.0f},
+		{1.8f, 0.0f, 0.0f},
+	};
+	kuyasii[Head] = {
+		{0.0f, 0.0f, 0.0f},
+		{0.0f, 0.0f, 0.0f},
+	};
+	kuyasii[BodyUnder] = {
+		{-0.45f, 0.0f, 0.0f},
+		{-0.45f, 0.0f, 0.0f},
+	};
+	//
+	kuyasii[LArm1] = {
+		{0.0f, 1.5f, 0.0f},
+		{0.0f, 1.5f, 0.0f},
+	};
+	kuyasii[LArm2] = {
+		{0.0f, 0.0f, -1.7f},
+		{0.0f, 0.0f, -2.5f},
+	};
+	kuyasii[LHand] = {
+		{0.0f, 0.0f, 0.0f},
+		{0.0f, 0.0f, 0.0f},
+	};
+	//
+	kuyasii[RArm1] = {
+		{0.0f, -1.5f, 0.0f},
+		{0.0f, -1.5f, 0.0f},
+	};
+	kuyasii[RArm2] = {
+		{0.0f, 0.0f, 1.7f},
+		{0.0f, 0.0f, 1.7f},
+	};
+	kuyasii[RHand] = {
+		{0.0f, 0.0f, 0.0f},
+		{0.0f, 0.0f, 0.0f},
+	};
+	//
+	kuyasii[LLeg1] = {
+		{-1.2f, 0.0f, 0.0f},
+		{-1.2f, 0.0f, 0.0f},
+	};
+	kuyasii[LLeg2] = {
+		{2.0f, 0.0f, 0.0f},
+		{2.0f, 0.0f, 0.0f},
+	};
+	kuyasii[LFoot] = {
+		{-0.2f, 0.0f, 0.0f},
+		{-0.2f, 0.0f, 0.0f},
+	};
+
+	//
+	kuyasii[RLeg1] = {
+		{-1.2f, 0.0f, 0.0f},
+		{-1.2f, 0.0f, 0.0f},
+	};
+	kuyasii[RLeg2] = {
+		{2.0f, 0.0f, 0.0f},
+		{2.0f, 0.0f, 0.0f},
+	};
+	kuyasii[RFoot] = {
+		{-0.2f, 0.0f, 0.0f},
+		{-0.2f, 0.0f, 0.0f},
+	};
+#pragma endregion
+
 	isAnimeStart_ = false;
 	isOkiStart_ = false;
 
@@ -294,7 +363,7 @@ void Result::Update()
 {
 	//camera_->transform.scale_ = Vector3(1.0f, 1.0f, 0.5f);
 
-	cameraR_target_.rotation_.y += (1.0f / 180.0f)*3.14f;
+	cameraR_target_.rotation_.y += (1.0f / 360.0f)*3.14f;
 
 #ifdef _DEBUG
 	ImGui::Begin("Result");
@@ -326,6 +395,7 @@ void Result::Update()
 #endif // _DEBUG
 
 	EatRamen();
+	//Kuyasii();
 	OkiSyogun();
 	
 	ui_->Update();
@@ -452,6 +522,44 @@ void Result::OkiSyogun() {
 				OkiT_ = 0;
 			}
 		}
+	}
+}
+
+//悔しがりアニメ
+void Result::Kuyasii() {
+	//アニメーション初期化
+	if (!isAnimeStart_) {
+		isAnimeStart_ = true;
+		isLoop_ = false;
+
+		//アニメーションポーズ設定
+		for (int i = 0; i < PARTS::Num; i++) {
+			parts_[i].rotation_ = kuyasii[i].st;
+		}
+		T_ = 0;
+
+	}//更新
+	else {
+		for (int i = 0; i < PARTS::Num; i++) {
+			parts_[i].rotation_ = ES(kuyasii[i], T_);
+		}
+		//以下ループT
+		float ADD = 1.0f / 30.0f;
+		if (!isLoop_) {
+			T_ += ADD;
+			if (T_ >= 1.0f) {
+				isLoop_ = true;
+				T_ = 1.0f;
+			}
+		}
+		else {
+			T_ -= ADD;
+			if (T_ <= 0.0f) {
+				isLoop_ = false;
+				T_ = 0;
+			}
+		}
+
 	}
 }
 #pragma endregion
