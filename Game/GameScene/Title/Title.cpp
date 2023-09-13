@@ -45,6 +45,31 @@ void Title::Initialize()
 	shopTrans.resize(shopModels_.size());
 	tentyoTransform.resize(tentyoModels_.size());
 
+#pragma region 武器構え
+
+	ATK_W.resize(parts_.size());
+
+	ATK_W[Body] = { 0.1f, 0.0f, 0.0f };
+	ATK_W[Head] = { 0.0f, 0.0f, 0.0f };
+	ATK_W[BodyUnder] = { -0.1f, 0.0f, 0.0f };
+
+	ATK_W[LArm1] = { 0.0f, 0.0f, 1.0f };
+	ATK_W[LArm2] = { 0.0f, 2.3f, 0.0f };
+	ATK_W[LHand] = { 0.0f, 0.0f, 0.0f };
+
+	ATK_W[RArm1] = { 0.0f, 0.0f, -1.0f };
+	ATK_W[RArm2] = { 0.0f, -2.3f, 0.0f };
+	ATK_W[RHand] = { 0.0f, 0.0f, 0.0f };
+
+
+	ATK_W[LLeg1] = { 0.0f, 0.0f, -0.1f };
+	ATK_W[LLeg2] = { 0.0f, 0.0f, 0.1f };
+	ATK_W[LFoot] = { 0.0f, 0.0f, 0.0f };
+
+	ATK_W[RLeg1] = { 0.0f, 0.0f, 0.1f };
+	ATK_W[RLeg2] = { 0.0f, 0.0f, -0.1f };
+	ATK_W[RFoot] = { 0.0f, 0.0f, 0.0f };
+#pragma endregion
 	SetParts();
 
 	cameraStep = CAMERASTEP::Zero;
@@ -220,6 +245,10 @@ void Title::Initialize()
 	}
 	TenchoW_.translation_ = Tpos[GetTpos];
 	TenchoW_.rotation_ = Trota[GetTpos];
+
+
+
+
 }
 
 //将軍ポーズ店長
@@ -393,7 +422,9 @@ void Title::SetParts()
 	parts_[RLeg2].translation_ = { 0.0f, -2.2f, 0.0f };
 	parts_[RFoot].translation_ = { 0.12f, -2.2f, 0.0f };
 #pragma endregion
-	
+	for (int i = 0; i < Num; i++) {
+		parts_[i].rotation_ = ATK_W[i];
+	}
 
 	tentyoTransform[Body].translation_;
 

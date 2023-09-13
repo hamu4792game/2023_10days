@@ -117,4 +117,6 @@ private: // メンバ関数
 	//店長座標
 	Vector3 Tpos[4];
 	Vector3 Trota[4];
+
+	std::vector<Vector3>ATK_W;
 };

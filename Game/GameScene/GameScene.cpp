@@ -226,25 +226,25 @@ void GameScene::Draw()
 void GameScene::ModelLoad()
 {
 	//頭・身体・腰
-	mobModels_[static_cast<int>(ModelType::Player)][Body]->Texture("Resources/player/Parts/pBody/pBody.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl");
-	mobModels_[static_cast<int>(ModelType::Player)][Head]->Texture("Resources/player/Parts/pHead/pHead.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl");
-	mobModels_[static_cast<int>(ModelType::Player)][BodyUnder]->Texture("Resources/player/Parts/pBodyUnder/pBodyUnder.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl");
+	mobModels_[static_cast<int>(ModelType::Player)][Body]->Texture("Resources/player/Parts/pBody/pBody.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl", "minsukiKid.png");
+	mobModels_[static_cast<int>(ModelType::Player)][Head]->Texture("Resources/player/Parts/pHead/pHead.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl", "minsukiKid.png");
+	mobModels_[static_cast<int>(ModelType::Player)][BodyUnder]->Texture("Resources/player/Parts/pBodyUnder/pBodyUnder.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl", "minsukiKid.png");
 	//左腕１・左腕２・左手
-	mobModels_[static_cast<int>(ModelType::Player)][LArm1]->Texture("Resources/player/Parts/pLArm1/pLArm1.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl");
-	mobModels_[static_cast<int>(ModelType::Player)][LArm2]->Texture("Resources/player/Parts/pLArm2/pLArm2.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl");
-	mobModels_[static_cast<int>(ModelType::Player)][LHand]->Texture("Resources/player/Parts/pLHand/pLHand.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl");
+	mobModels_[static_cast<int>(ModelType::Player)][LArm1]->Texture("Resources/player/Parts/pLArm1/pLArm1.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl", "minsukiKid.png");
+	mobModels_[static_cast<int>(ModelType::Player)][LArm2]->Texture("Resources/player/Parts/pLArm2/pLArm2.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl", "minsukiKid.png");
+	mobModels_[static_cast<int>(ModelType::Player)][LHand]->Texture("Resources/player/Parts/pLHand/pLHand.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl", "minsukiKid.png");
 	//右腕１・右腕２・右手
-	mobModels_[static_cast<int>(ModelType::Player)][RArm1]->Texture("Resources/player/Parts/pRArm1/pRArm1.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl");
-	mobModels_[static_cast<int>(ModelType::Player)][RArm2]->Texture("Resources/player/Parts/pRArm2/pRArm2.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl");
-	mobModels_[static_cast<int>(ModelType::Player)][RHand]->Texture("Resources/player/Parts/pRHand/pRHand.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl");
+	mobModels_[static_cast<int>(ModelType::Player)][RArm1]->Texture("Resources/player/Parts/pRArm1/pRArm1.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl", "minsukiKid.png");
+	mobModels_[static_cast<int>(ModelType::Player)][RArm2]->Texture("Resources/player/Parts/pRArm2/pRArm2.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl", "minsukiKid.png");
+	mobModels_[static_cast<int>(ModelType::Player)][RHand]->Texture("Resources/player/Parts/pRHand/pRHand.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl", "minsukiKid.png");
 	//左足首１・左足首２・左足
-	mobModels_[static_cast<int>(ModelType::Player)][LLeg1]->Texture("Resources/player/Parts/pLLeg1/pLLeg1.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl");
-	mobModels_[static_cast<int>(ModelType::Player)][LLeg2]->Texture("Resources/player/Parts/pLLeg/pLLeg.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl");
-	mobModels_[static_cast<int>(ModelType::Player)][LFoot]->Texture("Resources/player/Parts/pLFoot/pLFoot.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl");
+	mobModels_[static_cast<int>(ModelType::Player)][LLeg1]->Texture("Resources/player/Parts/pLLeg1/pLLeg1.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl", "minsukiKid.png");
+	mobModels_[static_cast<int>(ModelType::Player)][LLeg2]->Texture("Resources/player/Parts/pLLeg/pLLeg.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl", "minsukiKid.png");
+	mobModels_[static_cast<int>(ModelType::Player)][LFoot]->Texture("Resources/player/Parts/pLFoot/pLFoot.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl", "minsukiKid.png");
 	//右足首１・右足首２・右足
-	mobModels_[static_cast<int>(ModelType::Player)][RLeg1]->Texture("Resources/player/Parts/pRLeg1/pRLeg1.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl");
-	mobModels_[static_cast<int>(ModelType::Player)][RLeg2]->Texture("Resources/player/Parts/pRLeg2/pRLeg2.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl");
-	mobModels_[static_cast<int>(ModelType::Player)][RFoot]->Texture("Resources/player/Parts/pRFoot/pRFoot.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl");
+	mobModels_[static_cast<int>(ModelType::Player)][RLeg1]->Texture("Resources/player/Parts/pRLeg1/pRLeg1.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl", "minsukiKid.png");
+	mobModels_[static_cast<int>(ModelType::Player)][RLeg2]->Texture("Resources/player/Parts/pRLeg2/pRLeg2.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl", "minsukiKid.png");
+	mobModels_[static_cast<int>(ModelType::Player)][RFoot]->Texture("Resources/player/Parts/pRFoot/pRFoot.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl", "minsukiKid.png");
 
 	//頭・身体・腰
 	mobModels_[static_cast<int>(ModelType::Type1)][Body]->Texture("Resources/player/Parts/pBody/pBody.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl", "e_tex/cusGREEN.png");

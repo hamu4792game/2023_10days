@@ -84,6 +84,8 @@ private:
 	bool* clearFlag_ = nullptr;
 
 	float OkiT_ = 0;
+
+	
 public: // korone
 
 	void SetUI(UI* ui) { ui_ = ui; }
