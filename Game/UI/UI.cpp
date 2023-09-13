@@ -195,7 +195,7 @@ void UI::ResultInitialize() {
 
 	colors_[UITextureNames::kBack] = 0xFFFFFFFF;
 
-	isDraw_[UITextureNames::kBack] = true;
+	isDraw_[UITextureNames::kBack] = false;
 	isDraw_[UITextureNames::kScore] = false;
 	isDraw_[UITextureNames::kCombo] = false;
 	isDraw_[UITextureNames::kHighScore] = false;
@@ -419,7 +419,21 @@ void UI::ResultUpdate() {
 
 	count_++;
 
-	if (count_ == kInterval_ * 1) {
+	if (count_ <= kInterval_ * 2) {
+
+		if (count_ == kInterval_) {
+			isDraw_[UITextureNames::kBack] = true;
+		}
+		if (count_ >= kInterval_) {
+
+			float scale = Ease::UseEase(0.0f, uiScales_[Scene::kResultScene][UITextureNames::kBack], count_ - kInterval_, kInterval_, Ease::EaseInSine);
+
+			SetWorldTransform(uiPos_[Scene::kResultScene][UITextureNames::kBack], scale, 0.0f, UITextureNames::kBack);
+
+		}
+
+	}
+	else if (count_ == kInterval_ * 3) {
 
 		isDraw_[UITextureNames::kScore] = true;
 		isDraw_[UITextureNames::kHighScore] = true;
@@ -427,27 +441,27 @@ void UI::ResultUpdate() {
 		score_->SetIsDraw(true, Score::kScore);
 		score_->SetIsDraw(true, Score::kMemoHighScore);
 	}
-	else if (count_ == kInterval_ * 2) {
+	else if (count_ == kInterval_ * 4) {
 
 		isDraw_[UITextureNames::kCombo] = true;
 		score_->SetIsDraw(true, Score::kHighCombo);
 	}
-	else if (count_ == kInterval_ * 3) {
+	else if (count_ == kInterval_ * 5) {
 
 		isDraw_[UITextureNames::kPerfect] = true;
 		score_->SetIsDraw(true, Score::kPerfectNum);
 	}
-	else if (count_ == kInterval_ * 4) {
+	else if (count_ == kInterval_ * 6) {
 
 		isDraw_[UITextureNames::kGreat] = true;
 		score_->SetIsDraw(true, Score::kGreatNum);
 	}
-	else if (count_ == kInterval_ * 5) {
+	else if (count_ == kInterval_ * 7) {
 
 		isDraw_[UITextureNames::kGood] = true;
 		score_->SetIsDraw(true, Score::kGoodNum);
 	}
-	else if (count_ == kInterval_ * 6) {
+	else if (count_ == kInterval_ * 8) {
 
 		isDraw_[UITextureNames::kMiss] = true;
 		score_->SetIsDraw(true, Score::kMissNum);
