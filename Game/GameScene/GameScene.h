@@ -72,6 +72,8 @@ private: // モデル用変数
 	std::vector<std::shared_ptr<Texture2D>> UITextures_;
 
 	std::vector<std::shared_ptr<Model>> shopModel_;
+	//	ラーメン
+	std::shared_ptr<Model> ramenModel_;
 
 	// ゲージ用
 	std::vector<std::shared_ptr<Texture2D>> gaugeTextures_;

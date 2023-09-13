@@ -21,6 +21,7 @@ void Result::Initialize()
 	shopTransform_.resize(shopModels_.size());
 	//店長
 	tentyoTransform_.resize(tentyoModels_.size());
+	
 
 	//親子関係
 	camera_->transform.parent_ = &cameraR_target_;
@@ -123,9 +124,13 @@ void Result::Initialize()
 
 
 	//以下数値設定
-	camera_->transform.translation_ = Vector3(0.0f, 3.0f, -40.0f);
-	camera_->transform.rotation_ = Vector3(0.0f, 0.0f, 0.0f);
+	//camera_->transform.translation_ = Vector3(0.0f, 3.0f, -40.0f);
+	//camera_->transform.rotation_ = Vector3(0.0f, 0.0f, 0.0f);
 	camera_->transform.scale_ = Vector3(1.0f, 1.0f, 0.5f);
+
+	//	食ってる画角
+	camera_->transform.translation_ = Vector3(16.3f, 8.5f, -9.6f);
+	camera_->transform.rotation_ = Vector3(0.0f, -0.5f, 0.0f);
 
 
 	shopTransform_[0].scale_ = { 10.0f,10.0f,10.0f };
@@ -141,6 +146,7 @@ void Result::Initialize()
 	cameraR_target_.translation_ = Vector3(0.0f, 7.7f, 0.0f);
 	cameraR_target_.rotation_ = Vector3(0.7f, 0.0f, 0.0f);
 
+	ramenTransform_.translation_ = Vector3(17.3f, 12.5f, 5.3f);
 
 #pragma region ラーメン食べる
 
@@ -358,13 +364,25 @@ void Result::Initialize()
 	isAnimeStart_ = false;
 	isOkiStart_ = false;
 
+	//	クリアできなかった時の初期位置設定
+	if (!clearFlag_) {
+		camera_->transform.translation_ = Vector3(0.0f, 1.9f, 6.5f);
+		camera_->transform.rotation_ = Vector3(0.0f, 0.0f, 0.0f);
+		cameraR_target_.translation_ = Vector3(-28.1f, 40.0f, 77.0f);
+		cameraR_target_.rotation_ = Vector3(0.8f, -3.9f, 0.0f);
+		playerW_.translation_ = Vector3(0.3f, 0.5f, 6.1f);
+		playerW_.rotation_ = Vector3(0.0f, 3.74f, 0.0f);
+		tentyoW_.translation_ = Vector3(-0.2f, 1.3f, 4.2f);
+		tentyoW_.rotation_ = Vector3(0.0f, 0.0f, 0.0f);
+	}
+
 }
 
 void Result::Update()
 {
 	//camera_->transform.scale_ = Vector3(1.0f, 1.0f, 0.5f);
 
-	cameraR_target_.rotation_.y += (1.0f / 360.0f)*3.14f;
+	//cameraR_target_.rotation_.y += (1.0f / 360.0f)*3.14f;
 
 #ifdef _DEBUG
 	ImGui::Begin("Result");
@@ -391,23 +409,24 @@ void Result::Update()
 	ImGui::Text("tentyo");
 	ImGui::DragFloat3("T pos", &tentyoW_.translation_.x, 0.1f);
 	ImGui::DragFloat3("T Rotate", &tentyoW_.rotation_.x, 0.1f);
+
+	ImGui::Text("ramen");
+	ImGui::DragFloat3("R pos", &ramenTransform_.translation_.x, 0.1f);
+	ImGui::DragFloat3("R Rotate", &ramenTransform_.rotation_.x, AngleToRadian(1.0f));
 	ImGui::End();
 
 #endif // _DEBUG
 
 	if (clearFlag_) {
 		// 時間内に来た時
-
-
+		EatRamen();
+		OkiSyogun();
 	}
 	else {
 		// 間に合わなかった時
-
+		Kuyasii();
+		OkiSyogun();
 	}
-
-	EatRamen();
-	//Kuyasii();
-	OkiSyogun();
 	
 	ui_->Update();
 
@@ -427,6 +446,7 @@ void Result::Update()
 	for (auto& i : tentyoTransform_) {
 		i.UpdateMatrix();
 	}
+	ramenTransform_.UpdateMatrix();
 
 }
 
@@ -442,6 +462,7 @@ void Result::Draw(Matrix4x4 viewProjection)
 	for (uint16_t i = 0u; i < tentyoModels_.size(); i++) {
 		Model::ModelDraw(tentyoTransform_[i], viewProjection, 0xffffffff, tentyoModels_[i].get());
 	}
+	Model::ModelDraw(ramenTransform_, viewProjection, 0xffffffff, ramenModels_.get());
 }
 
 void Result::Draw2D(const Matrix4x4& viewProjection) {
