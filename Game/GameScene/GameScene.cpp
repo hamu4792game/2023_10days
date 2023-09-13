@@ -38,6 +38,7 @@ void GameScene::Initialize()
 	for (uint16_t index = 0u; index < PARTS::Num + 1; index++) {
 		tentyo_.push_back(std::make_shared<Model>());
 	}
+	ramenModel_ = std::make_shared<Model>();
 
 	//ボタンモデルの初期化
 	for (uint32_t i = 0u; i < 4; i++) {
@@ -88,6 +89,7 @@ void GameScene::Initialize()
 	result->SetModels(mobModels_[0]);
 	result->SetTentyoModel(tentyo_);
 	result->SetShopModel(shopModel_);
+	result->SetRamenModel(ramenModel_);
 
 	result->SetClearFlag_(battle->GetClearFlag());
 
@@ -394,6 +396,8 @@ void GameScene::ModelLoad()
 	shopModel_[0]->Texture("Resources/RamenShop/RamenShop.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl", "RamenShop/RamenShop.png");
 	shopModel_[1]->Texture("Resources/plane/plane.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl", "hud/board.png");
 	shopModel_[2]->Texture("Resources/plane/plane.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl", "hud/onetime.png");
+
+	ramenModel_->Texture("Resources/eatRamen/eatRamen.obj", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl");
 
 	box->Texture("Resources/hud/block.png", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl");
 	boxP->Texture("Resources/hud/block.png", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2Dex.PS.hlsl");

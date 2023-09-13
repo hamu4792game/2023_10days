@@ -24,6 +24,7 @@ public: // Modelデータのロード
 	void SetModels(std::vector<std::shared_ptr<Model>> modeldate) { mobModels_ = modeldate; }
 	void SetShopModel(std::vector<std::shared_ptr<Model>> modeldate) { shopModels_ = modeldate; }
 	void SetTentyoModel(std::vector<std::shared_ptr<Model>> modeldate) { tentyoModels_ = modeldate; }
+	void SetRamenModel(std::shared_ptr<Model> modeldate) { ramenModels_ = modeldate; }
 
 private: // 音関係
 	//AudioInput pon;
@@ -36,6 +37,8 @@ private: // Modelの宣言
 
 	std::vector<std::shared_ptr<Model>> tentyoModels_;
 
+	std::shared_ptr<Model> ramenModels_;
+
 private:
 
 	std::vector<WorldTransform> parts_;
@@ -43,6 +46,8 @@ private:
 	std::vector<WorldTransform> shopTransform_;
 
 	std::vector<WorldTransform> tentyoTransform_;
+
+	WorldTransform ramenTransform_;
 
 	//プレイヤーの基本W
 	WorldTransform playerW_;
