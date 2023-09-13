@@ -135,7 +135,7 @@ void Result::Initialize()
 
 	tentyoW_.translation_ = Vector3(-1.7f, 1.3f, 2.0f);
 	tentyoW_.scale_ = Vector3(0.2f, 0.2f, 0.2f);
-
+	tentyoW_.rotation_ = Vector3(0.0f, 2.2f, 0.0f);
 
 	cameraR_target_.translation_ = Vector3(0.0f, 7.7f, 0.0f);
 	cameraR_target_.rotation_ = Vector3(0.7f, 0.0f, 0.0f);
@@ -216,6 +216,78 @@ void Result::Initialize()
 	};
 #pragma endregion
 
+#pragma region 王騎将軍ポーズ
+	okisyogun.resize(tentyoTransform_.size());
+	okisyogun[Body] = {
+		{0.0f,0.0f,0.0f},
+		{0.0f, 0.0f, 0.0f},
+	};
+	okisyogun[BodyUnder] = {
+		{0.0f, 0.0f, 0.0f},
+		{0.0f, 0.0f, 0.0f},
+	};
+	okisyogun[Head] = {
+		{0.0f, 0.0f, 0.0f},
+		{0.3f, 0.0f, 0.0f},
+	};
+
+	//ude
+	okisyogun[LArm1] = {
+		{0.0f, 0.6f, 1.1f},
+		{0.0f, 0.6f, 1.1f},
+	};
+	okisyogun[LArm2] = {
+		{0.0f, 2.7f, -0.95f},
+		{0.0f, 2.7f, -0.95f},
+	};
+	okisyogun[LHand] = {
+		{0.0f, 0.75f, 0.0f},
+		{0.0f, 0.75f, 0.0f},
+	};
+
+	okisyogun[RArm1] = {
+		{0.0f, -0.53f, -1.0f},
+		{0.0f, -0.53f, -1.0f},
+	};
+	okisyogun[RArm2] = {
+		{0.0f, -2.54f, 0.7f},
+		{0.0f, -2.54f, 0.7f},
+	};
+	okisyogun[RHand] = {
+		{0.0f, -0.5f, 0.0f},
+		{0.0f, -0.5f, 0.0f},
+	};
+
+	//asi
+	okisyogun[LLeg1] = {
+		{0.0f, 0.0f, 0.0f},
+		{0.0f, 0.0f, 0.0f},
+	};
+	okisyogun[LLeg2] = {
+		{0.0f, 0.0f, 0.0f},
+		{0.0f, 0.0f, 0.0f},
+	};
+	okisyogun[LFoot] = {
+		{0.0f, 0.0f, 0.0f},
+		{0.0f, 0.0f, 0.0f},
+	};
+	okisyogun[RLeg1] = {
+		{0.0f, 0.0f, 0.0f},
+		{0.0f, 0.0f, 0.0f},
+	};
+	okisyogun[RLeg2] = {
+		{0.0f, 0.0f, 0.0f},
+		{0.0f, 0.0f, 0.0f},
+	};
+	okisyogun[RFoot] = {
+		{0.0f, 0.0f, 0.0f},
+		{0.0f, 0.0f, 0.0f},
+	};
+#pragma endregion
+
+	isAnimeStart_ = false;
+	isOkiStart_ = false;
+
 }
 
 void Result::Update()
@@ -254,7 +326,7 @@ void Result::Update()
 #endif // _DEBUG
 
 	EatRamen();
-	
+	OkiSyogun();
 	
 	ui_->Update();
 	
@@ -344,6 +416,42 @@ void Result::EatRamen() {
 			}
 		}
 
+	}
+}
+
+//将軍ポーズ店長
+void Result::OkiSyogun() {
+	if (!isOkiStart_) {
+		isOkiStart_ = true;
+		//アニメーションポーズ設定
+		for (int i = 0; i < PARTS::Num; i++) {
+			tentyoTransform_[i].rotation_ = okisyogun[i].st;
+		}
+		isL_ = false;
+		OkiT_ = 0;
+	}
+	else {
+
+		for (int i = 0; i < PARTS::Num; i++) {
+			tentyoTransform_[i].rotation_ = ES(okisyogun[i], T_);
+		}
+
+		//以下ループT
+		float ADD = 1.0f / 30.0f;
+		if (!isL_) {
+			OkiT_ += ADD;
+			if (OkiT_ >= 1.0f) {
+				isL_ = true;
+				T_ = 1.0f;
+			}
+		}
+		else {
+			OkiT_ -= ADD;
+			if (OkiT_ <= 0.0f) {
+				isL_ = false;
+				OkiT_ = 0;
+			}
+		}
 	}
 }
 #pragma endregion

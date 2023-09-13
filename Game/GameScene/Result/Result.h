@@ -60,6 +60,15 @@ private:
 
 	//ラーメン食う！！
 	std::vector<esing> eatRamen;
+
+	//王騎将軍ポーズ
+	std::vector<esing> okisyogun;
+
+	void OkiSyogun();
+	bool isL_ = false;
+	bool isOkiStart_=false;
+
+	float OkiT_ = 0;
 public: // korone
 
 	void SetUI(UI* ui) { ui_ = ui; }
