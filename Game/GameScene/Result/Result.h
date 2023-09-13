@@ -72,11 +72,14 @@ private:
 	bool isL_ = false;
 	bool isOkiStart_=false;
 
+	bool* clearFlag_ = nullptr;
+
 	float OkiT_ = 0;
 public: // korone
 
 	void SetUI(UI* ui) { ui_ = ui; }
 
+	void SetClearFlag_(bool* flag) { clearFlag_ = flag; }
 
 private:
 

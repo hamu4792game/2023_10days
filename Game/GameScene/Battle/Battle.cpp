@@ -75,6 +75,7 @@ void Battle::Initialize()
 	
 	tutorialFlag_ = true;
 
+	clearFlag_ = true;
 
 	blackTrans_.scale_ = Vector3(80.0f, 45.0f, 1.0f);
 	blackTrans_.cMono->pibot = Vector2(642.0f, 359.0f);
@@ -257,6 +258,8 @@ void Battle::Update()
 
 		if (timer_->GetTime() == 0) {
 			int num = kEnemyMaxNum_ - enemyKillCount_;
+
+			clearFlag_ = false;
 
 			if (kEnemyMaxNum_ != score_->GetPerfect() + score_->GetGreat() + score_->GetGood() + score_->GetMiss()) {
 				for (int i = 0; i < num; i++) {

@@ -6,6 +6,8 @@
 #include "GlobalVariables/GlobalVariables.h"
 #include "Engine/Easing/Ease.h"
 
+#include "Engine/Input/KeyInput/KeyInput.h"
+
 UI::UI() {
 
 	for (int i = 0; i < kUITexturesMaxNum_; i++) {
@@ -465,6 +467,16 @@ void UI::ResultUpdate() {
 
 		isDraw_[UITextureNames::kMiss] = true;
 		score_->SetIsDraw(true, Score::kMissNum);
+	}
+
+	if (count_ >= kInterval_ * 8) {
+		if (KeyInput::GetInstance()->GetPadButtonDown(XINPUT_GAMEPAD_A) ||
+			KeyInput::GetInstance()->GetPadButtonDown(XINPUT_GAMEPAD_B) ||
+			KeyInput::GetInstance()->GetPadButtonDown(XINPUT_GAMEPAD_X) ||
+			KeyInput::GetInstance()->GetPadButtonDown(XINPUT_GAMEPAD_Y) ||
+			KeyInput::PushKey(DIK_SPACE)) {
+			GameScene::GetInstance()->sceneChangeFlag = true;
+		}
 	}
 
 }
