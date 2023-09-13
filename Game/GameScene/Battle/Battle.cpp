@@ -211,10 +211,12 @@ void Battle::Update()
 				enemyKillCount_++;
 				EnemyGeneration();
 				ButtonRand();
+				enemy->SetAnimeState(MODE_A::NORMAL);
 
-				if (score_->GetCombo() >= 20) {
+				if (score_->GetCombo() >= 15) {
 					sHitToKill.SoundStop();
 					sHitToKill.SoundPlayWave();
+					enemy->SetAnimeState(MODE_A::BAKUSAN);
 				}
 				else
 				{
@@ -252,6 +254,22 @@ void Battle::Update()
 
 	//	一旦仮置き 敵を最大数倒したらシーン切り替え
 	if (enemyKillCount_ >= kEnemyMaxNum_ || timer_->GetTime() == 0) {
+
+		if (timer_->GetTime() == 0) {
+			int num = kEnemyMaxNum_ - enemyKillCount_;
+
+			if (kEnemyMaxNum_ != score_->GetPerfect() + score_->GetGreat() + score_->GetGood() + score_->GetMiss()) {
+				for (int i = 0; i < num; i++) {
+					if (kEnemyMaxNum_ == score_->GetPerfect() + score_->GetGreat() + score_->GetGood() + score_->GetMiss()) {
+						break;
+					}
+					else {
+						score_->AddMiss();
+					}
+				}
+			}
+		}
+
 		GameScene::GetInstance()->sceneChangeFlag = true;
 	}
 
