@@ -528,21 +528,22 @@ void Player::GetplayerR() {
 
 void Player::Animetion() {
 
+	//ミスだった場合
+	if (score_->GetEvaluation() == Score::Evaluation::kMiss) {
+		state_ = MISS_;
+		isAnimeStart_ = false;
+		wave_A = ATKWAIT;
+		//ミスじゃなっかった場合
+	}
+	else if (score_->GetEvaluation()) {
+		state_ = PUNCH;
+		isAnimeStart_ = false;
+		wave_A = ATKWAIT;
+		ANIMENUM = GetRandomNum(A_NUM, false);
+	}
 	switch (state_)
-	{
-	case Player::NOMOTION:
-		//ミスだった場合
-		if (score_->GetEvaluation() == Score::Evaluation::kMiss) {
-			state_ = MISS_;
-			isAnimeStart_ = false;
-			wave_A = ATKWAIT;
-			//ミスじゃなっかった場合
-		}else if (score_->GetEvaluation()) {
-			state_ = PUNCH;
-			isAnimeStart_ = false;
-			wave_A = ATKWAIT;
-			ANIMENUM = GetRandomNum(A_NUM, false);
-		}
+	{	
+	case Player::NOMOTION:	
 		break;
 	case Player::PUNCH://パンチまとめ
 		ATK_R_F(ANIMENUM);

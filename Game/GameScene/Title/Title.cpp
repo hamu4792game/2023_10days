@@ -83,6 +83,51 @@ void Title::Initialize()
 	pushAtrans_.translation_ = Vector3(0.0f, -230.0f, 0.0f);
 	pushAtrans_.scale_ = Vector3(1.5f, 1.5f, 1.0f);
 
+#pragma region パーツの親子関係と座標の初期設定
+	tentyoTransform[Head].parent_ = &tentyoTransform[Body];
+	tentyoTransform[BodyUnder].parent_ = &tentyoTransform[Body];
+
+	tentyoTransform[LArm1].parent_ = &tentyoTransform[Body];
+	tentyoTransform[LArm2].parent_ = &tentyoTransform[LArm1];
+	tentyoTransform[LHand].parent_ = &tentyoTransform[LArm2];
+
+	tentyoTransform[RArm1].parent_ = &tentyoTransform[Body];
+	tentyoTransform[RArm2].parent_ = &tentyoTransform[RArm1];
+	tentyoTransform[RHand].parent_ = &tentyoTransform[RArm2];
+
+	tentyoTransform[LLeg1].parent_ = &tentyoTransform[BodyUnder];
+	tentyoTransform[LLeg2].parent_ = &tentyoTransform[LLeg1];
+	tentyoTransform[LFoot].parent_ = &tentyoTransform[LLeg2];
+
+	tentyoTransform[RLeg1].parent_ = &tentyoTransform[BodyUnder];
+	tentyoTransform[RLeg2].parent_ = &tentyoTransform[RLeg1];
+	tentyoTransform[RFoot].parent_ = &tentyoTransform[RLeg2];
+
+	tentyoTransform[Num].parent_ = &tentyoTransform[BodyUnder];
+	//座標設定
+	tentyoTransform[Body].translation_ = { 0.0f, 0.0f, 0.0f };
+	tentyoTransform[BodyUnder].translation_ = { 0.0f, 0.0f, 0.0f };
+	tentyoTransform[Head].translation_ = { 0.0f, 2.6f, 0.0f };
+
+	tentyoTransform[LArm1].translation_ = { -0.8f, 1.57f, 0.0f };
+	tentyoTransform[LArm2].translation_ = { -1.73f, 0.0f, 0.0f };
+	tentyoTransform[LHand].translation_ = { -2.37f, 0.0f, 0.0f };
+
+	tentyoTransform[RArm1].translation_ = { 0.8f, 1.57f, 0.0f };
+	tentyoTransform[RArm2].translation_ = { 1.73f, 0.0f, 0.0f };
+	tentyoTransform[RHand].translation_ = { 2.37f, 0.0f, 0.0f };
+
+	tentyoTransform[LLeg1].translation_ = { -0.3f, -1.7f, 0.0f };
+	tentyoTransform[LLeg2].translation_ = { 0.0f, -2.2f, 0.0f };
+	tentyoTransform[LFoot].translation_ = { -0.12f, -2.2f, 0.0f };
+
+	tentyoTransform[RLeg1].translation_ = { 0.3f, -1.7f, 0.0f };
+	tentyoTransform[RLeg2].translation_ = { 0.0f, -2.2f, 0.0f };
+	tentyoTransform[RFoot].translation_ = { 0.12f, -2.2f, 0.0f };
+
+
+#pragma endregion
+
 }
 
 void Title::Update()
