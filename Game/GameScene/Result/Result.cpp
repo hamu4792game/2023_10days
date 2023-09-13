@@ -2,6 +2,7 @@
 
 #include "Engine/Input/KeyInput/KeyInput.h"
 #include "Game/GameScene/GameScene.h"
+#include"externals/imgui/imgui.h"
 
 Result::Result(std::shared_ptr<Camera> camera) {
 	camera_ = camera;
@@ -9,19 +10,172 @@ Result::Result(std::shared_ptr<Camera> camera) {
 
 void Result::Initialize()
 {
+
+	
 	ui_->Initialize();
 
-	mobTransform_.resize(mobModels_.size());
+	//プレイヤー
+	parts_.resize(mobModels_.size());
+	//店
 	shopTransform_.resize(shopModels_.size());
+	//店長
 	tentyoTransform_.resize(tentyoModels_.size());
 
-	camera_->transform.translation_ = Vector3(0.0f, 3.0f, 0.0f);
-	camera_->transform.rotation_ = Vector3(AngleToRadian(3.0f), 0.0f, 0.0f);
+	//親子関係
+	camera_->transform.parent_ = &cameraR_target_;
 
+	tentyoW_.parent_ = &shopTransform_[0];
+
+	playerW_.parent_ = &shopTransform_[0];
+
+	//店長ボディを店に設定
+	tentyoTransform_[Body].parent_ = &tentyoW_;
+	parts_[Body].parent_ = &playerW_;
+
+#pragma region パーツの親子関係と座標の初期設定
+	tentyoTransform_[Head].parent_ = &tentyoTransform_[Body];
+	tentyoTransform_[BodyUnder].parent_ = &tentyoTransform_[Body];
+
+	tentyoTransform_[LArm1].parent_ = &tentyoTransform_[Body];
+	tentyoTransform_[LArm2].parent_ = &tentyoTransform_[LArm1];
+	tentyoTransform_[LHand].parent_ = &tentyoTransform_[LArm2];
+
+	tentyoTransform_[RArm1].parent_ = &tentyoTransform_[Body];
+	tentyoTransform_[RArm2].parent_ = &tentyoTransform_[RArm1];
+	tentyoTransform_[RHand].parent_ = &tentyoTransform_[RArm2];
+
+	tentyoTransform_[LLeg1].parent_ = &tentyoTransform_[BodyUnder];
+	tentyoTransform_[LLeg2].parent_ = &tentyoTransform_[LLeg1];
+	tentyoTransform_[LFoot].parent_ = &tentyoTransform_[LLeg2];
+
+	tentyoTransform_[RLeg1].parent_ = &tentyoTransform_[BodyUnder];
+	tentyoTransform_[RLeg2].parent_ = &tentyoTransform_[RLeg1];
+	tentyoTransform_[RFoot].parent_ = &tentyoTransform_[RLeg2];
+
+	tentyoTransform_[Num].parent_ = &tentyoTransform_[BodyUnder];
+	//座標設定
+	tentyoTransform_[Body].translation_ = { 0.0f, 0.0f, 0.0f };
+	tentyoTransform_[BodyUnder].translation_ = { 0.0f, 0.0f, 0.0f };
+	tentyoTransform_[Head].translation_ = { 0.0f, 2.6f, 0.0f };
+
+	tentyoTransform_[LArm1].translation_ = { -0.8f, 1.57f, 0.0f };
+	tentyoTransform_[LArm2].translation_ = { -1.73f, 0.0f, 0.0f };
+	tentyoTransform_[LHand].translation_ = { -2.37f, 0.0f, 0.0f };
+
+	tentyoTransform_[RArm1].translation_ = { 0.8f, 1.57f, 0.0f };
+	tentyoTransform_[RArm2].translation_ = { 1.73f, 0.0f, 0.0f };
+	tentyoTransform_[RHand].translation_ = { 2.37f, 0.0f, 0.0f };
+
+	tentyoTransform_[LLeg1].translation_ = { -0.3f, -1.7f, 0.0f };
+	tentyoTransform_[LLeg2].translation_ = { 0.0f, -2.2f, 0.0f };
+	tentyoTransform_[LFoot].translation_ = { -0.12f, -2.2f, 0.0f };
+
+	tentyoTransform_[RLeg1].translation_ = { 0.3f, -1.7f, 0.0f };
+	tentyoTransform_[RLeg2].translation_ = { 0.0f, -2.2f, 0.0f };
+	tentyoTransform_[RFoot].translation_ = { 0.12f, -2.2f, 0.0f };
+
+	
+#pragma endregion
+	
+#pragma region パーツの親子関係と座標の初期設定(プレイヤー)
+	parts_[Head].parent_ = &parts_[Body];
+	parts_[BodyUnder].parent_ = &parts_[Body];
+
+	parts_[LArm1].parent_ = &parts_[Body];
+	parts_[LArm2].parent_ = &parts_[LArm1];
+	parts_[LHand].parent_ = &parts_[LArm2];
+
+	parts_[RArm1].parent_ = &parts_[Body];
+	parts_[RArm2].parent_ = &parts_[RArm1];
+	parts_[RHand].parent_ = &parts_[RArm2];
+
+	parts_[LLeg1].parent_ = &parts_[BodyUnder];
+	parts_[LLeg2].parent_ = &parts_[LLeg1];
+	parts_[LFoot].parent_ = &parts_[LLeg2];
+
+	parts_[RLeg1].parent_ = &parts_[BodyUnder];
+	parts_[RLeg2].parent_ = &parts_[RLeg1];
+	parts_[RFoot].parent_ = &parts_[RLeg2];
+
+	//座標設定
+	parts_[Body].translation_ = { 0.0f, 0.0f, 0.0f };
+	parts_[BodyUnder].translation_ = { 0.0f, 0.0f, 0.0f };
+	parts_[Head].translation_ = { 0.0f, 2.6f, 0.0f };
+
+	parts_[LArm1].translation_ = { -0.8f, 1.57f, 0.0f };
+	parts_[LArm2].translation_ = { -1.73f, 0.0f, 0.0f };
+	parts_[LHand].translation_ = { -2.37f, 0.0f, 0.0f };
+
+	parts_[RArm1].translation_ = { 0.8f, 1.57f, 0.0f };
+	parts_[RArm2].translation_ = { 1.73f, 0.0f, 0.0f };
+	parts_[RHand].translation_ = { 2.37f, 0.0f, 0.0f };
+
+	parts_[LLeg1].translation_ = { -0.3f, -1.7f, 0.0f };
+	parts_[LLeg2].translation_ = { 0.0f, -2.2f, 0.0f };
+	parts_[LFoot].translation_ = { -0.12f, -2.2f, 0.0f };
+
+	parts_[RLeg1].translation_ = { 0.3f, -1.7f, 0.0f };
+	parts_[RLeg2].translation_ = { 0.0f, -2.2f, 0.0f };
+	parts_[RFoot].translation_ = { 0.12f, -2.2f, 0.0f };
+#pragma endregion
+
+
+	//以下数値設定
+	camera_->transform.translation_ = Vector3(0.0f, 3.0f, -40.0f);
+	camera_->transform.rotation_ = Vector3(0.0f, 0.0f, 0.0f);
+	camera_->transform.scale_ = Vector3(1.0f, 1.0f, 0.5f);
+
+
+	shopTransform_[0].scale_ = { 10.0f,10.0f,10.0f };
+
+	playerW_.translation_ = Vector3(1.7f, 1.0f, 1.0f);
+	playerW_.scale_ = Vector3(0.2f, 0.2f, 0.2f);
+
+	tentyoW_.translation_ = Vector3(-1.7f, 1.3f, 2.0f);
+	tentyoW_.scale_ = Vector3(0.2f, 0.2f, 0.2f);
+
+
+	cameraR_target_.translation_ = Vector3(0.0f, 7.7f, 0.0f);
+	cameraR_target_.rotation_ = Vector3(0.7f, 0.0f, 0.0f);
 }
 
 void Result::Update()
 {
+	//camera_->transform.scale_ = Vector3(1.0f, 1.0f, 0.5f);
+
+	cameraR_target_.rotation_.y += (1.0f / 180.0f)*3.14f;
+
+#ifdef _DEBUG
+	ImGui::Begin("Result");
+	ImGui::Text("camera");
+	ImGui::DragFloat3("C pos", &camera_->transform.translation_.x, 0.1f);
+	ImGui::DragFloat3("C rotate", &camera_->transform.rotation_.x, 0.1f);
+	ImGui::DragFloat3("C scale", &camera_->transform.scale_.x, 0.01f);
+	ImGui::Text("cameraR");
+	ImGui::DragFloat3("CR pos", &cameraR_target_.translation_.x, 0.1f);
+	ImGui::DragFloat3("CR rotate", &cameraR_target_.rotation_.x, 0.1f);
+	ImGui::DragFloat3("CR scale", &cameraR_target_.scale_.x, 0.01f);
+
+
+	ImGui::Text("shop");
+	ImGui::DragFloat3("S pos", &shopTransform_[0].translation_.x, 0.1f);
+	ImGui::DragFloat3("S rotate", &shopTransform_[0].rotation_.x, 0.1f);
+	ImGui::DragFloat3("S scale", &shopTransform_[0].scale_.x, 0.1f);
+
+	ImGui::Text("player");
+	ImGui::DragFloat3("P pos", &playerW_.translation_.x, 0.1f);
+	ImGui::DragFloat3("P rotate", &playerW_.rotation_.x, 0.1f);
+	ImGui::DragFloat3("P scale", &playerW_.scale_.x, 0.1f);
+
+	ImGui::Text("tentyo");
+	ImGui::DragFloat3("T pos", &tentyoW_.translation_.x, 0.1f);
+	ImGui::DragFloat3("T Rotate", &tentyoW_.rotation_.x, 0.1f);
+#endif // _DEBUG
+
+	
+	
+	ImGui::End();
+
 	ui_->Update();
 	
 	if (KeyInput::GetInstance()->GetPadButtonDown(XINPUT_GAMEPAD_A) ||
@@ -32,10 +186,17 @@ void Result::Update()
 		GameScene::GetInstance()->sceneChangeFlag = true;
 	}
 
-	for (auto& i : mobTransform_) {
+	cameraR_target_.UpdateMatrix();
+	camera_->transform.UpdateMatrix();
+
+	//アップデート
+	for (auto& i : shopTransform_) {
 		i.UpdateMatrix();
 	}
-	for (auto& i : shopTransform_) {
+	playerW_.UpdateMatrix();
+	tentyoW_.UpdateMatrix();
+
+	for (auto& i : parts_) {
 		i.UpdateMatrix();
 	}
 	for (auto& i : tentyoTransform_) {
@@ -47,7 +208,7 @@ void Result::Update()
 void Result::Draw(Matrix4x4 viewProjection)
 {
 	for (uint16_t i = 0u; i < mobModels_.size(); i++) {
-		Model::ModelDraw(mobTransform_[i], viewProjection, 0xffffffff, mobModels_[i].get());
+		Model::ModelDraw(parts_[i], viewProjection, 0xffffffff, mobModels_[i].get());
 	}
 	for (uint16_t i = 0u; i < shopModels_.size(); i++) {
 		Model::ModelDraw(shopTransform_[i], viewProjection, 0xffffffff, shopModels_[i].get());

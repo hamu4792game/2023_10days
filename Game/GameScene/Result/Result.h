@@ -33,11 +33,19 @@ private: // Modelの宣言
 
 private:
 
-	std::vector<WorldTransform> mobTransform_;
+	std::vector<WorldTransform> parts_;
 	
 	std::vector<WorldTransform> shopTransform_;
 
 	std::vector<WorldTransform> tentyoTransform_;
+
+	//プレイヤーの基本W
+	WorldTransform playerW_;
+
+	//店長の基本W
+	WorldTransform tentyoW_;
+
+	WorldTransform cameraR_target_;
 
 	std::shared_ptr<Camera> camera_;
 

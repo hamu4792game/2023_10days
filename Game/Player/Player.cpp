@@ -45,7 +45,7 @@ void Player::Initialize(std::vector<std::shared_ptr<Model>> models, WorldTransfo
 	
 	offset = Vector2(camera_->transform.rotation_.x, camera_->transform.rotation_.y);
 
-
+	
 	//親子関係
 	parts_[Body].parent_ = &transform;
 
