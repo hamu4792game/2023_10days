@@ -46,6 +46,8 @@ public:
 	
 	void Draw2D(const Matrix4x4& viewProjectionMat);
 
+	void SetClearFlag(bool* flag) { clearFlag_ = flag; }
+
 private:
 
 	void EvaluationUpdate();
@@ -78,7 +80,7 @@ private:
 
 private:
 	
-	static const int kUseSceneNum_ = 2;
+	static const int kUseSceneNum_ = 3;
 
 	// これはscoreクラスのstatic const int kParameterNum_と同じ数値にすること
 	static const int kScoreNum_ = 9;
@@ -86,6 +88,7 @@ private:
 	enum Scene {
 		kBattleScene,
 		kResultScene,
+		kResultScene2,
 	};
 
 	static const int kClassNum_ = 2;
@@ -113,6 +116,10 @@ private:
 		{
 		"UIResultScene",
 		"ScoreResultScene",
+		},
+		{
+		"UIResultScene2",
+		"ScoreResultScene2",
 		}
 	};
 
@@ -171,6 +178,8 @@ private:
 		"MissScale",
 		}
 	};
+
+	bool* clearFlag_ = nullptr;
 
 	int count_ = 0;
 

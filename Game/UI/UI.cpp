@@ -418,7 +418,13 @@ void UI::BattleUpdate() {
 
 void UI::ResultUpdate() {
 	ApplyGlobalVariable();
-	SetAllTransform(Scene::kResultScene);
+
+	if (*clearFlag_ == true) {
+		SetAllTransform(Scene::kResultScene);
+	}
+	else {
+		SetAllTransform(Scene::kResultScene2);
+	}
 
 	count_++;
 
@@ -429,9 +435,17 @@ void UI::ResultUpdate() {
 		}
 		if (count_ >= kInterval_) {
 
-			float scale = Ease::UseEase(0.0f, uiScales_[Scene::kResultScene][UITextureNames::kBack], count_ - kInterval_, kInterval_, Ease::EaseInSine);
 
-			SetWorldTransform(uiPos_[Scene::kResultScene][UITextureNames::kBack], scale, 0.0f, UITextureNames::kBack);
+			if (*clearFlag_ == true) {
+				float scale = Ease::UseEase(0.0f, uiScales_[Scene::kResultScene][UITextureNames::kBack], count_ - kInterval_, kInterval_, Ease::EaseInSine);
+
+				SetWorldTransform(uiPos_[Scene::kResultScene][UITextureNames::kBack], scale, 0.0f, UITextureNames::kBack);
+			}
+			else {
+				float scale = Ease::UseEase(0.0f, uiScales_[Scene::kResultScene2][UITextureNames::kBack], count_ - kInterval_, kInterval_, Ease::EaseInSine);
+
+				SetWorldTransform(uiPos_[Scene::kResultScene2][UITextureNames::kBack], scale, 0.0f, UITextureNames::kBack);
+			}
 
 		}
 

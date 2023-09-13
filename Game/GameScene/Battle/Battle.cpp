@@ -25,6 +25,7 @@ Battle::Battle(std::shared_ptr<Camera> camera)
 
 	ui_ = std::make_unique<UI>();
 	ui_->SetScore(score_.get());
+	ui_->SetClearFlag(&clearFlag_);
 
 	timer_ = std::make_unique<Timer>();
 
@@ -34,6 +35,7 @@ Battle::Battle(std::shared_ptr<Camera> camera)
 	sBigPunch.SoundLoadWave("Resources/sound/bigPunch.wav");
 	sFallDown.SoundLoadWave("Resources/sound/fallDown.wav");
 	sHitToKill.SoundLoadWave("Resources/sound/hitToKill.wav");
+
 
 }
 
