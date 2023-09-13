@@ -75,7 +75,7 @@ void Battle::Initialize()
 	
 	tutorialFlag_ = true;
 
-	clearFlag_ = true;
+	clearFlag_ = false;
 
 	blackTrans_.scale_ = Vector3(80.0f, 45.0f, 1.0f);
 	blackTrans_.cMono->pibot = Vector2(642.0f, 359.0f);
@@ -256,12 +256,16 @@ void Battle::Update()
 	//	一旦仮置き 敵を最大数倒したらシーン切り替え
 	if (enemyKillCount_ >= kEnemyMaxNum_ || timer_->GetTime() == 0) {
 
-		if (timer_->GetTime() == 0) {
-			int num = kEnemyMaxNum_ - enemyKillCount_;
-
+		if (enemyKillCount_ >= kEnemyMaxNum_) {
+			clearFlag_ = true;
+		}
+		else {
 			clearFlag_ = false;
 
 			if (kEnemyMaxNum_ != score_->GetPerfect() + score_->GetGreat() + score_->GetGood() + score_->GetMiss()) {
+
+				int num = kEnemyMaxNum_ - enemyKillCount_;
+
 				for (int i = 0; i < num; i++) {
 					if (kEnemyMaxNum_ == score_->GetPerfect() + score_->GetGreat() + score_->GetGood() + score_->GetMiss()) {
 						break;

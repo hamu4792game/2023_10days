@@ -84,7 +84,7 @@ private:
 
 	bool tutorialFlag_ = false;
 
-	bool clearFlag_ = true;
+	bool clearFlag_ = false;
 
 private: // sound
 	AudioInput bgm;
