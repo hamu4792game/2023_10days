@@ -53,11 +53,11 @@ void Battle::Initialize()
 	
 	masterSpeed = 1.0f;
 
+	score_->Initialize();
+
 	EnemyReset();
 
 	EnemyGeneration();
-
-	score_->Initialize();
 
 	ui_->Initialize();
 
@@ -84,6 +84,8 @@ void Battle::Initialize()
 
 	rand_ = 0;
 	randCount_ = 0;
+
+	enemyCount_ = 0;
 }
 
 
@@ -149,8 +151,45 @@ void Battle::EnemyGeneration() {
 				typeCount_ = 0;
 			}
 
-			// Initializeを変える必要がある
-			enemy->InitializeSP(pos, type, enemyNum_, mobModels_[1 + type]);
+			int modelType = type + 1;
+
+			if (score_->GetCombo() >= 6) {
+
+				if (score_->GetCombo() == 6) {
+					enemyCount_ = 0;
+					subCount_ = 0;
+				}
+
+				if (rand() % 3 == 0 || enemyCount_ == 6 || subCount_ == 3) {
+					if (enemyCount_ == 6) {
+						enemyCount_ = 0;
+					}
+
+					if (enemyCount_ == 0 || subCount_ == 3) {
+						subCount_ = 0;
+						int preType = modelType;
+
+						while (preType == modelType) {
+							modelType = rand() % 4 + 1;
+						}
+						enemyCount_++;
+					}
+					else {
+						enemyCount_++;
+					}
+				}
+				else {
+					enemyCount_++;
+
+					if (score_->GetCombo() <= 9) {
+						subCount_++;
+					}
+				}
+				
+
+			}
+
+			enemy->InitializeSP(pos, type, enemyNum_, mobModels_[modelType]);
 
 			enemies_.push_back(enemy);
 

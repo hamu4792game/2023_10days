@@ -113,6 +113,9 @@ private: //Korone
 	int kEnemyMaxNum_ = 50;
 	int kEnemyIntervalNum_ = 5;
 
+	int enemyCount_ = 0;
+	int subCount_ = 0;
+
 	int enemyNum_ = 0;
 	int enemyKillCount_ = 0;
 
