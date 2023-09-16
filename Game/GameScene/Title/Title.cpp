@@ -15,7 +15,7 @@ Title::Title(std::shared_ptr<Camera> camera)
 	}
 	player = std::make_unique<Enemy>();
 	pushAtext_ = std::make_unique<Texture2D>();
-	pushAtext_->Texture("Resources/hud/pushA.png", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl");
+	pushAtext_->Texture("Resources/hud/pushA_title.png", "./Shader/Texture2D.VS.hlsl", "./Shader/Texture2D.PS.hlsl");
 	
 	//	音声のロード
 	

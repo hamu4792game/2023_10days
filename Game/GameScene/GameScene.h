@@ -78,6 +78,9 @@ private: // モデル用変数
 	// ゲージ用
 	std::vector<std::shared_ptr<Texture2D>> gaugeTextures_;
 
+	// チュートリアル用
+	
+
 private:
 	//	パーツ用データの元
 	std::vector<WorldTransform> parts_;
