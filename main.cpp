@@ -1,19 +1,12 @@
 #include <Windows.h>
 #include "Engine/Engine.h"
-#include "Engine/Texture/Texture2D.h"
 #include "externals/imgui/imgui.h"
-#include "math/Matrix4x4.h"
-#include "Engine/Camera/Camera.h"
 
-#include "Engine/Texture/Model.h"
 #include "Engine/Input/KeyInput/KeyInput.h"
-#include "Engine/Input/AudioInput/AudioInput.h"
 
 #include "Game/GameScene/GameScene.h"
 
-#include "GlobalVariables/GlobalVariables.h"
 #include "Engine/TimeBaseLoopExecuter/TimeBaseLoopExecuter.h"
-
 
 int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR lpCmdLine, _In_ int nShowCmd) {
 	static D3DResourceLeakChecker leak;
@@ -22,7 +15,7 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR lpCmdLine, _In
 	Engine::Initialize("2004_閉店一分前", windowWidth, windowHeight);
 	
 	// グローバル変数の読み込み
-	GlobalVariables::GetInstance()->LoadFiles();
+	//GlobalVariables::GetInstance()->LoadFiles();
 
 	GameScene::GetInstance()->Initialize();
 
@@ -46,7 +39,7 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR lpCmdLine, _In
 
 
 		// グローバル変数の更新
-		GlobalVariables::GetInstance()->Update();
+		//GlobalVariables::GetInstance()->Update();
 
 		GameScene::GetInstance()->Update();
 

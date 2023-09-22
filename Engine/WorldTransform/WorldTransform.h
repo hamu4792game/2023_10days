@@ -10,6 +10,7 @@ class WorldTransform
 public:
 	WorldTransform();
 	~WorldTransform() = default;
+	WorldTransform(const WorldTransform& transform);
 
 	WorldTransform& operator=(const WorldTransform &trans);
 

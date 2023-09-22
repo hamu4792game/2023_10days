@@ -77,35 +77,14 @@
     <ClCompile Include="externals\imgui\imgui_widgets.cpp">
       <Filter>imgui</Filter>
     </ClCompile>
-    <ClCompile Include="Game\Enemy\Enemy.cpp">
-      <Filter>Game\Enemy</Filter>
-    </ClCompile>
     <ClCompile Include="Game\GameScene\GameScene.cpp">
       <Filter>Game\GameScene</Filter>
     </ClCompile>
     <ClCompile Include="Game\Ground\Ground.cpp">
       <Filter>Game\Ground</Filter>
     </ClCompile>
-    <ClCompile Include="Game\GameScene\Battle\Battle.cpp">
-      <Filter>Game\GameScene\Battle</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\GameScene\Result\Result.cpp">
-      <Filter>Game\GameScene\Result</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\GameScene\Title\Title.cpp">
-      <Filter>Game\GameScene\Title</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\Score\Score.cpp">
-      <Filter>Game\Score</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\Player\Player.cpp">
-      <Filter>Game\Player</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\Easing\Ease.cpp">
       <Filter>Engine\Easing</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\UI\UI.cpp">
-      <Filter>Game\UI</Filter>
     </ClCompile>
     <ClCompile Include="GlobalVariables\GlobalVariables.cpp">
       <Filter>GlobalVariables</Filter>
@@ -115,9 +94,6 @@
     </ClCompile>
     <ClCompile Include="Engine\TimeBaseLoopExecuter\TimeBaseLoopExecuter.cpp">
       <Filter>Engine\TimeBaseLoopExecuter</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\Timer\Timer.cpp">
-      <Filter>Game\Timer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -208,38 +184,17 @@
     <ClInclude Include="externals\imgui\imstb_truetype.h">
       <Filter>imgui</Filter>
     </ClInclude>
-    <ClInclude Include="Game\Enemy\Enemy.h">
-      <Filter>Game\Enemy</Filter>
-    </ClInclude>
     <ClInclude Include="Game\GameScene\GameScene.h">
       <Filter>Game\GameScene</Filter>
     </ClInclude>
     <ClInclude Include="Game\Ground\Ground.h">
       <Filter>Game\Ground</Filter>
     </ClInclude>
-    <ClInclude Include="Game\GameScene\Battle\Battle.h">
-      <Filter>Game\GameScene\Battle</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\GameScene\Result\Result.h">
-      <Filter>Game\GameScene\Result</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\GameScene\Title\Title.h">
-      <Filter>Game\GameScene\Title</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\Score\Score.h">
-      <Filter>Game\Score</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\Player\Player.h">
-      <Filter>Game\Player</Filter>
-    </ClInclude>
     <ClInclude Include="EEnum.h">
       <Filter>Game</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Easing\Ease.h">
       <Filter>Engine\Easing</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\UI\UI.h">
-      <Filter>Game\UI</Filter>
     </ClInclude>
     <ClInclude Include="GlobalVariables\GlobalVariables.h">
       <Filter>GlobalVariables</Filter>
@@ -250,9 +205,7 @@
     <ClInclude Include="Engine\TimeBaseLoopExecuter\TimeBaseLoopExecuter.h">
       <Filter>Engine\TimeBaseLoopExecuter</Filter>
     </ClInclude>
-    <ClInclude Include="Game\Timer\Timer.h">
-      <Filter>Game\Timer</Filter>
-    </ClInclude>
+    <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Engine">
@@ -315,32 +268,11 @@
     <Filter Include="Game">
       <UniqueIdentifier>{3ba9cce2-d55c-4668-9f9d-4fd5d463027b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Game\Enemy">
-      <UniqueIdentifier>{fccb9ca6-ebe8-4198-9d1a-40ef283764c2}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Game\GameScene">
       <UniqueIdentifier>{f2714010-80f6-4a11-8576-2117702fd88e}</UniqueIdentifier>
     </Filter>
     <Filter Include="Game\Ground">
       <UniqueIdentifier>{cc10d3d5-f517-46c1-8689-f9886c7bf5d2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Game\GameScene\Title">
-      <UniqueIdentifier>{46a7a751-e96b-422a-a575-2f2cd94c84f4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Game\GameScene\Result">
-      <UniqueIdentifier>{080f51b1-b2e7-4740-918b-70e4f41a341a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Game\GameScene\Battle">
-      <UniqueIdentifier>{0010e352-cdae-4966-be85-4f89394abdff}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Game\Score">
-      <UniqueIdentifier>{34f3ad00-f561-4888-a48d-99dba1bb8f8c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Game\Player">
-      <UniqueIdentifier>{7cdcfa8e-f92b-4cec-95eb-64d0a5dd4a67}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Game\UI">
-      <UniqueIdentifier>{9c794037-5856-4b03-8816-818b8eb45d8d}</UniqueIdentifier>
     </Filter>
     <Filter Include="GlobalVariables">
       <UniqueIdentifier>{5db6066b-e521-4852-be15-c042cb93042a}</UniqueIdentifier>
@@ -351,13 +283,16 @@
     <Filter Include="Engine\TimeBaseLoopExecuter">
       <UniqueIdentifier>{c6624870-76a9-40a9-98f5-f85f997b9828}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Game\Timer">
-      <UniqueIdentifier>{ab1dcf6d-8449-4522-aa11-939eda4fc290}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="externals\imgui\LICENSE.txt">
       <Filter>imgui</Filter>
     </Text>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="DirectXgame.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Resources\icon.ico" />
   </ItemGroup>
 </Project>

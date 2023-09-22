@@ -180,6 +180,9 @@ void Model::ModelDraw(WorldTransform& worldTransform, const Matrix4x4& viewProje
 	*worldTransform.cMat = worldTransform.worldMatrix * viewProjectionMat;
 	*worldTransform.cColor = ChangeColor(color);
 
+	//ConstantBuffer<Matrix4x4> cMat;
+	//*cMat = worldTransform.worldMatrix * viewProjectionMat;
+
 	Engine::GetList()->SetGraphicsRootSignature(model->rootSignature.Get());
 	Engine::GetList()->SetPipelineState(model->graphicsPipelineState.Get());
 	// インデックスを使わずに四角形以上を書くときは
@@ -196,4 +199,5 @@ void Model::ModelDraw(WorldTransform& worldTransform, const Matrix4x4& viewProje
 	Engine::GetList()->SetGraphicsRootConstantBufferView(3, worldTransform.cMono.GetGPUVirtualAddress());
 
 	Engine::GetList()->DrawInstanced(UINT(model->modelData.vertices.size()), 1, 0, 0);
+
 }

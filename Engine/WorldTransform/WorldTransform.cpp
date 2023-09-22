@@ -10,6 +10,11 @@ WorldTransform::WorldTransform()
 	cMono->rate = 1.0f;
 }
 
+WorldTransform::WorldTransform(const WorldTransform& transform)
+{
+	*this = transform;
+}
+
 WorldTransform& WorldTransform::operator=(const WorldTransform& trans)
 {
 	this->translation_ = trans.translation_;
